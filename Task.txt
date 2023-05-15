@@ -1,11 +1,17 @@
 
-Graph : En Cours (3h)
+Graph : En Cours (Durée estimée : 5h - Début : 18h)
+	-Christophe, Abd-Ennour
 	-> comment créer un mur ??
 
-Vertex : Terminé
-Edge : Plus besoin
 
-Wall : A faire
+Vertex : Terminé (Durée: 5min)
+	-Christophe
 
-Pawn : A faire 
+Wall : En Cours (Durée estimée : 4h - Début : 18h)
+	-Warren, Jeremy
 
+Pawn : En Cours (Durée estimée : 1h - Début : 18h) 
+	-Noaman
+
+enum (Player,Orientation,Movement) : Terminé (Durée: 5min)
+	-Christophe, Warren
