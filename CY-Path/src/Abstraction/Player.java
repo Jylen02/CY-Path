@@ -1,6 +1,6 @@
 package Abstraction;
 
-public enum PlayerPosition {
+public enum Player {
 	EMPTY,
 	PLAYER1,
 	PLAYER2,
