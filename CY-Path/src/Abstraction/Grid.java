@@ -23,16 +23,7 @@ public class Grid {
 		}
 		
 		//Initializing the associated graph
-		this.setGraph(new Graph());
-		System.out.println("HELlOOOOOOO!!!");
-	}
-
-	public Graph getGraph() {
-		return graph;
-	}
-
-	public void setGraph(Graph graph) {
-		this.graph = graph;
+		this.graph = new Graph();
 	}
 
 	
