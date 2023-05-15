@@ -1,9 +1,12 @@
 package Abstraction;
 
 public class Intersection {
-
-	public Intersection(Position position, Position position2) {
-		// TODO Auto-generated constructor stub
+	
+	public Position p1;
+	public Position p2;
+	
+	public Intersection(Position pE,Position pS) {
+		this.p1=pE;
+		this.p2=pS;
 	}
-
 }
