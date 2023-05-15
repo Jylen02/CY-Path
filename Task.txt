@@ -1,12 +1,11 @@
-Grid : En Cours (20min)
-Graph : En Cours (1h)
-Vertex : En Cours (10min)
-Edge : En Corus (20min)
+
+Graph : En Cours (3h)
+	-> comment créer un mur ??
+
+Vertex : Terminé
+Edge : Plus besoin
 
 Wall : A faire
 
-Pawn : A faire
+Pawn : A faire 
 
-Move : A faire
-SpecialMove : A faire
-ImpossibleMoveException : A faire
