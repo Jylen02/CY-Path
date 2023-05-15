@@ -1,6 +1,12 @@
-Grille (Grid) : A faire
-Pion (Pawn) : A faire
-Mur (Wall) : A faire
-Déplacement (Move) : A faire
-Déplacement spécial (SpecialMove) : A faire
-Déplacement impossible (ImpossibleMoveException) : A faire
+Grid : En Cours (20min)
+Graph : En Cours (1h)
+Vertex : En Cours (10min)
+Edge : En Corus (20min)
+
+Wall : A faire
+
+Pawn : A faire
+
+Move : A faire
+SpecialMove : A faire
+ImpossibleMoveException : A faire
