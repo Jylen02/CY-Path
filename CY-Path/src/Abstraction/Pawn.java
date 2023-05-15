@@ -22,5 +22,35 @@ public class Pawn {
 		this.player = player;
 	}
 	
+	/**
+	 * Moves in a specified direction.
+	 *
+	 * @param m the movement direction
+	 */
+	public void move(Movement m) {
+	    switch (m) {
+	        case HAUT:
+	            this.pos.getPos().setY(this.pos.getPos().getY()+1);
+	            break;
+	        case BAS:
+	        	this.pos.getPos().setY(this.pos.getPos().getY()-1);
+	            break;
+	        case DROITE:
+	        	this.pos.getPos().setX(this.pos.getPos().getX()+1);
+	            break;
+	        default:
+	        	this.pos.getPos().setX(this.pos.getPos().getX()-1);
+	            break;
+	    }
+	}
+
+	
+	public void specialMove() {
+		
+	}
+	
+	public void canMove() {
+		
+	}
 	
 }
