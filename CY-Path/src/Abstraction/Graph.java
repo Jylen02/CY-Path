@@ -11,15 +11,6 @@ public class Graph{
 	//Intersection of possible wall's placements
 	private Map<Intersection,Boolean> wallIntersection;
 	private Integer playerNumber;
-<<<<<<< Updated upstream
-	private HashMap<Intersection,Boolean> wallIntersection;
-	
-	public HashMap<Intersection,Boolean> getWallIntersection(){
-		return this.wallIntersection;
-	}
-	
-=======
->>>>>>> Stashed changes
 	
 	public Graph() {
 		initializeMatrix();
