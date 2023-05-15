@@ -1,5 +1,6 @@
 package Abstraction;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class Wall {
@@ -49,11 +50,12 @@ public class Wall {
 			else {
 				/* Quand cela marche */
 				/* Map intersection */
-				if(this.getOrientation() == Orientation.HORIZONTAL) {
+				HashMap<Intersection,Boolean> wallIntersection;
+				if(this.getOrientation() == orientation.HORIZONTAL) {
 					wallIntersection.replace(new Intersection(new Position(this.getPosition().getX()-1, this.getPosition().getY()), this.getPosition()), false);
 					wallIntersection.replace(new Intersection(this.getPosition(), new Position(this.getPosition().getX()+1, this.getPosition().getY())), false);
 				}
-				else if(this.getOrientation() == Orientation.VERTICAL) {
+				else if(this.getOrientation() == orientation.VERTICAL) {
 					wallIntersection.replace(new Intersection(new Position(this.getPosition().getX(), this.getPosition().getY()-1), this.getPosition()), false);
 					wallIntersection.replace(new Intersection(this.getPosition(), new Position(this.getPosition().getX(), this.getPosition().getY()+1)), false);
 				}

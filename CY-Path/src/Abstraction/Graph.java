@@ -13,6 +13,10 @@ public class Graph{
 	private Integer playerNumber;
 	private HashMap<Intersection,Boolean> wallIntersection;
 	
+	public HashMap<Intersection,Boolean> getWallIntersection(){
+		return this.wallIntersection;
+	}
+	
 	
 	public Graph() {
 		//this.matrix = initializeMatrix();
