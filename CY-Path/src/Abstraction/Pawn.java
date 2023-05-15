@@ -1,5 +1,5 @@
 package Abstraction;
 
-public class Grille {
+public class Pawn {
 
 }
