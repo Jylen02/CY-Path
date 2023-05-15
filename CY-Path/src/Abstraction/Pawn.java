@@ -38,7 +38,7 @@ public class Pawn {
 	        case DROITE:
 	        	this.pos.getPos().setX(this.pos.getPos().getX()+1);
 	            break;
-	        default:
+	        case GAUCHE:
 	        	this.pos.getPos().setX(this.pos.getPos().getX()-1);
 	            break;
 	    }
@@ -49,8 +49,26 @@ public class Pawn {
 		
 	}
 	
-	public void canMove() {
-		
+	public boolean canMove(Movement m) {
+		switch (m) {
+        case HAUT:
+            /*  Vérifier que la case au dessus appartient a la grille
+             *  / que la case au dessus n'est pas occuper par un autre pion
+             *  / que la case au dessus n'est pas bloquer par un mur
+             *  return true;
+        	*/  
+            break;
+        case BAS:
+        	//
+            break;
+        case DROITE:
+        	//
+            break;
+        case GAUCHE:
+        	//
+            break;
+		}
+		return false;
 	}
 	
 }
