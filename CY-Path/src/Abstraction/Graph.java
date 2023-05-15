@@ -56,28 +56,28 @@ public class Graph{
 	public Boolean[][] initializeMatrix() {
 		Boolean[][] matrix = new Boolean[81][81];
 		for (int i=0; i < 81; i++) {
-			for (int j=0; j < 81; j++) {
+			for (int j=0; j < i; j++) {
 				//Top grid
-				if (i<9 || j<9) {
-					if (j-i==1 || j-i==9) {
+				if (i<9) {
+					if (Math.abs(j-i)==1 || i-j==9) {
 						matrix[i][j]=true;
 					}
 				}
 				//Left grid
-				else if (i%9==0 || j%9==0) {
-					if (j-i==1 || j-i==9) {
+				else if (i%9==0) {
+					if (j-i==1 || Math.abs(j-i)==9) {
 						matrix[i][j]=true;
 					}
 				}
 				//Right grid
-				else if (i%9==8 || j%9==8) {
-					if (j-i==1 || j-i==9) {
+				else if (i%9==8) {
+					if (j-i==1 || Math.abs(j-i)==9) {
 						matrix[i][j]=true;
 					}
 				}
 				//Bottom grid
-				else if (i>71 || j>71) {
-					if (j-i==1 || j-i==9) {
+				else if (i>71) {
+					if (Math.abs(j-i)==1 || j-i==9) {
 						matrix[i][j]=true;
 					}
 				}
@@ -86,14 +86,16 @@ public class Graph{
 					if (Math.abs(j-i)==1 || Math.abs(j-i)==9) {
 						matrix[i][j]=true;
 					}
-					else {
-						matrix[i][j]=false;
-					}
 				}
-				if (matrix[i][j]=false) {
+				//false
+				if (matrix[i][j]==null) {
+					matrix[i][j]=false;
+				}
+				//Affichage
+				if (matrix[i][j]==false) {
 					System.out.print("0");
 				}
-				else {
+				else if(matrix[i][j]==true) {
 					System.out.print("1");
 				}
 			}
@@ -111,7 +113,11 @@ public class Graph{
 	
 	
 	public static void main(String[] args) {
+<<<<<<< Updated upstream
 		Graph p= new Graph();
 		System.out.println("test");
+=======
+		Graph g = new Graph();
+>>>>>>> Stashed changes
 	}
 }
