@@ -26,5 +26,21 @@ public class Grid {
 		this.graph = new Graph();
 	}
 
+	public ArrayList<ArrayList<Integer>> getGrid() {
+		return grid;
+	}
+
+	public void setGrid(ArrayList<ArrayList<Integer>> grid) {
+		this.grid = grid;
+	}
+
+	public Graph getGraph() {
+		return graph;
+	}
+
+	public void setGraph(Graph graph) {
+		this.graph = graph;
+	}
+
 	
 }
