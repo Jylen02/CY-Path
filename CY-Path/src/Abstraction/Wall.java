@@ -8,7 +8,6 @@ public class Wall {
 	private final int HEIGHT = 2;
 	private Orientation orientation;
 	private Position position;
-	private Map<Intersection,Boolean> wallIntersection;
 	
 	/* Constructor */
 	public Wall(Orientation orientation, Position position) {
@@ -31,6 +30,16 @@ public class Wall {
 	}
 	
 	/* Useful methods */
+	public boolean outOfBorderWidth() {
+		if(this.getPosition().getX() == 0 || this.getPosition().getX() == 9 || this.getPosition().getX() == 0 || this.getPosition().getX() == 9)
+			return false;
+		return true;
+	}
+	
+	public boolean hasWall(){
+		return false;
+	}
+	
 	public boolean VerifyWall() throws IncorrectWallException {
 		try {
 			if(this.hasWall() || this.outOfBorderWidth() || (DFS() == false)) {
@@ -38,6 +47,7 @@ public class Wall {
 			}
 
 			else {
+				/* Quand cela marche */
 				/* Map intersection */
 				if(this.getOrientation() == Orientation.HORIZONTAL) {
 					wallIntersection.replace(new Intersection(new Position(this.getPosition().getX()-1, this.getPosition().getY()), this.getPosition()), false);
