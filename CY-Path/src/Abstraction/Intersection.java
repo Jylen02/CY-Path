@@ -9,4 +9,11 @@ public class Intersection {
 		this.p1=pE;
 		this.p2=pS;
 	}
+
+	@Override
+	public String toString() {
+		return "Intersection [" + p1 + "," + p2 + "]";
+	}
+	
+	
 }

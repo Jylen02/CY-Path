@@ -1,5 +1,6 @@
 package Abstraction;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class Graph{
@@ -8,13 +9,48 @@ public class Graph{
 	//Vertex's grid
 	private Player[][] grid;
 	//Intersection of possible wall's placements
-	private Map<Intersection,Boolean> wallIntersection;
+	
 	private Integer playerNumber;
+	private HashMap<Intersection,Boolean> wallIntersection;
+	
 	
 	public Graph() {
-		this.matrix = initializeMatrix();
-		this.grid = initializeGrid(this.playerNumber);
-		this.wallIntersection = initializeWallIntersection();
+		//this.matrix = initializeMatrix();
+		//this.grid = initializeGrid(this.playerNumber);
+		initializeWallIntersection();
+	}
+	public void initializeWallIntersection(){
+		wallIntersection =  new HashMap<Intersection,Boolean>();
+		for (int i=0; i<(10); i+=2) {
+			for ( int j=0; j<10; j+=2) {
+				if (i>0 && i<10) {
+					if (j>0 && j<10) {
+						Position t0 = new Position(i,j);
+						Position t1 = new Position(i-1,j);
+						Position t2 = new Position(i+1,j);
+						Position t3 = new Position(i,j-1);
+						Position t4 = new Position(i,j+1);
+						
+						Intersection i1= new Intersection (t0,t1);
+						Intersection i2= new Intersection (t0,t2);
+						Intersection i3= new Intersection (t0,t3);
+						Intersection i4= new Intersection (t0,t4);
+						wallIntersection.put(i1, true);
+						wallIntersection.put(i2, true);
+						wallIntersection.put(i3, true);
+						wallIntersection.put(i4, true);
+						System.out.println(i1+","+i2+","+i3+","+i4);
+						
+						
+						}
+					
+					
+				}
+				
+			}
+			
+			
+		}
 	}
 	
 	public Boolean[][] initializeMatrix() {
@@ -71,12 +107,11 @@ public class Graph{
 		return grid;
 	}
 	
-	public Map<Intersection,Boolean> initializeWallIntersection(){
-		return null;
-	}
+
 	
 	
 	public static void main(String[] args) {
+		Graph p= new Graph();
 		System.out.println("test");
 	}
 }
