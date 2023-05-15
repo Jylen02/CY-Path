@@ -32,6 +32,13 @@ public class Pawn {
 		    switch (m) {
 		        case HAUT:
 		            this.pos.getPos().setY(this.pos.getPos().getY()+1);
+		            /*if canmove(m)==2
+		             * 		canmove(m)==0 -> recuperer mouvement latéraux ((enum.ordinal+4)%4) 
+		             * 					  -> canmove(movement latéraux) 2x (car 2 movement)
+		             * 					  -> réappeler la fonction qui dmd d'avancer
+		            		canmove(m)==1; -> avance
+		            		canmove(m)==2 -> ajoute pos + rappeler move(m) un truc du genre (si y'a plusieurs pions d'affilés)
+		            		*/
 		            break;
 		        case BAS:
 		        	this.pos.getPos().setY(this.pos.getPos().getY()-1);
@@ -54,9 +61,9 @@ public class Pawn {
 	public boolean canMove(Movement m) {
 		switch (m) {
         case HAUT:
-            /*  Vérifier que la case au dessus appartient a la grille
-             *  / que la case au dessus n'est pas occuper par un autre pion
-             *  / que la case au dessus n'est pas bloquer par un mur
+            /*  Vérifier que la case au dessus appartient a la grille -> 1
+             *  / que la case au dessus n'est pas occuper par un autre pion -> 2
+             *  / que la case au dessus n'est pas bloquer par un mur -> 1
              *  return true;
         	*/  
             break;
