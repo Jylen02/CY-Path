@@ -2,7 +2,7 @@ package Abstraction;
 
 import java.util.ArrayList;
 
-public class Graph extends Grid{
+public class Graph{
 	//List of edges connecting a pair of vertex
 	private ArrayList<Edge> edges;
 	
