@@ -12,15 +12,10 @@ public class Graph{
 		for (int i=0; i < 9; i++) {
 			for (int j=0; j < 9; j++) {
 				//Adding for each adjacent vertex, an edge connecting them
-				try{
-					addEdge(new Vertex(i,j),new Vertex(i+1,j+1));
-					addEdge(new Vertex(i,j),new Vertex(i+1,j-1));
-					addEdge(new Vertex(i,j),new Vertex(i-1,j-1));
-					addEdge(new Vertex(i,j),new Vertex(i-1,j+1));
-				} catch(IndexOutOfBoundsException e) {
-					throw e;
-				}
-				
+				addEdge(new Vertex(new Position(i,j)),new Vertex(new Position(i+1,j+1)));
+				addEdge(new Vertex(new Position(i,j)),new Vertex(new Position(i+1,j-1)));
+				addEdge(new Vertex(new Position(i,j)),new Vertex(new Position(i-1,j-1)));
+				addEdge(new Vertex(new Position(i,j)),new Vertex(new Position(i-1,j+1)));
 			}
 		}
 	}

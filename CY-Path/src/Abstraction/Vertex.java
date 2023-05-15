@@ -1,19 +1,13 @@
 package Abstraction;
 
 public class Vertex {
-	private int x;
-	private int y;
+	private Position pos;
 	
-	public Vertex(int x, int y) {
-		this.x = x;
-		this.y = y;
+	public Vertex(Position pos) {
+		this.pos = pos;
 	}
 	
-	public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
+	public Position getPos() {
+		return pos;
     }
 }
