@@ -1,6 +1,5 @@
 package Abstraction;
 
-import java.awt.Color;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,20 +11,20 @@ public class Graph {
 	// Intersection of possible wall's placements
 	private Map<Intersection, Boolean> wallIntersection;
 	private Integer playerNumber;
-	/*pour tester la méthode delete intersection
-	private Position p1= new Position(1,1);
+	//Test deleteIntersection
+	/*private Position p1= new Position(1,1);
 	private Position p2= new Position(1,2);
 	private Intersection i0= new Intersection(p1,p2);*/
+	//Print with color
 	public static final String ANSI_RESET = "\u001B[0m";
     public static final String ANSI_CYAN = "\u001B[36m";
+	
 	
 
 	public Graph() {
 		initializeMatrix();
-		//initializeGrid(this.playerNumber);
-	    //initializeWallIntersection();
-		//deleteEdge(0,1);
-		//deleteIntersection(i0);
+		initializeGrid(this.playerNumber);
+	    initializeWallIntersection();
 	}
 
 	public void initializeMatrix() {
@@ -104,6 +103,20 @@ public class Graph {
 	
 	public void initializeGrid(Integer playerNumber) {
 		grid = new Player[9][9];
+		//Set the grid's default value to EMPTY
+		for (int i = 0; i < 9; i++) {
+			for (int j = 0; j < 9; j++) {
+				grid[i][j] = Player.EMPTY ;
+			}
+		}
+		if (playerNumber >= 2) {
+			grid[8][5] = Player.PLAYER1;
+			grid[0][5] = Player.PLAYER2;
+			if (playerNumber == 4) {
+				grid[5][0] = Player.PLAYER3;
+				grid[5][8] = Player.PLAYER4;
+			}
+		}
 	}
 
 	public void initializeWallIntersection() {
@@ -190,9 +203,9 @@ public class Graph {
 	//delete edge from Matrix
 	public void deleteEdge(int v1, int v2) {
 		if (this.matrix[v1][v2]==true) {
-			System.out.println("matrix ("+v1+","+v2+"):"+matrix[v1][v2]);
+			//System.out.println("matrix ("+v1+","+v2+"):"+matrix[v1][v2]);
 			this.matrix[v1][v2]=false;
-			System.out.println("matrix ("+v1+","+v2+"):"+matrix[v1][v2]);
+			//System.out.println("matrix ("+v1+","+v2+"):"+matrix[v1][v2]);
 		}
 		else {
 			System.out.println("AlreadyBreak");
@@ -205,23 +218,21 @@ public class Graph {
 	public void addEdge(int v1, int v2) {
 		if (this.matrix[v1][v2]==false) {
 			this.matrix[v1][v2]=true;
-			System.out.println("matrix ("+v1+","+v2+"):"+matrix[v1][v2]);
+			//System.out.println("matrix ("+v1+","+v2+"):"+matrix[v1][v2]);
 		}
-		}
+	}
 		
 	// delete an intersection
 	public void deleteIntersection (Intersection i1) {
-		
-			wallIntersection.remove(i1);
-			wallIntersection.put(i1,false);
-			
-		
-		
-		
-		
+			/*wallIntersection.remove(i1);
+			wallIntersection.put(i1,false);	*/
+			wallIntersection.replace(i1, false);
 	}
 
 	public static void main(String[] args) {
 		Graph p = new Graph();
+
+		//deleteEdge(0,1);
+		//deleteIntersection(i0);
 	}
 }
