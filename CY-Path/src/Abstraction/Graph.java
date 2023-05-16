@@ -13,9 +13,9 @@ public class Graph {
 	private Integer playerNumber;
 
 	public Graph() {
-		initializeMatrix();
+		//initializeMatrix();
 		// initializeGrid(this.playerNumber);
-		// initializeWallIntersection();
+	    initializeWallIntersection();
 	}
 
 	public void initializeMatrix() {
@@ -78,7 +78,7 @@ public class Graph {
 
 	public void initializeWallIntersection() {
 		wallIntersection = new HashMap<Intersection, Boolean>();
-		for (int i = 0; i < 10; i += 2) {
+		/*for (int i = 0; i < 10; i += 2) {
 			for (int j = 0; j < 10; j += 2) {
 				if (i > 0 && i < 10 && j > 0 && j < 10) {
 					Position t0 = new Position(i, j);
@@ -98,8 +98,30 @@ public class Graph {
 					System.out.println(i1 + "," + i2 + "," + i3 + "," + i4);
 				}
 			}
+		}*/
+		//Intersection en ligne
+		System.out.println("Intersection en ligne : ");
+		for (int i = 0; i < 10; i ++) {
+			for (int j = 0; j < 9; j ++) {
+					Position t0 = new Position(i, j);
+					Position t1 = new Position(i, j+1);
+					Intersection i1 = new Intersection(t0, t1);
+					wallIntersection.put(i1, true);
+					System.out.println("iL="+i1);
+			}
+		}
+		System.out.println("Intersection en colonne : ");
+		for (int k = 0; k < 9; k ++) {
+			for (int l = 0; l < 10; l ++) {
+					Position t0 = new Position(k, l);
+					Position t1 = new Position(k+1, l);
+					Intersection i1 = new Intersection(t0, t1);
+					wallIntersection.put(i1, true);
+					System.out.println("iC="+i1);
+			}
 		}
 	}
+		
 
 	public static void main(String[] args) {
 		Graph p = new Graph();
