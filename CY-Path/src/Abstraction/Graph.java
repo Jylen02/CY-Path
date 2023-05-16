@@ -13,9 +13,10 @@ public class Graph {
 	private Integer playerNumber;
 
 	public Graph() {
-		//initializeMatrix();
-		// initializeGrid(this.playerNumber);
-	    initializeWallIntersection();
+		initializeMatrix();
+		//initializeGrid(this.playerNumber);
+	    //initializeWallIntersection();
+		deleteEdge(1,2);
 	}
 
 	public void initializeMatrix() {
@@ -122,6 +123,26 @@ public class Graph {
 			}
 		}
 	}
+	//delete edge from Matrix
+	public void deleteEdge(int v1, int v2) {
+		if (this.matrix[v1][v2]==true) {
+			this.matrix[v1][v2]=false;
+			System.out.println("matrix ("+v1+","+v2+"):"+matrix[v1][v2]);
+		}
+		else {
+			System.out.println("AlreadyBreak");
+			// exception à traiter
+			//throw new AlreadyBreakException();
+		}
+		
+	}
+	//add edge from Matrix
+	public void addEdge(int v1, int v2) {
+		if (this.matrix[v1][v2]==false) {
+			this.matrix[v1][v2]=true;
+			System.out.println("matrix ("+v1+","+v2+"):"+matrix[v1][v2]);
+		}
+		}
 		
 
 	public static void main(String[] args) {
