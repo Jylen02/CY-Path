@@ -99,7 +99,7 @@ public class Graph {
 				}
 			}
 		}*/
-		//Intersection en ligne
+		//line intersection
 		System.out.println("Intersection en ligne : ");
 		for (int i = 0; i < 10; i ++) {
 			for (int j = 0; j < 9; j ++) {
@@ -110,6 +110,7 @@ public class Graph {
 					System.out.println("iL="+i1);
 			}
 		}
+		//column intersection
 		System.out.println("Intersection en colonne : ");
 		for (int k = 0; k < 9; k ++) {
 			for (int l = 0; l < 10; l ++) {
