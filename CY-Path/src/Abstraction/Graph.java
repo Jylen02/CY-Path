@@ -1,5 +1,6 @@
 package Abstraction;
 
+import java.awt.Color;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,20 +16,29 @@ public class Graph {
 	private Position p1= new Position(1,1);
 	private Position p2= new Position(1,2);
 	private Intersection i0= new Intersection(p1,p2);*/
+	public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_CYAN = "\u001B[36m";
 	
 
 	public Graph() {
 		initializeMatrix();
 		//initializeGrid(this.playerNumber);
 	    //initializeWallIntersection();
-		deleteEdge(0,1);
+		//deleteEdge(0,1);
 		//deleteIntersection(i0);
 	}
 
 	public void initializeMatrix() {
 		matrix = new Boolean[81][81];
+		//Set matrix's default value to false
 		for (int i = 0; i < 81; i++) {
-			for (int j = 0; j < i; j++) {
+			for (int j = 0; j < 81; j++) {
+				matrix[i][j] = false ;
+			}
+		}
+		
+		for (int i = 0; i < 81; i++) {
+			for (int j = 0; j < i+1; j++) {
 				// Top grid
 				if (i < 9) {
 					if (Math.abs(j - i) == 1 || i - j == 9) {
@@ -45,7 +55,7 @@ public class Graph {
 				}
 				// Right grid
 				else if (i % 9 == 8) {
-					if (j - i == 1 || Math.abs(j - i) == 9) {
+					if (i - j == 1 || Math.abs(j - i) == 9) {
 						matrix[i][j] = true;
 						matrix[j][i] = true;
 					}
@@ -63,22 +73,35 @@ public class Graph {
 						matrix[j][i] = true;
 					}
 				}
-				// false
-				if (matrix[i][j] == null) {
-					matrix[i][j] = false;
-					matrix[j][i] = false;
-				}
-				// Affichage
+			}
+		}
+		//Display the adjacency matrix
+		//showMatrix();
+	}
+
+	public void showMatrix() {
+		System.out.print("\t  ");
+		for (int c = 0; c < 81; c++) {
+			System.out.print(c + " ");
+			if (c<10) {
+				System.out.print(" ");
+			}
+		}
+		System.out.println("");
+		for (int i = 0; i < 81; i++) {
+			System.out.print(i + "\t:");
+			for (int j = 0; j < 81; j++) {
 				if (matrix[i][j] == false) {
-					System.out.print("0");
+					System.out.print(" 0 ");
 				} else if (matrix[i][j] == true) {
-					System.out.print("1");
+					System.out.print(ANSI_CYAN + " 1 " + ANSI_RESET);
+					
 				}
 			}
 			System.out.println("");
 		}
 	}
-
+	
 	public void initializeGrid(Integer playerNumber) {
 		grid = new Player[9][9];
 	}
