@@ -1,4 +1,5 @@
 # CY-Path
 #
-# Initialiser le plateau de jeu en éxécutant la classe Board.
-# Il n'y a aucun argument à entrer.
+# Ouvrir le terminal
+# Tapez la commande "cd CheminAbsolu" en remplaçant CheminAbsolu par le chemin absolu du fichier runnableBoard.jar
+# Tapez ensuite la commande "java -jar runnableBoard.jar"
