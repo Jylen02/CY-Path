@@ -1,4 +1,4 @@
-1. Construction du plateau.
+1. Construction du plateau. Terminé
 1.1. Choix de la modélisation (Durée estimée : 2h - Durée : 1h) : Terminé - Tout le monde
 1.2. Construire le plateau (Durée estimée : 4h - Durée : 2h) : Terminé - Tout le monde
      Initialiser le plateau selon le nombre de joueur (en plaçant les pions)
