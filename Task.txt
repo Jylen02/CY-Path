@@ -1,17 +1,40 @@
+1. Construction du plateau.
+1.1. Choix de la modélisation (Durée estimée : 2h - Durée : 1h) : Terminé - Tout le monde
+1.2. Construire le plateau (Durée estimée : 4h - Durée : 2h) : Terminé - Tout le monde
+     Initialiser le plateau selon le nombre de joueur (en plaçant les pions)
+     Réinitialiser compteur Wall
 
-Graph : En Cours (Durée estimée : 5h - Début : 18h)
-	-Christophe, Abd-Ennour
-	-> comment créer un mur ??
+2. Faire une fonction tourDeJeu (Durée estimée : 1h) : A faire 
+   Créer une classe Player (numéro joueur, méthode jouer)
+   Quand c'est à son tour : débloquer les fonctionnalités de tour de jeu
 
+3. Déplacer un pion
+3.1. Vérifier les déplacements possibles (Durée estimée : 2h) : A faire
+     (possibleMove(Position,int))
+     mouvement Special
+     Gerer Exception déplacement impossible
+3.2. Afficher les déplacements possibles (Durée estimée : 10min) : A faire
+3.3. Déplacer un pion (Durée estimée : 30min) : A faire
+     Choisir déplacement
+     Actualiser la position du pion
+3.4. Vérifier si le joueur a gagné (Durée estimée : 30min) : A faire
+     Afficher gagnant
+     Bouton rejouer (appeler initializeBoard())
 
-Vertex : Terminé (Durée: 5min)
-	-Christophe
+4. Poser un mur
+4.1. Tourner le mur (scroll, clic droit) (Durée estimée : 20min) : A faire
+4.2. Vérifier Mur posable (Durée estimée : 2-3h) : A modifier
+     Vérifier Hors Index / Deja un mur / Bordure / Max 20 bordures (compteur)
+     Vérifier DFS pour tout les joueurs
+4.3. Pose le mur centré sur le curseur (Durée estimée : 2h) : A faire
+     IHM plus tard : Recuperer les coordonnées du curseur et convertir -> méthode
+     Poser le mur
+     Incrémenter compteur Wall
+4.4. Si max 20 bordures atteint : grisé l'icone du mur (ne peut plus poser de mur).
 
-Wall : En Cours (Durée estimée : 4h - Début : 18h)
-	-Warren, Jeremy
+5. Affichage du plateau dans la console (Durée estimée : 30min) : A faire
+   IHM plus tard : Afficher une interface du plateau + un menu
 
-Pawn : En Cours (Durée estimée : 1h - Début : 18h) 
-	-Noaman
+6. Documentation de toutes les classes
 
-enum (Player,Orientation,Movement) : Terminé (Durée: 5min)
-	-Christophe, Warren
+Bonus. Choix Icone de pion / Musique de fond

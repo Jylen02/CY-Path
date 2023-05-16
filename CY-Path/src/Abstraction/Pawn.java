@@ -1,24 +1,24 @@
 package Abstraction;
 
 public class Pawn {
-	private Vertex pos;
-	private Player player;
+	private Position pos;
+	private Case player;
 	
-	public Pawn(Vertex pos,Player player) {
+	public Pawn(Position pos,Case player) {
 		this.pos=pos;
 		this.player=player;
 	}
 	
-	public Vertex getPos() {
+	public Position getPos() {
 		return pos;
 	}
-	public void setPos(Vertex pos) {
+	public void setPos(Position pos) {
 		this.pos = pos;
 	}
-	public Player getPlayer() {
+	public Case getPlayer() {
 		return player;
 	}
-	public void setPlayer(Player player) {
+	public void setPlayer(Case player) {
 		this.player = player;
 	}
 	
@@ -31,7 +31,7 @@ public class Pawn {
 		if(canMove(m)) {
 		    switch (m) {
 		        case HAUT:
-		            this.pos.getPos().setY(this.pos.getPos().getY()+1);
+		            this.pos.setY(this.pos.getY()+1);
 		            /*if canmove(m)==2
 		             * 		canmove(m)==0 -> recuperer mouvement latéraux ((enum.ordinal+4)%4) 
 		             * 					  -> canmove(movement latéraux) 2x (car 2 movement)
@@ -41,13 +41,13 @@ public class Pawn {
 		            		*/
 		            break;
 		        case BAS:
-		        	this.pos.getPos().setY(this.pos.getPos().getY()-1);
+		        	this.pos.setY(this.pos.getY()-1);
 		            break;
 		        case DROITE:
-		        	this.pos.getPos().setX(this.pos.getPos().getX()+1);
+		        	this.pos.setX(this.pos.getX()+1);
 		            break;
 		        case GAUCHE:
-		        	this.pos.getPos().setX(this.pos.getPos().getX()-1);
+		        	this.pos.setX(this.pos.getX()-1);
 		            break;
 	    	}
 	    }

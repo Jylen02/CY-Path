@@ -9,7 +9,6 @@ public class Wall {
 	private final int HEIGHT = 2;
 	private Orientation orientation;
 	private Position position;
-	private HashMap<Intersection, Boolean> wallIntersection;
 
 	/* Constructor */
 	public Wall(Orientation orientation, Position position) {
