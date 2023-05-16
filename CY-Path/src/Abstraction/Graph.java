@@ -11,12 +11,18 @@ public class Graph {
 	// Intersection of possible wall's placements
 	private Map<Intersection, Boolean> wallIntersection;
 	private Integer playerNumber;
+	/*pour tester la méthode delete intersection
+	private Position p1= new Position(1,1);
+	private Position p2= new Position(1,2);
+	private Intersection i0= new Intersection(p1,p2);*/
+	
 
 	public Graph() {
 		initializeMatrix();
 		//initializeGrid(this.playerNumber);
-	    initializeWallIntersection();
-		//deleteEdge(1,2);
+	    //initializeWallIntersection();
+		deleteEdge(0,1);
+		//deleteIntersection(i0);
 	}
 
 	public void initializeMatrix() {
@@ -161,6 +167,7 @@ public class Graph {
 	//delete edge from Matrix
 	public void deleteEdge(int v1, int v2) {
 		if (this.matrix[v1][v2]==true) {
+			System.out.println("matrix ("+v1+","+v2+"):"+matrix[v1][v2]);
 			this.matrix[v1][v2]=false;
 			System.out.println("matrix ("+v1+","+v2+"):"+matrix[v1][v2]);
 		}
@@ -181,10 +188,12 @@ public class Graph {
 		
 	// delete an intersection
 	public void deleteIntersection (Intersection i1) {
-		if ( wallIntersection.containsKey(i1)) {
+		
 			wallIntersection.remove(i1);
 			wallIntersection.put(i1,false);
-		}
+			
+		
+		
 		
 		
 	}
