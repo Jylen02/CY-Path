@@ -15,8 +15,8 @@ public class Graph {
 	public Graph() {
 		initializeMatrix();
 		//initializeGrid(this.playerNumber);
-	    //initializeWallIntersection();
-		deleteEdge(1,2);
+	    initializeWallIntersection();
+		//deleteEdge(1,2);
 	}
 
 	public void initializeMatrix() {
@@ -100,9 +100,10 @@ public class Graph {
 				}
 			}
 		}*/
+		//for intersections that are not on the border
 		//line intersection
-		System.out.println("Intersection en ligne : ");
-		for (int i = 0; i < 10; i ++) {
+		System.out.println("Intersection en ligne (=true): ");
+		for (int i = 1; i < 9; i ++) {
 			for (int j = 0; j < 9; j ++) {
 					Position t0 = new Position(i, j);
 					Position t1 = new Position(i, j+1);
@@ -112,9 +113,9 @@ public class Graph {
 			}
 		}
 		//column intersection
-		System.out.println("Intersection en colonne : ");
+		System.out.println("Intersection en colonne (=true): ");
 		for (int k = 0; k < 9; k ++) {
-			for (int l = 0; l < 10; l ++) {
+			for (int l = 1; l < 9; l ++) {
 					Position t0 = new Position(k, l);
 					Position t1 = new Position(k+1, l);
 					Intersection i1 = new Intersection(t0, t1);
@@ -122,6 +123,40 @@ public class Graph {
 					System.out.println("iC="+i1);
 			}
 		}
+		//for intersections that are on the border
+		//line intersection
+		System.out.println("Intersection sur les bords ligne (=false): ");
+		for (int m=0; m<9; m++) {
+			Position t0 = new Position(0, m);
+			Position t0b = new Position(9, m);
+			Position t1 = new Position(0, m+1);
+			Position t1b = new Position(9, m+1);
+			Intersection i1 = new Intersection(t0, t1);
+			Intersection i1b = new Intersection(t0b, t1b);
+			wallIntersection.put(i1, false);
+			wallIntersection.put(i1b, false);
+			System.out.println("iL="+i1);
+			System.out.println("iL="+i1b);
+		}
+		//column intersection
+				System.out.println("Intersection sur les bords colonne (=false): ");
+				for (int n=0; n<9; n++) {
+					Position t0 = new Position(n, 0);
+					Position t0b = new Position(n, 9);
+					Position t1 = new Position(n+1, 0);
+					Position t1b = new Position(n+1, 9);
+					Intersection i1 = new Intersection(t0, t1);
+					Intersection i1b = new Intersection(t0b, t1b);
+					wallIntersection.put(i1, false);
+					wallIntersection.put(i1b, false);
+					System.out.println("iC="+i1);
+					System.out.println("iC="+i1b);
+					
+				}
+				
+	
+	
+		
 	}
 	//delete edge from Matrix
 	public void deleteEdge(int v1, int v2) {
@@ -144,6 +179,15 @@ public class Graph {
 		}
 		}
 		
+	// delete an intersection
+	public void deleteIntersection (Intersection i1) {
+		if ( wallIntersection.containsKey(i1)) {
+			wallIntersection.remove(i1);
+			wallIntersection.put(i1,false);
+		}
+		
+		
+	}
 
 	public static void main(String[] args) {
 		Graph p = new Graph();
