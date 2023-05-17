@@ -18,11 +18,24 @@ public class Main {
 		System.out.println(" - Avancer : 1 \n - Poser un mur : 2");
 		System.out.println("Veuillez entrer l'option de votre choix (1 ou 2)");
 		int input = s.nextInt();
+		if ( input!=1 || input !=2) {
+			System.out.println("Le chiffre saisie est incorrect");
+			System.out.println("Veuillez entrer l'option de votre choix (1 ou 2)");
+			input = s.nextInt();
+		}
 		System.out.println("Veuillez entrer les coordonnées : ");
 		System.out.println("	x = ");
 		int x = s.nextInt();
 		System.out.println("	y = ");
 		int y = s.nextInt();
+		if ( x>19 || x<0|| y>19 || y<0) {
+			System.out.println("Une des coordonées est incorrect");
+			System.out.println("Veuillez entrer les coordonnées : ");
+			System.out.println("	x = ");
+			x = s.nextInt();
+			System.out.println("	y = ");
+			y = s.nextInt();
+		}
 
 		Position position = new Position(x, y);
 
