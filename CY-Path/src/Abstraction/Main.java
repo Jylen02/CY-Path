@@ -112,7 +112,6 @@ public class Main {
 		board.show();
 
 		boolean win = false;
-		// Player[] players = { p1, p2}; If there is only players
 		int turn = 0;
 
 		while (!win) {

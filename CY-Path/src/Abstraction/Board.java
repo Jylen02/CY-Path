@@ -151,10 +151,6 @@ public class Board {
 			this.board[player.getPos().getX()][player.getPos().getY()] = Case.EMPTY;
 			player.setPos(pos);
 			this.board[player.getPos().getX()][player.getPos().getY()] = player.getPlayerNb();
-			if (player.isWinner()) {
-				System.out.println(player.getPlayerNb() + " won.");
-				
-			}
 		} else {
 			throw new ImpossibleMovementException("Error : Unauthorized movement");
 		}
