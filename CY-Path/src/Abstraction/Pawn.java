@@ -158,9 +158,9 @@ public class Pawn {
 			break;
 		}
 	}
-	
+
 	public Boolean isWinner() {
-		if(this.finishLine.contains(this.pos)) {
+		if (this.finishLine.contains(this.pos)) {
 			return true;
 		}
 		return false;
