@@ -43,11 +43,11 @@ IHM plus tard : Recuperer les coordonnées du curseur et convertir -> méthode
      Pouvoir choisir une action (déplacer pion/poser mur -> disponible seulement si compteur mur<20)
      Si poser : Choix orientation du mur
      Sélectionner l'emplacement du pion/mur (Position) pair : mur / impair : pion
-     Il manque : main -> gérer erreur nbre de joueur initial
-                 ajouter méthode accountWall()
+     Il manque : main -> gérer erreur nbre de joueur initial Terminé - Jeremy, Christophe, Warren, Noaman
+                 ajouter méthode accountWall() - Abd-Ennour
                  optimiser if/else -> switch ? 
-                 vérifier dupliquat d'affichage pb technique
- 	 	 win ? à implémenter
+                 vérifier dupliquat d'affichage pb technique Terminé - Jeremy, Christophe, Warren, Noaman
+ 	 	 win ? à implémenter - Noaman
 
 6. DFS (Durée : 4h) : A adapter - Jeremy
 
