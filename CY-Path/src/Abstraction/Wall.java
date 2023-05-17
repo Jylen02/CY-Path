@@ -99,4 +99,12 @@ public class Wall {
 				e.printStackTrace();
 			}
 }
+	public static void main(String[] args) {
+		Board p = new Board(4);
+		Position po =new Position(2,2);
+		Wall w = new Wall(Orientation.HORIZONTAL, po);
+		w.createWall(p);
+		p.show();
+	}
+	
 }
