@@ -43,7 +43,7 @@ IHM plus tard : Recuperer les coordonnées du curseur et convertir -> méthode
      Pouvoir choisir une action (déplacer pion/poser mur -> disponible seulement si compteur mur<20)
      Si poser : Choix orientation du mur
      Sélectionner l'emplacement du pion/mur (Position) pair : mur / impair : pion
-     Il manque : gérer erreur nbre de joueur initial
+     Il manque : main -> gérer erreur nbre de joueur initial
                  ajouter méthode accountWall()
                  optimiser if/else -> switch ? 
                  vérifier dupliquat d'affichage pb technique
