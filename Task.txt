@@ -39,6 +39,7 @@
 --5. Affichage du plateau dans la console (Durée estimée : 30min) : Terminé - Christophe, Jeremy, Warren
    IHM plus tard : Afficher une interface du plateau + un menu
 5.1. Menu de jeu (Durée estimée : 2h) : A faire
+     Ne plus poser de mur si il y a délà 20 mur: Terminé - Abd-Ennour
      Pouvoir choisir une action (déplacer pion/poser mur -> disponible seulement si compteur mur<20)
      Si poser : Choix orientation du mur
      Sélectionner l'emplacement du pion/mur (Position) pair : mur / impair : pion
