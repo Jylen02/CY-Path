@@ -1,6 +1,5 @@
 package Abstraction;
 
-
 public class Wall {
 
 	/* Attributes */
@@ -30,7 +29,6 @@ public class Wall {
 	public void setPosition(Position position) {
 		this.position = position;
 	}
-	
 
 	/* Useful methods */
 	public boolean outOfBorderWidth() {
@@ -40,70 +38,91 @@ public class Wall {
 		}
 		return false;
 	}
-	
+
 	/* A modifier pour prendre le board en parametre */
 	public boolean hasWall(Board board) {
 		if (this.getOrientation() == Orientation.VERTICAL) {
-			if (board.getBoard()[this.getPosition().getX()-1][this.getPosition().getY()] == Case.POTENTIALWALL
-					&& board.getBoard()[this.getPosition().getX()+1][this.getPosition().getY()] == Case.POTENTIALWALL) {
+			if (board.getBoard()[this.getPosition().getX() - 1][this.getPosition().getY()] == Case.POTENTIALWALL
+					&& board.getBoard()[this.getPosition().getX() + 1][this.getPosition()
+							.getY()] == Case.POTENTIALWALL) {
 				return false;
 			}
 		} else if (this.getOrientation() == Orientation.HORIZONTAL) {
-			if (board.getBoard()[this.getPosition().getX()][this.getPosition().getY()-1] == Case.POTENTIALWALL
-					&& board.getBoard()[this.getPosition().getX()][this.getPosition().getY()+1] == Case.POTENTIALWALL) {
+			if (board.getBoard()[this.getPosition().getX()][this.getPosition().getY() - 1] == Case.POTENTIALWALL
+					&& board.getBoard()[this.getPosition().getX()][this.getPosition().getY()
+							+ 1] == Case.POTENTIALWALL) {
 				return false;
 			}
 		}
 		return true;
 	}
-	
-	
+
 	public boolean verifyWall(Board board) {
-		if (this.hasWall(board)|| this.outOfBorderWidth()  || (new Dfs(board)).dfs(0,8) == false) {
+		if (this.hasWall(board) || this.outOfBorderWidth()) {
 			System.out.println("Vous ne pouvez pas placer de murs ici");
 			return false;
 		}
 		return true;
 	}
-	
-	public void createWall (Board board) {
-			
-			int x= this.getPosition().getX();
-			int y= this.getPosition().getY();
-					
-			try {
-				if(verifyWall(board)) {
-					if (this.getOrientation()== Orientation.HORIZONTAL) {
-					    board.getBoard()[x][y-1]=Case.WALL;
-					    board.getBoard()[x][y+1]=Case.WALL;
-						
-					}
-					else if (this.getOrientation()== Orientation.VERTICAL) {
-						board.getBoard()[x-1][y]=Case.WALL;
-					    board.getBoard()[x+1][y]=Case.WALL;
-					}
+
+	public void createWall(Board board) throws IncorrectWallException {
+
+		int x = this.getPosition().getX();
+		int y = this.getPosition().getY();
+
+		if (verifyWall(board)) {
+			if (this.getOrientation() == Orientation.HORIZONTAL) {
+				board.getBoard()[x][y - 1] = Case.WALL;
+				board.getBoard()[x][y + 1] = Case.WALL;
+				int counter = board.getWallCount() + 1;
+				board.setWallCount(counter);
+
+			} 
+			else if (this.getOrientation() == Orientation.VERTICAL) {
+				board.getBoard()[x - 1][y] = Case.WALL;
+				board.getBoard()[x + 1][y] = Case.WALL;
+				int counter = board.getWallCount() + 1;
+				board.setWallCount(counter);
+			}
+			if ((new Dfs(board)).dfs(4, 8) == false) {
+
+				if (this.getOrientation() == Orientation.HORIZONTAL) {
+					board.getBoard()[x][y - 1] = Case.POTENTIALWALL;
+					board.getBoard()[x][y + 1] = Case.POTENTIALWALL;
+					int counter = board.getWallCount() - 1;
+					board.setWallCount(counter);
+
+				} else if (this.getOrientation() == Orientation.VERTICAL) {
+					board.getBoard()[x - 1][y] = Case.POTENTIALWALL;
+					board.getBoard()[x + 1][y] = Case.POTENTIALWALL;
+					int counter = board.getWallCount() - 1;
+					board.setWallCount(counter);
 					
 				}
+				System.out.println("Ce mur bloque un joueur !");
+
 				
+
 			}
-			catch (IncorrectWallException e) {
-				System.out.println("Vous ne pouvez pas placer de mur à cette emplacement");
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-}
+
+		}
+		else {
+			System.out.println("Vous ne pouvez pas placer de mur à cette emplacement");
+		}
+	}
+
 	public static void main(String[] args) {
 		Board p = new Board(4);
-		Position po =new Position(2,8);
+		Position po = new Position(2, 8);
 		Wall w = new Wall(Orientation.VERTICAL, po);
 		w.createWall(p);
-		Position po2 =new Position(2,10);
+		Position po2 = new Position(2, 10);
 		Wall w2 = new Wall(Orientation.VERTICAL, po2);
 		w2.createWall(p);
-		Position po3 =new Position(4,10);
+		Position po3 = new Position(4, 10);
 		Wall w3 = new Wall(Orientation.HORIZONTAL, po3);
 		w3.createWall(p);
 		p.show();
 	}
-	
+
 }
