@@ -1,7 +1,7 @@
 package Abstraction;
 
 public class Player {
-	private int playerNumber;
+	private int playerNumber; // n° of the player
 	private Pawn pawn;
 	private Boolean myTurn = false;
 	

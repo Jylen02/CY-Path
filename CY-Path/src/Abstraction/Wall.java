@@ -43,36 +43,28 @@ public class Wall {
 	/* A modifier pour prendre le board en parametre */
 	public boolean hasWall(Board board) {
 		if (this.getOrientation() == Orientation.VERTICAL) {
-			if (board.getBoard()[this.getPosition().getX()][this.getPosition().getY() - 1].getValue() == 5
-					&& board.getBoard()[this.getPosition().getX()][this.getPosition().getY() + 1].getValue() == 5) {
+			if (board.getBoard()[this.getPosition().getX()][this.getPosition().getY() - 1] == Case.POTENTIALWALL
+					&& board.getBoard()[this.getPosition().getX()][this.getPosition().getY() + 1] == Case.POTENTIALWALL) {
 				return false;
 			}
 		} else if (this.getOrientation() == Orientation.HORIZONTAL) {
-			if (board.getBoard()[this.getPosition().getX() - 1][this.getPosition().getY()].getValue() == 6
-					&& board.getBoard()[this.getPosition().getX() + 1][this.getPosition().getY()].getValue() == 6) {
+			if (board.getBoard()[this.getPosition().getX() - 1][this.getPosition().getY()] == Case.POTENTIALWALL
+					&& board.getBoard()[this.getPosition().getX() + 1][this.getPosition().getY()] == Case.POTENTIALWALL) {
 				return false;
 			}
 		}
 		return true;
 	}
 	
-	private boolean DFS() {
-		return true;
-	}
 	
-	/* modifier exception : à mettre dans les méthodes d'au dessus */
-	public boolean verifyWall(Board board) throws IncorrectWallException {
-		try {
-			if (this.hasWall(board) || this.outOfBorderWidth() || (DFS() == false)) {
-				throw new IncorrectWallException("Error : Incorrect Wall");
-			}
-		}
-		catch (IncorrectWallException e) {
-			System.out.println("Vous ne pouvez pas placer de murs ici, il y'en a dejà un");
+	public boolean verifyWall(Board board) {
+		if (this.hasWall(board) || this.outOfBorderWidth() || (new Dfs(board)).dfs(0,8) == false) {
+			System.out.println("Vous ne pouvez pas placer de murs ici");
 			return false;
 		}
 		return true;
 	}
+	
 	public void createWall (Board board) {
 			
 			int x= this.getPosition().getX();
