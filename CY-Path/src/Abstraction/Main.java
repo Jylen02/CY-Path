@@ -14,15 +14,16 @@ public class Main {
 
 	public void roundOfPlay(Player p,Board board) { // Tour de jeu
 		Scanner s = new Scanner(System.in);
-		System.out.println("Avancer : 1 \n Poser un mur : 2");
+		System.out.println("Menu :");
+		System.out.println(" - Avancer : 1 \n - Poser un mur : 2");
+		System.out.println("Veuillez entrer l'option de votre choix (1 ou 2)");
 		int input=s.nextInt();
 	
-		System.out.print("Veuillez entrer les coordonnées x,y : ");
-        String inputString = s.nextLine();
-
-        String[] coordinates = inputString.split(" ");
-        int x = Integer.parseInt(coordinates[0]);
-        int y = Integer.parseInt(coordinates[1]);
+		System.out.print("Veuillez entrer les coordonnées : ");
+		System.out.print("	x = ");
+        int x = s.nextInt();
+        System.out.print("	y = ");
+        int y = s.nextInt();
 
         Position position = new Position(x, y);
         
@@ -32,7 +33,7 @@ public class Main {
 			board.move(position, p.getPawn());
 		}else if(input==2) {
 			System.out.println("Mur vertical : 1 \n Mur horizontal : 2");
-			int o=s.nextInt();
+			int o =s.nextInt();
 		}
 		s.close();
 	}
