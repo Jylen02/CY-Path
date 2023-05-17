@@ -58,7 +58,7 @@ public class Wall {
 	
 	
 	public boolean verifyWall(Board board) {
-		if (this.hasWall(board) || this.outOfBorderWidth() || (new Dfs(board)).dfs(0,8) == false) {
+		if (this.hasWall(board)|| this.outOfBorderWidth()  || (new Dfs(board)).dfs(0,8) == false) {
 			System.out.println("Vous ne pouvez pas placer de murs ici");
 			return false;
 		}
