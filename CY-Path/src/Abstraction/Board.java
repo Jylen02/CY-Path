@@ -102,6 +102,7 @@ public class Board {
 			}
 		}
 	}
+	
 
 	public void show() {
 		for (int i = 0; i < TAILLE; i++) {

@@ -2,6 +2,16 @@ package Abstraction;
 
 public class Main {
 
+	
+	public boolean accountWall(Board board) {
+		if (board.getWallCount()<20) {
+			return true;
+		}
+		
+		else {
+			return false;
+		}
+	}
 	public static void main(String[] args) {
 		Board board = new Board(4);
 		board.show();
