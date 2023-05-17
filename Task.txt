@@ -1,24 +1,26 @@
-1. Construction du plateau. Terminé
-1.1. Choix de la modélisation (Durée estimée : 2h - Durée : 1h) : Terminé - Tout le monde
-1.2. Construire le plateau (Durée estimée : 4h - Durée : 2h) : Terminé - Tout le monde
+--1. Construction du plateau. Terminé
+--1.1. Choix de la modélisation (Durée estimée : 2h - Durée : 1h) : Terminé - Tout le monde
+--1.2. Construire le plateau (Durée estimée : 4h - Durée : 2h) : Terminé - Tout le monde
      Initialiser le plateau selon le nombre de joueur (en plaçant les pions)
      Réinitialiser compteur Wall
 
 2. Faire une fonction tourDeJeu (Durée estimée : 1h) : En Cours - Jeremy
    Créer une classe Player (numéro joueur,attribut myTurn, méthode jouer)
    Quand c'est à son tour : débloquer les fonctionnalités de tour de jeu
-2.1. Associer les pions aux joueurs et à l'énumération Case PLAYER1... (Durée estimée : 30min) : En Cours - Noaman, Christophe
+--2.1. Associer les pions aux joueurs et à l'énumération Case PLAYER1... (Durée estimée : 30min - Durée : 20min) : Terminé - Noaman, Christophe
 
 3. Déplacer un pion
-3.1. Vérifier les déplacements possibles (Durée estimée : 2h - Durée : 2h) : A Verifier - Christophe, Jeremy
+3.1. Vérifier les déplacements possibles (Durée estimée : 2h - Durée : 2h) : A tester quand il y a un mur - Christophe, Jeremy
      (possibleMove(Position,int)) -> modifier les arguments
      mouvement Special
      Gerer Exception déplacement impossible -> pas besoin finalement
-3.2. Afficher les déplacements possibles (Durée estimée : 10min) : A faire
-3.3. Déplacer un pion (Durée estimée : 30min - Durée 20min) : A verifier - Noaman
+3.2. Afficher les déplacements possibles (Durée estimée : 10min) : A faire (IHM plus tard)
+3.3. Déplacer un pion (Durée estimée : 30min - Durée 1h) : A tester quand il y a un mur - Noaman, Christophe
+     méthode move() déplacé dans Board pour actualiser le plateau
      Choisir déplacement
      Actualiser la position du pion (rappeler possibleMove())
-3.4. Vérifier si le joueur a gagné (Durée estimée : 30min) : A faire
+--3.4. Vérifier si le joueur a gagné (Durée estimée : 30min - Durée : 10min) : Terminé - Noaman, Christophe
+     Apres chaque move()
      Afficher gagnant
      Bouton rejouer (appeler initializeBoard())
 
@@ -33,7 +35,7 @@
      Incrémenter compteur Wall
 4.4. Si max 20 bordures atteint : grisé l'icone du mur (ne peut plus poser de mur).
 
-5. Affichage du plateau dans la console (Durée estimée : 30min) : Terminé - Christophe, Jeremy, Warren
+--5. Affichage du plateau dans la console (Durée estimée : 30min) : Terminé - Christophe, Jeremy, Warren
    IHM plus tard : Afficher une interface du plateau + un menu
 
 6. DFS (Durée : 4h) : A adapter - Jeremy
