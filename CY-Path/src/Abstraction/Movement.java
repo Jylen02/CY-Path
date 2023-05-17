@@ -4,7 +4,7 @@ public enum Movement {
 	NULL,
 	TOP,
 	RIGHT, 
-	BOTTOM, 
+	BOT, 
 	LEFT;
 	/*private final int value;
 
