@@ -4,7 +4,7 @@
      Initialiser le plateau selon le nombre de joueur (en plaçant les pions)
      Réinitialiser compteur Wall
 
-2. Faire une fonction tourDeJeu (Durée estimée : 1h) : En Cours - Jeremy
+2. Faire une méthode tourDeJeu (Durée estimée : 1h) : A faire
    Créer une classe Player (numéro joueur,attribut myTurn, méthode jouer)
    Quand c'est à son tour : débloquer les fonctionnalités de tour de jeu
 --2.1. Associer les pions aux joueurs et à l'énumération Case PLAYER1... (Durée estimée : 30min - Durée : 20min) : Terminé - Noaman, Christophe
@@ -26,10 +26,11 @@
 
 4. Poser un mur
 4.1. Tourner le mur (scroll, clic droit) (Durée estimée : 20min) : A faire
-4.2. Vérifier Mur posable (Durée estimée : 2-3h) : Terminé - Warren
+--4.2. Vérifier Mur posable (Durée estimée : 2-3h - Durée : 2h) : Terminé - Warren
      Vérifier Hors Index / Deja un mur / Bordure / Max 20 bordures (compteur) Terminé (sauf compteur) - Warren
-     Vérifier DFS pour tout les joueurs : A verifier - Jeremy
-4.3. Pose le mur centré sur le curseur (Durée estimée : 2h) : A faire
+     Compteur -> tourDeJeu si compteur atteint -> plus de mur posable
+     Vérifier DFS pour tout les joueurs : A faire
+--4.3. Pose le mur centré sur le curseur (Durée estimée : 2h - Durée : 1h) : Terminé - Abd-Ennour
      IHM plus tard : Recuperer les coordonnées du curseur et convertir -> méthode
      Poser le mur - Testé : Abd-Ennour
      Incrémenter compteur Wall
@@ -37,9 +38,12 @@
 
 --5. Affichage du plateau dans la console (Durée estimée : 30min) : Terminé - Christophe, Jeremy, Warren
    IHM plus tard : Afficher une interface du plateau + un menu
+5.1. Menu de jeu (Durée estimée : 2h) : A faire
+     Pouvoir choisir une action (déplacer pion/poser mur)
+     Sélectionner l'emplacement du pion/mur (Position) pair : mur / impair : pion
 
 6. DFS (Durée : 4h) : A adapter - Jeremy
 
-7. Documentation de toutes les classes
+7. Commentaire + Documentation de toutes les classes (avant IHM !!)
 
 Bonus. Choix Icone de pion / Musique de fond
