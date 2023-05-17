@@ -13,7 +13,7 @@ public class Main {
 	}
 
 	public static void roundOfPlay(Player p, Board board,Scanner s) { // Tour de jeu
-
+		System.out.println("Tour de "+p.getPlayerNumber());
 		System.out.println("Menu :");
 		System.out.println(" - Avancer : 1 \n - Poser un mur : 2");
 		System.out.println("Veuillez entrer l'option de votre choix (1 ou 2)");
