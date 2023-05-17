@@ -9,24 +9,40 @@ public class Position {
 		return "(" + x + "," + y+")";
 	}
 
-	public Position(int x, int y) {
+	public Position(Integer x, Integer y) {
 		this.x = x;
 		this.y = y;
 	}
 
-	public int getX() {
+	public Integer getX() {
 		return x;
 	}
 
-	public void setX(int x) {
+	public void setX(Integer x) {
 		this.x = x;
 	}
 
-	public int getY() {
+	public Integer getY() {
 		return y;
 	}
 
-	public void setY(int y) {
+	public void setY(Integer y) {
 		this.y = y;
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if(o instanceof Position) {
+			Position p = (Position) o;
+			if(this.getX().equals(p.getX()) && this.getY().equals(p.getY())) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	@Override
+	public int hashCode() {
+		return getX()*100+getY();
 	}
 }
