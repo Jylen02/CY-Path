@@ -64,47 +64,33 @@ public class Wall {
 		}
 		return true;
 	}
+	
+	public void placeWall (Orientation orientation, Board board, Case type, int co) {
+		int x = this.getPosition().getX();
+		int y = this.getPosition().getY();
+		if (orientation == Orientation.HORIZONTAL) {
+			board.getBoard()[x][y - 1] = type;
+			board.getBoard()[x][y + 1] = type;
+			int counter = board.getWallCount() +co;
+			board.setWallCount(counter);
+
+		} 
+		else if (orientation == Orientation.VERTICAL) {
+			board.getBoard()[x - 1][y] = type;
+			board.getBoard()[x + 1][y] = type;
+			int counter = board.getWallCount() + co;
+			board.setWallCount(counter);
+		}
+	}
 
 	public void createWall(Board board) throws IncorrectWallException {
 
-		int x = this.getPosition().getX();
-		int y = this.getPosition().getY();
-
 		if (verifyWall(board)) {
-			if (this.getOrientation() == Orientation.HORIZONTAL) {
-				board.getBoard()[x][y - 1] = Case.WALL;
-				board.getBoard()[x][y + 1] = Case.WALL;
-				int counter = board.getWallCount() + 1;
-				board.setWallCount(counter);
-
-			} 
-			else if (this.getOrientation() == Orientation.VERTICAL) {
-				board.getBoard()[x - 1][y] = Case.WALL;
-				board.getBoard()[x + 1][y] = Case.WALL;
-				int counter = board.getWallCount() + 1;
-				board.setWallCount(counter);
-			}
+			placeWall(this.getOrientation(),board,Case.WALL,1);
 			if ((new Dfs(board)).dfs(4, 8) == false) {
-
-				if (this.getOrientation() == Orientation.HORIZONTAL) {
-					board.getBoard()[x][y - 1] = Case.POTENTIALWALL;
-					board.getBoard()[x][y + 1] = Case.POTENTIALWALL;
-					int counter = board.getWallCount() - 1;
-					board.setWallCount(counter);
-
-				} else if (this.getOrientation() == Orientation.VERTICAL) {
-					board.getBoard()[x - 1][y] = Case.POTENTIALWALL;
-					board.getBoard()[x + 1][y] = Case.POTENTIALWALL;
-					int counter = board.getWallCount() - 1;
-					board.setWallCount(counter);
-					
-				}
+				placeWall(this.getOrientation(),board,Case.POTENTIALWALL,(-1));
 				System.out.println("Ce mur bloque un joueur !");
-
-				
-
 			}
-
 		}
 		else {
 			System.out.println("Vous ne pouvez pas placer de mur à cette emplacement");
