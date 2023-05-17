@@ -45,7 +45,7 @@ IHM plus tard : Recuperer les coordonnées du curseur et convertir -> méthode
      Sélectionner l'emplacement du pion/mur (Position) pair : mur / impair : pion
      Il manque : main -> gérer erreur nbre de joueur initial Terminé - Jeremy, Christophe, Warren, Noaman
                  ajouter méthode accountWall() - Abd-Ennour
-                 optimiser if/else -> switch ? 
+                 optimiser if/else -> switch ? Terminé - Jeremy, Christophe, Warren, Noaman
                  vérifier dupliquat d'affichage pb technique Terminé - Jeremy, Christophe, Warren, Noaman
  	 	 win ? à implémenter - Noaman
 
