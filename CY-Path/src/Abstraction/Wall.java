@@ -73,4 +73,30 @@ public class Wall {
 		}
 		return true;
 	}
+	public void createWall (Board board) {
+			
+			int x= this.getPosition().getX();
+			int y= this.getPosition().getY();
+					
+			try {
+				if(verifyWall(board)) {
+					if (this.getOrientation()== Orientation.HORIZONTAL) {
+					    board.getBoard()[x][y-1]=Case.WALL;
+					    board.getBoard()[x][y+1]=Case.WALL;
+						
+					}
+					else if (this.getOrientation()== Orientation.VERTICAL) {
+						board.getBoard()[x-1][y]=Case.WALL;
+					    board.getBoard()[x+1][y]=Case.WALL;
+					}
+					
+				}
+				
+			}
+			catch (IncorrectWallException e) {
+				System.out.println("Vous ne pouvez pas placer de mur à cette emplacement");
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+}
 }
