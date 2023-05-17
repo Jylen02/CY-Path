@@ -7,6 +7,7 @@ public class Board {
 	private int wallCount;
 	public static final int TAILLE = 19;
 	public static final int MAXWALLCOUNT = 20;
+	
 
 	// Constructor
 	public Board(int playerNumber) {
@@ -117,13 +118,7 @@ public class Board {
 			for (int j = 0; j < TAILLE; j++) {
 				if (this.board[i][j] == Case.NULL) {
 						System.out.print("+ ");
-				} else if (this.board[i][j] == Case.BORDER) {
-					if (j % 2 == 0) {
-						System.out.print("| ");
-					} else {
-						System.out.print("- ");
-					}
-				} else if (this.board[i][j] == Case.POTENTIALWALL) {
+				} else if (this.board[i][j] == Case.BORDER || this.board[i][j] == Case.POTENTIALWALL) {
 					if (j % 2 == 0) {
 						System.out.print("| ");
 					} else {
@@ -148,6 +143,7 @@ public class Board {
 			this.board[player.getPos().getX()][player.getPos().getY()] = player.getPlayerNb();
 			if (player.isWinner()) {
 				System.out.println(player.getPlayerNb() + " won.");
+				
 			}
 		} else {
 			throw new ImpossibleMovementException("Error : Unauthorized movement");

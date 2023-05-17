@@ -32,8 +32,8 @@ public class Wall {
 
 	/* Useful methods */
 	public boolean outOfBorderWidth() {
-		if (this.getPosition().getX() == 0 || this.getPosition().getY() == 18 || this.getPosition().getX() == 18
-				|| this.getPosition().getY() == 0) {
+		if (this.getPosition().getX() <= 0 || this.getPosition().getY() >= 18 || this.getPosition().getX() >= 18
+				|| this.getPosition().getY() <= 0) {
 			return true;
 		}
 		return false;
@@ -58,8 +58,7 @@ public class Wall {
 	}
 
 	public boolean verifyWall(Board board) {
-		if (this.hasWall(board) || this.outOfBorderWidth()) {
-			System.out.println("Vous ne pouvez pas placer de murs ici");
+		if (this.outOfBorderWidth() || this.hasWall(board)) {
 			return false;
 		}
 		return true;
