@@ -43,37 +43,46 @@ public class Board {
 	//Initializing Board
 	public void initializeBoard() {
 		this.setBoard(new Case[TAILLE][TAILLE]);
-		//
 		for (int i = 0; i < TAILLE; i++) {
 			for (int j = 0; j < TAILLE; j+=2) {
+				//First line's right corner & Last line's right corner
 				if ((i == 0 && j == TAILLE-1) || (i == TAILLE-1 && j == TAILLE-1) ){
 					getBoard()[i][j] = Case.NULL;
 				}
+				//First line & Last line
 				else if (i == 0 || i == TAILLE-1) {
 					getBoard()[i][j] = Case.NULL;
 					getBoard()[i][j+1] = Case.BORDER;
 				}
+				//Odd line
 				else if (i%2 == 1) {
+					//First column
 					if (j==0) {
 						getBoard()[i][j] = Case.BORDER;
 						getBoard()[i][j+1] = Case.EMPTY;
 					}
+					//Last column
 					else if (j == TAILLE-1) {
 						getBoard()[i][j] = Case.BORDER;
 					}
+					//Other colums
 					else {
 						getBoard()[i][j] = Case.POTENTIALWALL;
 						getBoard()[i][j+1] = Case.EMPTY;
 					}
 				}
+				//Even line
 				else if (i%2 == 0) {
+					//First column
 					if (j==0) {
 						getBoard()[i][j] = Case.NULL;
 						getBoard()[i][j+1] = Case.POTENTIALWALL;
 					}
+					//Last column
 					else if (j == TAILLE-1) {
 						getBoard()[i][j] = Case.NULL;
 					}
+					//Other colums
 					else {
 						getBoard()[i][j] = Case.NULL;
 						getBoard()[i][j+1] = Case.POTENTIALWALL;
@@ -83,9 +92,11 @@ public class Board {
 		}
 		
 		if (getPlayerNumber() >= 2) {
+			//Set the two first player's pawn placement
 			getBoard()[TAILLE-2][TAILLE/2] = Case.PLAYER1;
 			getBoard()[1][TAILLE/2] = Case.PLAYER2;
 			if (getPlayerNumber() == 4) {
+				//Set the two others player's pawn placement
 				getBoard()[TAILLE/2][1] = Case.PLAYER3;
 				getBoard()[TAILLE/2][TAILLE-2] = Case.PLAYER4;
 			}
@@ -95,10 +106,10 @@ public class Board {
 	public void show() {
 		for (int i = 0; i < TAILLE; i++) {
 			for (int j = 0; j < TAILLE; j++) {
-				if (this.board[i][j].getValue() == -1) {
+				if (this.board[i][j] == Case.NULL) {
 					System.out.print("+ ");
 				}
-				else if (this.board[i][j].getValue() >= 6) {
+				else if (this.board[i][j] == Case.WALL || this.board[i][j] == Case.BORDER) {
 					if (j%2 == 0) {
 						System.out.print("| ");
 					}
@@ -106,7 +117,7 @@ public class Board {
 						System.out.print("- ");
 					}
 				}
-				else if (this.board[i][j].getValue() == 5) {
+				else if (this.board[i][j] == Case.POTENTIALWALL) {
 					System.out.print("  ");
 				}
 				else{
@@ -121,8 +132,8 @@ public class Board {
 
 	}
 
-	public void addEdge() {
-
+	public static void addEdge() {
+		
 	}
 
 	public static void main(String[] args) {
