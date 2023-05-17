@@ -90,8 +90,8 @@ public class Pawn {
 			if (board.getBoard()[pos.getX() + 1][pos.getY()] == Case.POTENTIALWALL) {
 				topMove(board, pos, true);
 			} else {
-				leftMove(board, pos, true);
 				rightMove(board, pos, true);
+				leftMove(board, pos, true);
 			}
 			break;
 		case RIGHT:
