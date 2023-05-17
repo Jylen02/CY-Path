@@ -2,10 +2,10 @@ CY-Path
 
 To run the deliverable:
 	- Make sure your Java version is up to date, otherwise download the latest version of JDK from Oracle's official website and restart the console.
-	- Download the "corridor.jar" file and place it in the folder of your choice
+	- Download the "quoridor.jar" file and place it in the folder of your choice
 	- Open the terminal on Windows
-	- Enter the command "cd AbsolutePath" replacing AbsolutePath with the absolute path of the corridor.jar file
-	- Then enter the command "java -jar corridor.jar"
+	- Enter the command "cd AbsolutePath" replacing AbsolutePath with the absolute path of the quoridor.jar file
+	- Then enter the command "java -jar quoridor.jar"
 
 Implemented features:
 	- Choice of the number of players (2 or 4 players)
