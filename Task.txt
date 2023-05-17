@@ -4,12 +4,12 @@
      Initialiser le plateau selon le nombre de joueur (en plaçant les pions)
      Réinitialiser compteur Wall
 
-2. Faire une méthode tourDeJeu (Durée estimée : 1h) : A faire 
-   Créer une classe Player (numéro joueur, méthode jouer)
+2. Faire une fonction tourDeJeu (Durée estimée : 1h) : En Cours - Jeremy
+   Créer une classe Player (numéro joueur,attribut myTurn, méthode jouer)
    Quand c'est à son tour : débloquer les fonctionnalités de tour de jeu
 
 3. Déplacer un pion
-3.1. Vérifier les déplacements possibles (Durée estimée : 2h) : A faire
+3.1. Vérifier les déplacements possibles (Durée estimée : 2h) : En Cours - Christophe, Jeremy
      (possibleMove(Position,int))
      mouvement Special
      Gerer Exception déplacement impossible
@@ -32,9 +32,11 @@
      Incrémenter compteur Wall
 4.4. Si max 20 bordures atteint : grisé l'icone du mur (ne peut plus poser de mur).
 
-5. Affichage du plateau dans la console (Durée estimée : 30min) : A faire
+5. Affichage du plateau dans la console (Durée estimée : 30min) : Terminé - Christophe, Jeremy, Warren
    IHM plus tard : Afficher une interface du plateau + un menu
 
-6. Documentation de toutes les classes
+6. DFS (Durée : 4h) : A adapter - Jeremy
+
+7. Documentation de toutes les classes
 
 Bonus. Choix Icone de pion / Musique de fond
