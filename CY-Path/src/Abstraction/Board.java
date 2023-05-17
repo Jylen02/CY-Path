@@ -107,6 +107,16 @@ public class Board {
 	public void show() {
 		System.out.print("   ");
 		for (int i = 0; i < TAILLE; i++) {
+			if (i>=10) {
+				System.out.print("1 ");
+			}
+			else {
+				System.out.print("  ");
+			}
+		}
+		System.out.println();
+		System.out.print("   ");
+		for (int i = 0; i < TAILLE; i++) {
 			System.out.print(i%10 + " ");
 		}
 		System.out.println();

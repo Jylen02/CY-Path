@@ -125,6 +125,7 @@ public class Pawn {
 	}
 
 	public void possibleMove(Board board) {
+		this.possibleDestination = new HashSet<Position>();
 		topMove(board, this.getPos(), false);
 		rightMove(board, this.getPos(), false);
 		botMove(board, this.getPos(), false);

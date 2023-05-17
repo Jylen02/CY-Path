@@ -41,17 +41,19 @@ public class Wall {
 
 	/* A modifier pour prendre le board en parametre */
 	public boolean hasWall(Board board) {
-		if (this.getOrientation() == Orientation.VERTICAL) {
-			if (board.getBoard()[this.getPosition().getX() - 1][this.getPosition().getY()] == Case.POTENTIALWALL
-					&& board.getBoard()[this.getPosition().getX() + 1][this.getPosition()
-							.getY()] == Case.POTENTIALWALL) {
-				return false;
-			}
-		} else if (this.getOrientation() == Orientation.HORIZONTAL) {
-			if (board.getBoard()[this.getPosition().getX()][this.getPosition().getY() - 1] == Case.POTENTIALWALL
-					&& board.getBoard()[this.getPosition().getX()][this.getPosition().getY()
-							+ 1] == Case.POTENTIALWALL) {
-				return false;
+		if (board.getBoard()[this.getPosition().getX()][this.getPosition().getY()] == Case.NULL) {
+			if (this.getOrientation() == Orientation.VERTICAL) {
+				if (board.getBoard()[this.getPosition().getX() - 1][this.getPosition().getY()] == Case.POTENTIALWALL
+						&& board.getBoard()[this.getPosition().getX() + 1][this.getPosition()
+								.getY()] == Case.POTENTIALWALL) {
+					return false;
+				}
+			} else if (this.getOrientation() == Orientation.HORIZONTAL) {
+				if (board.getBoard()[this.getPosition().getX()][this.getPosition().getY() - 1] == Case.POTENTIALWALL
+						&& board.getBoard()[this.getPosition().getX()][this.getPosition().getY()
+								+ 1] == Case.POTENTIALWALL) {
+					return false;
+				}
 			}
 		}
 		return true;
@@ -69,12 +71,14 @@ public class Wall {
 		int y = this.getPosition().getY();
 		if (orientation == Orientation.HORIZONTAL) {
 			board.getBoard()[x][y - 1] = type;
+			board.getBoard()[x][y] = type;
 			board.getBoard()[x][y + 1] = type;
 			int counter = board.getWallCount() + co;
 			board.setWallCount(counter);
 
 		} else if (orientation == Orientation.VERTICAL) {
 			board.getBoard()[x - 1][y] = type;
+			board.getBoard()[x][y] = type;
 			board.getBoard()[x + 1][y] = type;
 			int counter = board.getWallCount() + co;
 			board.setWallCount(counter);
@@ -96,19 +100,4 @@ public class Wall {
 			return false;
 		}
 	}
-
-	public static void main(String[] args) {
-		Board p = new Board(4);
-		Position po = new Position(2, 8);
-		Wall w = new Wall(Orientation.VERTICAL, po);
-		w.createWall(p);
-		Position po2 = new Position(2, 10);
-		Wall w2 = new Wall(Orientation.VERTICAL, po2);
-		w2.createWall(p);
-		Position po3 = new Position(4, 10);
-		Wall w3 = new Wall(Orientation.HORIZONTAL, po3);
-		w3.createWall(p);
-		p.show();
-	}
-
 }
