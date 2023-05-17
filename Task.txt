@@ -34,12 +34,12 @@
      IHM plus tard : Recuperer les coordonnées du curseur et convertir -> méthode
      Poser le mur - Testé : Abd-Ennour
      Incrémenter compteur Wall + test: en cour- Abd-Ennour
-4.4. Si max 20 bordures atteint : grisé l'icone du mur (ne peut plus poser de mur).
+4.4. IHM : Si max 20 bordures atteint : grisé l'icone du mur (ne peut plus poser de mur) : A faire
 
 --5. Affichage du plateau dans la console (Durée estimée : 30min) : Terminé - Christophe, Jeremy, Warren
    IHM plus tard : Afficher une interface du plateau + un menu
 5.1. Menu de jeu (Durée estimée : 2h) : A faire
-     Pouvoir choisir une action (déplacer pion/poser mur)
+     Pouvoir choisir une action (déplacer pion/poser mur -> disponible seulement si compteur mur<20)
      Si poser : Choix orientation du mur
      Sélectionner l'emplacement du pion/mur (Position) pair : mur / impair : pion
 
