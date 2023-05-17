@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Main {
 
-	public boolean accountWall(Board board) {
+	public static boolean accountWall(Board board) {
 		if (board.getWallCount() < 20) {
 			return true;
 		} else {
@@ -14,20 +14,28 @@ public class Main {
 
 	public static void roundOfPlay(Player[] players, Integer turn, Board board, Scanner s) { // Tour de jeu
 		// System.out.println("Menu :");
+		boolean endWall=accountWall(board);
 		Player p = players[turn];
 		p.getPawn().possibleMove(board);
 		System.out.println("Déplacements possible :");
 		System.out.println(p.getPawn().getPossibleDestination());
-		System.out.println("Choix de l'action souhaitée :");
-		System.out.println(" - Avancer : 1 \n - Poser un mur : 2");
-		System.out.println("Veuillez entrer l'option de votre choix (1 ou 2) :");
-		int input = s.nextInt();
+		int input;
+		if ( endWall==false) {
+			System.out.println("Le nombre de mur est trop élevé vous ne pouvez plus que vous deplacer !");	
+			input=1;
+		}
+		else {
+			System.out.println("Choix de l'action souhaitée :");
+			System.out.println(" - Avancer : 1 \n - Poser un mur : 2");
+			System.out.println("Veuillez entrer l'option de votre choix (1 ou 2) :");
+			input = s.nextInt();
+			
+		}
 		System.out.println("Veuillez entrer les coordonnées : ");
 		System.out.print("row = ");
 		int row = s.nextInt();
 		System.out.print("column = ");
 		int column = s.nextInt();
-		
 		Position position = new Position(row, column);
 
 		switch (input) {
