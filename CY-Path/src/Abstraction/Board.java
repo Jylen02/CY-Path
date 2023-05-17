@@ -7,13 +7,6 @@ public class Board {
 	private int wallCount;
 	public static final int TAILLE = 19;
 	public static final int MAXWALLCOUNT = 20;
-	public static final String RESET = "\u001B[0m";
-    public static final String RED = "\u001B[31m";
-
-    // Méthode pour imprimer du texte avec une couleur spécifique
-    public static void printColor(String text, String color) {
-        System.out.println(color + text + RESET);
-    }
 
 	// Constructor
 	public Board(int playerNumber) {
@@ -123,12 +116,16 @@ public class Board {
 			System.out.print(i + " ");
 			for (int j = 0; j < TAILLE; j++) {
 				if (this.board[i][j] == Case.NULL) {
-					System.out.print("+ ");
+						System.out.print("+ ");
 				} else if (this.board[i][j] == Case.WALL || this.board[i][j] == Case.BORDER) {
 					if (j % 2 == 0) {
-						System.out.print(RED + "| " + RESET);
+						System.out.print("\u001B[31m");
+						System.out.print("| ");
+						System.out.print("\u001B[0m");
 					} else {
-						System.out.print(RED + "- " + RESET);
+						System.out.print("\u001B[31m");
+						System.out.print("- ");
+						System.out.print("\u001B[0m");
 					}
 				} else if (this.board[i][j] == Case.POTENTIALWALL) {
 					if (j % 2 == 0) {
