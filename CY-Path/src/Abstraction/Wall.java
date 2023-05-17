@@ -64,7 +64,7 @@ public class Wall {
 	public boolean verifyWall(Board board) throws IncorrectWallException {
 		try {
 			if (this.hasWall(board) || this.outOfBorderWidth() || (DFS() == false)) {
-				throw new IncorrectWallException();
+				throw new IncorrectWallException("Error : Incorrect Wall");
 			}
 		}
 		catch (IncorrectWallException e) {
