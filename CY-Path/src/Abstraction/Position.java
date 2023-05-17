@@ -4,10 +4,7 @@ public class Position {
 	private Integer x;
 	private Integer y;
 
-	@Override
-	public String toString() {
-		return "(" + x + "," + y + ")";
-	}
+
 
 	public Position(Integer x, Integer y) {
 		this.x = x;
@@ -29,7 +26,12 @@ public class Position {
 	public void setY(Integer y) {
 		this.y = y;
 	}
-
+	
+	@Override
+	public String toString() {
+		return "(" + x + "," + y + ")";
+	}
+	
 	@Override
 	public boolean equals(Object o) {
 		if (o instanceof Position) {

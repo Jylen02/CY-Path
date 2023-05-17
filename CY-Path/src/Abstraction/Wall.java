@@ -1,9 +1,8 @@
 package Abstraction;
 
 public class Wall {
-
+	
 	/* Attributes */
-	// private final int HEIGHT = 2;
 	private Orientation orientation;
 	private Position position;
 
@@ -39,7 +38,6 @@ public class Wall {
 		return false;
 	}
 
-	/* A modifier pour prendre le board en parametre */
 	public boolean hasWall(Board board) {
 		if (board.getBoard()[this.getPosition().getX()][this.getPosition().getY()] == Case.NULL) {
 			if (this.getOrientation() == Orientation.VERTICAL) {
@@ -75,7 +73,6 @@ public class Wall {
 			board.getBoard()[x][y + 1] = type;
 			int counter = board.getWallCount() + co;
 			board.setWallCount(counter);
-
 		} else if (orientation == Orientation.VERTICAL) {
 			board.getBoard()[x - 1][y] = type;
 			board.getBoard()[x][y] = type;
@@ -86,15 +83,8 @@ public class Wall {
 	}
 
 	public boolean createWall(Board board) {
-
 		if (verifyWall(board)) {
 			placeWall(this.getOrientation(), board, Case.WALL, 1);
-			//DFS fait dans le main et non ici
-//			if ((new Dfs(board)).dfs(4, 8) == false) {
-//				placeWall(this.getOrientation(), board, Case.POTENTIALWALL, (-1));
-//				System.out.println("Ce mur bloque un joueur !");
-//				return false;
-//			}
 			return true;
 		} else {
 			System.out.println("Vous ne pouvez pas placer de mur à cette emplacement");

@@ -151,14 +151,4 @@ public class Board {
 		player.setPos(pos);
 		this.board[player.getPos().getX()][player.getPos().getY()] = player.getPlayerNb();
 	}
-
-	/*
-	 * public void deleteEdge() {
-	 * 
-	 * }
-	 * 
-	 * public static void addEdge() {
-	 * 
-	 * }
-	 */
 }

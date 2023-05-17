@@ -12,8 +12,7 @@ public class Main {
 		}
 	}
 
-	public static void roundOfPlay(Player[] players, Integer turn, Board board, Scanner s) { // Tour de jeu
-		// System.out.println("Menu :");
+	public static void roundOfPlay(Player[] players, Integer turn, Board board, Scanner s) {
 		boolean endWall=accountWall(board);
 		Player p = players[turn];
 		p.getPawn().possibleMove(board);
@@ -83,9 +82,6 @@ public class Main {
 			System.out.println("Erreur : Impossible de placer un mur à ces coordonnées.");
 			board.show();
 			roundOfPlay(players, turn, board, s);
-		} else {
-			//DFS sur tout les pions à faire ici
-			//(new Dfs(board)).dfs(board, p.getPawn());
 		}
 	}
 
