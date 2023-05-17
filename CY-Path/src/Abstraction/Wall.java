@@ -34,10 +34,11 @@ public class Wall {
 
 	/* Useful methods */
 	public boolean outOfBorderWidth() {
-		if (this.getPosition().getX() == 0 || this.getPosition().getX() == 18 || this.getPosition().getX() == 0
-				|| this.getPosition().getX() == 18)
-			return false;
-		return true;
+		if (this.getPosition().getX() == 0 || this.getPosition().getY() == 18 || this.getPosition().getX() == 18
+				|| this.getPosition().getY() == 0) {
+			return true;
+		}
+		return false;
 	}
 	
 	/* A modifier pour prendre le board en parametre */
