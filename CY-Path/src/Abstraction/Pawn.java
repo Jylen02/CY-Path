@@ -25,11 +25,21 @@ public class Pawn {
 	 * @param m the movement direction
 	 */
 
-	public void move() {
+	public void move(Position pos,Board board) throws ImpossibleMovementException{
+		if(this.possibleDestination.contains(pos)) {
+			this.pos=pos;
+			//this.possibleMove(board);		A instaurer dans tour de jeu
+		}
+		else {
+			throw new ImpossibleMovementException("Error : Unauthorized movement");
+		}
+	}
+	
+	//public void move() {
 		// recupere case
 		// if possibledestination.contains(case)
 		// this.pos = case
-	}
+	//}
 
 //	public void move(Movement m) {
 //	    switch (m) {
@@ -138,7 +148,7 @@ public class Pawn {
 			}
 			break;
 		default:
-			System.out.println("Mouvement incorrect");
+			System.out.println("Incorrect movement");
 			break;
 		}
 
@@ -146,10 +156,10 @@ public class Pawn {
 
 	public void possibleMove(Board board) {
 		this.possibleDestination = new HashSet<Position>();
-		topMove(board, pos, false);
-		rightMove(board, pos, false);
-		botMove(board, pos, false);
-		leftMove(board, pos, false);
+		topMove(board, this.getPos(), false);
+		rightMove(board, this.getPos(), false);
+		botMove(board, this.getPos(), false);
+		leftMove(board, this.getPos(), false);
 	}
 
 }
