@@ -66,19 +66,29 @@ public class Wall {
 		return true;
 	}
 
-	public void placeWall(Orientation orientation, Board board, Case type, int co) {
+	public void updateWall(Orientation orientation, Board board, Case type, int co) {
 		int x = this.getPosition().getX();
 		int y = this.getPosition().getY();
 		if (orientation == Orientation.HORIZONTAL) {
 			board.getBoard()[x][y - 1] = type;
-			board.getBoard()[x][y] = type;
+			if(type == Case.WALL) {
+				board.getBoard()[x][y] = type;
+			}
+			else {
+				board.getBoard()[x][y] = Case.NULL;
+			}
 			board.getBoard()[x][y + 1] = type;
 			int counter = board.getWallCount() + co;
 			board.setWallCount(counter);
 
 		} else if (orientation == Orientation.VERTICAL) {
 			board.getBoard()[x - 1][y] = type;
-			board.getBoard()[x][y] = type;
+			if(type == Case.WALL) {
+				board.getBoard()[x][y] = type;
+			}
+			else {
+				board.getBoard()[x][y] = Case.NULL;
+			}
 			board.getBoard()[x + 1][y] = type;
 			int counter = board.getWallCount() + co;
 			board.setWallCount(counter);
@@ -86,12 +96,11 @@ public class Wall {
 	}
 
 	public boolean createWall(Board board) {
-
 		if (verifyWall(board)) {
-			placeWall(this.getOrientation(), board, Case.WALL, 1);
+			updateWall(this.getOrientation(), board, Case.WALL, 1);
 			//DFS fait dans le main et non ici
 //			if ((new Dfs(board)).dfs(4, 8) == false) {
-//				placeWall(this.getOrientation(), board, Case.POTENTIALWALL, (-1));
+//				updateWall(this.getOrientation(), board, Case.POTENTIALWALL, -1);
 //				System.out.println("Ce mur bloque un joueur !");
 //				return false;
 //			}
