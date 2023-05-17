@@ -4,18 +4,18 @@
      Initialiser le plateau selon le nombre de joueur (en plaçant les pions)
      Réinitialiser compteur Wall
 
-2. Faire une méthode tourDeJeu (Durée estimée : 1h) : A faire
+2. Faire une méthode tourDeJeu boucle while(noWinner) (Durée estimée : 1h) : A faire
    Créer une classe Player (numéro joueur,attribut myTurn, méthode jouer)
    Quand c'est à son tour : débloquer les fonctionnalités de tour de jeu
 --2.1. Associer les pions aux joueurs et à l'énumération Case PLAYER1... (Durée estimée : 30min - Durée : 20min) : Terminé - Noaman, Christophe
 
 3. Déplacer un pion
-3.1. Vérifier les déplacements possibles (Durée estimée : 2h - Durée : 2h) : A tester quand il y a un mur - Christophe, Jeremy
+--3.1. Vérifier les déplacements possibles (Durée estimée : 2h - Durée : 2h) : A tester quand il y a un mur - Christophe, Jeremy
      (possibleMove(Position,int)) -> modifier les arguments
      mouvement Special
      Gerer Exception déplacement impossible -> pas besoin finalement
 3.2. Afficher les déplacements possibles (Durée estimée : 10min) : A faire (IHM plus tard)
-3.3. Déplacer un pion (Durée estimée : 30min - Durée 1h) : A tester quand il y a un mur - Noaman, Christophe
+--3.3. Déplacer un pion (Durée estimée : 30min - Durée 1h) : A tester quand il y a un mur - Noaman, Christophe
      méthode move() déplacé dans Board pour actualiser le plateau
      Choisir déplacement
      Actualiser la position du pion (rappeler possibleMove())
@@ -25,12 +25,12 @@
      Bouton rejouer (appeler initializeBoard())
 
 4. Poser un mur
-4.1. Tourner le mur (scroll, clic droit) (Durée estimée : 20min) : A faire
+4.1. Tourner le mur (scroll, clic droit) (Durée estimée : 20min) : A faire (IHM plus tard)
 --4.2. Vérifier Mur posable (Durée estimée : 2-3h - Durée : 2h) : Terminé - Warren
      Vérifier Hors Index / Deja un mur / Bordure / Max 20 bordures (compteur) Terminé (sauf compteur) - Warren
      Compteur -> tourDeJeu si compteur atteint -> plus de mur posable
      Vérifier DFS pour tout les joueurs : A faire
---4.3. Pose le mur centré sur le curseur (Durée estimée : 2h - Durée : 1h) : Terminé - Abd-Ennour
+--4.3. Pose le mur centré sur le curseur (Durée estimée : 2h) : A optimiser - Abd-Ennour
      IHM plus tard : Recuperer les coordonnées du curseur et convertir -> méthode
      Poser le mur - Testé : Abd-Ennour
      Incrémenter compteur Wall
@@ -40,6 +40,7 @@
    IHM plus tard : Afficher une interface du plateau + un menu
 5.1. Menu de jeu (Durée estimée : 2h) : A faire
      Pouvoir choisir une action (déplacer pion/poser mur)
+     Si poser : Choix orientation du mur
      Sélectionner l'emplacement du pion/mur (Position) pair : mur / impair : pion
 
 6. DFS (Durée : 4h) : A adapter - Jeremy
