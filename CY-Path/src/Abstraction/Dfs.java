@@ -3,8 +3,9 @@ package Abstraction;
 public class Dfs {
 	private Boolean[][] matrix;
 	private Integer width;
+	private Pawn pawn;
 
-	public Dfs(Board board) {
+	public Dfs(Board board, Pawn pawn) {
 		this.width = (Board.TAILLE - 1) / 2;
 		int nbVertex = (int) Math.pow((Board.TAILLE - 1) / 2, 2);
 		this.matrix = new Boolean[nbVertex][nbVertex];
@@ -83,19 +84,4 @@ public class Dfs {
 		}
 		return marking;
 	}
-
-//	public static void main(String[] args) {
-//		Board board = new Board(4);
-//		Dfs graph = new Dfs(board);
-//		// matrix[0][2]=false;
-//		// matrix[1][3]=false;		
-//		for (int i = 0; i < 9; i++) {
-//			graph.matrix[i][i + 9] = false;
-//			graph.matrix[i + 9][i] = false;
-//		}
-//		Integer j = 2;
-//		graph.matrix[j][j + 9] = true;
-//		System.out.println(graph.getMatrix().length);
-//		System.out.println(j + "," + graph.dfs(0, 8));
-//	}
 }

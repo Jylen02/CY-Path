@@ -89,11 +89,11 @@ public class Wall {
 
 		if (verifyWall(board)) {
 			placeWall(this.getOrientation(), board, Case.WALL, 1);
-			if ((new Dfs(board)).dfs(4, 8) == false) {
-				placeWall(this.getOrientation(), board, Case.POTENTIALWALL, (-1));
-				System.out.println("Ce mur bloque un joueur !");
-				return false;
-			}
+//			if ((new Dfs(board)).dfs(4, 8) == false) {
+//				placeWall(this.getOrientation(), board, Case.POTENTIALWALL, (-1));
+//				System.out.println("Ce mur bloque un joueur !");
+//				return false;
+//			}
 			return true;
 		} else {
 			System.out.println("Vous ne pouvez pas placer de mur à cette emplacement");
