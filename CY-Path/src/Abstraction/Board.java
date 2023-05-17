@@ -127,7 +127,23 @@ public class Board {
 			System.out.println();
 		}
 	}
+	
+	public void move(Position pos,Pawn player) throws ImpossibleMovementException{
+		if(player.getPossibleDestination().contains(pos)) {
+			this.board[player.getPos().getX()][player.getPos().getY()]=Case.EMPTY;
+			player.setPos(pos);
+			this.board[player.getPos().getX()][player.getPos().getY()]=player.getPlayerNb();
+			if(player.isWinner()) {
+				System.out.println(player.getPlayerNb()+" won.");
+			}
+		}
+		else {
+			throw new ImpossibleMovementException("Error : Unauthorized movement");
+		}
+	}
+	
 
+	/*
 	public void deleteEdge() {
 
 	}
@@ -135,9 +151,5 @@ public class Board {
 	public static void addEdge() {
 		
 	}
-
-	public static void main(String[] args) {
-		Board p = new Board(4);
-		p.show();
-	}
+	*/
 }

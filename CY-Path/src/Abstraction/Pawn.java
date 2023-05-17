@@ -6,54 +6,35 @@ import java.util.Set;
 public class Pawn {
 	private Position pos;
 	private Set<Position> possibleDestination;
+	private Case playerNb;
+	private Set<Position> finishLine;
 
 	public Pawn(Position pos, Case player) {
 		this.pos = pos;
+		this.playerNb = player;
+		this.possibleDestination = new HashSet<Position>();
+		this.finishLine();
 	}
 
 	public Position getPos() {
 		return pos;
 	}
 
+	public Case getPlayerNb() {
+		return playerNb;
+	}
+
+	public Set<Position> getFinishLine() {
+		return finishLine;
+	}
+
 	public void setPos(Position pos) {
 		this.pos = pos;
 	}
 
-	/**
-	 * Moves in a specified direction.
-	 *
-	 * @param m the movement direction
-	 */
-
-	public void move() {
-		// recupere case
-		// if possibledestination.contains(case)
-		// this.pos = case
+	public Set<Position> getPossibleDestination() {
+		return this.possibleDestination;
 	}
-
-//	public void move(Movement m) {
-//	    switch (m) {
-//	        case HAUT:
-//	            this.pos.setY(this.pos.getY()+1);
-//	            if canmove(m)==2
-//	              		canmove(m)==0 -> recuperer mouvement latéraux ((enum.ordinal+4)%4) 
-//	              					  -> canmove(movement latéraux) 2x (car 2 movement)
-//	              					  -> réappeler la fonction qui dmd d'avancer
-//	            		canmove(m)==1; -> avance
-//	            		canmove(m)==2 -> ajoute pos + rappeler move(m) un truc du genre (si y'a plusieurs pions d'affilés)
-//	            		
-//	            break;
-//	        case BAS:
-//	        	this.pos.setY(this.pos.getY()-1);
-//	            break;
-//	        case DROITE:
-//	        	this.pos.setX(this.pos.getX()+1);
-//	            break;
-//	        case GAUCHE:
-//	        	this.pos.setX(this.pos.getX()-1);
-//	            break;
-//    	}
-//	}
 
 	public void topMove(Board board, Position pos, Boolean specialMove) {
 		if (board.getBoard()[pos.getX() + 1][pos.getY()] == Case.POTENTIALWALL) {
@@ -138,18 +119,50 @@ public class Pawn {
 			}
 			break;
 		default:
-			System.out.println("Mouvement incorrect");
 			break;
 		}
 
 	}
 
 	public void possibleMove(Board board) {
-		this.possibleDestination = new HashSet<Position>();
-		topMove(board, pos, false);
-		rightMove(board, pos, false);
-		botMove(board, pos, false);
-		leftMove(board, pos, false);
+		topMove(board, this.getPos(), false);
+		rightMove(board, this.getPos(), false);
+		botMove(board, this.getPos(), false);
+		leftMove(board, this.getPos(), false);
 	}
 
+	public void finishLine() {
+		this.finishLine = new HashSet<Position>();
+		switch (this.playerNb) {
+		case PLAYER1:
+			for (int j = 1; j < Board.TAILLE; j += 2) {
+				this.finishLine.add(new Position(1, j));
+			}
+			break;
+		case PLAYER2:
+			for (int j = 1; j < Board.TAILLE; j += 2) {
+				this.finishLine.add(new Position(Board.TAILLE - 2, j));
+			}
+			break;
+		case PLAYER3:
+			for (int i = 1; i < Board.TAILLE; i += 2) {
+				this.finishLine.add(new Position(i, Board.TAILLE - 2));
+			}
+			break;
+		case PLAYER4:
+			for (int i = 1; i < Board.TAILLE; i += 2) {
+				this.finishLine.add(new Position(i, 1));
+			}
+			break;
+		default:
+			break;
+		}
+	}
+	
+	public Boolean isWinner() {
+		if(this.finishLine.contains(this.pos)) {
+			return true;
+		}
+		return false;
+	}
 }
