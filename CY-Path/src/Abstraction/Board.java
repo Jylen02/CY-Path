@@ -117,15 +117,11 @@ public class Board {
 			for (int j = 0; j < TAILLE; j++) {
 				if (this.board[i][j] == Case.NULL) {
 						System.out.print("+ ");
-				} else if (this.board[i][j] == Case.WALL || this.board[i][j] == Case.BORDER) {
+				} else if (this.board[i][j] == Case.BORDER) {
 					if (j % 2 == 0) {
-						System.out.print("\u001B[31m");
 						System.out.print("| ");
-						System.out.print("\u001B[0m");
 					} else {
-						System.out.print("\u001B[31m");
 						System.out.print("- ");
-						System.out.print("\u001B[0m");
 					}
 				} else if (this.board[i][j] == Case.POTENTIALWALL) {
 					if (j % 2 == 0) {
@@ -133,7 +129,9 @@ public class Board {
 					} else {
 						System.out.print("- ");
 					}
-				} else if (this.board[i][j] == Case.EMPTY) {
+				} else if (this.board[i][j] == Case.WALL) {
+					System.out.print("/ ");
+			    }else if (this.board[i][j] == Case.EMPTY) {
 						System.out.print("  ");
 				} else {
 					System.out.print(this.board[i][j].getValue() + " ");
