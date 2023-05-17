@@ -105,6 +105,7 @@ public class Board {
 	}
 
 	public void show() {
+		// First line of the column's coordinates
 		System.out.print("   ");
 		for (int i = 0; i < TAILLE; i++) {
 			if (i>=10) {
@@ -115,30 +116,37 @@ public class Board {
 			}
 		}
 		System.out.println();
+		// Second line of the column's coordinates
 		System.out.print("   ");
 		for (int i = 0; i < TAILLE; i++) {
 			System.out.print(i%10 + " ");
 		}
 		System.out.println();
 		for (int i = 0; i < TAILLE; i++) {
+			// Column of the row's coordinates
 			if (i<10) {
 				System.out.print(" ");
 			}
 			System.out.print(i + " ");
 			for (int j = 0; j < TAILLE; j++) {
+				// If the case is an intersection : put a "+"
 				if (this.board[i][j] == Case.NULL) {
 						System.out.print("+ ");
-				} else if (this.board[i][j] == Case.BORDER || this.board[i][j] == Case.POTENTIALWALL) {
+				} // If the case is a part of the grid, put a vertical "|" or horizontal "-" bar
+				else if (this.board[i][j] == Case.BORDER || this.board[i][j] == Case.POTENTIALWALL) {
 					if (j % 2 == 0) {
 						System.out.print("| ");
 					} else {
 						System.out.print("- ");
 					}
-				} else if (this.board[i][j] == Case.WALL) {
+				} // If the case is a wall : put a "/"
+				else if (this.board[i][j] == Case.WALL) {
 					System.out.print("/ ");
-			    }else if (this.board[i][j] == Case.EMPTY) {
+			    }// If the case is empty : put a " "
+				else if (this.board[i][j] == Case.EMPTY) {
 						System.out.print("  ");
-				} else {
+				} // If the case is a player, put its value
+				else {
 					System.out.print(this.board[i][j].getValue() + " ");
 				}
 			}
@@ -151,14 +159,4 @@ public class Board {
 		player.setPos(pos);
 		this.board[player.getPos().getX()][player.getPos().getY()] = player.getPlayerNb();
 	}
-
-	/*
-	 * public void deleteEdge() {
-	 * 
-	 * }
-	 * 
-	 * public static void addEdge() {
-	 * 
-	 * }
-	 */
 }
