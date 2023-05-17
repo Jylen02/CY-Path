@@ -12,20 +12,22 @@ public class Main {
 		}
 	}
 
-	public static void roundOfPlay(Player p, Board board, Scanner s) { // Tour de jeu
+	public static void roundOfPlay(Player[] players, Integer turn, Board board, Scanner s) { // Tour de jeu
 		// System.out.println("Menu :");
+		Player p = players[turn];
 		p.getPawn().possibleMove(board);
-		System.out.println(" - Déplacements possible :");
+		System.out.println("Déplacements possible :");
 		System.out.println(p.getPawn().getPossibleDestination());
+		System.out.println("Choix de l'action souhaitée :");
 		System.out.println(" - Avancer : 1 \n - Poser un mur : 2");
-		System.out.println("Veuillez entrer l'option de votre choix (1 ou 2)");
+		System.out.println("Veuillez entrer l'option de votre choix (1 ou 2) :");
 		int input = s.nextInt();
 		System.out.println("Veuillez entrer les coordonnées : ");
-		System.out.println("	row = ");
+		System.out.print("row = ");
 		int row = s.nextInt();
-		System.out.println("	column = ");
+		System.out.print("column = ");
 		int column = s.nextInt();
-
+		
 		Position position = new Position(row, column);
 
 		switch (input) {
@@ -35,42 +37,47 @@ public class Main {
 			} else {
 				System.out.println("Erreur : Veuillez entrez les coordonnées d'un déplacement valide.");
 				board.show();
-				roundOfPlay(p, board, s);
+				roundOfPlay(players, turn, board, s);
 			}
 			break;
 		case 2:
+			System.out.println("Choix de l'orientation du mur :");
 			System.out.println(" - Mur vertical : 1 \n - Mur horizontal : 2");
+			System.out.println("Veuillez entrer l'option de votre choix (1 ou 2) :");
 			int orientation = s.nextInt();
 			Wall wall;
 			switch (orientation) {
 			case 1:
 				wall = new Wall(Orientation.VERTICAL, position);
-				wallError(wall, board, p, s);
+				wallError(wall, board, players, turn, s);
 				break;
 			case 2:
 				wall = new Wall(Orientation.HORIZONTAL, position);
-				wallError(wall, board, p, s);
+				wallError(wall, board, players, turn, s);
 				break;
 			default:
 				System.out.println("Erreur : Orientation du mur incorrect.");
 				board.show();
-				roundOfPlay(p, board, s);
+				roundOfPlay(players, turn, board, s);
 				break;
 			}
 			break;
 		default:
 			System.out.println("Erreur : Action indisponible.");
 			board.show();
-			roundOfPlay(p, board, s);
+			roundOfPlay(players, turn, board, s);
 			break;
 		}
 	}
 
-	public static void wallError(Wall wall, Board board, Player p, Scanner s) {
+	public static void wallError(Wall wall, Board board, Player[] players, Integer turn, Scanner s) {
 		if (!wall.createWall(board)) {
 			System.out.println("Erreur : Impossible de placer un mur à ces coordonnées.");
 			board.show();
-			roundOfPlay(p, board, s);
+			roundOfPlay(players, turn, board, s);
+		} else {
+			//DFS sur tout les pions à faire ici
+			//(new Dfs(board)).dfs(board, p.getPawn());
 		}
 	}
 
@@ -110,7 +117,7 @@ public class Main {
 
 		while (!win) {
 			System.out.println("Tour de " + players[turn].getPlayerNumber() + ":");
-			roundOfPlay(players[turn], board, s);
+			roundOfPlay(players, turn, board, s);
 			board.show();
 			if (players[turn].getPawn().isWinner()) {
 				win = true;

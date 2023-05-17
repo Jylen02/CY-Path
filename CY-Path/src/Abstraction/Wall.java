@@ -89,6 +89,7 @@ public class Wall {
 
 		if (verifyWall(board)) {
 			placeWall(this.getOrientation(), board, Case.WALL, 1);
+			//DFS fait dans le main et non ici
 //			if ((new Dfs(board)).dfs(4, 8) == false) {
 //				placeWall(this.getOrientation(), board, Case.POTENTIALWALL, (-1));
 //				System.out.println("Ce mur bloque un joueur !");

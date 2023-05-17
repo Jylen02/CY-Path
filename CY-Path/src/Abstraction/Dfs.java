@@ -5,7 +5,7 @@ public class Dfs {
 	private Integer width;
 	private Pawn pawn;
 
-	public Dfs(Board board, Pawn pawn) {
+	public Dfs(Board board) {
 		this.width = (Board.TAILLE - 1) / 2;
 		int nbVertex = (int) Math.pow((Board.TAILLE - 1) / 2, 2);
 		this.matrix = new Boolean[nbVertex][nbVertex];
