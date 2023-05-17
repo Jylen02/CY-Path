@@ -5,17 +5,18 @@ public class Board {
 	private Case[][] board;
 	private int playerNumber;
 	private int wallCount;
-	private static final int TAILLE = 19;
-	private static final int MAXWALLCOUNT = 20;
+	public static final int TAILLE = 19;
+	public static final int MAXWALLCOUNT = 20;
 	
-	//Constructor
+
+	// Constructor
 	public Board(int playerNumber) {
 		this.playerNumber = playerNumber;
 		initializeBoard();
 		this.wallCount = 0;
 	}
 
-	//Getters & Setters
+	// Getters & Setters
 	public int getWallCount() {
 		return wallCount;
 	}
@@ -23,7 +24,7 @@ public class Board {
 	public void setWallCount(int wallCount) {
 		this.wallCount = wallCount;
 	}
-	
+
 	public Case[][] getBoard() {
 		return board;
 	}
@@ -40,76 +41,104 @@ public class Board {
 		this.playerNumber = playerNumber;
 	}
 
-	//Initializing Board
+	// Initializing Board
 	public void initializeBoard() {
 		this.setBoard(new Case[TAILLE][TAILLE]);
-		//
 		for (int i = 0; i < TAILLE; i++) {
-			for (int j = 0; j < TAILLE; j+=2) {
-				if ((i == 0 && j == TAILLE-1) || (i == TAILLE-1 && j == TAILLE-1) ){
+			for (int j = 0; j < TAILLE; j += 2) {
+				// First line's right corner & Last line's right corner
+				if ((i == 0 && j == TAILLE - 1) || (i == TAILLE - 1 && j == TAILLE - 1)) {
 					getBoard()[i][j] = Case.NULL;
 				}
-				else if (i == 0 || i == TAILLE-1) {
+				// First line & Last line
+				else if (i == 0 || i == TAILLE - 1) {
 					getBoard()[i][j] = Case.NULL;
-					getBoard()[i][j+1] = Case.BORDER;
+					getBoard()[i][j + 1] = Case.BORDER;
 				}
-				else if (i%2 == 1) {
-					if (j==0) {
+				// Odd line
+				else if (i % 2 == 1) {
+					// First column
+					if (j == 0) {
 						getBoard()[i][j] = Case.BORDER;
-						getBoard()[i][j+1] = Case.EMPTY;
+						getBoard()[i][j + 1] = Case.EMPTY;
 					}
-					else if (j == TAILLE-1) {
+					// Last column
+					else if (j == TAILLE - 1) {
 						getBoard()[i][j] = Case.BORDER;
 					}
+					// Other colums
 					else {
 						getBoard()[i][j] = Case.POTENTIALWALL;
-						getBoard()[i][j+1] = Case.EMPTY;
+						getBoard()[i][j + 1] = Case.EMPTY;
 					}
 				}
-				else if (i%2 == 0) {
-					if (j==0) {
+				// Even line
+				else if (i % 2 == 0) {
+					// First column
+					if (j == 0) {
 						getBoard()[i][j] = Case.NULL;
-						getBoard()[i][j+1] = Case.POTENTIALWALL;
+						getBoard()[i][j + 1] = Case.POTENTIALWALL;
 					}
-					else if (j == TAILLE-1) {
+					// Last column
+					else if (j == TAILLE - 1) {
 						getBoard()[i][j] = Case.NULL;
 					}
+					// Other colums
 					else {
 						getBoard()[i][j] = Case.NULL;
-						getBoard()[i][j+1] = Case.POTENTIALWALL;
+						getBoard()[i][j + 1] = Case.POTENTIALWALL;
 					}
 				}
 			}
 		}
-		
+
 		if (getPlayerNumber() >= 2) {
-			getBoard()[TAILLE-2][TAILLE/2] = Case.PLAYER1;
-			getBoard()[1][TAILLE/2] = Case.PLAYER2;
+			// Set the two first player's pawn placement
+			getBoard()[TAILLE - 2][TAILLE / 2] = Case.PLAYER1;
+			getBoard()[1][TAILLE / 2] = Case.PLAYER2;
 			if (getPlayerNumber() == 4) {
-				getBoard()[TAILLE/2][1] = Case.PLAYER3;
-				getBoard()[TAILLE/2][TAILLE-2] = Case.PLAYER4;
+				// Set the two others player's pawn placement
+				getBoard()[TAILLE / 2][1] = Case.PLAYER3;
+				getBoard()[TAILLE / 2][TAILLE - 2] = Case.PLAYER4;
 			}
 		}
 	}
 
 	public void show() {
+		System.out.print("   ");
 		for (int i = 0; i < TAILLE; i++) {
+			if (i>=10) {
+				System.out.print("1 ");
+			}
+			else {
+				System.out.print("  ");
+			}
+		}
+		System.out.println();
+		System.out.print("   ");
+		for (int i = 0; i < TAILLE; i++) {
+			System.out.print(i%10 + " ");
+		}
+		System.out.println();
+		for (int i = 0; i < TAILLE; i++) {
+			if (i<10) {
+				System.out.print(" ");
+			}
+			System.out.print(i + " ");
 			for (int j = 0; j < TAILLE; j++) {
-				if (this.board[i][j].getValue() == -1) {
-					System.out.print("+ ");
-				}
-				else if (this.board[i][j].getValue() >= 6) {
-					if (j%2 == 0) {
+				if (this.board[i][j] == Case.NULL) {
+						System.out.print("+ ");
+				} else if (this.board[i][j] == Case.BORDER || this.board[i][j] == Case.POTENTIALWALL) {
+					if (j % 2 == 0) {
 						System.out.print("| ");
-					}
-					else {
+					} else {
 						System.out.print("- ");
 					}
-				}
-				else if (this.board[i][j].getValue() == 5) {
-					System.out.print("  ");
-				}
-				else{
+				} else if (this.board[i][j] == Case.WALL) {
+					System.out.print("/ ");
+			    }else if (this.board[i][j] == Case.EMPTY) {
+						System.out.print("  ");
+				} else {
 					System.out.print(this.board[i][j].getValue() + " ");
 				}
 			}
@@ -117,16 +146,19 @@ public class Board {
 		}
 	}
 
-	public void deleteEdge() {
-
+	public void move(Position pos, Pawn player) {
+		this.board[player.getPos().getX()][player.getPos().getY()] = Case.EMPTY;
+		player.setPos(pos);
+		this.board[player.getPos().getX()][player.getPos().getY()] = player.getPlayerNb();
 	}
 
-	public void addEdge() {
-
-	}
-
-	public static void main(String[] args) {
-		Board p = new Board(4);
-		p.show();
-	}
+	/*
+	 * public void deleteEdge() {
+	 * 
+	 * }
+	 * 
+	 * public static void addEdge() {
+	 * 
+	 * }
+	 */
 }
