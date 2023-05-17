@@ -27,7 +27,7 @@
 4. Poser un mur
 4.1. Tourner le mur (scroll, clic droit) (Durée estimée : 20min) : A faire (IHM plus tard)
 --4.2. Vérifier Mur posable (Durée estimée : 2-3h - Durée : 2h) : Terminé - Warren
-     Vérifier Hors Index / Deja un mur / Bordure / Max 20 bordures (compteur) Terminé - Warren, Abd-Ennour
+     Vérifier Hors Index / Deja un mur / Bordure / Max 20 murs (compteur) Terminé - Warren, Abd-Ennour
      Compteur -> tourDeJeu si compteur atteint -> plus de mur posable
 Vérifier DFS pour tout les joueurs : A faire 
 --4.3. Pose le mur centré sur le curseur (Durée estimée : 2h) : terminé - Abd-Ennour
