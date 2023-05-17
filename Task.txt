@@ -14,7 +14,7 @@
      mouvement Special
      Gerer Exception déplacement impossible -> pas besoin finalement
 3.2. Afficher les déplacements possibles (Durée estimée : 10min) : A faire
-3.3. Déplacer un pion (Durée estimée : 30min) : A faire
+3.3. Déplacer un pion (Durée estimée : 30min) : En Cours - Noaman
      Choisir déplacement
      Actualiser la position du pion (rappeler possibleMove()
 3.4. Vérifier si le joueur a gagné (Durée estimée : 30min) : A faire
