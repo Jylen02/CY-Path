@@ -47,7 +47,7 @@ IHM plus tard : Recuperer les coordonnées du curseur et convertir -> méthode
                  ajouter méthode accountWall() - Abd-Ennour
                  optimiser if/else -> switch ? Terminé - Jeremy, Christophe, Warren, Noaman
                  vérifier dupliquat d'affichage pb technique Terminé - Jeremy, Christophe, Warren, Noaman
- 	 	 win ? à implémenter - Noaman
+ 	 	 win ? Terminé - Noaman
 
 6. DFS (Durée : 4h) : A adapter - Jeremy
 
