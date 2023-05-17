@@ -32,9 +32,19 @@ public class Main {
 			board.move(position, p.getPawn());
 		}else if(input==2) {
 			System.out.println("Mur vertical : 1 \n Mur horizontal : 2");
-			int o=s.nextInt();
+			int orientation=s.nextInt();
+			if(orientation==1) {
+				Wall wall = new Wall(Orientation.VERTICAL,position);
+				wall.createWall(board);
+				
+			}else if(orientation==2) {
+				Wall wall = new Wall(Orientation.HORIZONTAL,position);
+				wall.createWall(board);
+				
+			}
 		}
 		s.close();
+		board.show();
 	}
 
 	public static void main(String[] args) {
