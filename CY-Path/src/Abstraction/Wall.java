@@ -6,7 +6,7 @@ import java.util.Map;
 public class Wall {
 
 	/* Attributes */
-	private final int HEIGHT = 2;
+	//private final int HEIGHT = 2;
 	private Orientation orientation;
 	private Position position;
 
@@ -41,7 +41,7 @@ public class Wall {
 		return true;
 	}
 
-	/*public boolean hasWall(){
+	public boolean hasWall(){
 		if(this.getOrientation() == Orientation.VERTICAL 
 				&& (wallIntersection.containsKey(new Intersection(new Position(this.getPosition().getX(),this.getPosition().getY()-1),this.getPosition())))
 				&& (wallIntersection.containsKey(new Intersection(this.getPosition() , new Position(this.getPosition().getX(),this.getPosition().getY()+1))))) {
@@ -55,7 +55,7 @@ public class Wall {
 		return true;
 	}
 	/* modifier exception : à mettre dans les méthodes d'au dessus */
-	/*public boolean VerifyWall() throws IncorrectWallException {
+	public boolean VerifyWall() throws IncorrectWallException {
 		try {
 			if (this.hasWall() || this.outOfBorderWidth() || (DFS() == false)) {
 				throw new IncorrectWallException();
@@ -88,7 +88,7 @@ public class Wall {
 		}
 		return false;
 
-	}*/
+	}
 
 	private boolean DFS() {
 		return true;

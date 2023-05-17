@@ -5,8 +5,8 @@ public class Board {
 	private Case[][] board;
 	private int playerNumber;
 	private int wallCount;
-	private static final int TAILLE = 19;
-	private static final int MAXWALLCOUNT = 20;
+	public static final int TAILLE = 19;
+	public static final int MAXWALLCOUNT = 20;
 	
 	//Constructor
 	public Board(int playerNumber) {
