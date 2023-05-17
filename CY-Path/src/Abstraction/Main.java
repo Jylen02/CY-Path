@@ -14,11 +14,10 @@ public class Main {
 
 	public static void roundOfPlay(Player p, Board board,Scanner s) { // Tour de jeu
 		System.out.println("Tour de "+p.getPlayerNumber());
-		System.out.println("Menu :");
+		//System.out.println("Menu :");
 		System.out.println(" - Avancer : 1 \n - Poser un mur : 2");
 		System.out.println("Veuillez entrer l'option de votre choix (1 ou 2)");
 		int input = s.nextInt();
-
 		System.out.println("Veuillez entrer les coordonnées : ");
 		System.out.println("	x = ");
 		int x = s.nextInt();
@@ -29,25 +28,33 @@ public class Main {
 
 		if (input == 1) {
 			p.getPawn().possibleMove(board);
-			board.move(position, p.getPawn());
+			if(p.getPawn().getPossibleDestination().contains(position)) {
+				board.move(position, p.getPawn());
+			}
+			else {
+				System.out.println("Erreur : Veuillez entrez les coordonnées d'un déplacement valide.\\n");
+				roundOfPlay(p,board,s);
+			}
 		} else if (input == 2) {
 			System.out.println("Mur vertical : 1 \n Mur horizontal : 2");
 			int orientation = s.nextInt();
 			if (orientation == 1) {
 				Wall wall = new Wall(Orientation.VERTICAL, position);
 				if (!wall.createWall(board)) {
+					System.out.println("Erreur : Impossible de placer un mur à ces coordonnées.\n");
 					roundOfPlay(p, board,s);
 				}
 
 			} else if (orientation == 2) {
 				Wall wall = new Wall(Orientation.HORIZONTAL, position);
 				if (!wall.createWall(board)) {
+					System.out.println("Erreur : Impossible de placer un mur à ces coordonnées.\\n");
 					roundOfPlay(p, board,s);
 				}
 
 			}
 		}else{
-			System.out.println("Erreur : recommencez ");
+			System.out.println("Erreur : Orientation du mur incorrect.\\n");
 			roundOfPlay(p,board,s);
 		}
 		board.show();
