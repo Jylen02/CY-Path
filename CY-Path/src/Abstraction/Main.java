@@ -12,46 +12,54 @@ public class Main {
 		}
 	}
 
-	public static void roundOfPlay(Player[] players, Integer turn, Board board, Scanner s) { // Tour de jeu
-		// System.out.println("Menu :");
+	//Player's turn
+	public static void roundOfPlay(Player[] players, Integer turn, Board board, Scanner s) {
+		//Verify if there max amount of wall is reach
 		boolean endWall=accountWall(board);
 		Player p = players[turn];
+		//Display the possible destinations of a pawn
 		p.getPawn().possibleMove(board);
-		System.out.println("Déplacements possible :");
+		System.out.println("Possible move :");
 		System.out.println(p.getPawn().getPossibleDestination());
 		int input;
-		if ( endWall==false) {
-			System.out.println("Le nombre de mur est trop élevé vous ne pouvez plus que vous deplacer !");	
+		//Check if the max amount of wall is reached, we can only move
+		if (endWall==false) {
+			System.out.println("The maximum amount of wall is reached, you can only move from now.");	
 			input=1;
 		}
+		//Otherwise, choose an action
 		else {
-			System.out.println("Choix de l'action souhaitée :");
-			System.out.println(" - Avancer : 1 \n - Poser un mur : 2");
-			System.out.println("Veuillez entrer l'option de votre choix (1 ou 2) :");
+			System.out.println("Choice of action :");
+			System.out.println(" - Move the pawn : 1 \n - Put a wall : 2");
+			System.out.println("Please select the action you want (1 or 2) :");
 			input = s.nextInt();
-			
 		}
-		System.out.println("Veuillez entrer les coordonnées : ");
+		//Enter the coordinates for the pawn's move or wall's coordinates
+		System.out.println("Please enter the coordinates : ");
 		System.out.print("row = ");
 		int row = s.nextInt();
 		System.out.print("column = ");
 		int column = s.nextInt();
+		
 		Position position = new Position(row, column);
 
 		switch (input) {
 		case 1:
+			//Check if the move is in the possible move's list then move
 			if (p.getPawn().getPossibleDestination().contains(position)) {
 				board.move(position, p.getPawn());
-			} else {
-				System.out.println("Erreur : Veuillez entrez les coordonnées d'un déplacement valide.");
+			} //Otherwise, restart the turn
+			else {
+				System.out.println("Error : Please enter a valid coordinates.");
 				board.show();
 				roundOfPlay(players, turn, board, s);
 			}
 			break;
 		case 2:
-			System.out.println("Choix de l'orientation du mur :");
-			System.out.println(" - Mur vertical : 1 \n - Mur horizontal : 2");
-			System.out.println("Veuillez entrer l'option de votre choix (1 ou 2) :");
+			//Choose wall's orientation
+			System.out.println("Choice of the wall's orientation :");
+			System.out.println(" - Vertical wall : 1 \n - Horizontal wall : 2");
+			System.out.println("Please select the action you want (1 or 2) :");
 			int orientation = s.nextInt();
 			Wall wall;
 			switch (orientation) {
@@ -64,14 +72,16 @@ public class Main {
 				wallError(wall, board, players, turn, s);
 				break;
 			default:
-				System.out.println("Erreur : Orientation du mur incorrect.");
+				//Wrong value of wall's orientation
+				System.out.println("Error : Incorrect wall's orientation.");
 				board.show();
 				roundOfPlay(players, turn, board, s);
 				break;
 			}
 			break;
 		default:
-			System.out.println("Erreur : Action indisponible.");
+			//Wrong value of action
+			System.out.println("Error : Action not disponible.");
 			board.show();
 			roundOfPlay(players, turn, board, s);
 			break;
@@ -79,11 +89,13 @@ public class Main {
 	}
 
 	public static void wallError(Wall wall, Board board, Player[] players, Integer turn, Scanner s) {
+		//Check if the wall can't be instaured, restart the turn
 		if (!wall.createWall(board)) {
-			System.out.println("Erreur : Impossible de placer un mur à ces coordonnées.");
+			System.out.println("Error : Can't put a wall to these coordinates.");
 			board.show();
 			roundOfPlay(players, turn, board, s);
-		} else {
+		} //Otherwise, check if all pawn can still reach the goal, if not, remove the wall, then restart the turn
+		else {
 			//DFS sur tout les pions à faire ici
 			//(new Dfs(board)).dfs(board, p.getPawn());
 		}
@@ -92,10 +104,12 @@ public class Main {
 	public static void main(String[] args) {
 		Scanner s = new Scanner(System.in);
 		int numberOfPlayers = 0;
+		//Enter the number of players
 		do {
-			System.out.println("Veuillez entrer le nombre de joueur (2 ou 4)");
+			System.out.println("Please enter the number of players (2 or 4)");
 			numberOfPlayers = s.nextInt();
 		} while (numberOfPlayers != 2 && numberOfPlayers != 4);
+		
 		Player[] players = new Player[numberOfPlayers];
 		for (int i = 0; i < numberOfPlayers; i++) {
 			switch (i) {
@@ -122,13 +136,15 @@ public class Main {
 		boolean win = false;
 		int turn = 0;
 
+		//While no one has won, play turn
 		while (!win) {
 			System.out.println("Tour de " + players[turn].getPlayerNumber() + ":");
 			roundOfPlay(players, turn, board, s);
 			board.show();
+			//If someone has won, finish the game and display the winner
 			if (players[turn].getPawn().isWinner()) {
 				win = true;
-				System.out.println(players[turn].getPlayerNumber() + " à gagné. Félicitation !");
+				System.out.println(players[turn].getPlayerNumber() + " has won. Congratulations !");
 			}
 			turn = (turn + 1) % numberOfPlayers;
 		}
