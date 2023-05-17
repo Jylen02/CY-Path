@@ -3,6 +3,8 @@ package Abstraction;
 public class Player {
 	private Case playerNumber; // n° of the player
 	private Pawn pawn;
+	//private String name;
+	//private .... icone;
 
 	public Player(Case playerNumber, Pawn pawn) {
 		this.playerNumber = playerNumber;
