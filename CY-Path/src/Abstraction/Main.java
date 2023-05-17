@@ -63,18 +63,19 @@ public class Main {
 	public static void main(String[] args) {
 		Board board = new Board(4);
 		board.show();
-
+		int numberOfPlayer=4;
 		Player p1 = new Player(Case.PLAYER1, new Pawn(new Position(Board.TAILLE - 2, Board.TAILLE / 2), Case.PLAYER1));
 		Player p2 = new Player(Case.PLAYER2, new Pawn(new Position(1, Board.TAILLE / 2), Case.PLAYER2));
 		Player p3 = new Player(Case.PLAYER3, new Pawn(new Position(Board.TAILLE / 2, 1), Case.PLAYER3));
 		Player p4 = new Player(Case.PLAYER4, new Pawn(new Position(Board.TAILLE / 2, Board.TAILLE - 2), Case.PLAYER4));
 		boolean win = false;
 		Player[] players = { p1, p2, p3, p4 };
+		//Player[] players = { p1, p2};  If there is only  players
 		int turn=0;
 		Scanner s = new Scanner(System.in);
 		while (!win) {
 			roundOfPlay(players[turn],board,s);
-			turn=(turn+1)%4;
+			turn=(turn+1)%numberOfPlayer;
 		}
 		s.close();
 		
