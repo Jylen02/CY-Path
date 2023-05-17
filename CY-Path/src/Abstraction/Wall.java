@@ -44,13 +44,13 @@ public class Wall {
 	/* A modifier pour prendre le board en parametre */
 	public boolean hasWall(Board board) {
 		if (this.getOrientation() == Orientation.VERTICAL) {
-			if (board.getBoard()[this.getPosition().getX()][this.getPosition().getY() - 1] == Case.POTENTIALWALL
-					&& board.getBoard()[this.getPosition().getX()][this.getPosition().getY() + 1] == Case.POTENTIALWALL) {
+			if (board.getBoard()[this.getPosition().getX()-1][this.getPosition().getY()] == Case.POTENTIALWALL
+					&& board.getBoard()[this.getPosition().getX()+1][this.getPosition().getY()] == Case.POTENTIALWALL) {
 				return false;
 			}
 		} else if (this.getOrientation() == Orientation.HORIZONTAL) {
-			if (board.getBoard()[this.getPosition().getX() - 1][this.getPosition().getY()] == Case.POTENTIALWALL
-					&& board.getBoard()[this.getPosition().getX() + 1][this.getPosition().getY()] == Case.POTENTIALWALL) {
+			if (board.getBoard()[this.getPosition().getX()][this.getPosition().getY()-1] == Case.POTENTIALWALL
+					&& board.getBoard()[this.getPosition().getX()][this.getPosition().getY()+1] == Case.POTENTIALWALL) {
 				return false;
 			}
 		}
@@ -59,7 +59,7 @@ public class Wall {
 	
 	
 	public boolean verifyWall(Board board) {
-		if (this.hasWall(board) || this.outOfBorderWidth() || (new Dfs(board)).dfs(0,8) == false) {
+		if (this.hasWall(board) || this.outOfBorderWidth() || (new Dfs(board)).dfs(5,8) == false) {
 			System.out.println("Vous ne pouvez pas placer de murs ici");
 			return false;
 		}
@@ -94,9 +94,15 @@ public class Wall {
 }
 	public static void main(String[] args) {
 		Board p = new Board(4);
-		Position po =new Position(2,2);
-		Wall w = new Wall(Orientation.HORIZONTAL, po);
+		Position po =new Position(2,8);
+		Wall w = new Wall(Orientation.VERTICAL, po);
 		w.createWall(p);
+		Position po2 =new Position(2,10);
+		Wall w2 = new Wall(Orientation.VERTICAL, po2);
+		w2.createWall(p);
+		Position po3 =new Position(4,10);
+		Wall w3 = new Wall(Orientation.HORIZONTAL, po3);
+		w3.createWall(p);
 		p.show();
 	}
 	

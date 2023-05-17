@@ -23,12 +23,12 @@
 
 4. Poser un mur
 4.1. Tourner le mur (scroll, clic droit) (Durée estimée : 20min) : A faire
-4.2. Vérifier Mur posable (Durée estimée : 2-3h) : A modifier
-     Vérifier Hors Index / Deja un mur / Bordure / Max 20 bordures (compteur)
-     Vérifier DFS pour tout les joueurs
+4.2. Vérifier Mur posable (Durée estimée : 2-3h) : Terminé - Warren
+     Vérifier Hors Index / Deja un mur / Bordure / Max 20 bordures (compteur) Terminé (sauf compteur) - Warren
+     Vérifier DFS pour tout les joueurs : A verifier - Jeremy
 4.3. Pose le mur centré sur le curseur (Durée estimée : 2h) : A faire
      IHM plus tard : Recuperer les coordonnées du curseur et convertir -> méthode
-     Poser le mur
+     Poser le mur - Testé : Abd-Ennour
      Incrémenter compteur Wall
 4.4. Si max 20 bordures atteint : grisé l'icone du mur (ne peut plus poser de mur).
 
