@@ -7,6 +7,7 @@
 2. Faire une fonction tourDeJeu (Durée estimée : 1h) : En Cours - Jeremy
    Créer une classe Player (numéro joueur,attribut myTurn, méthode jouer)
    Quand c'est à son tour : débloquer les fonctionnalités de tour de jeu
+2.1. Associer les pions aux joueurs et à l'énumération Case PLAYER1... (Durée estimée : 30min) : En Cours - Noaman, Christophe
 
 3. Déplacer un pion
 3.1. Vérifier les déplacements possibles (Durée estimée : 2h - Durée : 2h) : A Verifier - Christophe, Jeremy
