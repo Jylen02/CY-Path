@@ -85,7 +85,7 @@ public class Wall {
 		}
 	}
 
-	public boolean createWall(Board board) throws IncorrectWallException {
+	public boolean createWall(Board board) {
 
 		if (verifyWall(board)) {
 			placeWall(this.getOrientation(), board, Case.WALL, 1);

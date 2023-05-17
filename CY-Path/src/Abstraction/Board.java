@@ -146,14 +146,10 @@ public class Board {
 		}
 	}
 
-	public void move(Position pos, Pawn player) throws ImpossibleMovementException {
-		if (player.getPossibleDestination().contains(pos)) {
-			this.board[player.getPos().getX()][player.getPos().getY()] = Case.EMPTY;
-			player.setPos(pos);
-			this.board[player.getPos().getX()][player.getPos().getY()] = player.getPlayerNb();
-		} else {
-			throw new ImpossibleMovementException("Error : Unauthorized movement");
-		}
+	public void move(Position pos, Pawn player) {
+		this.board[player.getPos().getX()][player.getPos().getY()] = Case.EMPTY;
+		player.setPos(pos);
+		this.board[player.getPos().getX()][player.getPos().getY()] = player.getPlayerNb();
 	}
 
 	/*
