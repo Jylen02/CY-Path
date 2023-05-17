@@ -4,7 +4,7 @@
      Initialiser le plateau selon le nombre de joueur (en plaçant les pions)
      Réinitialiser compteur Wall
 
-2. Faire une fonction tourDeJeu (Durée estimée : 1h) : A faire 
+2. Faire une méthode tourDeJeu (Durée estimée : 1h) : A faire 
    Créer une classe Player (numéro joueur, méthode jouer)
    Quand c'est à son tour : débloquer les fonctionnalités de tour de jeu
 
