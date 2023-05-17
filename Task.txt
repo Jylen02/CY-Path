@@ -7,6 +7,7 @@
 2. Faire une fonction tourDeJeu (Durée estimée : 1h) : En Cours - Jeremy
    Créer une classe Player (numéro joueur,attribut myTurn, méthode jouer)
    Quand c'est à son tour : débloquer les fonctionnalités de tour de jeu
+2.1. Associer les pions aux joueurs et à l'énumération Case PLAYER1... (Durée estimée : 30min) : En Cours - Noaman, Christophe
 
 3. Déplacer un pion
 3.1. Vérifier les déplacements possibles (Durée estimée : 2h - Durée : 2h) : A Verifier - Christophe, Jeremy
@@ -14,9 +15,9 @@
      mouvement Special
      Gerer Exception déplacement impossible -> pas besoin finalement
 3.2. Afficher les déplacements possibles (Durée estimée : 10min) : A faire
-3.3. Déplacer un pion (Durée estimée : 30min) : En Cours - Noaman
+3.3. Déplacer un pion (Durée estimée : 30min - Durée 20min) : A verifier - Noaman
      Choisir déplacement
-     Actualiser la position du pion (rappeler possibleMove()
+     Actualiser la position du pion (rappeler possibleMove())
 3.4. Vérifier si le joueur a gagné (Durée estimée : 30min) : A faire
      Afficher gagnant
      Bouton rejouer (appeler initializeBoard())
