@@ -4,9 +4,15 @@ import java.util.Scanner;
 
 public class Wall {
 
-	/* Attributes */
 	// private final int HEIGHT = 2;
+	/**
+	 * The orientation of the wall
+	 */
 	private Orientation orientation;
+	
+	/**
+	 * The current position of the middle of the wall
+	 */
 	private Position position;
 
 	/**
