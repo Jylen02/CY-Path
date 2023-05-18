@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -131,7 +132,6 @@ public class Main extends Application {
 		Label label= new Label("Choose the name of each players");
 		TextField player1= new TextField("Player1");
 		TextField player2= new TextField("Player2");
-		bu
 		VBox box = new VBox(title,label,player1,player2,back);
 		Scene scene = new Scene(box);
 		this.primaryStage.setScene(scene);
@@ -171,20 +171,18 @@ public class Main extends Application {
                 "Rules 3 : When the maximum amount of wall is reached, the player must move his pawn.",
                 "Rules 4 : The pawns are moved one square at a time, horizontally or vertically",
                 "Rules 5 : The fences must be placed between 2 sets of 2 squares",
-                "Rules 6 : When two pawns face each other on neighbouring squares which are not separated by a fence, the player whose turn it is can jump the opponent’s pawn (and place himself behind him), thus advancing an extra square",
-                "Rules 7 :  If there is a fence behind the said pawn, the player can place his pawn to the side of the other pawn",
+                "Rules 6 : When two pawns face each other on neighbouring squares which are not separated by a fence,\n\t\tthe player whose turn it is can jump the opponent’s pawn (and place himself behind him), thus advancing an extra square",
+                "Rules 7 : If there is a fence behind the said pawn, the player can place his pawn to the side of the other pawn",
                 "Rules 8 : The first player who reaches one of the 9 squares opposite his base line is the winner",
                 "Rules 9 : It is forbidden to jump more than one pawn"
         );
         
-        Button back = new Button("<-");
+        Button back = new Button("back");
         back.setOnAction(e -> start(primaryStage));
         
-        GridPane pane = new GridPane();
-        pane.getChildren().add(back);
+        VBox box = new VBox(title, listOfRules, back);
         
-		
-		Scene scene = new Scene(pane);
+		Scene scene = new Scene(box);
 		
 		this.primaryStage.setScene(scene);
 		this.primaryStage.show();
