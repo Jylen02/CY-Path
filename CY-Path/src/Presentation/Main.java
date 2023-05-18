@@ -7,6 +7,9 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -29,20 +32,29 @@ public class Main extends Application {
 	public void start(Stage primaryStage) {
 		this.primaryStage = primaryStage;
 		this.primaryStage.setTitle("Quoridor");
-		VBox box = new VBox();
+		this.primaryStage.setWidth(800);
+		this.primaryStage.setHeight(700);
+		this.primaryStage.setResizable(false);
+		
+		VBox box = new VBox(20);
 		
 		Label title = new Label("Quoridor");
-		Button play = new Button("Play");
+		title.setStyle("-fx-font-size: 140px;");
+		
+		Button play = createButton("Play");
 		play.setOnAction(e -> chooseNumberOfPlayer());
-		Button rules = new Button("Rules");
+		
+		Button rules = createButton("Rules");
 		rules.setOnAction(e -> showRules());
-		Button exit = new Button("Exit");
+		
+		Button exit = createButton("Exit");
 		exit.setOnAction(e -> primaryStage.close());
 		
 		box.getChildren().addAll(title, play, rules, exit);
 		box.setAlignment(Pos.CENTER);
 		
 		Scene scene = new Scene(box);
+		
 		this.primaryStage.setScene(scene);
 		this.primaryStage.show();
 		/*
@@ -90,16 +102,90 @@ public class Main extends Application {
 	}
 	
 	private void chooseNumberOfPlayer() {
-		VBox box = new VBox();
+		VBox box = new VBox(10);
+		Button back = new Button("Back");
+		back.setOnAction(e -> start(primaryStage));
 		Label title = new Label("Quoridor");
-		box.getChildren().addAll(title);
+		Label label= new Label("Choose the number of players");
+		RadioButton twoPlayer= new RadioButton("2 Players");
+		twoPlayer.setOnAction(e -> createTwoPlayers());
+		RadioButton fourPlayer= new RadioButton("4 Players");
+		fourPlayer.setOnAction(e -> createFourPlayers());
+		Button button = new Button ("Play Now !");
+		button.setOnAction(e -> playBoard());
+		box.getChildren().addAll(title,label,twoPlayer, fourPlayer,back);
 		Scene scene = new Scene(box);
 		this.primaryStage.setScene(scene);
 		this.primaryStage.show();
 	}
 	
+	private Object playBoard() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	private void createTwoPlayers() {
+		// TODO Auto-generated method stub
+		Button back = new Button("Back");
+		back.setOnAction(e -> chooseNumberOfPlayer());
+		Label title = new Label("Quoridor");
+		Label label= new Label("Choose the name of each players");
+		TextField player1= new TextField("Player1");
+		TextField player2= new TextField("Player2");
+		VBox box = new VBox(title,label,player1,player2,back);
+		Scene scene = new Scene(box);
+		this.primaryStage.setScene(scene);
+		this.primaryStage.show();
+		
+	}
+
+	private void createFourPlayers() {
+		// TODO Auto-generated method stub
+		Button back = new Button("Back");
+		back.setOnAction(e -> chooseNumberOfPlayer());
+		Label title = new Label("Quoridor");
+		Label label= new Label("Choose the name of each players");
+		TextField player1= new TextField("Player1");
+		TextField player2= new TextField("Player2");
+		TextField player3= new TextField("Player3");
+		TextField player4= new TextField("Player4");
+		Button commit = new Button("Start");
+		commit.setOnAction(e -> chooseNumberOfPlayer());
+		VBox box = new VBox(title,label,player1,player2,player3,player4,back);
+		Scene scene = new Scene(box);
+		this.primaryStage.setScene(scene);
+		this.primaryStage.show();
+	}
+
 	private void showRules() {
 		
+		Label title = new Label("Rules");
+		title.setStyle("-fx-font-size: 140px; -fx-justify-content: center;");
+		
+		ListView<String> listOfRules = new ListView<>();
+		listOfRules.getItems().addAll(
+        		"Goal : To be the first to reach the line opposite to one’s base line.",
+        		"",
+                "Rules 1 : When the game starts the wall are placed in their storage area.",
+                "Rules 2 : Each player in turn, chooses to move his pawn or to put up one of his wall.",
+                "Rules 3 : When the maximum amount of wall is reached, the player must move his pawn.",
+                "Rules 4 : The pawns are moved one square at a time, horizontally or vertically",
+                "Rules 5 : The fences must be placed between 2 sets of 2 squares",
+                "Rules 6 : When two pawns face each other on neighbouring squares which are not separated by a fence,\n\t\tthe player whose turn it is can jump the opponent’s pawn (and place himself behind him), thus advancing an extra square",
+                "Rules 7 : If there is a fence behind the said pawn, the player can place his pawn to the side of the other pawn",
+                "Rules 8 : The first player who reaches one of the 9 squares opposite his base line is the winner",
+                "Rules 9 : It is forbidden to jump more than one pawn"
+        );
+        
+        Button back = new Button("back");
+        back.setOnAction(e -> start(primaryStage));
+        
+        VBox box = new VBox(title, listOfRules, back);
+        
+		Scene scene = new Scene(box);
+		
+		this.primaryStage.setScene(scene);
+		this.primaryStage.show();
 	}
 	
 	private GridPane createGridPane() {
@@ -120,7 +206,8 @@ public class Main extends Application {
 
 	private Button createButton(String text) {
 		Button button = new Button(text);
-		button.setMinWidth(100);
+		button.setPrefSize(300,100);
+		button.setStyle("-fx-font-size: 50px;");
 		return button;
 	}
 
