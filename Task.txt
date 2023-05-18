@@ -48,8 +48,10 @@ IHM plus tard : Recuperer les coordonnées du curseur et convertir -> méthode
                  optimiser if/else -> switch ? Terminé - Jeremy, Christophe, Warren, Noaman
                  vérifier dupliquat d'affichage pb technique Terminé - Jeremy, Christophe, Warren, Noaman
  	 	 win ? Terminé - Noaman
+5.2. Ajouter fonctionnalité nom des joueurs (Durée estimée : 15min) : A faire
 
-6. DFS (Durée : 4h) : A adapter - Jeremy
+
+6. DFS (Durée : 8h) : Terminé - Jeremy, Christophe, Abd-Ennour
 
 7. Commentaire + Documentation de toutes les classes (avant IHM !!)
 

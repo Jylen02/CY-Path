@@ -215,17 +215,17 @@ public class Main {
 		for (int i = 0; i < numberOfPlayers; i++) {
 			switch (i) {
 			case 0:
-				players[0] = new Player(Case.PLAYER1,
+				players[0] = new Player("PLAYER1",
 						new Pawn(board, new Position(Board.TAILLE - 2, Board.TAILLE / 2), Case.PLAYER1));
 				break;
 			case 1:
-				players[1] = new Player(Case.PLAYER2, new Pawn(board, new Position(1, Board.TAILLE / 2), Case.PLAYER2));
+				players[1] = new Player("PLAYER2", new Pawn(board, new Position(1, Board.TAILLE / 2), Case.PLAYER2));
 				break;
 			case 2:
-				players[2] = new Player(Case.PLAYER3, new Pawn(board, new Position(Board.TAILLE / 2, 1), Case.PLAYER3));
+				players[2] = new Player("PLAYER3", new Pawn(board, new Position(Board.TAILLE / 2, 1), Case.PLAYER3));
 				break;
 			case 3:
-				players[3] = new Player(Case.PLAYER4,
+				players[3] = new Player("PLAYER4",
 						new Pawn(board, new Position(Board.TAILLE / 2, Board.TAILLE - 2), Case.PLAYER4));
 				break;
 			default:
@@ -243,13 +243,13 @@ public class Main {
 		}
 		//While no one has won, play turn
 		while (!win) {
-			System.out.println("Tour de " + players[turn].getPlayerNumber() + ":");
+			System.out.println("Tour de " + players[turn].getName() + ":");
 			roundOfPlay(players, turn, board, s);
 			board.show();
 			// If someone has won, finish the game and display the winner
 			if (players[turn].getPawn().isWinner()) {
 				win = true;
-				System.out.println(players[turn].getPlayerNumber() + " has won. Congratulations !");
+				System.out.println(players[turn].getName() + " has won. Congratulations !");
 			}
 			for (int i=0; i<numberOfPlayers; i++) {
 				players[i].getPawn().setPossibleDestination(players[i].getPawn().possibleMove(board,players[i].getPawn().getPos()));

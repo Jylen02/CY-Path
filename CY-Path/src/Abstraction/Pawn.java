@@ -246,6 +246,7 @@ public class Pawn {
 	 * @param board The current state of the game board.
 	 * @param pos   The position from which to calculate possible moves.
 	 */
+	
 	public Set<Position> possibleMove(Board board, Position pos) {
 		Set<Position> possibleDestination = new HashSet<Position>();
 		topMove(board, possibleDestination, pos, true);

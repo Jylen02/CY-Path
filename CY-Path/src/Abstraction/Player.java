@@ -6,11 +6,6 @@ package Abstraction;
 public class Player {
 
 	/**
-	 * The player's number or identifier.
-	 */
-	private Case playerNumber;
-
-	/**
 	 * The pawn associated with the player.
 	 */
 	private Pawn pawn;
@@ -24,30 +19,30 @@ public class Player {
 	/**
 	 * Creates a new player with the specified player number and associated pawn.
 	 *
-	 * @param playerNumber The player's number or identifier.
+	 * @param name 		   The player's name.
 	 * @param pawn         The pawn associated with the player.
 	 */
-	public Player(Case playerNumber, Pawn pawn) {
-		this.playerNumber = playerNumber;
+	public Player(String name, Pawn pawn) {
+		this.name = name;
 		this.pawn = pawn;
 	}
 
 	/**
-	 * Returns the player's number or identifier.
+	 * Returns the player's name.
 	 *
-	 * @return The player's number or identifier.
+	 * @return The player's name.
 	 */
-	public Case getPlayerNumber() {
-		return playerNumber;
+	public String getName() {
+		return this.name;
 	}
 
 	/**
-	 * Sets the player's number or identifier.
+	 * Sets the player's name.
 	 *
-	 * @param playerNumber The new player number.
+	 * @param name The new player's name.
 	 */
-	public void setPlayerNumber(Case playerNumber) {
-		this.playerNumber = playerNumber;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	/**
@@ -57,29 +52,5 @@ public class Player {
 	 */
 	public Pawn getPawn() {
 		return pawn;
-	}
-
-	/**
-	 * Sets the pawn associated with the player.
-	 *
-	 * @param pawn The new associated pawn.
-	 */
-	public void setPawn(Pawn pawn) {
-		this.pawn = pawn;
-	}
-
-	/**
-	 * Computes the vertex based on the player's pawn position. The vertex is
-	 * calculated by the formula: (x / 2) * 9 + y / 2, where x and y are the
-	 * coordinates of the pawn's position.
-	 *
-	 * @param player The player whose pawn position is to be used.
-	 * @return The computed vertex.
-	 */
-	public int getVertex(Player player) {
-		Position pos = player.getPawn().getPos();
-		int x = pos.getX();
-		int y = pos.getY();
-		return (x / 2) * 9 + y / 2;
 	}
 }
