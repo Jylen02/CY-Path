@@ -1,5 +1,8 @@
 package Abstraction;
-
+/**
+ * The Board class represents the game board for the game.
+ * It contains the board layout, player and wall count, and various methods for manipulating the board.
+ */
 public class Board {
 	// Board
 	private Case[][] board;
@@ -7,7 +10,11 @@ public class Board {
 	private int wallCount;
 	public static final int TAILLE = 19;
 	public static final int MAXWALLCOUNT = 20;
-	
+	/**
+     * Constructs a Board object with the specified player number.
+     *
+     * @param playerNumber the number of players in the game
+     */
 
 	// Constructor
 	public Board(int playerNumber) {
@@ -15,32 +22,64 @@ public class Board {
 		initializeBoard();
 		this.wallCount = 0;
 	}
+	/**
+     * Returns the current wall count on the board.
+     *
+     * @return the wall count
+     */
 
 	// Getters & Setters
 	public int getWallCount() {
 		return wallCount;
 	}
+	/**
+     * Sets the wall count on the board.
+     *
+     * @param wallCount the new wall count
+     */
 
 	public void setWallCount(int wallCount) {
 		this.wallCount = wallCount;
 	}
+	/**
+     * Returns the current board layout.
+     *
+     * @return the board layout
+     */
 
 	public Case[][] getBoard() {
 		return board;
 	}
+	/**
+     * Sets the board layout.
+     *
+     * @param board the new board layout
+     */
 
 	public void setBoard(Case[][] board) {
 		this.board = board;
 	}
+	/**
+     * Returns the number of players in the game.
+     *
+     * @return the player number
+     */
 
 	public int getPlayerNumber() {
 		return playerNumber;
 	}
+	/**
+     * Sets the number of players in the game.
+     *
+     * @param playerNumber the new player number
+     */
 
 	public void setPlayerNumber(int playerNumber) {
 		this.playerNumber = playerNumber;
 	}
-
+	/**
+     * Initializes the board with the initial layout and player placements.
+     */
 	// Initializing Board
 	public void initializeBoard() {
 		this.setBoard(new Case[TAILLE][TAILLE]);
@@ -103,6 +142,9 @@ public class Board {
 			}
 		}
 	}
+	/**
+     * Displays the current state of the board.
+     */
 
 	public void show() {
 		// First line of the column's coordinates
@@ -153,6 +195,12 @@ public class Board {
 			System.out.println();
 		}
 	}
+	/**
+     * Moves a player to a new position on the board.
+     *
+     * @param pos    the new position for the player
+     * @param player the player to move
+     */
 
 	public void move(Position pos, Pawn player) {
 		this.board[player.getPos().getX()][player.getPos().getY()] = Case.EMPTY;
