@@ -7,7 +7,7 @@ import java.util.Set;
 /**
  * The main class for running the game.
  */
-public class Main {
+public class Quoridor {
 	/**
 	 * Check if maximum amount of walls has been placed on the board.
 	 * 
