@@ -7,6 +7,8 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -29,7 +31,7 @@ public class Main extends Application {
 	public void start(Stage primaryStage) {
 		this.primaryStage = primaryStage;
 		this.primaryStage.setTitle("Quoridor");
-		VBox box = new VBox();
+		VBox box = new VBox(10);
 		
 		Label title = new Label("Quoridor");
 		Button play = new Button("Play");
@@ -90,14 +92,47 @@ public class Main extends Application {
 	}
 	
 	private void chooseNumberOfPlayer() {
-		VBox box = new VBox();
+		VBox box = new VBox(10);
 		Label title = new Label("Quoridor");
-		box.getChildren().addAll(title);
+		Label label= new Label("Choose the number of players");
+		RadioButton twoPlayer= new RadioButton("2 Players");
+		twoPlayer.setOnAction(e -> createTwoPlayers());
+		RadioButton fourPlayer= new RadioButton("4 Players");
+		fourPlayer.setOnAction(e -> createFourPlayers());
+		box.getChildren().addAll(title,label,twoPlayer, fourPlayer);
 		Scene scene = new Scene(box);
 		this.primaryStage.setScene(scene);
 		this.primaryStage.show();
 	}
 	
+	private void createTwoPlayers() {
+		// TODO Auto-generated method stub
+		
+		Label title = new Label("Quoridor");
+		Label label= new Label("Choose the name of each players");
+		TextField player1= new TextField("Player1");
+		TextField player2= new TextField("Player2");
+		VBox box = new VBox(title,label,player1,player2);
+		Scene scene = new Scene(box);
+		this.primaryStage.setScene(scene);
+		this.primaryStage.show();
+		
+	}
+
+	private void createFourPlayers() {
+		// TODO Auto-generated method stub
+		Label title = new Label("Quoridor");
+		Label label= new Label("Choose the name of each players");
+		TextField player1= new TextField("Player1");
+		TextField player2= new TextField("Player2");
+		TextField player3= new TextField("Player3");
+		TextField player4= new TextField("Player4");
+		VBox box = new VBox(title,label,player1,player2,player3,player4);
+		Scene scene = new Scene(box);
+		this.primaryStage.setScene(scene);
+		this.primaryStage.show();
+	}
+
 	private void showRules() {
 		
 	}
