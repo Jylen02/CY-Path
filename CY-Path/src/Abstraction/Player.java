@@ -19,7 +19,7 @@ public class Player {
 	 * The name of the player.
 	 */
 	private String name;
-	// private .... icone;
+	// private .... icone; TO IMPLEMENT WITH IHM
 
 	/**
 	 * Creates a new player with the specified player number and associated pawn.
