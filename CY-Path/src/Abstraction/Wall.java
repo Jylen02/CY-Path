@@ -132,7 +132,7 @@ public class Wall {
 			// Update the wall state horizontally
 			board.getBoard()[x][y - 1] = type;
 			if (type == Case.WALL) {
-				board.getBoard()[x][y] = type;
+				board.getBoard()[x][y] = Case.WALLINTERSECTION;
 			} else {
 				board.getBoard()[x][y] = Case.NULL;
 			}
@@ -145,7 +145,7 @@ public class Wall {
 			// Update the wall state vertically
 			board.getBoard()[x - 1][y] = type;
 			if (type == Case.WALL) {
-				board.getBoard()[x][y] = type;
+				board.getBoard()[x][y] = Case.WALLINTERSECTION;
 			} else {
 				board.getBoard()[x][y] = Case.NULL;
 			}
@@ -181,12 +181,13 @@ public class Wall {
 	 * @param turn    The current turn number.
 	 * @param s       Scanner for input.
 	 */
-	public void wallError(Board board, Player[] players, Integer turn, Scanner s) {
+	public void wallError(Board board, Player[] players, Integer turn) {
 		// Check if the wall can't be instaured, restart the turn
 		if (!this.createWall(board)) {
+			System.out.println(this.getPosition());
 			System.out.println("Error : Can't put a wall to these coordinates.");
 			board.show();
-			board.roundOfPlay(players, turn, s);
+			board.roundOfPlay(players, turn);
 		} // Otherwise, check if all pawn can still reach the goal, if not, remove the
 			// wall, then restart the turn
 		else {
@@ -202,8 +203,9 @@ public class Wall {
 				}
 				System.out.println("Error : This wall blocks a player.");
 				board.show();
-				board.roundOfPlay(players, turn, s);
+				board.roundOfPlay(players, turn);
 			}
+			board.show();
 		}
 	}
 }

@@ -45,11 +45,15 @@ public enum Case {
 	 * Placed wall.
 	 */
 	WALL(6),
-
+	
+	/**
+	 * Placed wall.
+	 */
+	WALLINTERSECTION(7),
 	/**
 	 * Border case.
 	 */
-	BORDER(7);
+	BORDER(8);
 
 	private final int value;
 

@@ -51,7 +51,7 @@ public class Quoridor {
 				break;
 			}
 		}
-
+		s.close();
 		board.show();
 
 		boolean win = false;
@@ -62,9 +62,10 @@ public class Quoridor {
 					.setPossibleDestination(players[i].getPawn().possibleMove(board, players[i].getPawn().getPos()));
 		}
 		// While no one has won, play turn
+		
 		while (!win) {
 			System.out.println(players[turn].getName() + "'s turn :");
-			board.roundOfPlay(players, turn, s);
+			board.roundOfPlay(players, turn);
 			board.show();
 			// If someone has won, finish the game and display the winner
 			if (players[turn].getPawn().isWinner()) {
@@ -77,6 +78,6 @@ public class Quoridor {
 			}
 			turn = (turn + 1) % numberOfPlayers;
 		}
-		s.close();
+		
 	}
 }
