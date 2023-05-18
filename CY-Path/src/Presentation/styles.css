@@ -1,0 +1,25 @@
+/* Styles pour les cellules du plateau */
+.label {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+.player-cell {
+    -fx-background-color: lightblue;
+    -fx-text-fill: black;
+}
+
+.wall-cell {
+    -fx-background-color: gray;
+    -fx-text-fill: white;
+}
+
+.border-cell {
+    -fx-background-color: black;
+    -fx-text-fill: white;
+}
+
+.empty-cell {
+    -fx-background-color: white;
+    -fx-text-fill: black;
+}
