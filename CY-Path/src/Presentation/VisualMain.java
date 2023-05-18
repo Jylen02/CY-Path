@@ -76,9 +76,10 @@ public class VisualMain extends Application {
 
         VBox vbox = new VBox(10);
         vbox.setAlignment(Pos.CENTER);
-        vbox.getChildren().addAll(/* Ajouter les éléments du plateau ici */, retourButton);
+        vbox.getChildren().addAll(retourButton);
 
         Scene scene = new Scene(vbox, 400, 300);
         primaryStage.setScene(scene);
     }
 }
+
