@@ -75,4 +75,6 @@ public class VisualBoard extends Application {
                 return cell.getValue() + "";
         }
     }
+
+
 }
