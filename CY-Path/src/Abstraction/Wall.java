@@ -155,7 +155,6 @@ public class Wall {
 	 *
 	 * @param board the game board
 	 * @return true if the wall can be created, false otherwise
-	 * @throws IncorrectWallException if the wall placement is incorrect
 	 */
 	public boolean createWall(Board board) {
 		if (verifyWall(board)) {
