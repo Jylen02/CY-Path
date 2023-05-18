@@ -79,3 +79,4 @@ public class VisualMain extends Application {
         primaryStage.setScene(scene);
     }
 }
+
