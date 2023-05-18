@@ -207,7 +207,8 @@ public class Main {
 			System.out.println("Please enter the number of players (2 or 4)");
 			numberOfPlayers = s.nextInt();
 		} while (numberOfPlayers != 2 && numberOfPlayers != 4);
-
+		s.nextLine();
+		System.out.println("Please enter the name of players");
 		Player[] players = new Player[numberOfPlayers];
 		
 		Board board = new Board(numberOfPlayers);
@@ -215,17 +216,22 @@ public class Main {
 		for (int i = 0; i < numberOfPlayers; i++) {
 			switch (i) {
 			case 0:
-				players[0] = new Player("PLAYER1",
+				System.out.println("Player 1: ");
+				players[0] = new Player(s.nextLine(),
 						new Pawn(board, new Position(Board.TAILLE - 2, Board.TAILLE / 2), Case.PLAYER1));
 				break;
 			case 1:
-				players[1] = new Player("PLAYER2", new Pawn(board, new Position(1, Board.TAILLE / 2), Case.PLAYER2));
+				System.out.println("Player 2: ");
+				players[1] = new Player(s.nextLine(), new Pawn(board, new Position(1, Board.TAILLE / 2), Case.PLAYER2));
 				break;
 			case 2:
-				players[2] = new Player("PLAYER3", new Pawn(board, new Position(Board.TAILLE / 2, 1), Case.PLAYER3));
+				System.out.println("Player 3: ");
+				players[2] = new Player(s.nextLine(), new Pawn(board, new Position(Board.TAILLE / 2, 1), Case.PLAYER3));
 				break;
 			case 3:
-				players[3] = new Player("PLAYER4",
+				System.out.println("Player 4: ");
+				
+				players[3] = new Player(s.nextLine(),
 						new Pawn(board, new Position(Board.TAILLE / 2, Board.TAILLE - 2), Case.PLAYER4));
 				break;
 			default:
@@ -243,7 +249,7 @@ public class Main {
 		}
 		//While no one has won, play turn
 		while (!win) {
-			System.out.println("Tour de " + players[turn].getName() + ":");
+			System.out.println(players[turn].getName() + "'s turn :");
 			roundOfPlay(players, turn, board, s);
 			board.show();
 			// If someone has won, finish the game and display the winner
