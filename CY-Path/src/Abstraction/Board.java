@@ -383,7 +383,6 @@ public class Board {
 				this.roundOfPlay(players, turn, s);
 				break;
 			}
-			System.out.println("wallCount =" + this.getWallCount());
 			break;
 		default:
 			// Wrong value of action
