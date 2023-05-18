@@ -27,7 +27,7 @@ public class Main extends Application {
 	private Player currentPlayer;
 	private Rectangle[][] cells;
 	private Stage primaryStage;
-	private Rectangle rectangle;
+	private Rectangle cell;
 
 	@Override
 	public void start(Stage primaryStage) {
@@ -137,23 +137,22 @@ public class Main extends Application {
 		GridPane gridPane = new GridPane();
 		for (int row = 0; row < BOARD_SIZE; row++) {
 			for (int col = 0; col < BOARD_SIZE; col++) {
-				
-				if (board.getBoard()[row][col] == Case.EMPTY) {
-					rectangle = new Rectangle(30, 30);
-					gridPane.getChildren().add(rectangle);
-				} else if (board.getBoard()[row][col] == Case.BORDER || board.getBoard()[row][col] == Case.POTENTIALWALL) {
+				if (board.getBoard()[row][col] == Case.BORDER || board.getBoard()[row][col] == Case.POTENTIALWALL) {
 					if (row % 2 == 0) {
-						this.rectangle = new Rectangle(30, 5);
-						gridPane.getChildren().add(rectangle);
+						this.cell = new Rectangle(5, 30);
 					} else {
-						this.rectangle = new Rectangle(5, 30);
-						gridPane.getChildren().add(rectangle);
+						this.cell = new Rectangle(30, 5);
 					}
-					
+					this.cell.setFill(Color.LIGHTGRAY);
+				} else if (board.getBoard()[row][col] == Case.NULL){
+					this.cell = new Rectangle(5, 5);
+					this.cell.setFill(Color.LIGHTGRAY);
+				} else {
+					cell = new Rectangle(30, 30);
+					this.cell.setFill(Color.WHITE);
 				}
-				//this.rectangle.setFill(Color.WHITE);
-				//this.rectangle.setStroke(Color.BLACK);
-
+				this.cell.setStroke(null);
+				gridPane.add(cell, row, col);
 				
 			}
 			
