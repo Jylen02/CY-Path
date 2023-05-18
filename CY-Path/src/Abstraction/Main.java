@@ -130,6 +130,9 @@ public class Main {
             }
 			if (!isWinnableForAll(board, players)) {
 				wall.updateWall(board, Case.POTENTIALWALL, -1);
+				for (int i=0; i<players.length; i++) {
+					players[i].getPawn().setPossibleDestination(players[i].getPawn().possibleMove(board,players[i].getPawn().getPos()));
+	            }
 				System.out.println("Error : This wall blocks a player.");
 				board.show();
 				roundOfPlay(players, turn, board, s);
