@@ -6,12 +6,12 @@ package Abstraction;
 public class Position {
 
 	/**
-	 * The x-coordinate of the position.
+	 * The x-coordinate of the position (Rows of the board).
 	 */
 	private Integer x;
 
 	/**
-	 * The y-coordinate of the position.
+	 * The y-coordinate of the position	(Columns of the board).
 	 */
 	private Integer y;
 
