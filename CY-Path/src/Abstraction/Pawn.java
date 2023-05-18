@@ -123,13 +123,21 @@ public class Pawn {
 		}
 
 	}
-
-	public void possibleMove(Board board) {
+	
+	/*public void possibleMove(Board board) {
 		this.possibleDestination = new HashSet<Position>();
 		topMove(board, this.getPos(), false);
 		rightMove(board, this.getPos(), false);
 		botMove(board, this.getPos(), false);
 		leftMove(board, this.getPos(), false);
+	}*/
+	
+	public void possibleMove(Board board, Position pos) {
+		this.possibleDestination = new HashSet<Position>();
+		topMove(board, pos, false);
+		rightMove(board, pos, false);
+		botMove(board, pos, false);
+		leftMove(board, pos, false);
 	}
 
 	public void finishLine() {

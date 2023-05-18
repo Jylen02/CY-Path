@@ -66,10 +66,10 @@ public class Wall {
 		return true;
 	}
 
-	public void updateWall(Orientation orientation, Board board, Case type, int co) {
+	public void updateWall(Board board, Case type, int co) {
 		int x = this.getPosition().getX();
 		int y = this.getPosition().getY();
-		if (orientation == Orientation.HORIZONTAL) {
+		if (this.getOrientation() == Orientation.HORIZONTAL) {
 			board.getBoard()[x][y - 1] = type;
 			if(type == Case.WALL) {
 				board.getBoard()[x][y] = type;
@@ -81,7 +81,7 @@ public class Wall {
 			int counter = board.getWallCount() + co;
 			board.setWallCount(counter);
 
-		} else if (orientation == Orientation.VERTICAL) {
+		} else if (this.getOrientation() == Orientation.VERTICAL) {
 			board.getBoard()[x - 1][y] = type;
 			if(type == Case.WALL) {
 				board.getBoard()[x][y] = type;
@@ -97,13 +97,7 @@ public class Wall {
 
 	public boolean createWall(Board board) {
 		if (verifyWall(board)) {
-			updateWall(this.getOrientation(), board, Case.WALL, 1);
-			//DFS fait dans le main et non ici
-//			if ((new Dfs(board)).dfs(4, 8) == false) {
-//				updateWall(this.getOrientation(), board, Case.POTENTIALWALL, -1);
-//				System.out.println("Ce mur bloque un joueur !");
-//				return false;
-//			}
+			updateWall(board, Case.WALL, 1);
 			return true;
 		} else {
 			System.out.println("Vous ne pouvez pas placer de mur à cette emplacement");

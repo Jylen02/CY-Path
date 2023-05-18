@@ -1,6 +1,8 @@
 package Abstraction;
 
+import java.util.HashSet;
 import java.util.Scanner;
+import java.util.Set;
 
 public class Main {
 
@@ -18,8 +20,8 @@ public class Main {
 		//Verify if there max amount of wall is reach
 		boolean endWall=accountWall(board);
 		Player p = players[turn];
-		//Display the possible destinations of a pawn
-		p.getPawn().possibleMove(board);
+		// Display the possible destinations of a pawn
+		p.getPawn().possibleMove(board,p.getPawn().getPos());
 		System.out.println("Possible move :");
 		System.out.println(p.getPawn().getPossibleDestination());
 		int input;
@@ -98,11 +100,43 @@ public class Main {
 			roundOfPlay(players, turn, board, s);
 		} //Otherwise, check if all pawn can still reach the goal, if not, remove the wall, then restart the turn
 		else {
-			//DFS sur tout les pions à faire ici
-			//(new Dfs(board)).dfs(board, p.getPawn());
+			if(!isWinnableForAll(board,players)) {
+				wall.updateWall(board, Case.POTENTIALWALL, -1);
+				System.out.println("Error : This wall block a player.");
+				board.show();
+				roundOfPlay(players, turn, board, s);
+			}
 		}
 	}
+	
+	public static boolean isWinnableForAll(Board board, Player[] players) {
+		int i=0;
+		while (i<4 && isWinnable(board,players[i].getPawn())) {
+			i++;
+		}
+		return i==4;
+	}
 
+	public static boolean isWinnable(Board board, Pawn player) {
+		Set<Position> marking = new HashSet<Position>();
+		for (Position pos : player.getPossibleDestination()) {
+			marking = dfs(board,pos,player,marking);
+		}
+		return false;
+	}
+
+	
+	public static Set<Position> dfs(Board board, Position pos, Pawn player, Set<Position> marking) {
+		if (!marking.contains(pos)) {
+			marking.add(pos);
+			player.possibleMove(board,pos);
+			for (Position pos1 : player.getPossibleDestination()) {
+					dfs(board, pos1, player , marking);
+				}
+			}
+		return marking;
+	}
+	
 	public static void main(String[] args) {
 		Scanner s = new Scanner(System.in);
 		int numberOfPlayers = 0;
