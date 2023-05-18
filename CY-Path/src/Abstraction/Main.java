@@ -213,7 +213,7 @@ public class Main {
 			numberOfPlayers = s.nextInt();
 		} while (numberOfPlayers != 2 && numberOfPlayers != 4);
 		s.nextLine();
-		System.out.println("Please enter the name of players");
+		System.out.println("Please enter the name of each players");
 		Player[] players = new Player[numberOfPlayers];
 		
 		Board board = new Board(numberOfPlayers);
