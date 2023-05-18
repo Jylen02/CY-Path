@@ -9,6 +9,7 @@ To run the deliverable:
 
 Implemented features:
 	- Choice of the number of players (2 or 4 players)
+	- Choice of players' names
 	- Initialization and display of the board
 	- Players play one at a time and the turn skip automatically
 	- Choice of action
@@ -37,6 +38,7 @@ Board display description :
 
 How to play? :
 	- Enter the number of players (2 or 4)
+	- Enter the names of each players
 	- Player's turn :
 		-> A list of possible moves for the active player is provided
 		-> Choose an action between "move the pawn" or "place a wall"
