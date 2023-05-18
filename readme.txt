@@ -22,10 +22,10 @@ Implemented features:
 			-> Check that there is no overlap with another wall
 			-> Cannot place a wall on the edge of the board
 			-> Check that there are a maximum of 20 walls on the board
+			-> DFS to be applied to all players, ensuring that all players have the possibility to win
 	- If there is an error, the turn is restarted 
 
 Unimplemented features :
-	- DFS to be applied to all players, ensuring that all players have the possibility to win
 	- Human-machine interface
 
 Board display description :
