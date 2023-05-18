@@ -1,27 +1,57 @@
 package Abstraction;
 
+/**
+ * Represents a player in a game.
+ */
 public class Player {
-	private Case playerNumber; // n° of the player
+
+	/**
+	 * The pawn associated with the player.
+	 */
 	private Pawn pawn;
 
-	public Player(Case playerNumber, Pawn pawn) {
-		this.playerNumber = playerNumber;
+	/**
+	 * The name of the player.
+	 */
+	private String name;
+	
+	// private .... icone; TO IMPLEMENT WITH IHM
+
+	/**
+	 * Creates a new player with the specified player number and associated pawn.
+	 *
+	 * @param name 		   The player's name.
+	 * @param pawn         The pawn associated with the player.
+	 */
+	public Player(String name, Pawn pawn) {
+		this.name = name;
 		this.pawn = pawn;
 	}
 
-	public Case getPlayerNumber() {
-		return playerNumber;
+	/**
+	 * Returns the player's name.
+	 *
+	 * @return The player's name.
+	 */
+	public String getName() {
+		return this.name;
 	}
 
-	public void setPlayerNumber(Case playerNumber) {
-		this.playerNumber = playerNumber;
+	/**
+	 * Sets the player's name.
+	 *
+	 * @param name The new player's name.
+	 */
+	public void setName(String name) {
+		this.name = name;
 	}
 
+	/**
+	 * Returns the pawn associated with the player.
+	 *
+	 * @return The pawn associated with the player.
+	 */
 	public Pawn getPawn() {
 		return pawn;
-	}
-
-	public void setPawn(Pawn pawn) {
-		this.pawn = pawn;
 	}
 }

@@ -38,18 +38,20 @@ IHM plus tard : Recuperer les coordonnées du curseur et convertir -> méthode
 
 --5. Affichage du plateau dans la console (Durée estimée : 30min) : Terminé - Christophe, Jeremy, Warren
    IHM plus tard : Afficher une interface du plateau + un menu
-5.1. Menu de jeu (Durée estimée : 2h) : A affiner - Noaman, Jeremy, Christophe
+--5.1. Menu de jeu (Durée estimée : 2h) : Terminé - Noaman, Jeremy, Christophe
      Ne plus poser de mur si il y a déjà 20 mur: en cour - Abd-Ennour
      Pouvoir choisir une action (déplacer pion/poser mur -> disponible seulement si compteur mur<20)
      Si poser : Choix orientation du mur
      Sélectionner l'emplacement du pion/mur (Position) pair : mur / impair : pion
      Il manque : main -> gérer erreur nbre de joueur initial Terminé - Jeremy, Christophe, Warren, Noaman
-                 ajouter méthode accountWall() - Abd-Ennour
+                 ajouter méthode accountWall() Terminé - Abd-Ennour
                  optimiser if/else -> switch ? Terminé - Jeremy, Christophe, Warren, Noaman
                  vérifier dupliquat d'affichage pb technique Terminé - Jeremy, Christophe, Warren, Noaman
  	 	 win ? Terminé - Noaman
+5.2. Ajouter fonctionnalité nom des joueurs (Durée estimée : 15min) : A faire
 
-6. DFS (Durée : 4h) : A adapter - Jeremy
+
+6. DFS (Durée : 8h) : Terminé - Jeremy, Christophe, Abd-Ennour
 
 7. Commentaire + Documentation de toutes les classes (avant IHM !!)
 

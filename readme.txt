@@ -9,6 +9,7 @@ To run the deliverable:
 
 Implemented features:
 	- Choice of the number of players (2 or 4 players)
+	- Choice of players' names
 	- Initialization and display of the board
 	- Players play one at a time and the turn skip automatically
 	- Choice of action
@@ -22,10 +23,10 @@ Implemented features:
 			-> Check that there is no overlap with another wall
 			-> Cannot place a wall on the edge of the board
 			-> Check that there are a maximum of 20 walls on the board
+			-> DFS to be applied to all players, ensuring that all players have the possibility to win
 	- If there is an error, the turn is restarted 
 
 Unimplemented features :
-	- DFS to be applied to all players, ensuring that all players have the possibility to win
 	- Human-machine interface
 
 Board display description :
@@ -35,8 +36,9 @@ Board display description :
 	- Walls are represented by slashes ("/")
 	- Coordinates are indicated at the top and left of the board
 
-How to play? :
+How to play ? :
 	- Enter the number of players (2 or 4)
+	- Enter the names of each players
 	- Player's turn :
 		-> A list of possible moves for the active player is provided
 		-> Choose an action between "move the pawn" or "place a wall"
