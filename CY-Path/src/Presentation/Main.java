@@ -2,7 +2,6 @@ package Presentation;
 
 import Abstraction.*;
 import javafx.application.Application;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -10,6 +9,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -18,16 +18,11 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 public class Main extends Application {
-	private static final int BOARD_SIZE = 19;
-	private static final int CELL_SIZE = 60;
-	private static final Color PLAYER1_COLOR = Color.RED;
-	private static final Color PLAYER2_COLOR = Color.BLUE;
 
 	private Board board;
-	private Player currentPlayer;
-	private Rectangle[][] cells;
 	private Stage primaryStage;
 	private Rectangle cell;
+	TextField[] player;
 
 	@Override
 	public void start(Stage primaryStage) {
@@ -35,7 +30,7 @@ public class Main extends Application {
 		this.primaryStage.setTitle("Quoridor");
 		this.primaryStage.setWidth(800);
 		this.primaryStage.setHeight(700);
-		this.primaryStage.setResizable(false);
+		//this.primaryStage.setResizable(false);
 
 		VBox box = new VBox(20);
 
@@ -59,18 +54,6 @@ public class Main extends Application {
 		this.primaryStage.setScene(scene);
 		this.primaryStage.show();
 		/*
-		 * // Create the board and players board = new Board(BOARD_SIZE); Player player1
-		 * = new Player("Player 1", new Pawn(board, new Position(1,8), Case.PLAYER1));
-		 * Player player2 = new Player("Player 2", new Pawn(board, new Position(9,8),
-		 * Case.PLAYER2)); currentPlayer = player1;
-		 * 
-		 * // Create the grid pane for the game board GridPane gridPane =
-		 * createGridPane(); cells = new Rectangle[BOARD_SIZE][BOARD_SIZE];
-		 * 
-		 * // Create the rectangles representing the cells on the game board for (int i
-		 * = 0; i < BOARD_SIZE; i++) { for (int j = 0; j < BOARD_SIZE; j++) { Rectangle
-		 * cell = createCell(i, j); cells[i][j] = cell; gridPane.add(cell, j, i); } }
-		 * 
 		 * // Create the buttons for player actions Button moveButton =
 		 * createButton("Move"); Button placeWallButton = createButton("Place Wall");
 		 * Button resetButton = createButton("Reset");
@@ -91,52 +74,116 @@ public class Main extends Application {
 
 	private void chooseNumberOfPlayer() {
 		VBox box = new VBox(10);
+		
 		Button back = new Button("Back");
 		back.setOnAction(e -> start(primaryStage));
+		
 		Label title = new Label("Quoridor");
+		
 		Label label = new Label("Choose the number of players");
+		
 		RadioButton twoPlayer = new RadioButton("2 Players");
 		twoPlayer.setOnAction(e -> {
 			createPlayers(2);
 			this.board = new Board(2);
 			});
+		
 		RadioButton fourPlayer = new RadioButton("4 Players");
 		fourPlayer.setOnAction(e -> {
 			createPlayers(4);
 			this.board = new Board(4);
 			});
+		
 		box.getChildren().addAll(title, label, twoPlayer, fourPlayer, back);
+		
 		Scene scene = new Scene(box);
 		this.primaryStage.setScene(scene);
 		this.primaryStage.show();
 	}
 
 	private void createPlayers(int number) {
-		// TODO Auto-generated method stub
+		
+		Label title = new Label("Quoridor");
+		
+		Label label = new Label("Choose the name of each players");
+		
+		VBox box = new VBox(title, label);
+		
 		Button back = new Button("Back");
 		back.setOnAction(e -> chooseNumberOfPlayer());
-		Label title = new Label("Quoridor");
-		Label label = new Label("Choose the name of each players");
-		VBox box = new VBox(title, label);
-		for (int i = 1; i < number + 1; i++) {
-			TextField player = new TextField("Player" + i);
-			box.getChildren().add(player);
-		}
-		box.getChildren().add(back);
+		
 		Button start = new Button("Start");
-		start.setOnAction(e -> playBoard());
-		box.getChildren().add(start);
+		start.setOnAction(e -> playBoard(0));
+		player = new TextField[number];
+		for (int i = 1; i < number + 1; i++) {
+			player[i-1] = new TextField("Player " + i);
+			box.getChildren().add(player[i-1]);
+		}
+		
+		box.getChildren().addAll(back, start);
+		
 		Scene scene = new Scene(box);
 		this.primaryStage.setScene(scene);
 		this.primaryStage.show();
 
 	}
 
-	public void playBoard() {
-		GridPane gridPane = new GridPane();
+	private void playBoard(int turn) {
+		Label playerTurn = new Label(player[turn].getText() + "'s turn");
+		playerTurn.setStyle("-fx-font-size: 50px;");
 		
-		for (int row = 0; row < BOARD_SIZE; row++) {
-			for (int col = 0; col < BOARD_SIZE; col++) {
+		GridPane grid = updateBoard();
+		
+		VBox action = actionList(turn);
+		
+		BorderPane pane = new BorderPane();
+		pane.setTop(playerTurn);
+		pane.setLeft(grid);
+		pane.setCenter(action);
+		
+		Scene scene = new Scene(pane);
+		primaryStage.setScene(scene);
+		primaryStage.show();
+	}
+
+	private VBox actionList(int turn) {
+		Rectangle wall = new Rectangle (5,30);
+		wall.setFill(Color.BLACK);
+		wall.setStroke(null);
+		wall.setOnDragDetected(e -> handlePlaceWall());
+		
+		Rectangle wall1 = new Rectangle (30,5);
+		wall1.setFill(Color.BLACK);
+		wall1.setStroke(null);
+		wall1.setOnDragDetected(e -> handlePlaceWall());
+		
+		HBox walls = new HBox(20);
+		walls.getChildren().addAll(wall, wall1);
+		
+		Button restart = new Button("Restart");
+		
+		Button exit = new Button("Exit");
+		
+		Button cancel = new Button("Cancel");
+		cancel.setOnAction(e -> {
+			
+		});
+		
+		Button confirm = new Button("Confirm");
+		confirm.setOnAction(e -> {
+			playBoard((turn+1)%4);
+		});
+		
+		HBox confirms = new HBox(20);
+		confirms.getChildren().addAll(cancel, confirm);
+		return new VBox(exit, restart, walls, confirms); 
+	}
+	
+	private GridPane updateBoard() {
+		GridPane grid = new GridPane();
+		
+		for (int row = 0; row < Board.SIZE; row++) {
+			for (int col = 0; col < Board.SIZE; col++) {
 				if (board.getBoard()[row][col] == Case.BORDER || board.getBoard()[row][col] == Case.POTENTIALWALL) {
 					if (row % 2 == 0) {
 						this.cell = new Rectangle(5, 30);
@@ -152,16 +199,12 @@ public class Main extends Application {
 					this.cell.setFill(Color.WHITE);
 				}
 				this.cell.setStroke(null);
-				gridPane.add(cell, row, col);
+				grid.add(cell, row, col);
 			}
 		}
-		
-		Scene scene = new Scene(gridPane);
-		primaryStage.setScene(scene);
-		primaryStage.setTitle("Tableau de rectangles");
-		primaryStage.show();
+		return grid;
 	}
-
+	
 	private void showRules() {
 
 		Label title = new Label("Rules");
@@ -211,7 +254,7 @@ public class Main extends Application {
 	private void handleResetButton() {
 		// Reset the game state
 		board.initializeBoard();
-		playBoard();
+		playBoard(0);
 	}
 
 	public static void main(String[] args) {
