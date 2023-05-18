@@ -2,6 +2,9 @@ package Abstraction;
 
 import java.util.Scanner;
 
+/**
+ * Represents a wall in a game.
+ */
 public class Wall {
 
 	/**

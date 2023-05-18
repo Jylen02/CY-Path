@@ -5,9 +5,9 @@ import java.util.Scanner;
 import java.util.Set;
 
 /**
- * The Board class represents the game board for the game. It contains the board
- * layout, player and wall count, and various methods for manipulating the
- * board.
+ * Represents the game board for the game. 
+ * It contains the board layout, player and wall count, and various 
+ * methods for manipulating the board.
  */
 public class Board {
 	
