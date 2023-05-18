@@ -4,8 +4,15 @@ import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
 
+/**
+ * The main class for running the game.
+ */
 public class Main {
-
+	/**
+     * Check if maximum amount of walls has been placed on the board.
+     * @param board The game board.
+     * @return true if less than 20 walls have been placed, false otherwise.
+     */
 	public static boolean accountWall(Board board) {
 		if (board.getWallCount() < 20) {
 			return true;
@@ -14,8 +21,13 @@ public class Main {
 		}
 	}
 
-	//Player's turn
-	
+	/**
+     * Handles the turn for a player.
+     * @param players Array of players in the game.
+     * @param turn The current turn number.
+     * @param board The game board.
+     * @param s Scanner for input.
+     */
 	public static void roundOfPlay(Player[] players, Integer turn, Board board, Scanner s) {
 		//Verify if there max amount of wall is reach
 		boolean endWall=accountWall(board);
@@ -91,7 +103,15 @@ public class Main {
 			break;
 		}
 	}
-
+	
+	/**
+     * Handles the possible errors that could happen when a player tries to place a wall.
+     * @param wall The wall to place.
+     * @param board The game board.
+     * @param players Array of players in the game.
+     * @param turn The current turn number.
+     * @param s Scanner for input.
+     */
 	public static void wallError(Wall wall, Board board, Player[] players, Integer turn, Scanner s) {
 		//Check if the wall can't be instaured, restart the turn
 		if (!wall.createWall(board)) {
@@ -108,7 +128,12 @@ public class Main {
 			}
 		}
 	}
-	
+	/**
+     * Checks if the current board configuration allows all players to reach their respective goals.
+     * @param board The game board.
+     * @param players Array of players in the game.
+     * @return true if all players can reach their goals, false otherwise.
+     */
 	public static boolean isWinnableForAll(Board board, Player[] players) {
 		int i=0;
 		while (i<4 && isWinnable(board,players[i].getPawn())) {
@@ -116,7 +141,12 @@ public class Main {
 		}
 		return i==4;
 	}
-
+	/**
+     * Check if a game board is winnable for a given player.
+     * @param board The game board.
+     * @param player The player to check.
+     * @return true if the game is winnable for the player, false otherwise.
+     */
 	public static boolean isWinnable(Board board, Pawn player) {
 		Set<Position> marking = new HashSet<Position>();
 		for (Position pos : player.getPossibleDestination()) {
@@ -125,7 +155,14 @@ public class Main {
 		return false;
 	}
 
-	
+	/**
+     * Performs a depth-first search (DFS) on the game board from a given position.
+     * @param board The game board.
+     * @param pos The position from which to start the DFS.
+     * @param player The player for whom to perform the DFS.
+     * @param marking A set of positions marking the nodes visited during the DFS.
+     * @return The updated marking set after performing the DFS.
+     */
 	public static Set<Position> dfs(Board board, Position pos, Pawn player, Set<Position> marking) {
 		if (!marking.contains(pos)) {
 			marking.add(pos);
@@ -136,7 +173,10 @@ public class Main {
 			}
 		return marking;
 	}
-	
+	/**
+     * The main method for running the game.
+     * @param args Command-line arguments (not used).
+     */
 	public static void main(String[] args) {
 		Scanner s = new Scanner(System.in);
 		int numberOfPlayers = 0;
