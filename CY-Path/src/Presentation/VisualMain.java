@@ -1,6 +1,5 @@
 package Presentation;
 
-
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -9,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.scene.control.Button;
 
 
 public class VisualMain extends Application {
@@ -66,9 +66,6 @@ public class VisualMain extends Application {
     }
 
     private void afficherPlateau(int nombreJoueurs) {
-        // Afficher le plateau 9x9 avec des lignes pour poser les murs entre chaque case
-        // Code pour afficher le plateau ici...
-
         primaryStage.setTitle("Plateau de jeu");
 
         Button retourButton = new Button("Retour");
