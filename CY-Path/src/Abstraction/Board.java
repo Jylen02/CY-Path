@@ -167,8 +167,8 @@ public class Board {
 	}
 
 	/**
-	 * Displays the current state of the board. To make this possible, each type of
-	 * the "Case" enumeration is replaced by a specific display.
+	 * Displays the current state of the board. 
+	 * To make this possible, each type of the "Case" enumeration is replaced by a specific display.
 	 */
 	public void show() {
 		// First line of the column's coordinates
