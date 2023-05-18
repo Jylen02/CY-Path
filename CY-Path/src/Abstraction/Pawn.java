@@ -70,6 +70,15 @@ public class Pawn {
 	}
 
 	/**
+	 * Sets the finish line position(s) for the pawn.
+	 *
+	 * @param finishLine The new finish line position(s).
+	 */
+	public void setFinishLine(Set<Position> finishLine) {
+		this.finishLine = finishLine;
+	}
+
+	/**
 	 * Sets the position of the pawn.
 	 *
 	 * @param pos The new position of the pawn.
@@ -254,26 +263,26 @@ public class Pawn {
 	 * Determines the finish line for this pawn based on the associated player.
 	 */
 	public void finishLine() {
-		this.finishLine = new HashSet<Position>();
+		this.setFinishLine(new HashSet<Position>());
 		switch (this.playerNb) {
 		case PLAYER1:
 			for (int j = 1; j < Board.SIZE; j += 2) {
-				this.finishLine.add(new Position(1, j));
+				this.getFinishLine().add(new Position(1, j));
 			}
 			break;
 		case PLAYER2:
 			for (int j = 1; j < Board.SIZE; j += 2) {
-				this.finishLine.add(new Position(Board.SIZE - 2, j));
+				this.getFinishLine().add(new Position(Board.SIZE - 2, j));
 			}
 			break;
 		case PLAYER3:
 			for (int i = 1; i < Board.SIZE; i += 2) {
-				this.finishLine.add(new Position(i, Board.SIZE - 2));
+				this.getFinishLine().add(new Position(i, Board.SIZE - 2));
 			}
 			break;
 		case PLAYER4:
 			for (int i = 1; i < Board.SIZE; i += 2) {
-				this.finishLine.add(new Position(i, 1));
+				this.getFinishLine().add(new Position(i, 1));
 			}
 			break;
 		default:
@@ -287,7 +296,7 @@ public class Pawn {
 	 * @return true if the pawn's current position is part of the finish line, false otherwise.
 	 */
 	public Boolean isWinner() {
-		if (this.finishLine.contains(this.pos)) {
+		if (this.getFinishLine().contains(this.getPos())) {
 			return true;
 		}
 		return false;
