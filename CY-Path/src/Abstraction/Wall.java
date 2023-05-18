@@ -1,5 +1,7 @@
 package Abstraction;
 
+import java.util.Scanner;
+
 public class Wall {
 
 	/* Attributes */
@@ -162,6 +164,40 @@ public class Wall {
 			return true;
 		} else {
 			return false;
+		}
+	}
+
+	/**
+	 * Handles the possible errors that could happen when a player tries to place a
+	 * wall.
+	 * @param board   The game board.
+	 * @param players Array of players in the game.
+	 * @param turn    The current turn number.
+	 * @param s       Scanner for input.
+	 */
+	public void wallError(Board board, Player[] players, Integer turn, Scanner s) {
+		// Check if the wall can't be instaured, restart the turn
+		if (!this.createWall(board)) {
+			System.out.println("Error : Can't put a wall to these coordinates.");
+			board.show();
+			board.roundOfPlay(players, turn, s);
+		} // Otherwise, check if all pawn can still reach the goal, if not, remove the
+			// wall, then restart the turn
+		else {
+			for (int i = 0; i < players.length; i++) {
+				players[i].getPawn().setPossibleDestination(
+						players[i].getPawn().possibleMove(board, players[i].getPawn().getPos()));
+			}
+			if (!board.isWinnableForAll(players)) {
+				this.updateWall(board, Case.POTENTIALWALL, -1);
+				for (int i = 0; i < players.length; i++) {
+					players[i].getPawn().setPossibleDestination(
+							players[i].getPawn().possibleMove(board, players[i].getPawn().getPos()));
+				}
+				System.out.println("Error : This wall blocks a player.");
+				board.show();
+				board.roundOfPlay(players, turn, s);
+			}
 		}
 	}
 }

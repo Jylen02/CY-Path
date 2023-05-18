@@ -11,7 +11,7 @@ public class Position {
 	private Integer x;
 
 	/**
-	 * The y-coordinate of the position	(Columns of the board).
+	 * The y-coordinate of the position (Columns of the board).
 	 */
 	private Integer y;
 
