@@ -14,6 +14,7 @@ public class Player {
 	 * The name of the player.
 	 */
 	private String name;
+	
 	// private .... icone; TO IMPLEMENT WITH IHM
 
 	/**

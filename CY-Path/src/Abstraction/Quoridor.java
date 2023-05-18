@@ -1,8 +1,6 @@
 package Abstraction;
 
-import java.util.HashSet;
 import java.util.Scanner;
-import java.util.Set;
 
 /**
  * The main class for running the game.
@@ -33,21 +31,21 @@ public class Quoridor {
 			case 0:
 				System.out.println("Player 1: ");
 				players[0] = new Player(s.nextLine(),
-						new Pawn(board, new Position(Board.TAILLE - 2, Board.TAILLE / 2), Case.PLAYER1));
+						new Pawn(board, new Position(Board.SIZE - 2, Board.SIZE / 2), Case.PLAYER1));
 				break;
 			case 1:
 				System.out.println("Player 2: ");
-				players[1] = new Player(s.nextLine(), new Pawn(board, new Position(1, Board.TAILLE / 2), Case.PLAYER2));
+				players[1] = new Player(s.nextLine(), new Pawn(board, new Position(1, Board.SIZE / 2), Case.PLAYER2));
 				break;
 			case 2:
 				System.out.println("Player 3: ");
-				players[2] = new Player(s.nextLine(), new Pawn(board, new Position(Board.TAILLE / 2, 1), Case.PLAYER3));
+				players[2] = new Player(s.nextLine(), new Pawn(board, new Position(Board.SIZE / 2, 1), Case.PLAYER3));
 				break;
 			case 3:
 				System.out.println("Player 4: ");
 
 				players[3] = new Player(s.nextLine(),
-						new Pawn(board, new Position(Board.TAILLE / 2, Board.TAILLE - 2), Case.PLAYER4));
+						new Pawn(board, new Position(Board.SIZE / 2, Board.SIZE - 2), Case.PLAYER4));
 				break;
 			default:
 				break;

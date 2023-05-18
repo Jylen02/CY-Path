@@ -92,7 +92,6 @@ public class Pawn {
 	 *
 	 * @param possibleDestination A set of Positions representing the possible destinations for the Pawn.
 	 */
-	
 	public void setPossibleDestination(Set<Position> possibleDestination) {
 		this.possibleDestination = possibleDestination;
 	}
@@ -173,7 +172,6 @@ public class Pawn {
 	 * @param pos            The current position of the pawn
 	 * @param canSpecialMove Indicates if it can do a special move or not
 	 */
-	
 	public void leftMove(Board board, Set<Position> possibleDestination, Position pos, Boolean canSpecialMove) {
 		if (board.getBoard()[pos.getX()][pos.getY() - 1] == Case.POTENTIALWALL) {
 			if (board.getBoard()[pos.getX()][pos.getY() - 2] == Case.EMPTY) {
@@ -195,7 +193,6 @@ public class Pawn {
 	 * @param pos   The current position of the pawn
 	 * @param m     The specified movement direction
 	 */
-
 	public void specialMove(Board board, Set<Position> possibleDestination, Position pos, Movement m) {
 		switch (m) {
 		case TOP:
@@ -244,7 +241,6 @@ public class Pawn {
 	 * @param pos   The position from which to calculate possible moves.
 	 * @return The set of Positions representing the possible destinations for the Pawn.
 	 */
-
 	public Set<Position> possibleMove(Board board, Position pos) {
 		Set<Position> possibleDestination = new HashSet<Position>();
 		topMove(board, possibleDestination, pos, true);
@@ -261,22 +257,22 @@ public class Pawn {
 		this.finishLine = new HashSet<Position>();
 		switch (this.playerNb) {
 		case PLAYER1:
-			for (int j = 1; j < Board.TAILLE; j += 2) {
+			for (int j = 1; j < Board.SIZE; j += 2) {
 				this.finishLine.add(new Position(1, j));
 			}
 			break;
 		case PLAYER2:
-			for (int j = 1; j < Board.TAILLE; j += 2) {
-				this.finishLine.add(new Position(Board.TAILLE - 2, j));
+			for (int j = 1; j < Board.SIZE; j += 2) {
+				this.finishLine.add(new Position(Board.SIZE - 2, j));
 			}
 			break;
 		case PLAYER3:
-			for (int i = 1; i < Board.TAILLE; i += 2) {
-				this.finishLine.add(new Position(i, Board.TAILLE - 2));
+			for (int i = 1; i < Board.SIZE; i += 2) {
+				this.finishLine.add(new Position(i, Board.SIZE - 2));
 			}
 			break;
 		case PLAYER4:
-			for (int i = 1; i < Board.TAILLE; i += 2) {
+			for (int i = 1; i < Board.SIZE; i += 2) {
 				this.finishLine.add(new Position(i, 1));
 			}
 			break;
