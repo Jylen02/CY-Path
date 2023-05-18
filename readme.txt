@@ -1,5 +1,8 @@
 CY-Path
 
+To see the Javadoc :
+	- Run the file "index.html" in the "doc" repository which is present in "CY-Path"
+
 To run the deliverable:
 	- Make sure your Java version is up to date, otherwise download the latest version of JDK from Oracle's official website and restart the console.
 	- Download the "quoridor.jar" file and place it in the folder of your choice
