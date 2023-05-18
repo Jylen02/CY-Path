@@ -93,26 +93,37 @@ public class Main extends Application {
 	
 	private void chooseNumberOfPlayer() {
 		VBox box = new VBox(10);
+		Button back = new Button("Back");
+		back.setOnAction(e -> start(primaryStage));
 		Label title = new Label("Quoridor");
 		Label label= new Label("Choose the number of players");
 		RadioButton twoPlayer= new RadioButton("2 Players");
 		twoPlayer.setOnAction(e -> createTwoPlayers());
 		RadioButton fourPlayer= new RadioButton("4 Players");
 		fourPlayer.setOnAction(e -> createFourPlayers());
-		box.getChildren().addAll(title,label,twoPlayer, fourPlayer);
+		Button button = new Button ("Play Now !");
+		button.setOnAction(e -> playBoard());
+		box.getChildren().addAll(title,label,twoPlayer, fourPlayer,back);
 		Scene scene = new Scene(box);
 		this.primaryStage.setScene(scene);
 		this.primaryStage.show();
 	}
 	
+	private Object playBoard() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	private void createTwoPlayers() {
 		// TODO Auto-generated method stub
-		
+		Button back = new Button("Back");
+		back.setOnAction(e -> chooseNumberOfPlayer());
 		Label title = new Label("Quoridor");
 		Label label= new Label("Choose the name of each players");
 		TextField player1= new TextField("Player1");
 		TextField player2= new TextField("Player2");
-		VBox box = new VBox(title,label,player1,player2);
+		bu
+		VBox box = new VBox(title,label,player1,player2,back);
 		Scene scene = new Scene(box);
 		this.primaryStage.setScene(scene);
 		this.primaryStage.show();
@@ -121,13 +132,17 @@ public class Main extends Application {
 
 	private void createFourPlayers() {
 		// TODO Auto-generated method stub
+		Button back = new Button("Back");
+		back.setOnAction(e -> chooseNumberOfPlayer());
 		Label title = new Label("Quoridor");
 		Label label= new Label("Choose the name of each players");
 		TextField player1= new TextField("Player1");
 		TextField player2= new TextField("Player2");
 		TextField player3= new TextField("Player3");
 		TextField player4= new TextField("Player4");
-		VBox box = new VBox(title,label,player1,player2,player3,player4);
+		Button commit = new Button("Start");
+		commit.setOnAction(e -> chooseNumberOfPlayer());
+		VBox box = new VBox(title,label,player1,player2,player3,player4,back);
 		Scene scene = new Scene(box);
 		this.primaryStage.setScene(scene);
 		this.primaryStage.show();
