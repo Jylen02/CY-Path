@@ -1,11 +1,15 @@
 package Presentation;
 
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.scene.control.Button;
+
 
 public class VisualMain extends Application {
 
@@ -22,10 +26,20 @@ public class VisualMain extends Application {
         primaryStage.setTitle("Menu du jeu");
 
         Button jouerButton = new Button("Jouer");
-        jouerButton.setOnAction(e -> afficherChoixNombreJoueurs());
+        jouerButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                afficherChoixNombreJoueurs();
+            }
+        });
 
         Button exitButton = new Button("Exit");
-        exitButton.setOnAction(e -> primaryStage.close());
+        exitButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                primaryStage.close();
+            }
+        });
 
         VBox vbox = new VBox(10);
         vbox.setAlignment(Pos.CENTER);
