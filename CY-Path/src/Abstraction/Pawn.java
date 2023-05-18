@@ -7,7 +7,7 @@ public class Pawn {
 	private Position pos;
 	private Set<Position> possibleDestination;
 	private Case playerNb;
-	private Position[] finishLine;
+	private Set<Position> finishLine;
 
 	public Pawn(Position pos, Case player) {
 		this.pos = pos;
@@ -24,7 +24,7 @@ public class Pawn {
 		return playerNb;
 	}
 
-	public Position[] getFinishLine() {
+	public Set<Position> getFinishLine() {
 		return finishLine;
 	}
 
@@ -141,26 +141,26 @@ public class Pawn {
 	}
 
 	public void finishLine() {
-		this.finishLine = new Position[(Board.TAILLE-1)/2];
+		this.finishLine = new HashSet<Position>();
 		switch (this.playerNb) {
 		case PLAYER1:
 			for (int j = 1; j < Board.TAILLE; j += 2) {
-				this.finishLine[(j-1)/2] = new Position(1, j);
+				this.finishLine.add(new Position(1, j));
 			}
 			break;
 		case PLAYER2:
 			for (int j = 1; j < Board.TAILLE; j += 2) {
-				this.finishLine[(j-1)/2] = new Position(Board.TAILLE - 2, j);
+				this.finishLine.add(new Position(Board.TAILLE - 2, j));
 			}
 			break;
 		case PLAYER3:
 			for (int i = 1; i < Board.TAILLE; i += 2) {
-				this.finishLine[(i-1)/2] = new Position(i, Board.TAILLE - 2);
+				this.finishLine.add(new Position(i, Board.TAILLE - 2));
 			}
 			break;
 		case PLAYER4:
 			for (int i = 1; i < Board.TAILLE; i += 2) {
-				this.finishLine[(i-1)/2] = new Position(i, 1);
+				this.finishLine.add(new Position(i, 1));
 			}
 			break;
 		default:
@@ -169,10 +169,8 @@ public class Pawn {
 	}
 
 	public Boolean isWinner() {
-		for (int i=0;i<this.finishLine.length;i++) {
-			if (this.finishLine[i] == this.pos) {
-				return true;
-			}
+		if (this.finishLine.contains(this.pos)) {
+			return true;
 		}
 		return false;
 	}
