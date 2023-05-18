@@ -19,7 +19,7 @@ public class Pawn {
 	private Set<Position> possibleDestination;
 
 	/**
-	 * The player number or identifier associated with the pawn.
+	 * The player number associated with the pawn.
 	 */
 	private Case playerNb;
 
@@ -31,6 +31,7 @@ public class Pawn {
 	/**
 	 * Creates a new pawn with the specified position and associated player.
 	 *
+	 * @param board  The board where the pawn is placed.
 	 * @param pos    The current position of the pawn.
 	 * @param player The player associated with the pawn.
 	 */
@@ -51,9 +52,9 @@ public class Pawn {
 	}
 
 	/**
-	 * Returns the player number or identifier associated with the pawn.
+	 * Returns the player number associated with the pawn.
 	 *
-	 * @return The player number or identifier.
+	 * @return The player number.
 	 */
 	public Case getPlayerNb() {
 		return playerNb;
@@ -85,7 +86,13 @@ public class Pawn {
 	public Set<Position> getPossibleDestination() {
 		return this.possibleDestination;
 	}
-
+	
+	/**
+	 * Sets the possible destinations for the Pawn.
+	 *
+	 * @param possibleDestination A set of Positions representing the possible destinations for the Pawn.
+	 */
+	
 	public void setPossibleDestination(Set<Position> possibleDestination) {
 		this.possibleDestination = possibleDestination;
 	}
@@ -96,6 +103,7 @@ public class Pawn {
 	 * it is empty or triggers a special move.
 	 *
 	 * @param board          The game board
+	 * @param possibleDestination	The set of Positions representing the possible destinations for the Pawn.
 	 * @param pos            The current position of the pawn
 	 * @param canSpecialMove Indicates if it can do a special move or not
 	 */
@@ -117,6 +125,7 @@ public class Pawn {
 	 * it is empty or triggers a special move.
 	 *
 	 * @param board          The game board
+	 * @param possibleDestination	The set of Positions representing the possible destinations for the Pawn.
 	 * @param pos            The current position of the pawn
 	 * @param canSpecialMove Indicates if it can do a special move or not
 	 */
@@ -138,6 +147,7 @@ public class Pawn {
 	 * it is empty or triggers a special move.
 	 *
 	 * @param board          The game board
+	 * @param possibleDestination	The set of Positions representing the possible destinations for the Pawn.
 	 * @param pos            The current position of the pawn
 	 * @param canSpecialMove Indicates if it can do a special move or not
 	 */
@@ -159,9 +169,11 @@ public class Pawn {
 	 * it is empty or triggers a special move.
 	 *
 	 * @param board          The game board
+	 * @param possibleDestination	The set of Positions representing the possible destinations for the Pawn.
 	 * @param pos            The current position of the pawn
 	 * @param canSpecialMove Indicates if it can do a special move or not
 	 */
+	
 	public void leftMove(Board board, Set<Position> possibleDestination, Position pos, Boolean canSpecialMove) {
 		if (board.getBoard()[pos.getX()][pos.getY() - 1] == Case.POTENTIALWALL) {
 			if (board.getBoard()[pos.getX()][pos.getY() - 2] == Case.EMPTY) {
@@ -179,6 +191,7 @@ public class Pawn {
 	 * the potential wall and triggers appropriate move or other moves.
 	 *
 	 * @param board The game board
+	 * @param possibleDestination	The set of Positions representing the possible destinations for the Pawn.
 	 * @param pos   The current position of the pawn
 	 * @param m     The specified movement direction
 	 */
@@ -229,6 +242,7 @@ public class Pawn {
 	 *
 	 * @param board The current state of the game board.
 	 * @param pos   The position from which to calculate possible moves.
+	 * @return The set of Positions representing the possible destinations for the Pawn.
 	 */
 
 	public Set<Position> possibleMove(Board board, Position pos) {
@@ -274,8 +288,7 @@ public class Pawn {
 	/**
 	 * Determines if this pawn is a winner based on its current position.
 	 *
-	 * @return true if the pawn's current position is part of the finish line, false
-	 *         otherwise.
+	 * @return true if the pawn's current position is part of the finish line, false otherwise.
 	 */
 	public Boolean isWinner() {
 		if (this.finishLine.contains(this.pos)) {
