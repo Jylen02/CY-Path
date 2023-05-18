@@ -162,7 +162,6 @@ public class Wall {
 			updateWall(board, Case.WALL, 1);
 			return true;
 		} else {
-			System.out.println("Vous ne pouvez pas placer de mur à cette emplacement");
 			return false;
 		}
 	}

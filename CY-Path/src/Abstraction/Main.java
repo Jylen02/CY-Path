@@ -33,10 +33,10 @@ public class Main {
 	public static void roundOfPlay(Player[] players, Integer turn, Board board, Scanner s) {
 		// Verify if there max amount of wall is reach
 		boolean endWall = accountWall(board);
-		Player p = players[turn];
+		Pawn p = players[turn].getPawn();
 		// Display the possible destinations of a pawn
 		System.out.println("Possible move :");
-		System.out.println(p.getPawn().getPossibleDestination());
+		System.out.println(p.getPossibleDestination());
 		int input;
 		// Check if the max amount of wall is reached, we can only move
 		if (endWall == false) {
@@ -62,8 +62,9 @@ public class Main {
 		switch (input) {
 		case 1:
 			// Check if the move is in the possible move's list then move
-			if (p.getPawn().getPossibleDestination().contains(position)) {
-				board.move(position, p.getPawn());
+			if (p.getPossibleDestination().contains(position)) {
+				board.move(position, p);
+				p.setPossibleDestination(p.possibleMove(board, p.getPos()));
 			} // Otherwise, restart the turn
 			else {
 				System.out.println("Error : Please enter a valid coordinates.");
@@ -124,9 +125,12 @@ public class Main {
 		} // Otherwise, check if all pawn can still reach the goal, if not, remove the
 			// wall, then restart the turn
 		else {
+			for (int i=0; i<players.length; i++) {
+				players[i].getPawn().setPossibleDestination(players[i].getPawn().possibleMove(board,players[i].getPawn().getPos()));
+            }
 			if (!isWinnableForAll(board, players)) {
 				wall.updateWall(board, Case.POTENTIALWALL, -1);
-				System.out.println("Error : This wall block a player.");
+				System.out.println("Error : This wall blocks a player.");
 				board.show();
 				roundOfPlay(players, turn, board, s);
 			}
@@ -160,7 +164,7 @@ public class Main {
 		Set<Position> marking = new HashSet<Position>();
 		marking.add(player.getPos());
 		for (Position pos : player.getPossibleDestination()) {
-			marking = dfs(board, pos, player, marking);
+			marking = dfs(board, pos, player, marking, player.getPossibleDestination());
 		}
 		for (Position pos: player.getFinishLine()) {
 			if (marking.contains(pos)) {
@@ -179,12 +183,12 @@ public class Main {
 	 * @param marking A set of positions marking the nodes visited during the DFS.
 	 * @return The updated marking set after performing the DFS.
 	 */
-	public static Set<Position> dfs(Board board, Position pos, Pawn player, Set<Position> marking) {
+	public static Set<Position> dfs(Board board, Position pos, Pawn player, Set<Position> marking, Set<Position> possibleDestination) {
 		if (!marking.contains(pos)) {
 			marking.add(pos);
-			player.possibleMove(board, pos);
-			for (Position pos1 : player.getPossibleDestination()) {
-				dfs(board, pos1, player, marking);
+			possibleDestination = player.possibleMove(board, pos);
+			for (Position pos1 : possibleDestination) {
+				marking = dfs(board, pos1, player, marking, possibleDestination);
 			}
 		}
 		return marking;
@@ -205,35 +209,37 @@ public class Main {
 		} while (numberOfPlayers != 2 && numberOfPlayers != 4);
 
 		Player[] players = new Player[numberOfPlayers];
+		
+		Board board = new Board(numberOfPlayers);
+		
 		for (int i = 0; i < numberOfPlayers; i++) {
 			switch (i) {
 			case 0:
 				players[0] = new Player(Case.PLAYER1,
-						new Pawn(new Position(Board.TAILLE - 2, Board.TAILLE / 2), Case.PLAYER1));
+						new Pawn(board, new Position(Board.TAILLE - 2, Board.TAILLE / 2), Case.PLAYER1));
 				break;
 			case 1:
-				players[1] = new Player(Case.PLAYER2, new Pawn(new Position(1, Board.TAILLE / 2), Case.PLAYER2));
+				players[1] = new Player(Case.PLAYER2, new Pawn(board, new Position(1, Board.TAILLE / 2), Case.PLAYER2));
 				break;
 			case 2:
-				players[2] = new Player(Case.PLAYER3, new Pawn(new Position(Board.TAILLE / 2, 1), Case.PLAYER3));
+				players[2] = new Player(Case.PLAYER3, new Pawn(board, new Position(Board.TAILLE / 2, 1), Case.PLAYER3));
 				break;
 			case 3:
 				players[3] = new Player(Case.PLAYER4,
-						new Pawn(new Position(Board.TAILLE / 2, Board.TAILLE - 2), Case.PLAYER4));
+						new Pawn(board, new Position(Board.TAILLE / 2, Board.TAILLE - 2), Case.PLAYER4));
 				break;
 			default:
 				break;
 			}
 		}
 
-		Board board = new Board(numberOfPlayers);
 		board.show();
 
 		boolean win = false;
 		int turn = 0;
 		//Initialize first possible move for each pawn
 		for (int i=0; i<numberOfPlayers; i++) {
-			players[i].getPawn().possibleMove(board,players[i].getPawn().getPos());
+			players[i].getPawn().setPossibleDestination(players[i].getPawn().possibleMove(board,players[i].getPawn().getPos()));
 		}
 		//While no one has won, play turn
 		while (!win) {
@@ -245,10 +251,9 @@ public class Main {
 				win = true;
 				System.out.println(players[turn].getPlayerNumber() + " has won. Congratulations !");
 			}
-			//Update all possibleMove for each pawn
 			for (int i=0; i<numberOfPlayers; i++) {
-				players[i].getPawn().possibleMove(board,players[i].getPawn().getPos());
-			}
+				players[i].getPawn().setPossibleDestination(players[i].getPawn().possibleMove(board,players[i].getPawn().getPos()));
+            }
 			turn = (turn + 1) % numberOfPlayers;
 		}
 		s.close();
