@@ -16,23 +16,20 @@ public class Board {
 	/**
 	 * Constructs a Board object with the specified player number.
 	 *
-	 * @param playerNumber the number of players in the game
+	 * @param playerNumber the number of players in the game between 2 and 4
 	 */
-
 	// Constructor
 	public Board(int playerNumber) {
 		this.playerNumber = playerNumber;
 		initializeBoard();
 		this.wallCount = 0;
 	}
-
+	// Getters & Setters
 	/**
 	 * Returns the current wall count on the board.
 	 *
 	 * @return the wall count
 	 */
-
-	// Getters & Setters
 	public int getWallCount() {
 		return wallCount;
 	}
@@ -42,7 +39,6 @@ public class Board {
 	 *
 	 * @param wallCount the new wall count
 	 */
-
 	public void setWallCount(int wallCount) {
 		this.wallCount = wallCount;
 	}
@@ -52,7 +48,6 @@ public class Board {
 	 *
 	 * @return the board layout
 	 */
-
 	public Case[][] getBoard() {
 		return board;
 	}
@@ -62,7 +57,6 @@ public class Board {
 	 *
 	 * @param board the new board layout
 	 */
-
 	public void setBoard(Case[][] board) {
 		this.board = board;
 	}
@@ -72,7 +66,6 @@ public class Board {
 	 *
 	 * @return the player number
 	 */
-
 	public int getPlayerNumber() {
 		return playerNumber;
 	}
@@ -82,15 +75,15 @@ public class Board {
 	 *
 	 * @param playerNumber the new player number
 	 */
-
 	public void setPlayerNumber(int playerNumber) {
 		this.playerNumber = playerNumber;
 	}
 
+	// Initializing Board
 	/**
 	 * Initializes the board with the initial layout and player placements.
+	 * All the different types filled in the array are present in the "Case" enumeration.
 	 */
-	// Initializing Board
 	public void initializeBoard() {
 		this.setBoard(new Case[TAILLE][TAILLE]);
 		for (int i = 0; i < TAILLE; i++) {
@@ -115,7 +108,7 @@ public class Board {
 					else if (j == TAILLE - 1) {
 						getBoard()[i][j] = Case.BORDER;
 					}
-					// Other colums
+					// Other column
 					else {
 						getBoard()[i][j] = Case.POTENTIALWALL;
 						getBoard()[i][j + 1] = Case.EMPTY;
@@ -132,7 +125,7 @@ public class Board {
 					else if (j == TAILLE - 1) {
 						getBoard()[i][j] = Case.NULL;
 					}
-					// Other colums
+					// Other column
 					else {
 						getBoard()[i][j] = Case.NULL;
 						getBoard()[i][j + 1] = Case.POTENTIALWALL;
@@ -140,7 +133,6 @@ public class Board {
 				}
 			}
 		}
-
 		if (getPlayerNumber() >= 2) {
 			// Set the two first player's pawn placement
 			getBoard()[TAILLE - 2][TAILLE / 2] = Case.PLAYER1;
@@ -155,8 +147,8 @@ public class Board {
 
 	/**
 	 * Displays the current state of the board.
+	 * To make this possible, each type of the "Case" enumeration is replaced by a specific display.
 	 */
-
 	public void show() {
 		// First line of the column's coordinates
 		System.out.print("   ");
@@ -212,7 +204,6 @@ public class Board {
 	 * @param pos    the new position for the player
 	 * @param player the player to move
 	 */
-
 	public void move(Position pos, Pawn player) {
 		this.board[player.getPos().getX()][player.getPos().getY()] = Case.EMPTY;
 		player.setPos(pos);
