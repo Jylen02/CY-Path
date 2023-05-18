@@ -13,6 +13,7 @@ public class Main {
 	}
 
 	//Player's turn
+	
 	public static void roundOfPlay(Player[] players, Integer turn, Board board, Scanner s) {
 		//Verify if there max amount of wall is reach
 		boolean endWall=accountWall(board);
@@ -62,6 +63,7 @@ public class Main {
 			System.out.println("Please select the action you want (1 or 2) :");
 			int orientation = s.nextInt();
 			Wall wall;
+			
 			switch (orientation) {
 			case 1:
 				wall = new Wall(Orientation.VERTICAL, position);

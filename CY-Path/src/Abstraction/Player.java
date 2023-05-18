@@ -26,4 +26,11 @@ public class Player {
 	public void setPawn(Pawn pawn) {
 		this.pawn = pawn;
 	}
+	public int translatToNumber(Player player) {
+		Pawn p= player.getPawn();
+		Position pos = p.getPos();
+		int x= pos.getX();
+		int y= pos.getY();
+		return (x/2)*9+y/2;
+		}
 }
