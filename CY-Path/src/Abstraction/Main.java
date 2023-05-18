@@ -30,6 +30,7 @@ public class Main {
 	 * @param board   The game board.
 	 * @param s       Scanner for input.
 	 */
+	
 	public static void roundOfPlay(Player[] players, Integer turn, Board board, Scanner s) {
 		// Verify if there max amount of wall is reach
 		boolean endWall = accountWall(board);
@@ -160,7 +161,7 @@ public class Main {
 	 * Check if a game board is winnable for a given player.
 	 * 
 	 * @param board  The game board.
-	 * @param player The player to check.
+	 * @param player The Pawn of the player to check.
 	 * @return true if the game is winnable for the player, false otherwise.
 	 */
 	public static boolean isWinnable(Board board, Pawn player) {
@@ -184,6 +185,7 @@ public class Main {
 	 * @param pos     The position from which to start the DFS.
 	 * @param player  The player for whom to perform the DFS.
 	 * @param marking A set of positions marking the nodes visited during the DFS.
+	 * @param possibleDestination	The set of Positions representing the possible destinations for the Pawn.
 	 * @return The updated marking set after performing the DFS.
 	 */
 	public static Set<Position> dfs(Board board, Position pos, Pawn player, Set<Position> marking, Set<Position> possibleDestination) {
