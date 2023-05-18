@@ -133,8 +133,8 @@ public class Main extends Application {
 	}
 
 	public void playBoard() {
-		// TODO Auto-generated method stub
 		GridPane gridPane = new GridPane();
+		
 		for (int row = 0; row < BOARD_SIZE; row++) {
 			for (int col = 0; col < BOARD_SIZE; col++) {
 				if (board.getBoard()[row][col] == Case.BORDER || board.getBoard()[row][col] == Case.POTENTIALWALL) {
@@ -153,10 +153,7 @@ public class Main extends Application {
 				}
 				this.cell.setStroke(null);
 				gridPane.add(cell, row, col);
-				
 			}
-			
-
 		}
 		
 		Scene scene = new Scene(gridPane);
@@ -196,22 +193,6 @@ public class Main extends Application {
 		this.primaryStage.show();
 	}
 
-	private GridPane createGridPane() {
-		GridPane gridPane = new GridPane();
-		gridPane.setHgap(1);
-		gridPane.setVgap(1);
-		gridPane.setGridLinesVisible(true);
-		return gridPane;
-	}
-
-	private Rectangle createCell(int row, int col) {
-		Rectangle cell = new Rectangle(CELL_SIZE, CELL_SIZE);
-		cell.setFill(Color.WHITE);
-		cell.setStroke(Color.BLACK);
-		cell.setOnMouseClicked(e -> handleCellClick(row, col));
-		return cell;
-	}
-
 	private Button createButton(String text) {
 		Button button = new Button(text);
 		button.setPrefSize(300, 100);
@@ -219,39 +200,18 @@ public class Main extends Application {
 		return button;
 	}
 
-	private void handleCellClick(int row, int col) {
-		Position currentPosition = currentPlayer.getPawn().getPos();
-		Position clickedPosition = new Position(row, col);
-
-		// Check if it's the current player's turn and if the clicked cell is
-		// if (currentPlayer.getPawn().canMove(clickedPosition) &&
-		// board.isPathFree(currentPosition, clickedPosition)) {
-		// currentPlayer.getPawn().moveTo(clickedPosition);
-		// cells[currentPosition.getX()][currentPosition.getY()].setFill(Color.WHITE);
-		// cells[row][col].setFill(getPlayerColor(currentPlayer));
-		// currentPlayer = (currentPlayer == player1) ? player2 : player1;
-		// }
+	private void handleMove() {
+		// TODO: Implement the logic for handling the Move  click
 	}
 
-	private void handleMoveButton() {
-		// TODO: Implement the logic for handling the Move button click
-	}
-
-	private void handlePlaceWallButton() {
+	private void handlePlaceWall() {
 		// TODO: Implement the logic for handling the Place Wall button click
 	}
 
-	private void handleResetButton(Player player) {
+	private void handleResetButton() {
 		// Reset the game state
 		board.initializeBoard();
-		currentPlayer = player;
-
-		// Clear the cell colors
-		for (Rectangle[] row : cells) {
-			for (Rectangle cell : row) {
-				cell.setFill(Color.WHITE);
-			}
-		}
+		playBoard();
 	}
 
 	public static void main(String[] args) {
