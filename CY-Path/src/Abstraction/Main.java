@@ -21,7 +21,6 @@ public class Main {
 		boolean endWall=accountWall(board);
 		Player p = players[turn];
 		// Display the possible destinations of a pawn
-		p.getPawn().possibleMove(board,p.getPawn().getPos());
 		System.out.println("Possible move :");
 		System.out.println(p.getPawn().getPossibleDestination());
 		int input;
@@ -111,16 +110,22 @@ public class Main {
 	
 	public static boolean isWinnableForAll(Board board, Player[] players) {
 		int i=0;
-		while (i<4 && isWinnable(board,players[i].getPawn())) {
+		while (i<players.length && isWinnable(board,players[i].getPawn())) {
 			i++;
 		}
-		return i==4;
+		return i==players.length;
 	}
 
 	public static boolean isWinnable(Board board, Pawn player) {
 		Set<Position> marking = new HashSet<Position>();
+		marking.add(player.getPos());
 		for (Position pos : player.getPossibleDestination()) {
 			marking = dfs(board,pos,player,marking);
+		}
+		for (Position pos: player.getFinishLine()) {
+			if (marking.contains(pos)) {
+				return true;
+			}
 		}
 		return false;
 	}
@@ -171,7 +176,10 @@ public class Main {
 
 		boolean win = false;
 		int turn = 0;
-
+		//Initialize first possible move for each pawn
+		for (int i=0; i<numberOfPlayers; i++) {
+			players[i].getPawn().possibleMove(board,players[i].getPawn().getPos());
+		}
 		//While no one has won, play turn
 		while (!win) {
 			System.out.println("Tour de " + players[turn].getPlayerNumber() + ":");
@@ -181,6 +189,10 @@ public class Main {
 			if (players[turn].getPawn().isWinner()) {
 				win = true;
 				System.out.println(players[turn].getPlayerNumber() + " has won. Congratulations !");
+			}
+			//Update all possibleMove for each pawn
+			for (int i=0; i<numberOfPlayers; i++) {
+				players[i].getPawn().possibleMove(board,players[i].getPawn().getPos());
 			}
 			turn = (turn + 1) % numberOfPlayers;
 		}

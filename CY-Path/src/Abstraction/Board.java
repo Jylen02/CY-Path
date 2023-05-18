@@ -158,5 +158,6 @@ public class Board {
 		this.board[player.getPos().getX()][player.getPos().getY()] = Case.EMPTY;
 		player.setPos(pos);
 		this.board[player.getPos().getX()][player.getPos().getY()] = player.getPlayerNb();
+		player.possibleMove(this,player.getPos());
 	}
 }
