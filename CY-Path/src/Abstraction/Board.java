@@ -167,8 +167,8 @@ public class Board {
 	}
 
 	/**
-	 * Displays the current state of the board. To make this possible, each type of
-	 * the "Case" enumeration is replaced by a specific display.
+	 * Displays the current state of the board. 
+	 * To make this possible, each type of the "Case" enumeration is replaced by a specific display.
 	 */
 	public void show() {
 		// First line of the column's coordinates
@@ -195,24 +195,24 @@ public class Board {
 			System.out.print(i + " ");
 			for (int j = 0; j < SIZE; j++) {
 				// If the case is an intersection : put a "+"
-				if (this.board[i][j] == Case.NULL) {
+				if (this.getBoard()[i][j] == Case.NULL) {
 					System.out.print("+ ");
 				} // If the case is a part of the grid, put a vertical "|" or horizontal "-" bar
-				else if (this.board[i][j] == Case.BORDER || this.board[i][j] == Case.POTENTIALWALL) {
+				else if (this.getBoard()[i][j] == Case.BORDER || this.getBoard()[i][j] == Case.POTENTIALWALL) {
 					if (j % 2 == 0) {
 						System.out.print("| ");
 					} else {
 						System.out.print("- ");
 					}
 				} // If the case is a wall : put a "/"
-				else if (this.board[i][j] == Case.WALL) {
+				else if (this.getBoard()[i][j] == Case.WALL) {
 					System.out.print("/ ");
 				} // If the case is empty : put a " "
-				else if (this.board[i][j] == Case.EMPTY) {
+				else if (this.getBoard()[i][j] == Case.EMPTY) {
 					System.out.print("  ");
 				} // If the case is a player, put its value
 				else {
-					System.out.print(this.board[i][j].getValue() + " ");
+					System.out.print(this.getBoard()[i][j].getValue() + " ");
 				}
 			}
 			System.out.println();
@@ -226,9 +226,9 @@ public class Board {
 	 * @param player the player to move
 	 */
 	public void move(Position pos, Pawn player) {
-		this.board[player.getPos().getX()][player.getPos().getY()] = Case.EMPTY;
+		this.getBoard()[player.getPos().getX()][player.getPos().getY()] = Case.EMPTY;
 		player.setPos(pos);
-		this.board[player.getPos().getX()][player.getPos().getY()] = player.getPlayerNb();
+		this.getBoard()[player.getPos().getX()][player.getPos().getY()] = player.getPlayerNb();
 		player.possibleMove(this, player.getPos());
 	}
 
@@ -383,7 +383,7 @@ public class Board {
 				this.roundOfPlay(players, turn, s);
 				break;
 			}
-			System.out.println("wallCount =" + this.wallCount);
+			System.out.println("wallCount =" + this.getWallCount());
 			break;
 		default:
 			// Wrong value of action

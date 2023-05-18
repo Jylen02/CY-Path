@@ -36,7 +36,7 @@ Board display description :
 	- Walls are represented by slashes ("/")
 	- Coordinates are indicated at the top and left of the board
 
-How to play? :
+How to play ? :
 	- Enter the number of players (2 or 4)
 	- Enter the names of each players
 	- Player's turn :
