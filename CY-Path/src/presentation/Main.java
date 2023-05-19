@@ -33,7 +33,7 @@ public class Main extends Application {
 
 	private Player[] players;
 	private int currentTurn = 0;
-	
+
 	// A enlever (récupérer dans players[i].getPawn())
 	private Set<Position> possibleMove;
 	private Position pos;
@@ -45,7 +45,7 @@ public class Main extends Application {
 	private boolean hasPlacedWall;
 	private int mouseColumn;
 	private int mouseRow;
-	
+
 	// Getters & Setters
 	public Board getBoard() {
 		return board;
@@ -90,7 +90,7 @@ public class Main extends Application {
 	public void setPlacingWall(boolean isPlacingWall) {
 		this.isPlacingWall = isPlacingWall;
 	}
-	
+
 	public boolean hasPlacedWall() {
 		return hasPlacedWall;
 	}
@@ -112,11 +112,9 @@ public class Main extends Application {
 		this.primaryStage = primaryStage;
 		this.primaryStage.setTitle("Quoridor");
 		this.primaryStage.setResizable(false);
-		
-        Image icon = new Image("image/dikdik.png"); //Icon of the application
-        this.primaryStage.getIcons().add(icon);
-        
-		
+
+		Image icon = new Image("image/dikdik.png"); // Icon of the application
+		this.primaryStage.getIcons().add(icon);
 
 		VBox box = new VBox(20);
 
@@ -134,8 +132,8 @@ public class Main extends Application {
 		box.getChildren().addAll(title, play, rules, exit);
 		box.setAlignment(Pos.CENTER);
 
-		Scene scene = new Scene(box,800,700);
-		
+		Scene scene = new Scene(box, 800, 700);
+
 		this.primaryStage.setScene(scene);
 		this.primaryStage.sizeToScene();
 		this.primaryStage.show();
@@ -176,7 +174,7 @@ public class Main extends Application {
 		VBox box = new VBox(title, listOfRules, back);
 		box.setAlignment(Pos.CENTER);
 
-		Scene scene = new Scene(box,800,700);
+		Scene scene = new Scene(box, 800, 700);
 
 		this.primaryStage.setScene(scene);
 		this.primaryStage.sizeToScene();
@@ -208,7 +206,7 @@ public class Main extends Application {
 		box.getChildren().addAll(title, label, twoPlayer, fourPlayer, back);
 		box.setAlignment(Pos.CENTER);
 
-		Scene scene = new Scene(box,800,700);
+		Scene scene = new Scene(box, 800, 700);
 
 		this.primaryStage.setScene(scene);
 		this.primaryStage.sizeToScene();
@@ -268,8 +266,8 @@ public class Main extends Application {
 		box.setAlignment(Pos.CENTER);
 		box.getChildren().addAll(back, start);
 
-		Scene scene = new Scene(box,800,700);
-		
+		Scene scene = new Scene(box, 800, 700);
+
 		this.primaryStage.setScene(scene);
 		this.primaryStage.sizeToScene();
 		this.primaryStage.show();
@@ -278,62 +276,63 @@ public class Main extends Application {
 
 	private void playBoard(boolean canDoAction) {
 		Label playerTurn = createLabel(this.getPlayers()[this.getCurrentTurn()].getName() + "'s turn", 50);
-		//playerTurn.setStyle("-fx-text-fill: red;");
-		possibleMove = players[this.getCurrentTurn()].getPawn().possibleMove(this.board, players[this.getCurrentTurn()].getPawn().getPos());
+		// playerTurn.setStyle("-fx-text-fill: red;");
+		possibleMove = players[this.getCurrentTurn()].getPawn().possibleMove(this.board,
+				players[this.getCurrentTurn()].getPawn().getPos());
 
 		grid = updateBoard();
-	    Scene scene = new Scene(new BorderPane(),800,700);
+		Scene scene = new Scene(new BorderPane(), 800, 700);
 
 		VBox action = actionList(scene, canDoAction);
 
 		BorderPane pane = new BorderPane();
 		pane.setTop(playerTurn);
-		pane.setLeft(grid);
-		pane.setCenter(action);
+		pane.setAlignment(playerTurn, Pos.CENTER);
+		pane.setCenter(grid);
+		pane.setRight(action);
 
-	    if (this.isPlacingWall()) {
-	    	StackPane wallContainer = new StackPane(this.getWallPreview());
-	        // Vérifier si le mur en cours de placement existe déjà dans la grille
-	        if (!grid.getChildren().contains(wallContainer)) {
-	            // Ajouter le mur en cours de placement à la grille du plateau
-	            grid.getChildren().add(wallContainer);
-	        }
-	    }
+		if (this.isPlacingWall()) {
+			StackPane wallContainer = new StackPane(this.getWallPreview());
+			// Vérifier si le mur en cours de placement existe déjà dans la grille
+			if (!grid.getChildren().contains(wallContainer)) {
+				// Ajouter le mur en cours de placement à la grille du plateau
+				grid.getChildren().add(wallContainer);
+			}
+		}
 		scene.setRoot(pane);
-		
+
 		primaryStage.setScene(scene);
 		primaryStage.sizeToScene();
 		primaryStage.show();
 	}
 
 	private VBox actionList(Scene scene, boolean canDoAction) {
-		Button exit = createButton("Exit",100,50,20);
+		Button exit = createButton("Exit", 100, 50, 20);
 		exit.setOnAction(e -> start(primaryStage));
-		
-		Button restart = createButton("Restart",100,50,20);
+
+		Button restart = createButton("Restart", 100, 50, 20);
 		restart.setOnAction(e -> handleRestartButton());
-		
-		Button wall = createButton("Wall --",100,50,20);
+
+		Button wall = createButton("Wall --", 100, 50, 20);
 		wall.setOnAction(e -> handlePlaceWall(scene, wall));
 		if (!canDoAction) {
 			wall.setDisable(true);
 		}
-		
 
-		Button cancel = createButton("Cancel",100,50,20);
+		Button cancel = createButton("Cancel", 100, 50, 20);
 		cancel.setOnAction(e -> handleCancel());
 
-		Button confirm = createButton("Confirm",100,50,20);
+		Button confirm = createButton("Confirm", 100, 50, 20);
 		confirm.setOnAction(e -> handleConfirm());
-		
+
 		HBox confirms = new HBox(20);
 		confirms.getChildren().addAll(cancel, confirm);
 		confirms.setAlignment(Pos.CENTER);
-		
+
 		VBox box = new VBox(20);
 		box.getChildren().addAll(exit, restart, wall, confirms);
 		box.setAlignment(Pos.CENTER);
-		
+
 		return box;
 	}
 
@@ -342,7 +341,7 @@ public class Main extends Application {
 
 		for (int row = 0; row < Board.SIZE; row++) {
 			for (int col = 0; col < Board.SIZE; col++) {
-				pos = new Position(row,col);
+				pos = new Position(row, col);
 				if (board.getBoard()[row][col] == Case.BORDER || board.getBoard()[row][col] == Case.POTENTIALWALL) {
 					if (row % 2 == 1) {
 						this.cell = new Rectangle(5, 30);
@@ -354,43 +353,32 @@ public class Main extends Application {
 					this.cell = new Rectangle(5, 5);
 					this.cell.setFill(Color.LIGHTGRAY);
 				} else if (board.getBoard()[row][col] == Case.WALL) {
-					//Wall Intersection
-					if ((row+col)%2==0) {
+					// Wall Intersection
+					if ((row + col) % 2 == 0) {
 						this.cell = new Rectangle(5, 5);
 						this.cell.setFill(Color.RED);
-					}
-					else if (row % 2 == 1) {
+					} else if (row % 2 == 1) {
 						this.cell = new Rectangle(5, 30);
 					} else {
 						this.cell = new Rectangle(30, 5);
 					}
 					this.cell.setFill(Color.BLACK);
-				} else if( board.getBoard()[row][col] == Case.PLAYER1) {
+				} else if (board.getBoard()[row][col] == Case.PLAYER1) {
 					cell = new Rectangle(30, 30);
 					this.cell.setFill(Color.BLUE);
-					
-				}
-				else if( board.getBoard()[row][col] == Case.PLAYER2) {
+				} else if (board.getBoard()[row][col] == Case.PLAYER2) {
 					cell = new Rectangle(30, 30);
 					this.cell.setFill(Color.RED);
-					
-				}
-				else if( board.getBoard()[row][col] == Case.PLAYER3) {
+				} else if (board.getBoard()[row][col] == Case.PLAYER3) {
 					cell = new Rectangle(30, 30);
 					this.cell.setFill(Color.GREEN);
-					
-				}
-				else if( board.getBoard()[row][col] == Case.PLAYER4) {
+				} else if (board.getBoard()[row][col] == Case.PLAYER4) {
 					cell = new Rectangle(30, 30);
 					this.cell.setFill(Color.YELLOW);
-					
-				}
-				
-				else {
-					
+				} else {
 					cell = new Rectangle(30, 30);
 					if (possibleMove.contains(pos)) {
-						switch(this.getCurrentTurn()) {
+						switch (this.getCurrentTurn()) {
 						case 0:
 							this.cell.setFill(Color.LIGHTBLUE);
 							break;
@@ -403,21 +391,15 @@ public class Main extends Application {
 						case 3:
 							this.cell.setFill(Color.LIGHTGOLDENRODYELLOW);
 							break;
-							
 						}
-						
-						}	
-					
-					else {
+					} else {
 						this.cell.setFill(Color.WHITE);
 					}
-					
 				}
 				this.cell.setStroke(null);
 				grid.add(cell, col, row);
 			}
 		}
-		
 		return grid;
 	}
 
@@ -427,53 +409,52 @@ public class Main extends Application {
 
 	private void handlePlaceWall(Scene scene, Button button) {
 		button.setDisable(true);
-		//Création de la prévisualisation du mur
+		// Création de la prévisualisation du mur
 		this.setWallPreview(new Rectangle(65, 5));
 		this.getWallPreview().setFill(Color.RED);
 		this.getWallPreview().setOpacity(0.5);
 		this.getWallPreview().setStroke(null);
-		
+
 		this.setPlacingWall(true);
 		this.setWall(new Wall(Orientation.HORIZONTAL, new Position(0, 0))); // Orientation horizontale par défaut
-		
-		// Créer un conteneur pour voir le mur en cours de placement
-	    StackPane wallContainer = new StackPane(this.getWallPreview());
 
-	    // Gestion de l'événement de mouvement de la souris pour suivre le curseur
-	    scene.setOnMouseMoved(e -> {
-	    	mouseColumn = (int) e.getX(); // X : abscisse
-	    	mouseRow = (int) e.getY(); // Y : ordonnée
-	    	int row = cursorRowToIndex();
-	    	int column = cursorColumnToIndex();
-	    	if (0 < row && row < 18 && 0 < column && column < 18) {
-	    		if (row%2==0 && column%2==0) {
-		    		this.getWallPreview().setFill(Color.BLACK);
-		    		this.getWallPreview().setX(row); // Mettre à jour la position X du rectangle
-		    		this.getWallPreview().setY(column); // Mettre à jour la position Y du rectangle
-	    		}
-	    		else {
-		    		this.getWallPreview().setFill(Color.RED);
-		    	}
-	    	}
-	    	if (this.getWall().getOrientation() == Orientation.HORIZONTAL) {
-	    		wallContainer.setTranslateX(mouseColumn-360);
-		        wallContainer.setTranslateY(mouseRow-405);
-	    	} else {
-	    		wallContainer.setTranslateX(mouseColumn-332);
-		        wallContainer.setTranslateY(mouseRow-435);
-	    	}
-	        
-	        System.out.println(mouseRow + "," + mouseColumn + " : " + row + "," + column);
-	    });
+		// Créer un conteneur pour voir le mur en cours de placement
+		StackPane wallContainer = new StackPane(this.getWallPreview());
+
+		// Gestion de l'événement de mouvement de la souris pour suivre le curseur
+		scene.setOnMouseMoved(e -> {
+			mouseColumn = (int) e.getX(); // X : abscisse
+			mouseRow = (int) e.getY(); // Y : ordonnée
+			int row = cursorRowToIndex();
+			int column = cursorColumnToIndex();
+			if (0 < row && row < 18 && 0 < column && column < 18) {
+				if (row % 2 == 0 && column % 2 == 0) {
+					this.getWallPreview().setFill(Color.BLACK);
+					this.getWallPreview().setX(row); // Mettre à jour la position X du rectangle
+					this.getWallPreview().setY(column); // Mettre à jour la position Y du rectangle
+				} else {
+					this.getWallPreview().setFill(Color.RED);
+				}
+			}
+			if (this.getWall().getOrientation() == Orientation.HORIZONTAL) {
+				wallContainer.setTranslateX(mouseColumn - 360);
+				wallContainer.setTranslateY(mouseRow - 405);
+			} else {
+				wallContainer.setTranslateX(mouseColumn - 332);
+				wallContainer.setTranslateY(mouseRow - 435);
+			}
+
+			System.out.println(mouseRow + "," + mouseColumn + " : " + row + "," + column);
+		});
 
 		// Gestion de l'événement de clic gauche pour placer le mur
 		scene.setOnMouseClicked(e -> {
 			if (e.getButton() == MouseButton.PRIMARY) {
 				// Vérifier si la position du mur est valide (Case.NULL) et le placer
-		    	int column = cursorColumnToIndex();
-		    	int row = cursorRowToIndex();
-		    	if (row%2==0 && column%2==0) {
-		    		if (this.getBoard().getBoard()[row][column] == Case.NULL) {
+				int column = cursorColumnToIndex();
+				int row = cursorRowToIndex();
+				if (row % 2 == 0 && column % 2 == 0) {
+					if (this.getBoard().getBoard()[row][column] == Case.NULL) {
 						this.getWall().setPosition(new Position(row, column));
 						this.getWall().wallError(this.getBoard(), this.getPlayers(), this.getCurrentTurn());
 						// Mettre à jour l'affichage du plateau
@@ -483,27 +464,27 @@ public class Main extends Application {
 						this.setWallPreview(null);
 						playBoard(false);
 					}
-		    	} else {
-		    		 Alert alert = new Alert(Alert.AlertType.INFORMATION);
-		    		 alert.setTitle("Error");
-	    	         alert.setHeaderText("Invalid coordinates");
-		    		 alert.setContentText("You can't place a wall here");
-		    		 alert.showAndWait();
-		    	}
+				} else {
+					Alert alert = new Alert(Alert.AlertType.INFORMATION);
+					alert.setTitle("Error");
+					alert.setHeaderText("Invalid coordinates");
+					alert.setContentText("You can't place a wall here");
+					alert.showAndWait();
+				}
 			} else if (e.getButton() == MouseButton.SECONDARY) {
 				// Changer l'orientation du mur avec un clic droit
 				updateWallOrientation();
 			}
 		});
-	    // Ajouter le mur en cours de placement à la grille du plateau
-	    if (!grid.getChildren().contains(wallContainer)) {
-	        grid.add(wallContainer, 20, 20);
-	    }
+		// Ajouter le mur en cours de placement à la grille du plateau
+		if (!grid.getChildren().contains(wallContainer)) {
+			grid.add(wallContainer, 20, 20);
+		}
 	}
 
 	private void updateWallOrientation() {
 		// Mettre à jour la taille et l'orientation du mur en cours de placement
-		if (this.getWall().getOrientation()==Orientation.HORIZONTAL) {
+		if (this.getWall().getOrientation() == Orientation.HORIZONTAL) {
 			this.getWallPreview().setWidth(5);
 			this.getWallPreview().setHeight(65);
 			this.getWall().setOrientation(Orientation.VERTICAL);
@@ -515,18 +496,18 @@ public class Main extends Application {
 	}
 
 	private int cursorRowToIndex() {
-		//TODO bien convertir le curseur
-		return (int) ((mouseRow)/16.5)-4;
+		// TODO bien convertir le curseur
+		return (int) ((mouseRow) / 16.5) - 4;
 	}
-	
+
 	private int cursorColumnToIndex() {
-		//TODO bien convertir le curseur
-		return (int) ((mouseColumn-76+8)/16.5)+4;
+		// TODO bien convertir le curseur
+		return (int) ((mouseColumn - 76 + 8) / 16.5) + 4;
 	}
-	
+
 	private void handleCancel() {
 		// Si on veut annuler le placement du mur en cours
-		//TODO Control
+		// TODO Control
 		if (this.isPlacingWall()) {
 			this.setPlacingWall(false);
 			// Supprimer le mur en cours de placement de la grille du plateau
@@ -535,17 +516,17 @@ public class Main extends Application {
 			playBoard(true);
 		}
 
-		//Si on veut annuler un mur posé
-		if (this.getWall()!=null) {
-			//Détecter si j'ai posé un mur sinon erreur
+		// Si on veut annuler un mur posé
+		if (this.getWall() != null) {
+			// Détecter si j'ai posé un mur sinon erreur
 			if (this.hasPlacedWall()) {
 				this.getWall().updateWall(board, Case.POTENTIALWALL);
 				this.setHasPlacedWall(false);
 			}
 			playBoard(true);
 		}
-		
-		//TODO Si on veut annuler le déplacement d'un pion à implémenter
+
+		// TODO Si on veut annuler le déplacement d'un pion à implémenter
 	}
 
 	private void handleConfirm() {
@@ -556,6 +537,7 @@ public class Main extends Application {
 		this.setCurrentTurn((currentTurn + 1) % board.getPlayerNumber());
 		playBoard(true);
 	}
+
 	private void handleRestartButton() {
 		// Reset the game state
 		this.setWallPreview(null);
