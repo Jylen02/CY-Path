@@ -1,4 +1,4 @@
-package Abstraction;
+package abstraction;
 
 import java.util.HashSet;
 import java.util.Observable;

@@ -1,4 +1,4 @@
-package Abstraction;
+package abstraction;
 
 /**
  * Enum representing the orientation of a wall. The orientation can be either

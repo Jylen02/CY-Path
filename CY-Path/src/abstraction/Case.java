@@ -1,4 +1,4 @@
-package Abstraction;
+package abstraction;
 
 /**
  * Enum representing the different cases on the game board. Each case has a

@@ -1,9 +1,9 @@
-package Presentation;
+package presentation;
 
-import Abstraction.Case;
-import Abstraction.Orientation;
-import Abstraction.Position;
-import Abstraction.Wall;
+import abstraction.Case;
+import abstraction.Orientation;
+import abstraction.Position;
+import abstraction.Wall;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
