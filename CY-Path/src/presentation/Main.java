@@ -31,8 +31,6 @@ public class Main extends Application {
 	private Rectangle cell; // For the construction of the grid
 	private Player[] players;
 	private int currentTurn = 0;
-	private Set<Position> possibleMove;
-	private Position pos;
 
 	// PlaceWall information
 	private Wall wall;
@@ -264,7 +262,8 @@ public class Main extends Application {
 
 	private void playBoard(Boolean canDoAction) {
 		Label playerTurn = createLabel(this.getPlayers()[this.getCurrentTurn()].getName() + "'s turn", 50);
-		possibleMove = players[this.getCurrentTurn()].getPawn().possibleMove(this.board, players[this.getCurrentTurn()].getPawn().getPos());
+		players[this.getCurrentTurn()].getPawn().setPossibleDestination((players[this.getCurrentTurn()].getPawn().possibleMove(this.board, players[this.getCurrentTurn()].getPawn().getPos())));
+		
 
 		grid = updateBoard();
 	    Scene scene = new Scene(new BorderPane());
@@ -325,7 +324,7 @@ public class Main extends Application {
 
 		for (int row = 0; row < Board.SIZE; row++) {
 			for (int col = 0; col < Board.SIZE; col++) {
-				pos = new Position(row,col);
+				players[this.getCurrentTurn()].getPawn().setPos(new Position(row,col));
 				if (board.getBoard()[row][col] == Case.BORDER || board.getBoard()[row][col] == Case.POTENTIALWALL) {
 					if (row % 2 == 1) {
 						this.cell = new Rectangle(5, 30);
@@ -372,7 +371,7 @@ public class Main extends Application {
 				else {
 					
 					cell = new Rectangle(30, 30);
-					if (possibleMove.contains(pos)) {
+					if (players[this.getCurrentTurn()].getPawn().getPossibleDestination().contains(players[this.getCurrentTurn()].getPawn().getPos())) {
 						switch(this.getCurrentTurn()) {
 						case 0:
 							this.cell.setFill(Color.LIGHTBLUE);
