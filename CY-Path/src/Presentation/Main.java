@@ -31,11 +31,12 @@ public class Main extends Application {
 	private int currentTurn = 0;
 
 	// PlaceWall information
+	private Wall wall;
 	private Rectangle wallPreview;
 	private boolean isPlacingWall;
 	private int mouseColumn;
 	private int mouseRow;
-	private Wall wall;
+	
 
 	// Getters & Setters
 	public Board getBoard() {
@@ -320,11 +321,13 @@ public class Main extends Application {
 				} else if (board.getBoard()[row][col] == Case.NULL) {
 					this.cell = new Rectangle(5, 5);
 					this.cell.setFill(Color.LIGHTGRAY);
-				} else if (board.getBoard()[row][col] == Case.WALLINTERSECTION) {
-					this.cell = new Rectangle(5, 5);
-					this.cell.setFill(Color.BLACK);
 				} else if (board.getBoard()[row][col] == Case.WALL) {
-					if (row % 2 == 0) {
+					//Wall Intersection
+					if ((row+col)%2==0) {
+						this.cell = new Rectangle(5, 5);
+						this.cell.setFill(Color.RED);
+					}
+					else if (row % 2 == 0) {
 						this.cell = new Rectangle(5, 30);
 					} else {
 						this.cell = new Rectangle(30, 5);
@@ -361,8 +364,8 @@ public class Main extends Application {
 
 	    // Gestion de l'événement de mouvement de la souris pour suivre le curseur
 	    scene.setOnMouseMoved(e -> {
-	    	mouseRow = (int) e.getX();
-	    	mouseColumn = (int) e.getY();
+	    	mouseColumn = (int) e.getX(); // X : abscisse
+	    	mouseRow = (int) e.getY(); // Y : ordonnée
 	    	int row = cursorRowToIndex();
 	    	int column = cursorColumnToIndex();
 	    	if (0 < row && row < 19 && 0 < column && column < 19) {
@@ -371,12 +374,13 @@ public class Main extends Application {
 		    		this.getWallPreview().setX(row); // Mettre à jour la position X du rectangle
 		    		this.getWallPreview().setY(column); // Mettre à jour la position Y du rectangle
 	    		}
-	    	}else {
-	    		this.getWallPreview().setFill(Color.BLACK);
+	    		else {
+		    		this.getWallPreview().setFill(Color.BLACK);
+		    	}
 	    	}
-	        wallContainer.setTranslateX(mouseRow-31);
-	        wallContainer.setTranslateY(mouseColumn-75);
-	        System.out.println(mouseColumn + "," + mouseRow + " : " + column + "," + row);
+	        wallContainer.setTranslateX(mouseColumn-32);
+	        wallContainer.setTranslateY(mouseRow-75);
+	        System.out.println(mouseRow + "," + mouseColumn + " : " + row + "," + column);
 	    });
 
 		// Gestion de l'événement de clic gauche pour placer le mur
@@ -452,7 +456,8 @@ public class Main extends Application {
 
 		//Si on veut annuler un mur posé
 		if (this.getWall()!=null) {
-			this.getWall().updateWall(board, Case.POTENTIALWALL, -1);
+			//Détecter si j'ai poser un mur
+			//this.getWall().updateWall(board, Case.POTENTIALWALL, -1);
 
 			playBoard(true);
 		}
