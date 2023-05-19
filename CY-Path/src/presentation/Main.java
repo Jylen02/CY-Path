@@ -111,14 +111,12 @@ public class Main extends Application {
 	public void start(Stage primaryStage) {
 		this.primaryStage = primaryStage;
 		this.primaryStage.setTitle("Quoridor");
-		this.primaryStage.setWidth(800);
-		this.primaryStage.setHeight(700);
-		
+		this.primaryStage.setResizable(false);
 		
         Image icon = new Image("image/dikdik.png"); //Icon of the application
         this.primaryStage.getIcons().add(icon);
         
-		// this.primaryStage.setResizable(false);
+		
 
 		VBox box = new VBox(20);
 
@@ -136,8 +134,8 @@ public class Main extends Application {
 		box.getChildren().addAll(title, play, rules, exit);
 		box.setAlignment(Pos.CENTER);
 
-		Scene scene = new Scene(box);
-
+		Scene scene = new Scene(box,800,700);
+		
 		this.primaryStage.setScene(scene);
 		this.primaryStage.sizeToScene();
 		this.primaryStage.show();
@@ -176,11 +174,12 @@ public class Main extends Application {
 		back.setOnAction(e -> start(primaryStage));
 
 		VBox box = new VBox(title, listOfRules, back);
-		// box.setAlignment(Pos.CENTER);
+		box.setAlignment(Pos.CENTER);
 
-		Scene scene = new Scene(box);
+		Scene scene = new Scene(box,800,700);
 
 		this.primaryStage.setScene(scene);
+		this.primaryStage.sizeToScene();
 		this.primaryStage.show();
 	}
 
@@ -209,9 +208,10 @@ public class Main extends Application {
 		box.getChildren().addAll(title, label, twoPlayer, fourPlayer, back);
 		box.setAlignment(Pos.CENTER);
 
-		Scene scene = new Scene(box);
+		Scene scene = new Scene(box,800,700);
 
 		this.primaryStage.setScene(scene);
+		this.primaryStage.sizeToScene();
 		this.primaryStage.show();
 	}
 
@@ -268,8 +268,10 @@ public class Main extends Application {
 		box.setAlignment(Pos.CENTER);
 		box.getChildren().addAll(back, start);
 
-		Scene scene = new Scene(box);
+		Scene scene = new Scene(box,800,700);
+		
 		this.primaryStage.setScene(scene);
+		this.primaryStage.sizeToScene();
 		this.primaryStage.show();
 
 	}
@@ -280,7 +282,7 @@ public class Main extends Application {
 		possibleMove = players[this.getCurrentTurn()].getPawn().possibleMove(this.board, players[this.getCurrentTurn()].getPawn().getPos());
 
 		grid = updateBoard();
-	    Scene scene = new Scene(new BorderPane());
+	    Scene scene = new Scene(new BorderPane(),800,700);
 
 		VBox action = actionList(scene, canDoAction);
 
@@ -300,6 +302,7 @@ public class Main extends Application {
 		scene.setRoot(pane);
 		
 		primaryStage.setScene(scene);
+		primaryStage.sizeToScene();
 		primaryStage.show();
 	}
 
@@ -325,9 +328,12 @@ public class Main extends Application {
 		
 		HBox confirms = new HBox(20);
 		confirms.getChildren().addAll(cancel, confirm);
+		confirms.setAlignment(Pos.CENTER);
 		
 		VBox box = new VBox(20);
 		box.getChildren().addAll(exit, restart, wall, confirms);
+		box.setAlignment(Pos.CENTER);
+		
 		return box;
 	}
 
