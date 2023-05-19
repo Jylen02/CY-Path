@@ -1,6 +1,6 @@
-package Presentation;
+package presentation;
 
-import Abstraction.*;
+import abstraction.*;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;

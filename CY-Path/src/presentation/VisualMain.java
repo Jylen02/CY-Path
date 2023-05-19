@@ -1,4 +1,4 @@
-package Presentation;
+package presentation;
 
 import javafx.application.Application;
 import javafx.event.ActionEvent;

@@ -1,4 +1,4 @@
-package Abstraction;
+package abstraction;
 
 /**
  * Represents a position in a 2D coordinate system.

@@ -1,4 +1,4 @@
-package Abstraction;
+package abstraction;
 
 /**
  * Enum representing different movement directions. Each movement direction
