@@ -120,9 +120,8 @@ public class Wall {
 	 *
 	 * @param board the game board
 	 * @param type  the case type to update the wall to (WALL or NULL)
-	 * @param co    the counter value for the wall count
 	 */
-	public void updateWall(Board board, Case type, int co) {
+	public void updateWall(Board board, Case type) {
 		int x = this.getPosition().getX();
 		int y = this.getPosition().getY();
 
@@ -135,10 +134,7 @@ public class Wall {
 				board.getBoard()[x][y] = Case.NULL;
 			}
 			board.getBoard()[x][y + 1] = type;
-
-			// Update the wall count
-			int counter = board.getWallCount() + co;
-			board.setWallCount(counter);
+			
 		} else if (this.getOrientation() == Orientation.VERTICAL) {
 			// Update the wall state vertically
 			board.getBoard()[x - 1][y] = type;
@@ -148,32 +144,9 @@ public class Wall {
 				board.getBoard()[x][y] = Case.NULL;
 			}
 			board.getBoard()[x + 1][y] = type;
-
-			// Update the wall count
-			int counter = board.getWallCount() + co;
-			board.setWallCount(counter);
 		}
 	}
-
-	/**
-	 * Creates the wall and verifies if it blocks a player's winning path using
-	 * depth-first search.
-	 *
-	 * @param board the game board
-	 * @return true if the wall can be created, false otherwise
-	 */
-	public boolean createWall(Board board, Player[] players, Integer turn) {
-		if (verifyWall(board)) {
-			updateWall(board, Case.WALL, 1);
-			if (wallError(board, players, turn)) {
-				return false;
-			};
-			return true;
-		} else {
-			return false;
-		}
-	}
-
+	
 	/**
 	 * Handles the possible errors that could happen when a player tries to place a
 	 * wall.
@@ -182,32 +155,38 @@ public class Wall {
 	 * @param turn    The current turn number.
 	 */
 	public boolean wallError(Board board, Player[] players, Integer turn) {
-		// Check if the wall can't be instaured, restart the turn
-		/*if (!this.createWall(board)) {
-			System.out.println(this.getPosition());
-			System.out.println("Error : Can't put a wall to these coordinates.");
-			System.out.println(board);
-			board.roundOfPlay(players, turn);
-		} // Otherwise, check if all pawn can still reach the goal, if not, remove the
-			// wall, then restart the turn
-		else {*/
 			for (int i = 0; i < players.length; i++) {
 				players[i].getPawn().setPossibleDestination(
 						players[i].getPawn().possibleMove(board, players[i].getPawn().getPos()));
 			}
 			if (!board.isWinnableForAll(players)) {
-				this.updateWall(board, Case.POTENTIALWALL, -1);
+				this.updateWall(board, Case.POTENTIALWALL);
 				for (int i = 0; i < players.length; i++) {
 					players[i].getPawn().setPossibleDestination(
 							players[i].getPawn().possibleMove(board, players[i].getPawn().getPos()));
 				}
-				//System.out.println(board);
 				return true;
 			}
-			
-			//A supprimer
-			//System.out.println(board);
 			return false;
-		//}
+	}
+	
+	/**
+	 * Creates the wall and verifies if it blocks a player's winning path using
+	 * depth-first search.
+	 *
+	 * @param board the game board
+	 * @return true if the wall can be created, false otherwise
+	 */
+	public static boolean createWall(Board board, Player[] players, Integer turn, Orientation orientation, Position pos) {
+		Wall wall = new Wall(orientation, pos);
+		if (wall.verifyWall(board)) {
+			wall.updateWall(board, Case.WALL);
+			if (wall.wallError(board, players, turn)) {
+				return false;
+			};
+			return true;
+		} else {
+			return false;
+		}
 	}
 }
