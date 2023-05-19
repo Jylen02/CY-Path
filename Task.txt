@@ -70,18 +70,34 @@
 --10.3. Bouton back -> Retour menu
 
 --11. IHM : Choix nom de chaque joueur (Durée : 1h) : Terminé - Abd-Ennour
---10.1. Titre "Quoridor" + message : "Choix du nom de chaque joueur"
---10.2. Choix du nom des joueur
---10.3. Bouton back -> Retour menu
---10.4. Bouton valider -> Commence le plateau
+--11.1. Titre "Quoridor" + message : "Choix du nom de chaque joueur"
+--11.2. Choix du nom des joueur
+--11.3. Bouton back -> Retour choix du nombre de joueurs
+--11.4. Bouton start-> Commence le plateau
 
 12. IHM : Choix icone pour chaque joueur + Icone de l'application (Durée estimée : 1h) : A Faire
 
-13. IHM : Affichage plateau (Durée : 1h) : Terminé - Christophe, Noaman, Warren 
+--13. IHM : Affichage plateau (Durée : 1h) : Terminé - Christophe, Noaman, Warren 
+--13.1. Message : "Tour du joueur ..."
+--13.2. Bouton exit -> Retour au menu
+--13.3. Bouton Restart -> Recommence la partie
+--13.4. Bouton wall pour récuperer un mur (transparent suivant le curseur)
+--13.5. Bouton cancel -> Annule l'action en cours (poser un mur/ bouger pion)
+--13.6. Bouton confirm -> Confirmer l'action effectué -> passer au prochain joueur
+			ajouter vérification action effectué !
 
-14. IHM : Fonctionnalités (Durée estimée : 4h) : A Faire
-14.1.
-14.2. Tourner le mur (scroll, clic droit) (Durée estimée : 20min) : A faire (IHM plus tard)
-14.3. Récuperer les coordonnées du curseur et convertir -> méthode
+14. IHM : Fonctionnalités pion
+14.1. Voir déplacement possible (Durée : 1h) : A modifier - Abd-Ennour
+14.2. Bouger pion (Durée estimée : 1h) : A Faire
+14.3. Verifier si un joueur à gagner -> message (Durée estimée : 10min) : A Faire
 
-Bonus. Musique de fond
+15. IHM : Fonctionnalités murs
+--15.1. Prévisualiser un mur transparent (Durée : 1h) : Terminé - Christophe
+--15.2. Ne plus pouvoir cliquer sur le bouton pour récuperer un mur si on le possède déjà (Durée : 10min) : Terminé - Jeremy
+15.3. Curseur souris -> index (Durée estimée : 2h) : En Cours - Christophe
+--15.4. Tourner le mur (clic droit) (Durée estimée : 20min - Durée estimée : 10min) : Terminé - Christophe
+15.5. Poser mur (Durée estimée : 30min) : A Faire
+
+16. IHM : Fonctionnalités
+16.1. Ajouter un bruit à chaque fois qu'on bouge un pion ou mur (Durée estimée : 20min) : A Faire
+16.2. Musique de fond (menu ?)
