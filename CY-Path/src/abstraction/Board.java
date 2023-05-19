@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * The Board class represents the game board for the game. It contains the board
+ * Represents the game board for the game. It contains the board
  * layout, player and wall count, and various methods for manipulating the
  * board.
  */
