@@ -27,30 +27,22 @@ public class Main extends Application {
 	private Stage primaryStage;
 	// Board information
 	private Board board; // numberOfPlayers in this class
-	private GridPane grid; // Grid of the board
+	private GridPane grid;
 	private Rectangle cell; // For the construction of the grid
-
-	//A implémenter dans Abstraction
 	private Player[] players;
 	private int currentTurn = 0;
+	private Set<Position> possibleMove;
+	private Position pos;
 
 	// PlaceWall information
 	private Wall wall;
 	private Rectangle wallPreview;
-	
-	//A implémenter dans Wall
 	private boolean isPlacingWall;
 	private boolean hasPlacedWall;
-	
-	//Mouse Cursor information
 	private int mouseColumn;
 	private int mouseRow;
 	
-	/*Control control = new Control(board,grid);
-	control.update();
-	control.changed()/ control.handle()
-	;*/
-	
+
 	// Getters & Setters
 	public Board getBoard() {
 		return board;
@@ -156,6 +148,7 @@ public class Main extends Application {
 	}
 
 	private void showRules() {
+
 		Label title = createLabel("Rules", 140);
 
 		ListView<String> listOfRules = new ListView<>();
@@ -214,6 +207,7 @@ public class Main extends Application {
 	}
 
 	private void createPlayers() {
+
 		Label title = createLabel("Quoridor", 100);
 
 		Label label = createLabel("Choose the name of each players", 50);
@@ -233,7 +227,6 @@ public class Main extends Application {
 		Button start = createButton("Start", 100, 50, 20);
 		start.setOnAction(e -> {
 			// Get each player's name
-			//TODO
 			this.setPlayers(new Player[this.getBoard().getPlayerNumber()]);
 			for (int i = 0; i < this.getBoard().getPlayerNumber(); i++) {
 				String playerName = name[i].getText();
@@ -271,8 +264,8 @@ public class Main extends Application {
 
 	private void playBoard(boolean canDoAction) {
 		Label playerTurn = createLabel(this.getPlayers()[this.getCurrentTurn()].getName() + "'s turn", 50);
-		players[this.getCurrentTurn()].getPawn().setPossibleDestination((players[this.getCurrentTurn()].getPawn().possibleMove(this.board, players[this.getCurrentTurn()].getPawn().getPos())));
-		
+		//playerTurn.setStyle("-fx-text-fill: red;");
+		possibleMove = players[this.getCurrentTurn()].getPawn().possibleMove(this.board, players[this.getCurrentTurn()].getPawn().getPos());
 
 		grid = updateBoard();
 	    Scene scene = new Scene(new BorderPane());
@@ -331,7 +324,7 @@ public class Main extends Application {
 
 		for (int row = 0; row < Board.SIZE; row++) {
 			for (int col = 0; col < Board.SIZE; col++) {
-				players[this.getCurrentTurn()].getPawn().setPos(new Position(row,col));
+				pos = new Position(row,col);
 				if (board.getBoard()[row][col] == Case.BORDER || board.getBoard()[row][col] == Case.POTENTIALWALL) {
 					if (row % 2 == 1) {
 						this.cell = new Rectangle(5, 30);
@@ -378,7 +371,7 @@ public class Main extends Application {
 				else {
 					
 					cell = new Rectangle(30, 30);
-					if (players[this.getCurrentTurn()].getPawn().getPossibleDestination().contains(players[this.getCurrentTurn()].getPawn().getPos())) {
+					if (possibleMove.contains(pos)) {
 						switch(this.getCurrentTurn()) {
 						case 0:
 							this.cell.setFill(Color.LIGHTBLUE);
@@ -414,7 +407,7 @@ public class Main extends Application {
 		// TODO: Implement the logic for handling the Move click
 	}
 
-	private void handlePlaceWall(Scene scene,Button button) {
+	private void handlePlaceWall(Scene scene, Button button) {
 		button.setDisable(true);
 		//Création de la prévisualisation du mur
 		this.setWallPreview(new Rectangle(65, 5));
@@ -456,14 +449,16 @@ public class Main extends Application {
 		    	int column = cursorColumnToIndex();
 		    	int row = cursorRowToIndex();
 		    	if (row%2==0 && column%2==0) {
-					this.getWall().setPosition(new Position(row, column));
-		    		this.getWall().wallError(board, players, currentTurn);
-					// Mettre à jour l'affichage du plateau
-					this.setPlacingWall(false);
-					this.setHasPlacedWall(true);
-					// Supprimer le mur en cours de placement de la grille du plateau
-					this.setWallPreview(null);
-					playBoard(false);
+		    		if (this.getBoard().getBoard()[row][column] == Case.NULL) {
+						this.getWall().setPosition(new Position(row, column));
+						this.getWall().wallError(this.getBoard(), this.getPlayers(), this.getCurrentTurn());
+						// Mettre à jour l'affichage du plateau
+						this.setPlacingWall(false);
+						this.setHasPlacedWall(true);
+						// Supprimer le mur en cours de placement de la grille du plateau
+						this.setWallPreview(null);
+						playBoard(false);
+					}
 		    	} else {
 		    		 Alert alert = new Alert(Alert.AlertType.INFORMATION);
 		    		 alert.setTitle("Error");
@@ -481,23 +476,20 @@ public class Main extends Application {
 	        grid.add(wallContainer, 20, 20);
 	    }
 	}
-	
+
 	private void updateWallOrientation() {
-		
 		// Mettre à jour la taille et l'orientation du mur en cours de placement
 		if (this.getWall().getOrientation()==Orientation.HORIZONTAL) {
 			this.getWallPreview().setWidth(65);
 			this.getWallPreview().setHeight(5);
-			//TODO Control
 			this.getWall().setOrientation(Orientation.VERTICAL);
 		} else {
 			this.getWallPreview().setWidth(5);
 			this.getWallPreview().setHeight(65);
-			//TODO Control
 			this.getWall().setOrientation(Orientation.HORIZONTAL);
 		}
 	}
-	//TODO A mettre dans control
+
 	private int cursorRowToIndex() {
 		//TODO bien convertir le curseur
 		return (int) ((mouseRow)/16.5)-4;
@@ -515,18 +507,20 @@ public class Main extends Application {
 			this.setPlacingWall(false);
 			// Supprimer le mur en cours de placement de la grille du plateau
 			this.setWallPreview(null);
+			// Réinitialiser l'affichage du plateau
+			playBoard(true);
 		}
 
-		//TODO Control : Si on veut annuler un mur posé
+		//Si on veut annuler un mur posé
 		if (this.getWall()!=null) {
 			//Détecter si j'ai posé un mur sinon erreur
 			if (this.hasPlacedWall()) {
 				this.getWall().updateWall(board, Case.POTENTIALWALL, -1);
 				this.setHasPlacedWall(false);
 			}
-			
+			playBoard(true);
 		}
-		playBoard(true);
+		
 		//TODO Si on veut annuler le déplacement d'un pion à implémenter
 	}
 
