@@ -195,6 +195,7 @@ public class Board {
 		return res;
 	}
 	
+	//TODO A déplacer dans pawn ou player
 	/**
 	 * Moves a player to a new position on the board.
 	 *

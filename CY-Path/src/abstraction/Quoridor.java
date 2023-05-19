@@ -6,39 +6,41 @@ import java.util.Scanner;
  * The main class for running the game.
  */
 public class Quoridor {
-	
+
 	/**
 	 * Handles the turn for a player.
 	 * 
 	 * @param players Array of players in the game.
 	 * @param turn    The current turn number.
 	 */
-	public void roundOfPlay(Player[] players, Integer turn) {
+	public static void roundOfPlay(Board board, Player[] players, Integer turn) {
 		Scanner s = new Scanner(System.in);
-		int input;
+		int action;
 		int row;
 		int column;
 		Position position;
+
 		// Verify if there max amount of wall is reach
 		Pawn p = players[turn].getPawn();
+
 		// Display the possible destinations of a pawn
 		System.out.println("Possible move :");
 		System.out.println(p.getPossibleDestination());
-		// Check if the max amount of wall is reached, we can only move
-		if (!this.accountWall()) {
+
+		// Check if the max amount of wall is reached, the player can only move
+		if (players[turn].getRemainingWall() == 0) {
 			System.out.println("The maximum amount of wall is reached, you can only move from now.");
-			input = 1;
+			action = 1;
 		}
 		// Otherwise, choose an action
 		else {
-			
 			System.out.println("Choice of action :");
 			System.out.println(" - Move the pawn : 1 \n - Put a wall : 2");
 			System.out.println("Please select the action you want (1 or 2) :");
-			input = s.nextInt();
+			action = s.nextInt();
 		}
 
-		switch (input) {
+		switch (action) {
 		case 1:
 			// Enter the coordinates for the pawn's move
 			System.out.println("Please enter the coordinates : ");
@@ -47,17 +49,19 @@ public class Quoridor {
 			System.out.print("column = ");
 			column = s.nextInt();
 			position = new Position(row, column);
+
 			// Check if the move is in the possible move's list then move
 			if (p.getPossibleDestination().contains(position)) {
-				this.move(position, p);
-				p.setPossibleDestination(p.possibleMove(this, p.getPos()));
+				board.move(position, p);
+				p.setPossibleDestination(p.possibleMove(board, p.getPos()));
 			} // Otherwise, restart the turn
 			else {
 				System.out.println("Error : Please enter a valid coordinates.");
-				this.show();
-				this.roundOfPlay(players, turn);
+				System.out.println(board);
+				roundOfPlay(board, players, turn);
 			}
 			break;
+
 		case 2:
 			// Enter the coordinates for the wall's coordinates
 			System.out.println("Please enter the coordinates : ");
@@ -66,6 +70,7 @@ public class Quoridor {
 			System.out.print("column = ");
 			column = s.nextInt();
 			position = new Position(row, column);
+
 			// Choose wall's orientation
 			System.out.println("Choice of the wall's orientation :");
 			System.out.println(" - Vertical wall : 1 \n - Horizontal wall : 2");
@@ -75,29 +80,31 @@ public class Quoridor {
 
 			switch (orientation) {
 			case 1:
+				// TODO A modifier
 				wall = new Wall(Orientation.VERTICAL, position);
-				wall.wallError(this, players, turn);
+				wall.wallError(board, players, turn);
 				break;
 			case 2:
 				wall = new Wall(Orientation.HORIZONTAL, position);
-				wall.wallError(this, players, turn);
+				wall.wallError(board, players, turn);
 				break;
 			default:
 				// Wrong value of wall's orientation
 				System.out.println("Error : Incorrect wall's orientation.");
-				this.show();
-				this.roundOfPlay(players, turn);
+				System.out.println(board);
+				roundOfPlay(board, players, turn);
 				break;
 			}
 			break;
 		default:
 			// Wrong value of action
 			System.out.println("Error : Action not available.");
-			this.show();
-			this.roundOfPlay(players, turn);
+			System.out.println(board);
+			roundOfPlay(board, players, turn);
 			break;
 		}
 	}
+
 	/**
 	 * The main method for running the game.
 	 * 
@@ -122,21 +129,25 @@ public class Quoridor {
 			case 0:
 				System.out.println("Player 1: ");
 				players[0] = new Player(s.nextLine(),
-						new Pawn(board, new Position(Board.SIZE - 2, Board.SIZE / 2), Case.PLAYER1));
+						new Pawn(board, new Position(Board.SIZE - 2, Board.SIZE / 2), Case.PLAYER1),
+						Board.MAXWALLCOUNT % numberOfPlayers);
 				break;
 			case 1:
 				System.out.println("Player 2: ");
-				players[1] = new Player(s.nextLine(), new Pawn(board, new Position(1, Board.SIZE / 2), Case.PLAYER2));
+				players[1] = new Player(s.nextLine(), new Pawn(board, new Position(1, Board.SIZE / 2), Case.PLAYER2),
+						Board.MAXWALLCOUNT % numberOfPlayers);
 				break;
 			case 2:
 				System.out.println("Player 3: ");
-				players[2] = new Player(s.nextLine(), new Pawn(board, new Position(Board.SIZE / 2, 1), Case.PLAYER3));
+				players[2] = new Player(s.nextLine(), new Pawn(board, new Position(Board.SIZE / 2, 1), Case.PLAYER3),
+						Board.MAXWALLCOUNT % numberOfPlayers);
 				break;
 			case 3:
 				System.out.println("Player 4: ");
 
 				players[3] = new Player(s.nextLine(),
-						new Pawn(board, new Position(Board.SIZE / 2, Board.SIZE - 2), Case.PLAYER4));
+						new Pawn(board, new Position(Board.SIZE / 2, Board.SIZE - 2), Case.PLAYER4),
+						Board.MAXWALLCOUNT % numberOfPlayers);
 				break;
 			default:
 				break;
@@ -152,10 +163,10 @@ public class Quoridor {
 					.setPossibleDestination(players[i].getPawn().possibleMove(board, players[i].getPawn().getPos()));
 		}
 		// While no one has won, play turn
-		
+
 		while (!win) {
 			System.out.println(players[turn].getName() + "'s turn :");
-			board.roundOfPlay(players, turn);
+			roundOfPlay(board, players, turn);
 			System.out.println(board);
 			// If someone has won, finish the game and display the winner
 			if (players[turn].getPawn().isWinner()) {
