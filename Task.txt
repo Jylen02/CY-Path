@@ -76,6 +76,7 @@
 --11.4. Bouton start-> Commence le plateau
 
 12. IHM : Choix icone pour chaque joueur + Icone de l'application (Durée estimée : 1h) : A Faire
+Mettre le tout dans un dossier + sélection en ouvrant l'explorateur de fichier
 
 --13. IHM : Affichage plateau (Durée : 1h) : Terminé - Christophe, Noaman, Warren 
 --13.1. Message : "Tour du joueur ..."
