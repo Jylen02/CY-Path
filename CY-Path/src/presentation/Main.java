@@ -29,8 +29,11 @@ public class Main extends Application {
 	private Board board; // numberOfPlayers in this class
 	private GridPane grid;
 	private Rectangle cell; // For the construction of the grid
+
 	private Player[] players;
 	private int currentTurn = 0;
+	
+	// A enlever (récupérer dans players[i].getPawn())
 	private Set<Position> possibleMove;
 	private Position pos;
 
@@ -42,7 +45,6 @@ public class Main extends Application {
 	private int mouseColumn;
 	private int mouseRow;
 	
-
 	// Getters & Setters
 	public Board getBoard() {
 		return board;
@@ -131,6 +133,7 @@ public class Main extends Application {
 		Scene scene = new Scene(box);
 
 		this.primaryStage.setScene(scene);
+		this.primaryStage.sizeToScene();
 		this.primaryStage.show();
 	}
 

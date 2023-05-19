@@ -166,12 +166,19 @@ public class Board {
 		}
 	}
 
+	@Override
+	public String toString() {
+		String res = "";
+		return res;
+	}
+	
 	/**
 	 * Displays the current state of the board. 
 	 * To make this possible, each type of the "Case" enumeration is replaced by a specific display.
 	 */
 	public void show() {
 		// First line of the column's coordinates
+		
 		System.out.print("   ");
 		for (int i = 0; i < SIZE; i++) {
 			if (i >= 10) {
