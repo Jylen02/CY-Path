@@ -1,5 +1,7 @@
 package Presentation;
 
+import java.util.Set;
+
 import Abstraction.*;
 import javafx.application.Application;
 import javafx.geometry.Pos;
@@ -29,6 +31,8 @@ public class Main extends Application {
 	private Rectangle cell; // For the construction of the grid
 	private Player[] players;
 	private int currentTurn = 0;
+	private Set<Position> possibleMove;
+	private Position pos;
 
 	// PlaceWall information
 	private Wall wall;
@@ -251,6 +255,7 @@ public class Main extends Application {
 
 	private void playBoard(Boolean canDoAction) {
 		Label playerTurn = createLabel(this.getPlayers()[this.getCurrentTurn()].getName() + "'s turn", 50);
+		possibleMove = players[this.getCurrentTurn()].getPawn().possibleMove(this.board, players[this.getCurrentTurn()].getPawn().getPos());
 
 		grid = updateBoard();
 	    Scene scene = new Scene(new BorderPane());
@@ -311,6 +316,7 @@ public class Main extends Application {
 
 		for (int row = 0; row < Board.SIZE; row++) {
 			for (int col = 0; col < Board.SIZE; col++) {
+				pos = new Position(row,col);
 				if (board.getBoard()[row][col] == Case.BORDER || board.getBoard()[row][col] == Case.POTENTIALWALL) {
 					if (row % 2 == 0) {
 						this.cell = new Rectangle(5, 30);
@@ -350,17 +356,40 @@ public class Main extends Application {
 				}
 				else if( board.getBoard()[row][col] == Case.PLAYER4) {
 					cell = new Rectangle(30, 30);
-					this.cell.setFill(Color.PURPLE);
+					this.cell.setFill(Color.YELLOW);
 					
 				}
+				
 				else {
+					
 					cell = new Rectangle(30, 30);
-					this.cell.setFill(Color.WHITE);
+					if (possibleMove.contains(pos)) {
+						switch(this.getCurrentTurn()) {
+						case 0:
+							this.cell.setFill(Color.LIGHTBLUE);
+							break;
+						case 1:
+							this.cell.setFill(Color.LIGHTSALMON);
+							break;
+						case 2:
+							this.cell.setFill(Color.LIGHTGREEN);
+							break;
+						case 3:
+							this.cell.setFill(Color.LIGHTGOLDENRODYELLOW);
+						}
+						
+						}	
+					
+					else {
+						this.cell.setFill(Color.WHITE);
+					}
+					
 				}
 				this.cell.setStroke(null);
 				grid.add(cell, row, col);
 			}
 		}
+		
 		return grid;
 	}
 
