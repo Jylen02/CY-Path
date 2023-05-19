@@ -52,7 +52,7 @@ public class Quoridor {
 
 			// Check if the move is in the possible move's list then move
 			if (p.getPossibleDestination().contains(position)) {
-				board.move(position, p);
+				p.move(board, position);
 				p.setPossibleDestination(p.possibleMove(board, p.getPos()));
 			} // Otherwise, restart the turn
 			else {

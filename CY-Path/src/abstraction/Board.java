@@ -194,20 +194,6 @@ public class Board {
 		}
 		return res;
 	}
-	
-	//TODO A déplacer dans pawn ou player
-	/**
-	 * Moves a player to a new position on the board.
-	 *
-	 * @param pos    the new position for the player
-	 * @param player the player to move
-	 */
-	public void move(Position pos, Pawn player) {
-		this.getBoard()[player.getPos().getX()][player.getPos().getY()] = Case.EMPTY;
-		player.setPos(pos);
-		this.getBoard()[player.getPos().getX()][player.getPos().getY()] = player.getPlayerNb();
-		player.possibleMove(this, player.getPos());
-	}
 
 	/**
 	 * Checks if the current board configuration allows all players to reach their
