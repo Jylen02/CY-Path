@@ -179,7 +179,6 @@ public class Wall {
 	 * @param board   The game board.
 	 * @param players Array of players in the game.
 	 * @param turn    The current turn number.
-	 * @param s       Scanner for input.
 	 */
 	public void wallError(Board board, Player[] players, Integer turn) {
 		// Check if the wall can't be instaured, restart the turn

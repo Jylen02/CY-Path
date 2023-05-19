@@ -307,7 +307,6 @@ public class Board {
 	 * 
 	 * @param players Array of players in the game.
 	 * @param turn    The current turn number.
-	 * @param s       Scanner for input.
 	 */
 	public void roundOfPlay(Player[] players, Integer turn) {
 		Scanner s = new Scanner(System.in);
@@ -392,6 +391,5 @@ public class Board {
 			this.roundOfPlay(players, turn);
 			break;
 		}
-		s.close();
 	}
 }
