@@ -271,7 +271,7 @@ public class Main extends Application {
 
 	}
 
-	private void playBoard(Boolean canDoAction) {
+	private void playBoard(boolean canDoAction) {
 		Label playerTurn = createLabel(this.getPlayers()[this.getCurrentTurn()].getName() + "'s turn", 50);
 		possibleMove = players[this.getCurrentTurn()].getPawn().possibleMove(this.board, players[this.getCurrentTurn()].getPawn().getPos());
 
@@ -299,7 +299,7 @@ public class Main extends Application {
 		primaryStage.show();
 	}
 
-	private VBox actionList(Scene scene, Boolean canDoAction) {
+	private VBox actionList(Scene scene, boolean canDoAction) {
 		Button exit = createButton("Exit",100,50,20);
 		exit.setOnAction(e -> start(primaryStage));
 		
@@ -307,19 +307,17 @@ public class Main extends Application {
 		restart.setOnAction(e -> handleRestartButton());
 		
 		Button wall = createButton("Wall --",100,50,20);
-		if (canDoAction) {
-			wall.setOnAction(e -> handlePlaceWall(scene, wall));
-		}
-		else {
-			wall.setStyle("-fx-background-color: gray;");
+		wall.setOnAction(e -> handlePlaceWall(scene, wall));
+		if (!canDoAction) {
+			wall.setDisable(true);
 		}
 		
 
 		Button cancel = createButton("Cancel",100,50,20);
-		cancel.setOnAction(e -> handleCancel(wall));
+		cancel.setOnAction(e -> handleCancel());
 
 		Button confirm = createButton("Confirm",100,50,20);
-		confirm.setOnAction(e -> handleConfirm(wall));
+		confirm.setOnAction(e -> handleConfirm());
 		
 		HBox confirms = new HBox(20);
 		confirms.getChildren().addAll(cancel, confirm);
@@ -445,8 +443,8 @@ public class Main extends Application {
 		    		this.getWallPreview().setFill(Color.RED);
 		    	}
 	    	}
-	        wallContainer.setTranslateX(mouseColumn-32);
-	        wallContainer.setTranslateY(mouseRow-75);
+	        wallContainer.setTranslateX(mouseColumn-360);
+	        wallContainer.setTranslateY(mouseRow-405);
 	        System.out.println(mouseRow + "," + mouseColumn + " : " + row + "," + column);
 	    });
 
@@ -479,7 +477,7 @@ public class Main extends Application {
 		});
 	    // Ajouter le mur en cours de placement à la grille du plateau
 	    if (!grid.getChildren().contains(wallContainer)) {
-	        grid.add(wallContainer, mouseRow, mouseColumn);
+	        grid.add(wallContainer, 20, 20);
 	    }
 	}
 	
@@ -506,13 +504,12 @@ public class Main extends Application {
 	
 	private int cursorColumnToIndex() {
 		//TODO bien convertir le curseur
-		return (int) ((mouseColumn-76+8)/16.5);
+		return (int) ((mouseColumn-76+8)/16.5)+4;
 	}
 	
-	private void handleCancel(Button button) {
+	private void handleCancel() {
 		// Si on veut annuler le placement du mur en cours
 		//TODO Control
-		button.setDisable(false);
 		if (this.isPlacingWall()) {
 			this.setPlacingWall(false);
 			// Supprimer le mur en cours de placement de la grille du plateau
@@ -532,22 +529,21 @@ public class Main extends Application {
 		//TODO Si on veut annuler le déplacement d'un pion à implémenter
 	}
 
-	private void handleConfirm(Button button) {
-		/*this.setPlacingWall(false);
+	private void handleConfirm() {
+		this.setPlacingWall(false);
 		this.setHasPlacedWall(false);
 		this.setWallPreview(null);
-		this.setWall(null);*/
-		button.setDisable(false);
+		this.setWall(null);
 		this.setCurrentTurn((currentTurn + 1) % board.getPlayerNumber());
 		playBoard(true);
 	}
 	private void handleRestartButton() {
 		// Reset the game state
-		/*this.setWallPreview(null);
+		this.setWallPreview(null);
 		this.setWall(null);
 		this.setPlacingWall(false);
 		this.setHasPlacedWall(false);
-		this.setCurrentTurn(0);*/
+		this.setCurrentTurn(0);
 		this.getBoard().initializeBoard();
 		playBoard(true);
 	}
