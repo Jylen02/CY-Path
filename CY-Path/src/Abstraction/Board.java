@@ -1,6 +1,7 @@
 package Abstraction;
 
 import java.util.HashSet;
+import java.util.Observable;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -9,7 +10,7 @@ import java.util.Set;
  * layout, player and wall count, and various methods for manipulating the
  * board.
  */
-public class Board {
+public class Board extends Observable {
 	
 	/**
 	 * The representation of the board
