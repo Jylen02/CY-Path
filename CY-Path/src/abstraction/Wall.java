@@ -1,5 +1,8 @@
 package abstraction;
 
+/**
+ * Represents a wall in a game.
+ */
 public class Wall {
 
 	// private final int HEIGHT = 2;
