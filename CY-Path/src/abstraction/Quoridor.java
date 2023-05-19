@@ -51,7 +51,7 @@ public class Quoridor {
 				break;
 			}
 		}
-		board.show();
+		System.out.println(board);
 
 		boolean win = false;
 		int turn = 0;
