@@ -115,7 +115,7 @@ public class Main extends Application {
 		this.primaryStage.setHeight(700);
 		
 		
-        Image icon = new Image("image/icon.png"); //Icon of the application
+        Image icon = new Image("image/dikdik.png"); //Icon of the application
         this.primaryStage.getIcons().add(icon);
         
 		// this.primaryStage.setResizable(false);
@@ -537,7 +537,7 @@ public class Main extends Application {
 		if (this.getWall()!=null) {
 			//Détecter si j'ai posé un mur sinon erreur
 			if (this.hasPlacedWall()) {
-				this.getWall().updateWall(board, Case.POTENTIALWALL, -1);
+				this.getWall().updateWall(board, Case.POTENTIALWALL);
 				this.setHasPlacedWall(false);
 			}
 			playBoard(true);

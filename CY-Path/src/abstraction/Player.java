@@ -23,9 +23,9 @@ public class Player {
 	/**
 	 * Creates a new player with the specified player number and associated pawn.
 	 *
-	 * @param name The player's name.
-	 * @param pawn The pawn associated with the player.
-	 * @param 
+	 * @param name 			The player's name.
+	 * @param pawn 			The pawn associated with the player.
+	 * @param remainingWall The number of wall remaining for this player.
 	 */
 	public Player(String name, Pawn pawn, int remainingWall) {
 		this.name = name;
@@ -59,11 +59,21 @@ public class Player {
 	public Pawn getPawn() {
 		return pawn;
 	}
-
+	
+	/**
+	 * Returns the number of wall remaining.
+	 *
+	 * @return The pawn associated with the player.
+	 */
 	public int getRemainingWall() {
 		return remainingWall;
 	}
-
+	
+	/**
+	 * Sets the number of wall remaining.
+	 *
+	 * @param name The new player's name.
+	 */
 	public void setRemainingWall(int remainingWall) {
 		this.remainingWall = remainingWall;
 	}

@@ -11,29 +11,29 @@ import java.util.Set;
 public class Board {
 
 	/**
-	 * The representation of the board
+	 * The representation of the board.
 	 */
 	private Case[][] board;
 
 	/**
-	 * The number of players playing the game
+	 * The number of players playing the game.
 	 */
 	private int playerNumber;
 
 	/**
-	 * The size of the board
+	 * The size of the board.
 	 */
 	public static final int SIZE = 19;
 
 	/**
-	 * The number of walls that can be placed on the board in total
+	 * The number of walls that can be placed on the board in total.
 	 */
 	public static final int MAXWALLCOUNT = 20;
 
 	/**
 	 * Constructs a Board object with the specified player number.
 	 *
-	 * @param playerNumber the number of players in the game between 2 and 4
+	 * @param playerNumber The number of players in the game between 2 and 4.
 	 */
 	public Board(int playerNumber) {
 		this.playerNumber = playerNumber;
@@ -47,7 +47,7 @@ public class Board {
 	/**
 	 * Sets the board layout.
 	 *
-	 * @param board the new board layout
+	 * @param board The new board layout.
 	 */
 	public void setBoard(Case[][] board) {
 		this.board = board;
@@ -56,7 +56,7 @@ public class Board {
 	/**
 	 * Returns the number of players in the game.
 	 *
-	 * @return the player number
+	 * @return The player number.
 	 */
 	public int getPlayerNumber() {
 		return playerNumber;
@@ -65,7 +65,7 @@ public class Board {
 	/**
 	 * Sets the number of players in the game.
 	 *
-	 * @param playerNumber the new player number
+	 * @param playerNumber The new player number.
 	 */
 	public void setPlayerNumber(int playerNumber) {
 		this.playerNumber = playerNumber;
@@ -135,61 +135,61 @@ public class Board {
 			}
 		}
 	}
-	
+
 	/**
 	 * Return the current state of the board. To make this possible, each type of
 	 * the "Case" enumeration is replaced by a specific display.
 	 *
 	 * @return A string representation of the current board.
 	 */
-	
+
 	@Override
 	public String toString() {
-		String res ="   ";
+		String res = "   ";
 		// First line of the column's coordinates
 		for (int i = 0; i < SIZE; i++) {
 			if (i >= 10) {
-				res+="1 ";
+				res += "1 ";
 			} else {
-				res+="  ";
+				res += "  ";
 			}
 		}
-		res+="\n";
+		res += "\n";
 		// Second line of the column's coordinates
-		res+="   ";
+		res += "   ";
 		for (int i = 0; i < SIZE; i++) {
-			res+=i % 10 + " ";
+			res += i % 10 + " ";
 		}
-		res+="\n";
+		res += "\n";
 		for (int i = 0; i < SIZE; i++) {
 			// Column of the row's coordinates
 			if (i < 10) {
-				res+=" ";
+				res += " ";
 			}
-			res+=i + " ";
+			res += i + " ";
 			for (int j = 0; j < SIZE; j++) {
 				// If the case is an intersection : put a "+"
 				if (this.getBoard()[i][j] == Case.NULL) {
-					res+="+ ";
+					res += "+ ";
 				} // If the case is a part of the grid, put a vertical "|" or horizontal "-" bar
 				else if (this.getBoard()[i][j] == Case.BORDER || this.getBoard()[i][j] == Case.POTENTIALWALL) {
 					if (j % 2 == 0) {
-						res+="| ";
+						res += "| ";
 					} else {
-						res+="- ";
+						res += "- ";
 					}
 				} // If the case is a wall : put a "/"
 				else if (this.getBoard()[i][j] == Case.WALL) {
-					res+="/ ";
+					res += "/ ";
 				} // If the case is empty : put a " "
 				else if (this.getBoard()[i][j] == Case.EMPTY) {
-					res+="  ";
+					res += "  ";
 				} // If the case is a player, put its value
 				else {
-					res+=this.getBoard()[i][j].getValue() + " ";
+					res += this.getBoard()[i][j].getValue() + " ";
 				}
 			}
-			res+="\n";
+			res += "\n";
 		}
 		return res;
 	}
