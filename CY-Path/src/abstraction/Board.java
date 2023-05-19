@@ -10,22 +10,22 @@ import java.util.Set;
  * board.
  */
 public class Board {
-	
+
 	/**
 	 * The representation of the board
 	 */
 	private Case[][] board;
-	
+
 	/**
 	 * The number of players playing the game
 	 */
 	private int playerNumber;
-	
+
 	/**
 	 * The size of the board
 	 */
 	public static final int SIZE = 19;
-	
+
 	/**
 	 * The number of walls that can be placed on the board in total
 	 */
@@ -136,67 +136,65 @@ public class Board {
 			}
 		}
 	}
-
-	@Override
-	public String toString() {
-		String res = "";
-		return res;
-	}
 	
 	/**
-	 * Displays the current state of the board. 
-	 * To make this possible, each type of the "Case" enumeration is replaced by a specific display.
+	 * Return the current state of the board. To make this possible, each type of
+	 * the "Case" enumeration is replaced by a specific display.
+	 *
+	 * @return A string representation of the current board.
 	 */
-	public void show() {
+	
+	@Override
+	public String toString() {
+		String res ="   ";
 		// First line of the column's coordinates
-		
-		System.out.print("   ");
 		for (int i = 0; i < SIZE; i++) {
 			if (i >= 10) {
-				System.out.print("1 ");
+				res+="1 ";
 			} else {
-				System.out.print("  ");
+				res+="  ";
 			}
 		}
-		System.out.println();
+		res+="\n";
 		// Second line of the column's coordinates
-		System.out.print("   ");
+		res+="   ";
 		for (int i = 0; i < SIZE; i++) {
-			System.out.print(i % 10 + " ");
+			res+=i % 10 + " ";
 		}
-		System.out.println();
+		res+="\n";
 		for (int i = 0; i < SIZE; i++) {
 			// Column of the row's coordinates
 			if (i < 10) {
-				System.out.print(" ");
+				res+=" ";
 			}
-			System.out.print(i + " ");
+			res+=i + " ";
 			for (int j = 0; j < SIZE; j++) {
 				// If the case is an intersection : put a "+"
 				if (this.getBoard()[i][j] == Case.NULL) {
-					System.out.print("+ ");
+					res+="+ ";
 				} // If the case is a part of the grid, put a vertical "|" or horizontal "-" bar
 				else if (this.getBoard()[i][j] == Case.BORDER || this.getBoard()[i][j] == Case.POTENTIALWALL) {
 					if (j % 2 == 0) {
-						System.out.print("| ");
+						res+="| ";
 					} else {
-						System.out.print("- ");
+						res+="- ";
 					}
 				} // If the case is a wall : put a "/"
 				else if (this.getBoard()[i][j] == Case.WALL) {
-					System.out.print("/ ");
+					res+="/ ";
 				} // If the case is empty : put a " "
 				else if (this.getBoard()[i][j] == Case.EMPTY) {
-					System.out.print("  ");
+					res+="  ";
 				} // If the case is a player, put its value
 				else {
-					System.out.print(this.getBoard()[i][j].getValue() + " ");
+					res+=this.getBoard()[i][j].getValue() + " ";
 				}
 			}
-			System.out.println();
+			res+="\n";
 		}
+		return res;
 	}
-
+	
 	/**
 	 * Moves a player to a new position on the board.
 	 *
@@ -266,5 +264,4 @@ public class Board {
 		}
 		return marking;
 	}
-
 }

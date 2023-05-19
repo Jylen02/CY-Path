@@ -183,7 +183,7 @@ public class Wall {
 		if (!this.createWall(board)) {
 			System.out.println(this.getPosition());
 			System.out.println("Error : Can't put a wall to these coordinates.");
-			board.show();
+			System.out.println(board);
 			board.roundOfPlay(players, turn);
 		} // Otherwise, check if all pawn can still reach the goal, if not, remove the
 			// wall, then restart the turn
@@ -199,11 +199,11 @@ public class Wall {
 							players[i].getPawn().possibleMove(board, players[i].getPawn().getPos()));
 				}
 				System.out.println("Error : This wall blocks a player.");
-				board.show();
+				System.out.println(board);
 				board.roundOfPlay(players, turn);
 			}
 			//A supprimer
-			board.show();
+			System.out.println(board);
 		}
 	}
 }

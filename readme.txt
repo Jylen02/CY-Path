@@ -1,5 +1,8 @@
 CY-Path
 
+To compile the javadoc :
+	- javadoc -d CY-Path/doc -classpath "C:/Users/jerem/Desktop/Études/Cours/2022-2023/javafx-sdk-20.0.1/lib/*" CY-Path/src/abstraction/*.java CY-Path/src/presentation/*.java
+
 To see the Javadoc :
 	- Run the file "index.html" in the "doc" folder which is present in "CY-Path" folder
 
