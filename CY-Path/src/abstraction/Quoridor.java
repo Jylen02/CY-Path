@@ -57,8 +57,8 @@ public class Quoridor {
 				p.setPossibleDestination(p.possibleMove(board, p.getPos()));
 			} // Otherwise, restart the turn
 			else {
-				System.out.println("Error : Please enter a valid coordinates.");
 				System.out.println(board);
+				System.out.println("Error : Please enter a valid coordinates.");
 				roundOfPlay(board, players, turn);
 			}
 			break;
@@ -77,22 +77,29 @@ public class Quoridor {
 			System.out.println(" - Vertical wall : 1 \n - Horizontal wall : 2");
 			System.out.println("Please select the action you want (1 or 2) :");
 			int orientation = s.nextInt();
-			Wall wall;
-
 			switch (orientation) {
 			case 1:
-				// TODO A modifier
-				wall = new Wall(Orientation.VERTICAL, position);
-				wall.wallError(board, players, turn);
+				if (Wall.createWall(board, players, turn, Orientation.VERTICAL , position)) {
+					players[turn].setRemainingWall(players[turn].getRemainingWall()-1);
+				}else{
+					System.out.println(board);
+					System.out.println("Error : Replay the round !");
+					roundOfPlay(board, players, turn);
+				};
 				break;
 			case 2:
-				wall = new Wall(Orientation.HORIZONTAL, position);
-				wall.wallError(board, players, turn);
+				if (Wall.createWall(board, players, turn, Orientation.HORIZONTAL , position)) {
+					players[turn].setRemainingWall(players[turn].getRemainingWall()-1);
+				}else{
+					System.out.println(board);
+					System.out.println("Error : Replay the round !");
+					roundOfPlay(board, players, turn);
+				};
 				break;
 			default:
 				// Wrong value of wall's orientation
-				System.out.println("Error : Incorrect wall's orientation.");
 				System.out.println(board);
+				System.out.println("Error : Incorrect wall's orientation.");
 				roundOfPlay(board, players, turn);
 				break;
 			}
@@ -131,24 +138,24 @@ public class Quoridor {
 				System.out.println("Player 1: ");
 				players[0] = new Player(s.nextLine(),
 						new Pawn(board, new Position(Board.SIZE - 2, Board.SIZE / 2), Case.PLAYER1),
-						Board.MAXWALLCOUNT % numberOfPlayers);
+						Board.MAXWALLCOUNT / numberOfPlayers);
 				break;
 			case 1:
 				System.out.println("Player 2: ");
 				players[1] = new Player(s.nextLine(), new Pawn(board, new Position(1, Board.SIZE / 2), Case.PLAYER2),
-						Board.MAXWALLCOUNT % numberOfPlayers);
+						Board.MAXWALLCOUNT / numberOfPlayers);
 				break;
 			case 2:
 				System.out.println("Player 3: ");
 				players[2] = new Player(s.nextLine(), new Pawn(board, new Position(Board.SIZE / 2, 1), Case.PLAYER3),
-						Board.MAXWALLCOUNT % numberOfPlayers);
+						Board.MAXWALLCOUNT / numberOfPlayers);
 				break;
 			case 3:
 				System.out.println("Player 4: ");
 
 				players[3] = new Player(s.nextLine(),
 						new Pawn(board, new Position(Board.SIZE / 2, Board.SIZE - 2), Case.PLAYER4),
-						Board.MAXWALLCOUNT % numberOfPlayers);
+						Board.MAXWALLCOUNT / numberOfPlayers);
 				break;
 			default:
 				break;
