@@ -260,6 +260,19 @@ public class Pawn {
 	}
 
 	/**
+	 * Moves a player to a new position on the board.
+	 *
+	 * @param board The current state of the game board.
+	 * @param pos    the new position for the player
+	 */
+	public void move(Board board, Position pos) {
+		board.getBoard()[this.getPos().getX()][this.getPos().getY()] = Case.EMPTY;
+		this.setPos(pos);
+		board.getBoard()[this.getPos().getX()][this.getPos().getY()] = this.getPlayerNb();
+		this.possibleMove(board, this.getPos());
+	}
+	
+	/**
 	 * Determines the finish line for this pawn based on the associated player.
 	 */
 	public void finishLine() {

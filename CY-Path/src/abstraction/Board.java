@@ -22,11 +22,6 @@ public class Board {
 	private int playerNumber;
 
 	/**
-	 * The number of walls placed on the board
-	 */
-	private int wallCount;
-
-	/**
 	 * The size of the board
 	 */
 	public static final int SIZE = 19;
@@ -44,32 +39,8 @@ public class Board {
 	public Board(int playerNumber) {
 		this.playerNumber = playerNumber;
 		initializeBoard();
-		this.wallCount = 0;
 	}
 
-	/**
-	 * Returns the current wall count on the board.
-	 *
-	 * @return the wall count
-	 */
-	public int getWallCount() {
-		return wallCount;
-	}
-
-	/**
-	 * Sets the wall count on the board.
-	 *
-	 * @param wallCount the new wall count
-	 */
-	public void setWallCount(int wallCount) {
-		this.wallCount = wallCount;
-	}
-
-	/**
-	 * Returns the current board layout.
-	 *
-	 * @return the board layout
-	 */
 	public Case[][] getBoard() {
 		return board;
 	}
@@ -223,32 +194,6 @@ public class Board {
 		}
 		return res;
 	}
-	
-	/**
-	 * Moves a player to a new position on the board.
-	 *
-	 * @param pos    the new position for the player
-	 * @param player the player to move
-	 */
-	public void move(Position pos, Pawn player) {
-		this.getBoard()[player.getPos().getX()][player.getPos().getY()] = Case.EMPTY;
-		player.setPos(pos);
-		this.getBoard()[player.getPos().getX()][player.getPos().getY()] = player.getPlayerNb();
-		player.possibleMove(this, player.getPos());
-	}
-
-	/**
-	 * Check if maximum amount of walls has been placed on the board.
-	 * 
-	 * @return true if less than 20 walls have been placed, false otherwise.
-	 */
-	public boolean accountWall() {
-		if (this.getWallCount() < Board.MAXWALLCOUNT) {
-			return true;
-		} else {
-			return false;
-		}
-	}
 
 	/**
 	 * Checks if the current board configuration allows all players to reach their
@@ -305,97 +250,5 @@ public class Board {
 			}
 		}
 		return marking;
-	}
-
-	/**
-	 * Handles the turn for a player.
-	 * 
-	 * @param players Array of players in the game.
-	 * @param turn    The current turn number.
-	 */
-	public void roundOfPlay(Player[] players, Integer turn) {
-		Scanner s = new Scanner(System.in);
-		int input;
-		int row;
-		int column;
-		Position position;
-		// Verify if there max amount of wall is reach
-		Pawn p = players[turn].getPawn();
-		// Display the possible destinations of a pawn
-		System.out.println("Possible move :");
-		System.out.println(p.getPossibleDestination());
-		// Check if the max amount of wall is reached, we can only move
-		if (!this.accountWall()) {
-			System.out.println("The maximum amount of wall is reached, you can only move from now.");
-			input = 1;
-		}
-		// Otherwise, choose an action
-		else {
-
-			System.out.println("Choice of action :");
-			System.out.println(" - Move the pawn : 1 \n - Put a wall : 2");
-			System.out.println("Please select the action you want (1 or 2) :");
-			input = s.nextInt();
-		}
-
-		switch (input) {
-		case 1:
-			// Enter the coordinates for the pawn's move
-			System.out.println("Please enter the coordinates : ");
-			System.out.print("row = ");
-			row = s.nextInt();
-			System.out.print("column = ");
-			column = s.nextInt();
-			position = new Position(row, column);
-			// Check if the move is in the possible move's list then move
-			if (p.getPossibleDestination().contains(position)) {
-				this.move(position, p);
-				p.setPossibleDestination(p.possibleMove(this, p.getPos()));
-			} // Otherwise, restart the turn
-			else {
-				System.out.println("Error : Please enter a valid coordinates.");
-				System.out.println(this);
-				this.roundOfPlay(players, turn);
-			}
-			break;
-		case 2:
-			// Enter the coordinates for the wall's coordinates
-			System.out.println("Please enter the coordinates : ");
-			System.out.print("row = ");
-			row = s.nextInt();
-			System.out.print("column = ");
-			column = s.nextInt();
-			position = new Position(row, column);
-			// Choose wall's orientation
-			System.out.println("Choice of the wall's orientation :");
-			System.out.println(" - Vertical wall : 1 \n - Horizontal wall : 2");
-			System.out.println("Please select the action you want (1 or 2) :");
-			int orientation = s.nextInt();
-			Wall wall;
-
-			switch (orientation) {
-			case 1:
-				wall = new Wall(Orientation.VERTICAL, position);
-				wall.wallError(this, players, turn);
-				break;
-			case 2:
-				wall = new Wall(Orientation.HORIZONTAL, position);
-				wall.wallError(this, players, turn);
-				break;
-			default:
-				// Wrong value of wall's orientation
-				System.out.println("Error : Incorrect wall's orientation.");
-				System.out.println(this);
-				this.roundOfPlay(players, turn);
-				break;
-			}
-			break;
-		default:
-			// Wrong value of action
-			System.out.println("Error : Action not available.");
-			System.out.println(this);
-			this.roundOfPlay(players, turn);
-			break;
-		}
 	}
 }
