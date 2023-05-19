@@ -201,14 +201,12 @@ public class Wall {
 					players[i].getPawn().setPossibleDestination(
 							players[i].getPawn().possibleMove(board, players[i].getPawn().getPos()));
 				}
-				//System.out.println("Error : This wall blocks a player.");
 				//System.out.println(board);
-				board.roundOfPlay(players, turn);
 				return true;
 			}
 			
 			//A supprimer
-			System.out.println(board);
+			//System.out.println(board);
 			return false;
 		//}
 	}
