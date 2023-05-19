@@ -202,6 +202,7 @@ public class Wall {
 				board.show();
 				board.roundOfPlay(players, turn);
 			}
+			//A supprimer
 			board.show();
 		}
 	}
