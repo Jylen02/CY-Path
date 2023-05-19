@@ -162,9 +162,12 @@ public class Wall {
 	 * @param board the game board
 	 * @return true if the wall can be created, false otherwise
 	 */
-	public boolean createWall(Board board) {
+	public boolean createWall(Board board, Player[] players, Integer turn) {
 		if (verifyWall(board)) {
 			updateWall(board, Case.WALL, 1);
+			if (wallError(board, players, turn)) {
+				return false;
+			};
 			return true;
 		} else {
 			return false;
@@ -178,16 +181,16 @@ public class Wall {
 	 * @param players Array of players in the game.
 	 * @param turn    The current turn number.
 	 */
-	public void wallError(Board board, Player[] players, Integer turn) {
+	public boolean wallError(Board board, Player[] players, Integer turn) {
 		// Check if the wall can't be instaured, restart the turn
-		if (!this.createWall(board)) {
+		/*if (!this.createWall(board)) {
 			System.out.println(this.getPosition());
 			System.out.println("Error : Can't put a wall to these coordinates.");
 			System.out.println(board);
 			board.roundOfPlay(players, turn);
 		} // Otherwise, check if all pawn can still reach the goal, if not, remove the
 			// wall, then restart the turn
-		else {
+		else {*/
 			for (int i = 0; i < players.length; i++) {
 				players[i].getPawn().setPossibleDestination(
 						players[i].getPawn().possibleMove(board, players[i].getPawn().getPos()));
@@ -198,12 +201,13 @@ public class Wall {
 					players[i].getPawn().setPossibleDestination(
 							players[i].getPawn().possibleMove(board, players[i].getPawn().getPos()));
 				}
-				System.out.println("Error : This wall blocks a player.");
-				System.out.println(board);
-				board.roundOfPlay(players, turn);
+				//System.out.println(board);
+				return true;
 			}
+			
 			//A supprimer
-			System.out.println(board);
-		}
+			//System.out.println(board);
+			return false;
+		//}
 	}
 }

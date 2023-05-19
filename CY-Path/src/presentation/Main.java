@@ -12,6 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -112,6 +113,11 @@ public class Main extends Application {
 		this.primaryStage.setTitle("Quoridor");
 		this.primaryStage.setWidth(800);
 		this.primaryStage.setHeight(700);
+		
+		
+        Image icon = new Image("image/icon.png"); //Icon of the application
+        this.primaryStage.getIcons().add(icon);
+        
 		// this.primaryStage.setResizable(false);
 
 		VBox box = new VBox(20);
