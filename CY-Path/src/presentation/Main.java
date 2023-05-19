@@ -437,8 +437,14 @@ public class Main extends Application {
 		    		this.getWallPreview().setFill(Color.RED);
 		    	}
 	    	}
-	        wallContainer.setTranslateX(mouseColumn-360);
-	        wallContainer.setTranslateY(mouseRow-405);
+	    	if (this.getWall().getOrientation() == Orientation.HORIZONTAL) {
+	    		wallContainer.setTranslateX(mouseColumn-360);
+		        wallContainer.setTranslateY(mouseRow-405);
+	    	} else {
+	    		wallContainer.setTranslateX(mouseColumn-332);
+		        wallContainer.setTranslateY(mouseRow-435);
+	    	}
+	        
 	        System.out.println(mouseRow + "," + mouseColumn + " : " + row + "," + column);
 	    });
 
