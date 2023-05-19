@@ -240,7 +240,7 @@ public class Main extends Application {
 			}
 			playBoard(true);
 		});
-
+		box.setAlignment(Pos.CENTER);
 		box.getChildren().addAll(back, start);
 
 		Scene scene = new Scene(box);
