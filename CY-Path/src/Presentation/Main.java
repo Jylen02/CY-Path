@@ -342,7 +342,27 @@ public class Main extends Application {
 						this.cell = new Rectangle(30, 5);
 					}
 					this.cell.setFill(Color.BLACK);
-				} else {
+				} else if( board.getBoard()[row][col] == Case.PLAYER1) {
+					cell = new Rectangle(30, 30);
+					this.cell.setFill(Color.BLUE);
+					
+				}
+				else if( board.getBoard()[row][col] == Case.PLAYER2) {
+					cell = new Rectangle(30, 30);
+					this.cell.setFill(Color.RED);
+					
+				}
+				else if( board.getBoard()[row][col] == Case.PLAYER3) {
+					cell = new Rectangle(30, 30);
+					this.cell.setFill(Color.GREEN);
+					
+				}
+				else if( board.getBoard()[row][col] == Case.PLAYER4) {
+					cell = new Rectangle(30, 30);
+					this.cell.setFill(Color.PURPLE);
+					
+				}
+				else {
 					cell = new Rectangle(30, 30);
 					this.cell.setFill(Color.WHITE);
 				}
