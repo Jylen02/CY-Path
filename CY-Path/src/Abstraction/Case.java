@@ -47,13 +47,9 @@ public enum Case {
 	WALL(6),
 	
 	/**
-	 * Placed wall.
-	 */
-	WALLINTERSECTION(7),
-	/**
 	 * Border case.
 	 */
-	BORDER(8);
+	BORDER(7);
 
 	private final int value;
 

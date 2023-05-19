@@ -205,7 +205,7 @@ public class Board {
 						System.out.print("- ");
 					}
 				} // If the case is a wall : put a "/"
-				else if (this.getBoard()[i][j] == Case.WALL || this.getBoard()[i][j] == Case.WALLINTERSECTION) {
+				else if (this.getBoard()[i][j] == Case.WALL) {
 					System.out.print("/ ");
 				} // If the case is empty : put a " "
 				else if (this.getBoard()[i][j] == Case.EMPTY) {
@@ -307,7 +307,6 @@ public class Board {
 	 * 
 	 * @param players Array of players in the game.
 	 * @param turn    The current turn number.
-	 * @param s       Scanner for input.
 	 */
 	public void roundOfPlay(Player[] players, Integer turn) {
 		Scanner s = new Scanner(System.in);
@@ -327,6 +326,7 @@ public class Board {
 		}
 		// Otherwise, choose an action
 		else {
+			
 			System.out.println("Choice of action :");
 			System.out.println(" - Move the pawn : 1 \n - Put a wall : 2");
 			System.out.println("Please select the action you want (1 or 2) :");
@@ -392,6 +392,5 @@ public class Board {
 			this.roundOfPlay(players, turn);
 			break;
 		}
-		s.close();
 	}
 }

@@ -1,7 +1,5 @@
 package Abstraction;
 
-import java.util.Scanner;
-
 public class Wall {
 
 	// private final int HEIGHT = 2;
@@ -132,7 +130,7 @@ public class Wall {
 			// Update the wall state horizontally
 			board.getBoard()[x][y - 1] = type;
 			if (type == Case.WALL) {
-				board.getBoard()[x][y] = Case.WALLINTERSECTION;
+				board.getBoard()[x][y] = type;
 			} else {
 				board.getBoard()[x][y] = Case.NULL;
 			}
@@ -145,7 +143,7 @@ public class Wall {
 			// Update the wall state vertically
 			board.getBoard()[x - 1][y] = type;
 			if (type == Case.WALL) {
-				board.getBoard()[x][y] = Case.WALLINTERSECTION;
+				board.getBoard()[x][y] = type;
 			} else {
 				board.getBoard()[x][y] = Case.NULL;
 			}
@@ -179,7 +177,6 @@ public class Wall {
 	 * @param board   The game board.
 	 * @param players Array of players in the game.
 	 * @param turn    The current turn number.
-	 * @param s       Scanner for input.
 	 */
 	public void wallError(Board board, Player[] players, Integer turn) {
 		// Check if the wall can't be instaured, restart the turn

@@ -51,7 +51,6 @@ public class Quoridor {
 				break;
 			}
 		}
-		s.close();
 		board.show();
 
 		boolean win = false;
@@ -78,6 +77,6 @@ public class Quoridor {
 			}
 			turn = (turn + 1) % numberOfPlayers;
 		}
-		
+		s.close();
 	}
 }
