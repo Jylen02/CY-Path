@@ -241,23 +241,19 @@ public class Main extends Application {
 				String playerName = name[i].getText();
 				switch (i) {
 				case 0:
-					System.out.println("Player 1: ");
 					players[0] = new Player(playerName,
 							new Pawn(board, new Position(Board.SIZE - 2, Board.SIZE / 2), Case.PLAYER1),
 							Board.MAXWALLCOUNT / this.getBoard().getPlayerNumber());
 					break;
 				case 1:
-					System.out.println("Player 2: ");
 					players[1] = new Player(playerName, new Pawn(board, new Position(1, Board.SIZE / 2), Case.PLAYER2),
 							Board.MAXWALLCOUNT / this.getBoard().getPlayerNumber());
 					break;
 				case 2:
-					System.out.println("Player 3: ");
 					players[2] = new Player(playerName, new Pawn(board, new Position(Board.SIZE / 2, 1), Case.PLAYER3),
 							Board.MAXWALLCOUNT / this.getBoard().getPlayerNumber());
 					break;
 				case 3:
-					System.out.println("Player 4: ");
 
 					players[3] = new Player(playerName,
 							new Pawn(board, new Position(Board.SIZE / 2, Board.SIZE - 2), Case.PLAYER4),
