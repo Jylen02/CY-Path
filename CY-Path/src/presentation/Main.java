@@ -264,6 +264,7 @@ public class Main extends Application {
 
 	private void playBoard(Boolean canDoAction) {
 		Label playerTurn = createLabel(this.getPlayers()[this.getCurrentTurn()].getName() + "'s turn", 50);
+		//playerTurn.setStyle("-fx-text-fill: red;");
 		possibleMove = players[this.getCurrentTurn()].getPawn().possibleMove(this.board, players[this.getCurrentTurn()].getPawn().getPos());
 
 		grid = updateBoard();
@@ -385,6 +386,8 @@ public class Main extends Application {
 							break;
 						case 3:
 							this.cell.setFill(Color.LIGHTGOLDENRODYELLOW);
+							break;
+							
 						}
 						
 						}	
