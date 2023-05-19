@@ -14,6 +14,7 @@ public class Quoridor {
 	 * @param turn    The current turn number.
 	 */
 	public static void roundOfPlay(Board board, Player[] players, Integer turn) {
+		@SuppressWarnings("resource")
 		Scanner s = new Scanner(System.in);
 		int action;
 		int row;
