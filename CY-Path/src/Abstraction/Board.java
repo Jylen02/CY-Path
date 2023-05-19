@@ -307,9 +307,9 @@ public class Board {
 	 * 
 	 * @param players Array of players in the game.
 	 * @param turn    The current turn number.
-	 * @param s       Scanner for input.
 	 */
-	public void roundOfPlay(Player[] players, Integer turn, Scanner s) {
+	public void roundOfPlay(Player[] players, Integer turn) {
+		Scanner s = new Scanner(System.in);
 		int input;
 		int row;
 		int column;
@@ -349,7 +349,7 @@ public class Board {
 			else {
 				System.out.println("Error : Please enter a valid coordinates.");
 				this.show();
-				this.roundOfPlay(players, turn, s);
+				this.roundOfPlay(players, turn);
 			}
 			break;
 		case 2:
@@ -370,17 +370,17 @@ public class Board {
 			switch (orientation) {
 			case 1:
 				wall = new Wall(Orientation.VERTICAL, position);
-				wall.wallError(this, players, turn, s);
+				wall.wallError(this, players, turn);
 				break;
 			case 2:
 				wall = new Wall(Orientation.HORIZONTAL, position);
-				wall.wallError(this, players, turn, s);
+				wall.wallError(this, players, turn);
 				break;
 			default:
 				// Wrong value of wall's orientation
 				System.out.println("Error : Incorrect wall's orientation.");
 				this.show();
-				this.roundOfPlay(players, turn, s);
+				this.roundOfPlay(players, turn);
 				break;
 			}
 			break;
@@ -388,7 +388,7 @@ public class Board {
 			// Wrong value of action
 			System.out.println("Error : Action not available.");
 			this.show();
-			this.roundOfPlay(players, turn, s);
+			this.roundOfPlay(players, turn);
 			break;
 		}
 	}

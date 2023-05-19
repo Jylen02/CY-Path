@@ -64,7 +64,7 @@ public class Quoridor {
 		// While no one has won, play turn
 		while (!win) {
 			System.out.println(players[turn].getName() + "'s turn :");
-			board.roundOfPlay(players, turn, s);
+			board.roundOfPlay(players, turn);
 			board.show();
 			// If someone has won, finish the game and display the winner
 			if (players[turn].getPawn().isWinner()) {
