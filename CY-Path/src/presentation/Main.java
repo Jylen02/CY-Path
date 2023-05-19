@@ -480,12 +480,12 @@ public class Main extends Application {
 	private void updateWallOrientation() {
 		// Mettre à jour la taille et l'orientation du mur en cours de placement
 		if (this.getWall().getOrientation()==Orientation.HORIZONTAL) {
-			this.getWallPreview().setWidth(65);
-			this.getWallPreview().setHeight(5);
-			this.getWall().setOrientation(Orientation.VERTICAL);
-		} else {
 			this.getWallPreview().setWidth(5);
 			this.getWallPreview().setHeight(65);
+			this.getWall().setOrientation(Orientation.VERTICAL);
+		} else {
+			this.getWallPreview().setWidth(65);
+			this.getWallPreview().setHeight(5);
 			this.getWall().setOrientation(Orientation.HORIZONTAL);
 		}
 	}
