@@ -12,6 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -112,6 +113,11 @@ public class Main extends Application {
 		this.primaryStage.setTitle("Quoridor");
 		this.primaryStage.setWidth(800);
 		this.primaryStage.setHeight(700);
+		
+		
+        Image icon = new Image("image/icon.png"); //Icon of the application
+        this.primaryStage.getIcons().add(icon);
+        
 		// this.primaryStage.setResizable(false);
 
 		VBox box = new VBox(20);
@@ -235,20 +241,27 @@ public class Main extends Application {
 				String playerName = name[i].getText();
 				switch (i) {
 				case 0:
-					this.getPlayers()[0] = new Player(playerName,
-							new Pawn(this.getBoard(), new Position(Board.SIZE - 2, Board.SIZE / 2), Case.PLAYER1));
+					System.out.println("Player 1: ");
+					players[0] = new Player(playerName,
+							new Pawn(board, new Position(Board.SIZE - 2, Board.SIZE / 2), Case.PLAYER1),
+							Board.MAXWALLCOUNT / this.getBoard().getPlayerNumber());
 					break;
 				case 1:
-					this.getPlayers()[1] = new Player(playerName,
-							new Pawn(this.getBoard(), new Position(1, Board.SIZE / 2), Case.PLAYER2));
+					System.out.println("Player 2: ");
+					players[1] = new Player(playerName, new Pawn(board, new Position(1, Board.SIZE / 2), Case.PLAYER2),
+							Board.MAXWALLCOUNT / this.getBoard().getPlayerNumber());
 					break;
 				case 2:
-					this.getPlayers()[2] = new Player(playerName,
-							new Pawn(this.getBoard(), new Position(Board.SIZE / 2, 1), Case.PLAYER3));
+					System.out.println("Player 3: ");
+					players[2] = new Player(playerName, new Pawn(board, new Position(Board.SIZE / 2, 1), Case.PLAYER3),
+							Board.MAXWALLCOUNT / this.getBoard().getPlayerNumber());
 					break;
 				case 3:
-					this.getPlayers()[3] = new Player(playerName,
-							new Pawn(this.getBoard(), new Position(Board.SIZE / 2, Board.SIZE - 2), Case.PLAYER4));
+					System.out.println("Player 4: ");
+
+					players[3] = new Player(playerName,
+							new Pawn(board, new Position(Board.SIZE / 2, Board.SIZE - 2), Case.PLAYER4),
+							Board.MAXWALLCOUNT / this.getBoard().getPlayerNumber());
 					break;
 				default:
 					break;
