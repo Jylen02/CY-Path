@@ -1,17 +1,24 @@
 CY-Path
 
-To compile the javadoc :
-	- javadoc -d CY-Path/doc -classpath "C:/Users/jerem/Desktop/Études/Cours/2022-2023/javafx-sdk-20.0.1/lib/*" CY-Path/src/abstraction/*.java CY-Path/src/presentation/*.java
-
-To see the Javadoc :
-	- Run the file "index.html" in the "doc" folder which is present in "CY-Path" folder
 
 To run the deliverable:
 	- Make sure your Java version is up to date, otherwise download the latest version of JDK from Oracle's official website and restart the console.
 	- Download the "quoridor.jar" file and place it in the folder of your choice
 	- Open the terminal on Windows
-	- Enter the command "cd AbsolutePath" replacing AbsolutePath with the absolute path of the quoridor.jar file
+	- Enter the command "cd AbsolutePath" replacing AbsolutePath with the absolute path of the folder where the quoridor.jar file is located
 	- Then enter the command "java -jar quoridor.jar"
+
+To compile the Javadoc :
+	- Make sure you have downloaded the JavaFX library 
+	- Download the project
+	- Open the terminal on Windows
+	- Enter the command "cd AbsolutePath" replacing AbsolutePath with the absolute path of the project
+	- Enter the following command : 
+			javadoc -d CY-Path/doc -classpath "AbsolutePath/lib/*" CY-Path/src/abstraction/*.java CY-Path/src/presentation/*.java
+	  replacing AbsolutePath with the absolute path of the "javafx-sdk-20.0.1" folder
+
+To see the Javadoc :
+	- Run the file "index.html" in the "doc" folder which is present in "CY-Path" folder
 
 Implemented features:
 	- Choice of the number of players (2 or 4 players)
