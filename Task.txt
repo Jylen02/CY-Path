@@ -4,41 +4,39 @@
      Initialiser le plateau selon le nombre de joueur (en plaçant les pions)
      Réinitialiser compteur Wall
 
---2. Faire une méthode tourDeJeu boucle while(noWinner) (Durée estimée : 1h) : A affiner - Noaman, Jeremy, Christophe
+--2. Faire une méthode tourDeJeu boucle while(noWinner) (Durée estimée : 1h) : Terminé - Noaman, Jeremy, Christophe
    Créer une classe Player (numéro joueur,attribut myTurn, méthode jouer)
    Quand c'est à son tour : débloquer les fonctionnalités de tour de jeu
 --2.1. Associer les pions aux joueurs et à l'énumération Case PLAYER1... (Durée estimée : 30min - Durée : 20min) : Terminé - Noaman, Christophe
 
-3. Déplacer un pion
-3.1. Vérifier les déplacements possibles (Durée estimée : 2h - Durée : 2h) : Problème 1/2 déplacement - Christophe, Jeremy
+--3. Déplacer un pion
+--3.1. Vérifier les déplacements possibles (Durée estimée : 2h - Durée : 4h) : Terminé - Christophe, Jeremy, Noaman
      (possibleMove(Position,int)) -> modifier les arguments
      mouvement Special
      Gerer Exception déplacement impossible -> pas besoin finalement
-3.2. Afficher les déplacements possibles (Durée estimée : 10min) : A faire (IHM plus tard)
+--3.2. Afficher les déplacements possibles (Durée estimée : 10min - Durée : 15min) : Terminé - Noaman, Christophe
 --3.3. Déplacer un pion (Durée estimée : 30min - Durée 1h) : Terminé - Noaman, Christophe
-     méthode move() déplacé dans Board pour actualiser le plateau
+     méthode move() 
      Choisir déplacement
      Actualiser la position du pion (rappeler possibleMove())
---3.4. Vérifier si le joueur a gagné (Durée estimée : 30min - Durée : 10min) : A verifier et implémenter - Noaman, Christophe
+--3.4. Vérifier si le joueur a gagné (Durée estimée : 30min - Durée : 10min) : Terminé - Noaman, Christophe
      Apres chaque move()
      Afficher gagnant
      Bouton rejouer (appeler initializeBoard())
 
-4. Poser un mur
-4.1. Tourner le mur (scroll, clic droit) (Durée estimée : 20min) : A faire (IHM plus tard)
+--4. Poser un mur
 --4.2. Vérifier Mur posable (Durée estimée : 2-3h - Durée : 2h) : Terminé - Warren
      Vérifier Hors Index / Deja un mur / Bordure / Max 20 murs (compteur) Terminé - Warren, Abd-Ennour
      Compteur -> tourDeJeu si compteur atteint -> plus de mur posable
-Vérifier DFS pour tout les joueurs : A faire 
---4.3. Pose le mur centré sur le curseur (Durée estimée : 2h) : terminé - Abd-Ennour
-IHM plus tard : Recuperer les coordonnées du curseur et convertir -> méthode
+     Vérifier DFS pour tout les joueurs : Terminé - Jeremy
+--4.3. Pose le mur centré sur la position (Durée estimée : 2h - Durée : 4h ) : Terminé - Abd-Ennour
      Poser le mur - Testé : Abd-Ennour
      Incrémenter compteur Wall + test : Terminé - Abd-Ennour
-4.4. IHM : Si max 20 bordures atteint : grisé l'icone du mur (ne peut plus poser de mur) : A faire
+--4.4. Si max bordures atteint pour le joueur : ne peut plus poser de mur (Durée : 15min ) : Terminé - Christophe
 
---5. Affichage du plateau dans la console (Durée estimée : 30min) : Terminé - Christophe, Jeremy, Warren
+--5. Affichage du plateau dans la console (Durée estimée : 30min - Durée : 1h) : Terminé - Christophe, Jeremy, Warren
    IHM plus tard : Afficher une interface du plateau + un menu
---5.1. Menu de jeu (Durée estimée : 2h) : Terminé - Noaman, Jeremy, Christophe
+--5.1. Menu de jeu (Durée estimée : 2h - Durée : 3h) : Terminé - Noaman, Jeremy, Christophe
      Ne plus poser de mur si il y a déjà 20 mur: en cour - Abd-Ennour
      Pouvoir choisir une action (déplacer pion/poser mur -> disponible seulement si compteur mur<20)
      Si poser : Choix orientation du mur
@@ -48,11 +46,42 @@ IHM plus tard : Recuperer les coordonnées du curseur et convertir -> méthode
                  optimiser if/else -> switch ? Terminé - Jeremy, Christophe, Warren, Noaman
                  vérifier dupliquat d'affichage pb technique Terminé - Jeremy, Christophe, Warren, Noaman
  	 	 win ? Terminé - Noaman
-5.2. Ajouter fonctionnalité nom des joueurs (Durée estimée : 15min) : A faire
+--5.2. Ajouter fonctionnalité nom des joueurs (Durée estimée : 15min - Durée : 20min) : Terminé - Jeremy
 
+--6. DFS (Durée : 8h) : Terminé - Jeremy, Christophe, Abd-Ennour
 
-6. DFS (Durée : 8h) : Terminé - Jeremy, Christophe, Abd-Ennour
+--7. Documentation de toutes les classes (avant IHM !!) (Durée : 1h) : Terminé - Jeremy, Noaman, Warren
+7.1. Commentaires pour toutes les méthodes de classe (si utile)
 
-7. Commentaire + Documentation de toutes les classes (avant IHM !!)
+--8. Affichage IHM : Menu (Durée : 1h) : Terminé - Christophe, Noaman
+--8.1. Titre "Quoridor"
+--8.2. Bouton play -> commence une partie : Choix nombre de joueurs
+--8.3. Bouton rules -> Affiche les règles de jeu
+--8.4. Bouton exit -> Quitte l'application
 
-Bonus. Choix Icone de pion / Musique de fond
+--9. Affichage IHM : Règles de jeu (Durée : 20min) : Terminé - Warren, Christophe, Noaman
+--9.1. Titre "Rules"
+--9.2. Liste des règles (ListView<String>)
+--9.3. Bouton back -> Retour menu
+
+--10. IHM : Choix nombre de joueurs (Durée : 1h) : Terminé - Abd-Ennour
+--10.1. Titre "Quoridor" + message : "Choix du nombre de joueur"
+--10.2. Choix du nombre de joueur -> demande le nom de tous les joueurs (par défaut : "Player i")
+--10.3. Bouton back -> Retour menu
+
+--11. IHM : Choix nom de chaque joueur (Durée : 1h) : Terminé - Abd-Ennour
+--10.1. Titre "Quoridor" + message : "Choix du nom de chaque joueur"
+--10.2. Choix du nom des joueur
+--10.3. Bouton back -> Retour menu
+--10.4. Bouton valider -> Commence le plateau
+
+12. IHM : Choix icone pour chaque joueur + Icone de l'application (Durée estimée : 1h) : A Faire
+
+13. IHM : Affichage plateau (Durée : 1h) : Terminé - Christophe, Noaman, Warren 
+
+14. IHM : Fonctionnalités (Durée estimée : 4h) : A Faire
+14.1.
+14.2. Tourner le mur (scroll, clic droit) (Durée estimée : 20min) : A faire (IHM plus tard)
+14.3. Récuperer les coordonnées du curseur et convertir -> méthode
+
+Bonus. Musique de fond

@@ -18,10 +18,12 @@ Implemented features:
 	- Choice of players' names
 	- Initialization and display of the board
 	- Players play one at a time and the turn skip automatically
+	- Player's possible move are displayed.
+	- Player's remaining wall are displayed.
 	- Choice of action
 		-> Move the pawn
 			-> Choose the movement to make
-			-> Check possible movements (normal, jump, and diagonal) and display them
+			-> Check possible movements (normal, jump, and diagonal)
 			-> Check if the pawn has crossed the board (thus winning)
 		-> Place a wall
 			-> Choose its orientation and position
@@ -34,6 +36,7 @@ Implemented features:
 
 Unimplemented features :
 	- Human-machine interface
+	- Players can choose there icon for their pawn
 
 Board display description :
 	- Players are indicated by their number
@@ -47,6 +50,7 @@ How to play ? :
 	- Enter the names of each players
 	- Player's turn :
 		-> A list of possible moves for the active player is provided
+		-> The number of wall remaining is displayed
 		-> Choose an action between "move the pawn" or "place a wall"
 		-> To move the pawn :
 			-> Enter the coordinates of the pawn's destination
