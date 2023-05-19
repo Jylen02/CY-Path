@@ -7,18 +7,32 @@ To run the deliverable:
 	- Make sure your Java version is up to date, otherwise download the latest version of JDK from Oracle's official website and restart the console.
 	- Download the "quoridor.jar" file and place it in the folder of your choice
 	- Open the terminal on Windows
-	- Enter the command "cd AbsolutePath" replacing AbsolutePath with the absolute path of the quoridor.jar file
+	- Enter the command "cd AbsolutePath" replacing AbsolutePath with the absolute path of the folder where the quoridor.jar file is located
 	- Then enter the command "java -jar quoridor.jar"
+
+To compile the Javadoc :
+	- Make sure you have downloaded the JavaFX library 
+	- Download the project
+	- Open the terminal on Windows
+	- Enter the command "cd AbsolutePath" replacing AbsolutePath with the absolute path of the project
+	- Enter the following command : 
+			javadoc -d CY-Path/doc -classpath "AbsolutePath/lib/*" CY-Path/src/abstraction/*.java CY-Path/src/presentation/*.java
+	  replacing AbsolutePath with the absolute path of the "javafx-sdk-20.0.1" folder
+
+To see the Javadoc :
+	- Run the file "index.html" in the "doc" folder which is present in "CY-Path" folder
 
 Implemented features:
 	- Choice of the number of players (2 or 4 players)
 	- Choice of players' names
 	- Initialization and display of the board
 	- Players play one at a time and the turn skip automatically
+	- Player's possible move are displayed.
+	- Player's remaining wall are displayed.
 	- Choice of action
 		-> Move the pawn
 			-> Choose the movement to make
-			-> Check possible movements (normal, jump, and diagonal) and display them
+			-> Check possible movements (normal, jump, and diagonal)
 			-> Check if the pawn has crossed the board (thus winning)
 		-> Place a wall
 			-> Choose its orientation and position
@@ -31,6 +45,7 @@ Implemented features:
 
 Unimplemented features :
 	- Human-machine interface
+	- Players can choose there icon for their pawn
 
 Board display description :
 	- Players are indicated by their number
@@ -44,6 +59,7 @@ How to play ? :
 	- Enter the names of each players
 	- Player's turn :
 		-> A list of possible moves for the active player is provided
+		-> The number of wall remaining is displayed
 		-> Choose an action between "move the pawn" or "place a wall"
 		-> To move the pawn :
 			-> Enter the coordinates of the pawn's destination
