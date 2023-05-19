@@ -6,7 +6,98 @@ import java.util.Scanner;
  * The main class for running the game.
  */
 public class Quoridor {
+	
+	/**
+	 * Handles the turn for a player.
+	 * 
+	 * @param players Array of players in the game.
+	 * @param turn    The current turn number.
+	 */
+	public void roundOfPlay(Player[] players, Integer turn) {
+		Scanner s = new Scanner(System.in);
+		int input;
+		int row;
+		int column;
+		Position position;
+		// Verify if there max amount of wall is reach
+		Pawn p = players[turn].getPawn();
+		// Display the possible destinations of a pawn
+		System.out.println("Possible move :");
+		System.out.println(p.getPossibleDestination());
+		// Check if the max amount of wall is reached, we can only move
+		if (!this.accountWall()) {
+			System.out.println("The maximum amount of wall is reached, you can only move from now.");
+			input = 1;
+		}
+		// Otherwise, choose an action
+		else {
+			
+			System.out.println("Choice of action :");
+			System.out.println(" - Move the pawn : 1 \n - Put a wall : 2");
+			System.out.println("Please select the action you want (1 or 2) :");
+			input = s.nextInt();
+		}
 
+		switch (input) {
+		case 1:
+			// Enter the coordinates for the pawn's move
+			System.out.println("Please enter the coordinates : ");
+			System.out.print("row = ");
+			row = s.nextInt();
+			System.out.print("column = ");
+			column = s.nextInt();
+			position = new Position(row, column);
+			// Check if the move is in the possible move's list then move
+			if (p.getPossibleDestination().contains(position)) {
+				this.move(position, p);
+				p.setPossibleDestination(p.possibleMove(this, p.getPos()));
+			} // Otherwise, restart the turn
+			else {
+				System.out.println("Error : Please enter a valid coordinates.");
+				this.show();
+				this.roundOfPlay(players, turn);
+			}
+			break;
+		case 2:
+			// Enter the coordinates for the wall's coordinates
+			System.out.println("Please enter the coordinates : ");
+			System.out.print("row = ");
+			row = s.nextInt();
+			System.out.print("column = ");
+			column = s.nextInt();
+			position = new Position(row, column);
+			// Choose wall's orientation
+			System.out.println("Choice of the wall's orientation :");
+			System.out.println(" - Vertical wall : 1 \n - Horizontal wall : 2");
+			System.out.println("Please select the action you want (1 or 2) :");
+			int orientation = s.nextInt();
+			Wall wall;
+
+			switch (orientation) {
+			case 1:
+				wall = new Wall(Orientation.VERTICAL, position);
+				wall.wallError(this, players, turn);
+				break;
+			case 2:
+				wall = new Wall(Orientation.HORIZONTAL, position);
+				wall.wallError(this, players, turn);
+				break;
+			default:
+				// Wrong value of wall's orientation
+				System.out.println("Error : Incorrect wall's orientation.");
+				this.show();
+				this.roundOfPlay(players, turn);
+				break;
+			}
+			break;
+		default:
+			// Wrong value of action
+			System.out.println("Error : Action not available.");
+			this.show();
+			this.roundOfPlay(players, turn);
+			break;
+		}
+	}
 	/**
 	 * The main method for running the game.
 	 * 

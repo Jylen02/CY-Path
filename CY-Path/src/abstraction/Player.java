@@ -11,6 +11,11 @@ public class Player {
 	private Pawn pawn;
 
 	/**
+	 * Number of wall remaining for this player.
+	 */
+	private int remainingWall;
+	
+	/**
 	 * The name of the player.
 	 */
 	private String name;
@@ -51,5 +56,13 @@ public class Player {
 	 */
 	public Pawn getPawn() {
 		return pawn;
+	}
+
+	public int getRemainingWall() {
+		return remainingWall;
+	}
+
+	public void setRemainingWall(int remainingWall) {
+		this.remainingWall = remainingWall;
 	}
 }
