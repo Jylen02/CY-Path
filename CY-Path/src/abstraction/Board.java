@@ -165,7 +165,14 @@ public class Board {
 			}
 		}
 	}
-
+	
+	/**
+	 * Return the current state of the board. To make this possible, each type of
+	 * the "Case" enumeration is replaced by a specific display.
+	 *
+	 * @return A string representation of the current board.
+	 */
+	
 	@Override
 	public String toString() {
 		String res ="   ";
@@ -216,61 +223,7 @@ public class Board {
 		}
 		return res;
 	}
-
-	/**
-	 * Displays the current state of the board. To make this possible, each type of
-	 * the "Case" enumeration is replaced by a specific display.
-	 */
-	public void show() {
-		// First line of the column's coordinates
-
-		System.out.print("   ");
-		for (int i = 0; i < SIZE; i++) {
-			if (i >= 10) {
-				System.out.print("1 ");
-			} else {
-				System.out.print("  ");
-			}
-		}
-		System.out.println();
-		// Second line of the column's coordinates
-		System.out.print("   ");
-		for (int i = 0; i < SIZE; i++) {
-			System.out.print(i % 10 + " ");
-		}
-		System.out.println();
-		for (int i = 0; i < SIZE; i++) {
-			// Column of the row's coordinates
-			if (i < 10) {
-				System.out.print(" ");
-			}
-			System.out.print(i + " ");
-			for (int j = 0; j < SIZE; j++) {
-				// If the case is an intersection : put a "+"
-				if (this.getBoard()[i][j] == Case.NULL) {
-					System.out.print("+ ");
-				} // If the case is a part of the grid, put a vertical "|" or horizontal "-" bar
-				else if (this.getBoard()[i][j] == Case.BORDER || this.getBoard()[i][j] == Case.POTENTIALWALL) {
-					if (j % 2 == 0) {
-						System.out.print("| ");
-					} else {
-						System.out.print("- ");
-					}
-				} // If the case is a wall : put a "/"
-				else if (this.getBoard()[i][j] == Case.WALL) {
-					System.out.print("/ ");
-				} // If the case is empty : put a " "
-				else if (this.getBoard()[i][j] == Case.EMPTY) {
-					System.out.print("  ");
-				} // If the case is a player, put its value
-				else {
-					System.out.print(this.getBoard()[i][j].getValue() + " ");
-				}
-			}
-			System.out.println();
-		}
-	}
-
+	
 	/**
 	 * Moves a player to a new position on the board.
 	 *
@@ -401,7 +354,7 @@ public class Board {
 			} // Otherwise, restart the turn
 			else {
 				System.out.println("Error : Please enter a valid coordinates.");
-				this.show();
+				System.out.println(this);
 				this.roundOfPlay(players, turn);
 			}
 			break;
@@ -432,7 +385,7 @@ public class Board {
 			default:
 				// Wrong value of wall's orientation
 				System.out.println("Error : Incorrect wall's orientation.");
-				this.show();
+				System.out.println(this);
 				this.roundOfPlay(players, turn);
 				break;
 			}
@@ -440,7 +393,7 @@ public class Board {
 		default:
 			// Wrong value of action
 			System.out.println("Error : Action not available.");
-			this.show();
+			System.out.println(this);
 			this.roundOfPlay(players, turn);
 			break;
 		}
