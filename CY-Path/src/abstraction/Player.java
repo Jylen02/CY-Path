@@ -1,4 +1,4 @@
-package Abstraction;
+package abstraction;
 
 /**
  * Represents a player in a game.

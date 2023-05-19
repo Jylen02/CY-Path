@@ -1,9 +1,9 @@
-package Presentation;
+package presentation;
 
-import Abstraction.Board;
-import Abstraction.Case;
-import Abstraction.Position;
-import Abstraction.Pawn;
+import abstraction.Board;
+import abstraction.Case;
+import abstraction.Pawn;
+import abstraction.Position;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;

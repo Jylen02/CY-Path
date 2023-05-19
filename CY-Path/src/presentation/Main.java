@@ -1,4 +1,4 @@
-package Presentation;
+package presentation;
 
 import java.util.Set;
 
@@ -38,6 +38,7 @@ public class Main extends Application {
 	private Wall wall;
 	private Rectangle wallPreview;
 	private boolean isPlacingWall;
+	private boolean hasPlacedWall;
 	private int mouseColumn;
 	private int mouseRow;
 	
@@ -85,6 +86,14 @@ public class Main extends Application {
 
 	public void setPlacingWall(boolean isPlacingWall) {
 		this.isPlacingWall = isPlacingWall;
+	}
+	
+	public boolean hasPlacedWall() {
+		return hasPlacedWall;
+	}
+
+	public void setHasPlacedWall(boolean hasPlacedWall) {
+		this.hasPlacedWall = hasPlacedWall;
 	}
 
 	public Wall getWall() {
@@ -318,7 +327,7 @@ public class Main extends Application {
 			for (int col = 0; col < Board.SIZE; col++) {
 				pos = new Position(row,col);
 				if (board.getBoard()[row][col] == Case.BORDER || board.getBoard()[row][col] == Case.POTENTIALWALL) {
-					if (row % 2 == 0) {
+					if (row % 2 == 1) {
 						this.cell = new Rectangle(5, 30);
 					} else {
 						this.cell = new Rectangle(30, 5);
@@ -333,7 +342,7 @@ public class Main extends Application {
 						this.cell = new Rectangle(5, 5);
 						this.cell.setFill(Color.RED);
 					}
-					else if (row % 2 == 0) {
+					else if (row % 2 == 1) {
 						this.cell = new Rectangle(5, 30);
 					} else {
 						this.cell = new Rectangle(30, 5);
@@ -386,7 +395,7 @@ public class Main extends Application {
 					
 				}
 				this.cell.setStroke(null);
-				grid.add(cell, row, col);
+				grid.add(cell, col, row);
 			}
 		}
 		
@@ -398,17 +407,16 @@ public class Main extends Application {
 	}
 
 	private void handlePlaceWall(Scene scene) {
-		// TODO: Implement the logic for handling the Place Wall button click
 		//Création de la prévisualisation du mur
 		this.setWallPreview(new Rectangle(65, 5));
-		this.getWallPreview().setFill(Color.BLACK);
+		this.getWallPreview().setFill(Color.RED);
 		this.getWallPreview().setOpacity(0.5);
 		this.getWallPreview().setStroke(null);
 		
 		this.setPlacingWall(true);
 		this.setWall(new Wall(Orientation.HORIZONTAL, new Position(0, 0))); // Orientation horizontale par défaut
 		
-		// Créer un conteneur pour le mur en cours de placement
+		// Créer un conteneur pour voir le mur en cours de placement
 	    StackPane wallContainer = new StackPane(this.getWallPreview());
 
 	    // Gestion de l'événement de mouvement de la souris pour suivre le curseur
@@ -417,14 +425,14 @@ public class Main extends Application {
 	    	mouseRow = (int) e.getY(); // Y : ordonnée
 	    	int row = cursorRowToIndex();
 	    	int column = cursorColumnToIndex();
-	    	if (0 < row && row < 19 && 0 < column && column < 19) {
+	    	if (0 < row && row < 18 && 0 < column && column < 18) {
 	    		if (row%2==0 && column%2==0) {
-		    		this.getWallPreview().setFill(Color.RED);
+		    		this.getWallPreview().setFill(Color.BLACK);
 		    		this.getWallPreview().setX(row); // Mettre à jour la position X du rectangle
 		    		this.getWallPreview().setY(column); // Mettre à jour la position Y du rectangle
 	    		}
 	    		else {
-		    		this.getWallPreview().setFill(Color.BLACK);
+		    		this.getWallPreview().setFill(Color.RED);
 		    	}
 	    	}
 	        wallContainer.setTranslateX(mouseColumn-32);
@@ -444,53 +452,50 @@ public class Main extends Application {
 						this.getWall().wallError(this.getBoard(), this.getPlayers(), this.getCurrentTurn());
 						// Mettre à jour l'affichage du plateau
 						this.setPlacingWall(false);
+						this.setHasPlacedWall(true);
 						// Supprimer le mur en cours de placement de la grille du plateau
 						this.setWallPreview(null);
 						playBoard(false);
 					}
 		    	} else {
 		    		 Alert alert = new Alert(Alert.AlertType.INFORMATION);
-		    		 alert.setContentText("Les coordonnées entrées sont non valide");
+		    		 alert.setTitle("Error");
+	    	         alert.setHeaderText("Invalid coordinates");
+		    		 alert.setContentText("You can't place a wall here");
+		    		 alert.showAndWait();
 		    	}
 			} else if (e.getButton() == MouseButton.SECONDARY) {
 				// Changer l'orientation du mur avec un clic droit
-				if (this.getWall().getOrientation()==Orientation.HORIZONTAL) {
-					this.getWall().setOrientation(Orientation.VERTICAL);
-				} else {
-					this.getWall().setOrientation(Orientation.HORIZONTAL);
-				}
-				// Mettre à jour l'affichage du mur en cours de placement
-				updateWallPreview();
+				updateWallOrientation();
 			}
 		});
-		
-		// Mettre à jour la taille et l'orientation du mur en cours de placement
-	    updateWallPreview();
 	    // Ajouter le mur en cours de placement à la grille du plateau
 	    if (!grid.getChildren().contains(wallContainer)) {
-	        grid.getChildren().add(wallContainer);
+	        grid.add(wallContainer,20,20);
 	    }
 	}
 
-	private void updateWallPreview() {
+	private void updateWallOrientation() {
 		// Mettre à jour la taille et l'orientation du mur en cours de placement
 		if (this.getWall().getOrientation()==Orientation.HORIZONTAL) {
 			this.getWallPreview().setWidth(65);
 			this.getWallPreview().setHeight(5);
+			this.getWall().setOrientation(Orientation.VERTICAL);
 		} else {
 			this.getWallPreview().setWidth(5);
 			this.getWallPreview().setHeight(65);
+			this.getWall().setOrientation(Orientation.HORIZONTAL);
 		}
 	}
 
 	private int cursorRowToIndex() {
 		//TODO bien convertir le curseur
-		return (int) ((mouseRow)/16);
+		return (int) ((mouseRow)/16.5)-4;
 	}
 	
 	private int cursorColumnToIndex() {
 		//TODO bien convertir le curseur
-		return (int) ((mouseColumn-76+8)/16);
+		return (int) ((mouseColumn-76+8)/16.5);
 	}
 	
 	private void handleCancel() {
@@ -505,9 +510,11 @@ public class Main extends Application {
 
 		//Si on veut annuler un mur posé
 		if (this.getWall()!=null) {
-			//Détecter si j'ai poser un mur
-			//this.getWall().updateWall(board, Case.POTENTIALWALL, -1);
-
+			//Détecter si j'ai posé un mur sinon erreur
+			if (this.hasPlacedWall()) {
+				this.getWall().updateWall(board, Case.POTENTIALWALL, -1);
+				this.setHasPlacedWall(false);
+			}
 			playBoard(true);
 		}
 		
@@ -516,6 +523,7 @@ public class Main extends Application {
 
 	private void handleConfirm() {
 		this.setPlacingWall(false);
+		this.setHasPlacedWall(false);
 		this.setWallPreview(null);
 		this.setWall(null);
 		this.setCurrentTurn((currentTurn + 1) % board.getPlayerNumber());
@@ -526,6 +534,7 @@ public class Main extends Application {
 		this.setWallPreview(null);
 		this.setWall(null);
 		this.setPlacingWall(false);
+		this.setHasPlacedWall(false);
 		this.setCurrentTurn(0);
 		this.getBoard().initializeBoard();
 		playBoard(true);
