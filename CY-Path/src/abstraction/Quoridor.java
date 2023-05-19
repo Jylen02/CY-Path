@@ -10,6 +10,7 @@ public class Quoridor {
 	/**
 	 * Handles the turn for a player.
 	 * 
+	 * @param board   The game board.
 	 * @param players Array of players in the game.
 	 * @param turn    The current turn number.
 	 */

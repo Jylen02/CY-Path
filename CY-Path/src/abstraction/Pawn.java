@@ -262,8 +262,8 @@ public class Pawn {
 	/**
 	 * Moves a player to a new position on the board.
 	 *
-	 * @param board The current state of the game board.
-	 * @param pos    the new position for the player
+	 * @param board  The game board.
+	 * @param pos    The new position for the player
 	 */
 	public void move(Board board, Position pos) {
 		board.getBoard()[this.getPos().getX()][this.getPos().getY()] = Case.EMPTY;
