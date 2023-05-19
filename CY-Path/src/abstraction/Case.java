@@ -56,7 +56,7 @@ public enum Case {
 	/**
 	 * Constructs a new Case with the specified value.
 	 *
-	 * @param value the value associated with the case
+	 * @param value The value associated with the case.
 	 */
 	private Case(int value) {
 		this.value = value;
@@ -65,7 +65,7 @@ public enum Case {
 	/**
 	 * Returns the value associated with the case.
 	 *
-	 * @return the value of the case
+	 * @return The value of the case.
 	 */
 	public int getValue() {
 		return this.value;

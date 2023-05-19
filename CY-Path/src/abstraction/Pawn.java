@@ -110,10 +110,10 @@ public class Pawn {
 	 * the next case in the board. Adds the new position to possible destinations if
 	 * it is empty or triggers a special move.
 	 *
-	 * @param board          The game board
+	 * @param board          The game board.
 	 * @param possibleDestination	The set of Positions representing the possible destinations for the Pawn.
-	 * @param pos            The current position of the pawn
-	 * @param canSpecialMove Indicates if it can do a special move or not
+	 * @param pos            The current position of the pawn.
+	 * @param canSpecialMove Indicates if it can do a special move or not.
 	 */
 	public void topMove(Board board, Set<Position> possibleDestination, Position pos, Boolean canSpecialMove) {
 		if (board.getBoard()[pos.getX() - 1][pos.getY()] == Case.POTENTIALWALL) {
@@ -132,10 +132,10 @@ public class Pawn {
 	 * the next case in the board. Adds the new position to possible destinations if
 	 * it is empty or triggers a special move.
 	 *
-	 * @param board          The game board
+	 * @param board          The game board.
 	 * @param possibleDestination	The set of Positions representing the possible destinations for the Pawn.
-	 * @param pos            The current position of the pawn
-	 * @param canSpecialMove Indicates if it can do a special move or not
+	 * @param pos            The current position of the pawn.
+	 * @param canSpecialMove Indicates if it can do a special move or not.
 	 */
 	public void rightMove(Board board, Set<Position> possibleDestination, Position pos, Boolean canSpecialMove) {
 		if (board.getBoard()[pos.getX()][pos.getY() + 1] == Case.POTENTIALWALL) {
@@ -154,10 +154,10 @@ public class Pawn {
 	 * the next case in the board. Adds the new position to possible destinations if
 	 * it is empty or triggers a special move.
 	 *
-	 * @param board          The game board
+	 * @param board          The game board.
 	 * @param possibleDestination	The set of Positions representing the possible destinations for the Pawn.
-	 * @param pos            The current position of the pawn
-	 * @param canSpecialMove Indicates if it can do a special move or not
+	 * @param pos            The current position of the pawn.
+	 * @param canSpecialMove Indicates if it can do a special move or not.
 	 */
 	public void botMove(Board board, Set<Position> possibleDestination, Position pos, Boolean canSpecialMove) {
 		if (board.getBoard()[pos.getX() + 1][pos.getY()] == Case.POTENTIALWALL) {
@@ -176,10 +176,10 @@ public class Pawn {
 	 * the next case in the board. Adds the new position to possible destinations if
 	 * it is empty or triggers a special move.
 	 *
-	 * @param board          The game board
+	 * @param board          The game board.
 	 * @param possibleDestination	The set of Positions representing the possible destinations for the Pawn.
-	 * @param pos            The current position of the pawn
-	 * @param canSpecialMove Indicates if it can do a special move or not
+	 * @param pos            The current position of the pawn.
+	 * @param canSpecialMove Indicates if it can do a special move or not.
 	 */
 	public void leftMove(Board board, Set<Position> possibleDestination, Position pos, Boolean canSpecialMove) {
 		if (board.getBoard()[pos.getX()][pos.getY() - 1] == Case.POTENTIALWALL) {
@@ -197,10 +197,10 @@ public class Pawn {
 	 * Performs a special move depending on the specified movement direction. Checks
 	 * the potential wall and triggers appropriate move or other moves.
 	 *
-	 * @param board The game board
+	 * @param board 		 The game board.
 	 * @param possibleDestination	The set of Positions representing the possible destinations for the Pawn.
-	 * @param pos   The current position of the pawn
-	 * @param m     The specified movement direction
+	 * @param pos  			 The current position of the pawn.
+	 * @param m    			 The specified movement direction.
 	 */
 	public void specialMove(Board board, Set<Position> possibleDestination, Position pos, Movement m) {
 		switch (m) {
@@ -263,7 +263,7 @@ public class Pawn {
 	 * Moves a player to a new position on the board.
 	 *
 	 * @param board  The game board.
-	 * @param pos    The new position for the player
+	 * @param pos    The new position for the player.
 	 */
 	public void move(Board board, Position pos) {
 		board.getBoard()[this.getPos().getX()][this.getPos().getY()] = Case.EMPTY;

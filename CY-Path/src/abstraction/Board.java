@@ -11,29 +11,29 @@ import java.util.Set;
 public class Board {
 
 	/**
-	 * The representation of the board
+	 * The representation of the board.
 	 */
 	private Case[][] board;
 
 	/**
-	 * The number of players playing the game
+	 * The number of players playing the game.
 	 */
 	private int playerNumber;
 
 	/**
-	 * The size of the board
+	 * The size of the board.
 	 */
 	public static final int SIZE = 19;
 
 	/**
-	 * The number of walls that can be placed on the board in total
+	 * The number of walls that can be placed on the board in total.
 	 */
 	public static final int MAXWALLCOUNT = 20;
 
 	/**
 	 * Constructs a Board object with the specified player number.
 	 *
-	 * @param playerNumber the number of players in the game between 2 and 4
+	 * @param playerNumber 	The number of players in the game between 2 and 4.
 	 */
 	public Board(int playerNumber) {
 		this.playerNumber = playerNumber;
@@ -47,7 +47,7 @@ public class Board {
 	/**
 	 * Sets the board layout.
 	 *
-	 * @param board the new board layout
+	 * @param board 	The new board layout.
 	 */
 	public void setBoard(Case[][] board) {
 		this.board = board;
@@ -56,7 +56,7 @@ public class Board {
 	/**
 	 * Returns the number of players in the game.
 	 *
-	 * @return the player number
+	 * @return The player number.
 	 */
 	public int getPlayerNumber() {
 		return playerNumber;
@@ -65,7 +65,7 @@ public class Board {
 	/**
 	 * Sets the number of players in the game.
 	 *
-	 * @param playerNumber the new player number
+	 * @param playerNumber 	The new player number.
 	 */
 	public void setPlayerNumber(int playerNumber) {
 		this.playerNumber = playerNumber;
@@ -198,7 +198,7 @@ public class Board {
 	 * Checks if the current board configuration allows all players to reach their
 	 * respective goals.
 	 * 
-	 * @param players Array of players in the game.
+	 * @param players 	Array of players in the game.
 	 * @return true if all players can reach their goals, false otherwise.
 	 */
 	public boolean isWinnableForAll(Player[] players) {
@@ -212,7 +212,7 @@ public class Board {
 	/**
 	 * Check if a game board is winnable for a given player.
 	 * 
-	 * @param player The Pawn of the player to check.
+	 * @param player 	The Pawn of the player to check.
 	 * @return true if the game is winnable for the player, false otherwise.
 	 */
 	public boolean isWinnable(Pawn player) {

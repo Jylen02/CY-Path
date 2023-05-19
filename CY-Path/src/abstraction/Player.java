@@ -23,8 +23,8 @@ public class Player {
 	/**
 	 * Creates a new player with the specified player number and associated pawn.
 	 *
-	 * @param name The player's name.
-	 * @param pawn The pawn associated with the player.
+	 * @param name 			The player's name.
+	 * @param pawn 			The pawn associated with the player.
 	 * @param remainingWall The number of wall remaining for this player.
 	 */
 	public Player(String name, Pawn pawn, int remainingWall) {

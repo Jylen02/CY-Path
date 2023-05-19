@@ -37,7 +37,7 @@ public class Quoridor {
 		// Otherwise, choose an action
 		else {
 			System.out.println("Choice of action :");
-			System.out.println(" - Move the pawn : 1 \n - Put a wall : 2");
+			System.out.println(" - Move the pawn : 1 \n - Put a wall (Remaining wall(s) : " + players[turn].getRemainingWall() + ") : 2");
 			System.out.println("Please select the action you want (1 or 2) :");
 			action = s.nextInt();
 		}
