@@ -8,6 +8,7 @@ import java.util.Set;
 import abstraction.*;
 import javafx.application.Application;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -546,7 +547,7 @@ public class Main extends Application {
 		this.setWall(new Wall(Orientation.HORIZONTAL, new Position(0, 0))); // Orientation horizontale par défaut
 
 		// Créer un conteneur pour voir le mur en cours de placement
-		GridPane wallContainer = new GridPane();
+		StackPane wallContainer = new StackPane();
 		wallContainer.getChildren().add(this.getWallPreview());
 
 		// Gestion de l'événement de mouvement de la souris pour suivre le curseur
@@ -603,6 +604,18 @@ public class Main extends Application {
 		});
 		// Ajouter le mur en cours de placement à la grille du plateau
 		//scene.setRoot(wallContainer);
+		// Accédez à la racine de la scène existante
+		Parent root = scene.getRoot();
+
+		if (root instanceof StackPane) {
+		    // La racine est déjà un StackPane, ajoutez simplement le nouveau StackPane à la liste des enfants
+		    StackPane existingStackPane = (StackPane) root;
+		    existingStackPane.getChildren().add(wallContainer);
+		} else {
+		    // La racine n'est pas un StackPane, créez un nouveau StackPane contenant la racine existante et le nouveau StackPane
+		    StackPane newRoot = new StackPane(root, wallContainer);
+		    scene.setRoot(newRoot);
+		}
 	}
 
 	private void updateWallOrientation() {
