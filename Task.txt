@@ -95,7 +95,7 @@ Mettre le tout dans un dossier + sélection en ouvrant l'explorateur de fichier
 --14.3. Verifier si un joueur à gagner -> message (Durée estimée : 10min - Durée : 15min) : Terminé - Abd-Ennour, 
 
 15. IHM : Fonctionnalités murs
---15.1. Prévisualiser un mur transparent (Durée : 1h) : Terminé - Christophe
+--15.1. Prévisualiser un mur transparent (Durée : 2h) : Problème technique - Christophe
 --15.2. Ne plus pouvoir cliquer sur le bouton pour récuperer un mur si on le possède déjà (Durée : 10min) : Terminé - Jeremy
 --15.3. Curseur souris -> index (Durée estimée : 2h - Durée : 2h) : Annulé - Christophe
 --15.4. Tourner le mur (clic droit) (Durée estimée : 20min - Durée estimée : 10min) : Terminé - Christophe
@@ -103,6 +103,6 @@ Mettre le tout dans un dossier + sélection en ouvrant l'explorateur de fichier
 
 16. IHM : Fonctionnalités
 16.1. Pouvoir cliquer sur les cases du plateau pour effectuer l'action (Durée : 3h) : En Cours - Abd-Ennour
-16.2. Ajouter un bruit à chaque fois qu'on bouge un pion ou mur (Durée estimée : 20min) : Quasi Terminé - Noaman, Warren
---16.3. Musique de fond (Durée : 40min ): En Cours- Noaman, Warren
+16.2. Ajouter un bruit à chaque fois qu'on bouge un pion ou mur (Durée estimée : 20min - Durée : 30min) : Quasi Terminé - Noaman, Warren
+--16.3. Musique de fond (Durée : 40min ): Terminé - Noaman, Warren
         Bouton à mettre en attribut
