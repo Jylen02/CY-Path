@@ -7,6 +7,7 @@ import java.util.Set;
 
 import abstraction.*;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -19,6 +20,7 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
@@ -44,18 +46,19 @@ public class Main extends Application {
 	private GridPane grid;
 	private Rectangle cell; // For the construction of the grid
 
-	//Main of quoridor
+	// Main of quoridor
 	private Player[] players;
 	private int currentTurn = 0;
-	
-	//private Set<Position> possibleCell;
-	private LinkedHashMap<Position,Rectangle> possibleCellMap = new LinkedHashMap<Position,Rectangle>();
-	private Set<Position> positionWall= new LinkedHashSet<Position>();
-	//private LinkedHashMap<Position,Rectangle> cellWallMap = new LinkedHashMap<Position,Rectangle>();
-	
-	//A Supprimer
+
+	// private Set<Position> possibleCell;
+	private LinkedHashMap<Position, Rectangle> possibleCellMap = new LinkedHashMap<Position, Rectangle>();
+	private Set<Position> positionWall = new LinkedHashSet<Position>();
+	// private LinkedHashMap<Position,Rectangle> cellWallMap = new
+	// LinkedHashMap<Position,Rectangle>();
+
+	// A Supprimer
 	private Wall wall;
-	
+
 	// PlaceWall information
 	private StackPane wallContainer;
 	private Rectangle wallPreview;
@@ -63,25 +66,24 @@ public class Main extends Application {
 	private boolean hasPlacedWall;
 	private int mouseColumn;
 	private int mouseRow;
-	
-	//Background A voir si on garde en attribut
-    private StackPane rootPane;
+
+	// Background A voir si on garde en attribut
+	private StackPane rootPane;
 	private Background background;
-	
+
 	private Image wolf = new Image("image/wolfR.png");
 	private Image gibbon = new Image("image/gibbonG.png");
 	private Image penguin = new Image("image/penguinB.png");
 	private Image seagull = new Image("image/seagullY.png");
-	
+
 	private Media mediaPawnMove = new Media(new File("src/sound/move.mp3").toURI().toString());
 	private MediaPlayer mediaPlayerPawnMove = new MediaPlayer(mediaPawnMove);
 	private Media mediaMusic = new Media(new File("src/sound/tw3LOW.mp3").toURI().toString());
-	private MediaPlayer mediaPlayerMusic  = new MediaPlayer(mediaMusic);
-	
-	//Slider volume lié entre pages
+	private MediaPlayer mediaPlayerMusic = new MediaPlayer(mediaMusic);
+
+	// Slider volume lié entre pages
 	private Label volumeLabel = createLabel("Volume", 40);
 	private Slider volumeSlider = new Slider(0, 0.1, 0.05);
-
 
 	// Getters & Setters
 	public Board getBoard() {
@@ -143,8 +145,7 @@ public class Main extends Application {
 	public void setWall(Wall wall) {
 		this.wall = wall;
 	}
-	
-	
+
 	@Override
 	public void start(Stage primaryStage) {
 		this.primaryStage = primaryStage;
@@ -152,19 +153,18 @@ public class Main extends Application {
 		this.primaryStage.setResizable(false);
 
 		this.primaryStage.getIcons().add(new Image("image/dikdik.png"));
-		
-	
+
 		mediaPlayerPawnMove.volumeProperty().bindBidirectional(volumeSlider.valueProperty());
 		mediaPlayerPawnMove.setCycleCount(1); // To repeat the sound 1 time
 
 		mediaPlayerMusic.volumeProperty().bindBidirectional(volumeSlider.valueProperty());
 		mediaPlayerMusic.setCycleCount(MediaPlayer.INDEFINITE); // Infinite restart
 		mediaPlayerMusic.play(); // background music start with the launch of the app
-		
+
 		HBox sliderContainer = new HBox(10);
-        sliderContainer.setAlignment(Pos.CENTER);
-        sliderContainer.getChildren().addAll(volumeLabel, volumeSlider);
-  
+		sliderContainer.setAlignment(Pos.CENTER);
+		sliderContainer.getChildren().addAll(volumeLabel, volumeSlider);
+
 		VBox box = new VBox(20);
 
 		Label title = createLabel("Quoridor", 140);
@@ -181,19 +181,19 @@ public class Main extends Application {
 		box.getChildren().addAll(title, play, rules, exit);
 		box.setAlignment(Pos.CENTER);
 		box.getChildren().add(sliderContainer);
-		
-		Image backgroundImage = new Image("image/background.png");
-        BackgroundSize backgroundSize = new BackgroundSize(800, 700, true, true, true, true);
-        BackgroundImage backgroundImg = new BackgroundImage(backgroundImage, BackgroundRepeat.NO_REPEAT,
-                BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
-        background = new Background(backgroundImg);
 
-        rootPane = new StackPane();
-        rootPane.setBackground(background);
-		
+		Image backgroundImage = new Image("image/background.png");
+		BackgroundSize backgroundSize = new BackgroundSize(800, 700, true, true, true, true);
+		BackgroundImage backgroundImg = new BackgroundImage(backgroundImage, BackgroundRepeat.NO_REPEAT,
+				BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
+		background = new Background(backgroundImg);
+
+		rootPane = new StackPane();
+		rootPane.setBackground(background);
+
 		rootPane.getChildren().add(box);
 
-		Scene scene = new Scene(rootPane, 800, 700);  
+		Scene scene = new Scene(rootPane, 800, 700);
 
 		this.primaryStage.setScene(scene);
 		this.primaryStage.sizeToScene();
@@ -202,7 +202,7 @@ public class Main extends Application {
 
 	private Button createButton(String text, int i, int j, int pixel) {
 		Button button = new Button(text);
-		button.setPrefSize(i, j);  
+		button.setPrefSize(i, j);
 		button.setStyle("-fx-font-size: " + pixel + "px;");
 		return button;
 	}
@@ -234,10 +234,11 @@ public class Main extends Application {
 
 		VBox box = new VBox(title, listOfRules, back);
 		box.setAlignment(Pos.CENTER);
-		
-		/*rootPane = new StackPane();
-        rootPane.setBackground(background);
-		rootPane.getChildren().add(box);*/
+
+		/*
+		 * rootPane = new StackPane(); rootPane.setBackground(background);
+		 * rootPane.getChildren().add(box);
+		 */
 		Scene scene = new Scene(box, 800, 700);
 
 		this.primaryStage.setScene(scene);
@@ -270,9 +271,9 @@ public class Main extends Application {
 		box.getChildren().addAll(title, label, twoPlayer, fourPlayer, back);
 		box.setAlignment(Pos.CENTER);
 		/*
-		rootPane = new StackPane();
-        rootPane.setBackground(background);
-		rootPane.getChildren().add(box); */
+		 * rootPane = new StackPane(); rootPane.setBackground(background);
+		 * rootPane.getChildren().add(box);
+		 */
 		Scene scene = new Scene(box, 800, 700);
 
 		this.primaryStage.setScene(scene);
@@ -346,26 +347,26 @@ public class Main extends Application {
 		Label playerTurn = createLabel(this.getPlayers()[this.getCurrentTurn()].getName() + "'s turn", 50);
 		Pawn p = players[this.getCurrentTurn()].getPawn();
 		p.setPossibleMove(p.possibleMove(this.board, p.getPos()));
-		
+
 		grid = updateBoard();
 		grid.setAlignment(Pos.CENTER);
-						
+
 		Scene scene = new Scene(new BorderPane(), 800, 700);
-		
+
 		HBox action = actionList(scene, canDoAction);
-		
+
 		Label volumeLabel = createLabel("Volume", 40);
-		
+
 		mediaPlayerMusic.volumeProperty().bindBidirectional(volumeSlider.valueProperty());
-		
+
 		HBox sliderContainer = new HBox(10);
-        sliderContainer.getChildren().addAll(volumeLabel, volumeSlider);
-        sliderContainer.setAlignment(Pos.CENTER);
-        
+		sliderContainer.getChildren().addAll(volumeLabel, volumeSlider);
+		sliderContainer.setAlignment(Pos.CENTER);
+
 		VBox box = new VBox(50);
-		box.getChildren().addAll(playerTurn, grid, action, sliderContainer); 
+		box.getChildren().addAll(playerTurn, grid, action, sliderContainer);
 		box.setAlignment(Pos.CENTER);
-		
+
 		if (canDoAction) {
 			handleMove(scene, players[this.getCurrentTurn()]);
 		}
@@ -374,6 +375,18 @@ public class Main extends Application {
 			wallContainer = new StackPane(this.getWallPreview());
 		}
 		scene.setRoot(box);
+
+		scene.setOnMouseMoved(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				if (!isPlacingWall) {
+					double mouseColumn = event.getX() - wallPreview.getWidth() / 2;
+					double mouseRow = event.getY() - wallPreview.getHeight() / 2;
+					wallPreview.setTranslateX(mouseColumn);
+					wallPreview.setTranslateY(mouseRow);
+				}
+			}
+		});
 
 		primaryStage.setScene(scene);
 		primaryStage.sizeToScene();
@@ -386,9 +399,25 @@ public class Main extends Application {
 
 		Button restart = createButton("Restart", 100, 50, 20);
 		restart.setOnAction(e -> handleRestartButton());
-		
+
+		wallPreview = new Rectangle(65, 5, Color.RED);
+		wallPreview.setOpacity(0.5);
+		wallPreview.setStroke(null);
+		wallPreview.setVisible(false);
+
 		Button wall = createButton("Wall --", 100, 50, 20);
-		wall.setOnAction(e -> handlePlaceWall(scene, wall));
+		wall.setOnAction(e -> {
+			handlePlaceWall(scene, wall);
+			if (isPlacingWall) {
+				wallPreview.setVisible(true);
+				isPlacingWall = false;
+			} else {
+				wallPreview.setVisible(false);
+				isPlacingWall = true;
+			}
+		});
+
+
 		if (!canDoAction) {
 			wall.setDisable(true);
 		}
@@ -399,9 +428,9 @@ public class Main extends Application {
 		Button confirm = createButton("Confirm", 100, 50, 20);
 		confirm.setOnAction(e -> handleConfirm());
 
-		HBox box = new HBox(20);
-		box.getChildren().addAll(exit, restart, wall,cancel, confirm);
-		box.setAlignment(Pos.TOP_CENTER);
+		HBox box = new HBox(29);
+		box.getChildren().addAll(exit, restart, wall, cancel, confirm, wallPreview);
+		box.setAlignment(Pos.TOP_RIGHT);
 
 		return box;
 	}
@@ -409,14 +438,14 @@ public class Main extends Application {
 	private GridPane updateBoard() {
 		GridPane grid = new GridPane();
 		possibleCellMap.clear();
-		//cellWallMap.clear();
+		// cellWallMap.clear();
 		positionWall.clear();
 		for (int row = 0; row < Board.SIZE; row++) {
 			for (int col = 0; col < Board.SIZE; col++) {
 				Position pos = new Position(row, col);
 				if (board.getBoard()[row][col] == Case.BORDER || board.getBoard()[row][col] == Case.POTENTIALWALL) {
 					if (row % 2 == 1) {
-						this.cell = new Rectangle(5, 30);	
+						this.cell = new Rectangle(5, 30);
 					} else {
 						this.cell = new Rectangle(30, 5);
 					}
@@ -424,8 +453,7 @@ public class Main extends Application {
 				} else if (board.getBoard()[row][col] == Case.NULL) {
 					this.cell = new Rectangle(5, 5);
 					this.cell.setFill(Color.LIGHTGRAY);
-					
-					
+
 				} else if (board.getBoard()[row][col] == Case.WALL) {
 					// Wall Intersection
 					if ((row + col) % 2 == 0) {
@@ -439,29 +467,29 @@ public class Main extends Application {
 					this.cell.setFill(Color.BLACK);
 				} else if (board.getBoard()[row][col] == Case.PLAYER1) {
 					cell = new Rectangle(30, 30);
-					//possibleCellMap.put(pos,this.cell);
+					// possibleCellMap.put(pos,this.cell);
 					this.cell.setFill(new ImagePattern(penguin));
-					//this.cell.setFill(Color.BLUE);
+					// this.cell.setFill(Color.BLUE);
 				} else if (board.getBoard()[row][col] == Case.PLAYER2) {
 					cell = new Rectangle(30, 30);
-					//possibleCellMap.put(pos,this.cell);
+					// possibleCellMap.put(pos,this.cell);
 					this.cell.setFill(new ImagePattern(wolf));
-					//this.cell.setFill(Color.RED);
+					// this.cell.setFill(Color.RED);
 				} else if (board.getBoard()[row][col] == Case.PLAYER3) {
 					cell = new Rectangle(30, 30);
-					//possibleCellMap.put(pos,this.cell);
-					//this.cell.setFill(Color.GREEN);
+					// possibleCellMap.put(pos,this.cell);
+					// this.cell.setFill(Color.GREEN);
 					this.cell.setFill(new ImagePattern(gibbon));
 				} else if (board.getBoard()[row][col] == Case.PLAYER4) {
 					cell = new Rectangle(30, 30);
-					//possibleCellMap.put(pos,this.cell);
+					// possibleCellMap.put(pos,this.cell);
 					this.cell.setFill(new ImagePattern(seagull));
-					//this.cell.setFill(Color.YELLOW);
+					// this.cell.setFill(Color.YELLOW);
 				} else {
 					cell = new Rectangle(30, 30);
-					
+
 					if (players[currentTurn].getPawn().getPossibleMove().contains(pos)) {
-						
+
 						switch (this.getCurrentTurn()) {
 						case 0:
 							this.cell.setFill(Color.LIGHTBLUE);
@@ -481,9 +509,9 @@ public class Main extends Application {
 					}
 				}
 				this.cell.setStroke(null);
-				possibleCellMap.put(pos,this.cell);
+				possibleCellMap.put(pos, this.cell);
 				positionWall.add(pos);
-				//cellWallMap.put(pos, this.cell);
+				// cellWallMap.put(pos, this.cell);
 				grid.add(cell, col, row);
 			}
 		}
@@ -491,40 +519,40 @@ public class Main extends Application {
 	}
 
 	private void handleMove(Scene scene, Player p) {
-		for ( Position position : p.getPawn().getPossibleMove()) {
-			possibleCellMap.get(position).setOnMouseClicked(e->pawnMove(p,position));
+		for (Position position : p.getPawn().getPossibleMove()) {
+			possibleCellMap.get(position).setOnMouseClicked(e -> pawnMove(p, position));
 		}
 	}
-	
+
 	private void pawnMove(Player p, Position pos) {
 		if (p.getPawn().move(this.board, pos)) {
 			mediaPlayerPawnMove.stop();
 			mediaPlayerPawnMove.play();
 			grid = updateBoard();
 			playBoard(false);
-			//mediaPlayerPawnMove.play();
+			// mediaPlayerPawnMove.play();
 			if (p.getPawn().isWinner()) {
-				/*Set<Position> poz=p.getPawn().getFinishLine();
-				for (Position position : poz) {
-					possibleCellMap.get(position).setFill(Color.GOLD);
-				}*/
+				/*
+				 * Set<Position> poz=p.getPawn().getFinishLine(); for (Position position : poz)
+				 * { possibleCellMap.get(position).setFill(Color.GOLD); }
+				 */
 				Alert alert = new Alert(Alert.AlertType.INFORMATION);
 				alert.setTitle("winner");
-				alert.setHeaderText("The winner is  "+p.getName());
+				alert.setHeaderText("The winner is  " + p.getName());
 				alert.showAndWait();
-				//Finir la partie
+				// Finir la partie
 				start(primaryStage);
 			}
-		} 
+		}
 	}
+
 	private void wallPreview(Scene scene) {
 		this.setWallPreview(new Rectangle(65, 5));
 		this.getWallPreview().setFill(Color.RED);
 		this.getWallPreview().setOpacity(0.5);
 		this.getWallPreview().setStroke(null);
-
 		this.setPlacingWall(true);
-		
+
 		// Créer un conteneur pour voir le mur en cours de placement
 		wallContainer = new StackPane();
 		wallContainer.getChildren().add(this.getWallPreview());
@@ -552,46 +580,46 @@ public class Main extends Application {
 				wallContainer.setTranslateY(mouseRow - 435);
 			}
 
-			System.out.println(mouseRow + "," + mouseColumn + " : " + row + "," + column);
 		});
-		
-		// Ajouter le mur en cours de placement à la grille du plateau
-		//scene.setRoot(wallContainer);
-		// Accédez à la racine de la scène existante
-		/*Parent root = scene.getRoot();
 
-		if (root instanceof StackPane) {
-		    // La racine est déjà un StackPane, ajoutez simplement le nouveau StackPane à la liste des enfants
-		    StackPane existingStackPane = (StackPane) root;
-		    existingStackPane.getChildren().add(wallContainer);
-		} else {
-		    // La racine n'est pas un StackPane, créez un nouveau StackPane contenant la racine existante et le nouveau StackPane
-		    StackPane newRoot = new StackPane(root, wallContainer);
-		    scene.setRoot(newRoot);
-		}*/
+		// Ajouter le mur en cours de placement à la grille du plateau
+		// scene.setRoot(wallContainer);
+		// Accédez à la racine de la scène existante
+		/*
+		 * Parent root = scene.getRoot();
+		 * 
+		 * if (root instanceof StackPane) { // La racine est déjà un StackPane, ajoutez
+		 * simplement le nouveau StackPane à la liste des enfants StackPane
+		 * existingStackPane = (StackPane) root;
+		 * existingStackPane.getChildren().add(wallContainer); } else { // La racine
+		 * n'est pas un StackPane, créez un nouveau StackPane contenant la racine
+		 * existante et le nouveau StackPane StackPane newRoot = new StackPane(root,
+		 * wallContainer); scene.setRoot(newRoot); }
+		 */
 	}
 
 	private void handlePlaceWall(Scene scene, Button button) {
 		button.setDisable(true);
 		wallPreview(scene);
-		
+
 		this.setWall(new Wall(Orientation.HORIZONTAL, new Position(0, 0)));
-		
-		scene.setOnMouseClicked(e->{
+
+		scene.setOnMouseClicked(e -> {
 			if (e.getButton() == MouseButton.SECONDARY) {
 				// Changer l'orientation du mur avec un clic droit
 				updateWallOrientation();
 			}
 		});
-		for ( Position position : positionWall) {
-			possibleCellMap.get(position).setOnMouseClicked(e->{
-				
+		for (Position position : positionWall) {
+			possibleCellMap.get(position).setOnMouseClicked(e -> {
+
 				if (e.getButton() == MouseButton.PRIMARY) {
 					// Vérifier si la position du mur est valide (Case.NULL) et le placer
-					//int column = cursorColumnToIndex();
-					//int row = cursorRowToIndex();
+					// int column = cursorColumnToIndex();
+					// int row = cursorRowToIndex();
 					this.getWall().setPosition(position);
-					if (Wall.createWall(this.getBoard(), this.getPlayers(), this.getCurrentTurn(), this.getWall().getOrientation(), this.getWall().getPosition())){
+					if (Wall.createWall(this.getBoard(), this.getPlayers(), this.getCurrentTurn(),
+							this.getWall().getOrientation(), this.getWall().getPosition())) {
 						// Mettre à jour l'affichage du plateau
 						this.setPlacingWall(false);
 						this.setHasPlacedWall(true);
@@ -605,7 +633,7 @@ public class Main extends Application {
 						alert.setContentText("You can't place a wall here");
 						alert.showAndWait();
 					}
-				} 
+				}
 			});
 		}
 	}
@@ -625,12 +653,12 @@ public class Main extends Application {
 
 	private int cursorRowToIndex() {
 		// TODO bien convertir le curseur
-		return (int) ((mouseRow-146) / 17);
+		return (int) ((mouseRow - 146) / 17);
 	}
 
 	private int cursorColumnToIndex() {
 		// TODO bien convertir le curseur
-		return (int) ((mouseColumn -240) / 17);
+		return (int) ((mouseColumn - 240) / 17);
 	}
 
 	private void handleCancel() {
@@ -663,7 +691,7 @@ public class Main extends Application {
 		this.setHasPlacedWall(false);
 		this.setWallPreview(null);
 		this.setWall(null);
-		
+
 		// Change turn
 		this.setCurrentTurn((currentTurn + 1) % board.getPlayerNumber());
 		playBoard(true);
@@ -675,7 +703,7 @@ public class Main extends Application {
 		this.setWall(null);
 		this.setPlacingWall(false);
 		this.setHasPlacedWall(false);
-		
+
 		// Reset the game state
 		this.setCurrentTurn(0);
 		this.getBoard().initializeBoard();
