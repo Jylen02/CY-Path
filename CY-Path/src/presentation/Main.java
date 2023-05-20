@@ -15,6 +15,11 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -48,6 +53,8 @@ public class Main extends Application {
 	private boolean hasPlacedWall;
 	private int mouseColumn;
 	private int mouseRow;
+    private StackPane rootPane;
+	private Background background;
 
 	// Getters & Setters
 	public Board getBoard() {
@@ -109,7 +116,8 @@ public class Main extends Application {
 	public void setWall(Wall wall) {
 		this.wall = wall;
 	}
-
+	
+	
 	@Override
 	public void start(Stage primaryStage) {
 		this.primaryStage = primaryStage;
@@ -149,8 +157,19 @@ public class Main extends Application {
 
 		box.getChildren().addAll(title, play, rules, exit);
 		box.setAlignment(Pos.CENTER);
+		
+		Image backgroundImage = new Image("image/wallpaper.jpg");
+        BackgroundSize backgroundSize = new BackgroundSize(800, 700, true, true, true, true);
+        BackgroundImage backgroundImg = new BackgroundImage(backgroundImage, BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
+        background = new Background(backgroundImg);
 
-		Scene scene = new Scene(box, 800, 700);
+        rootPane = new StackPane();
+        rootPane.setBackground(background);
+		
+		rootPane.getChildren().add(box);
+
+		Scene scene = new Scene(rootPane, 800, 700);
 
 		this.primaryStage.setScene(scene);
 		this.primaryStage.sizeToScene();
@@ -191,7 +210,10 @@ public class Main extends Application {
 
 		VBox box = new VBox(title, listOfRules, back);
 		box.setAlignment(Pos.CENTER);
-
+		
+		/*rootPane = new StackPane();
+        rootPane.setBackground(background);
+		rootPane.getChildren().add(box);*/
 		Scene scene = new Scene(box, 800, 700);
 
 		this.primaryStage.setScene(scene);
@@ -223,7 +245,10 @@ public class Main extends Application {
 
 		box.getChildren().addAll(title, label, twoPlayer, fourPlayer, back);
 		box.setAlignment(Pos.CENTER);
-
+		/*
+		rootPane = new StackPane();
+        rootPane.setBackground(background);
+		rootPane.getChildren().add(box); */
 		Scene scene = new Scene(box, 800, 700);
 
 		this.primaryStage.setScene(scene);
@@ -305,8 +330,9 @@ public class Main extends Application {
 
 		BorderPane pane = new BorderPane();
 		pane.setTop(playerTurn);
-		pane.setLeft(grid);
-		pane.setCenter(action);
+		pane.setAlignment(playerTurn, Pos.CENTER);
+		pane.setCenter(grid);
+		pane.setRight(action);
 
 		if (this.isPlacingWall()) {
 			StackPane wallContainer = new StackPane(this.getWallPreview());
@@ -383,23 +409,16 @@ public class Main extends Application {
 				} else if (board.getBoard()[row][col] == Case.PLAYER1) {
 					cell = new Rectangle(30, 30);
 					this.cell.setFill(Color.BLUE);
-
 				} else if (board.getBoard()[row][col] == Case.PLAYER2) {
 					cell = new Rectangle(30, 30);
 					this.cell.setFill(Color.RED);
-
 				} else if (board.getBoard()[row][col] == Case.PLAYER3) {
 					cell = new Rectangle(30, 30);
 					this.cell.setFill(Color.GREEN);
-
 				} else if (board.getBoard()[row][col] == Case.PLAYER4) {
 					cell = new Rectangle(30, 30);
 					this.cell.setFill(Color.YELLOW);
-
-				}
-
-				else {
-
+				} else {
 					cell = new Rectangle(30, 30);
 					if (possibleMove.contains(pos)) {
 						switch (this.getCurrentTurn()) {
@@ -415,21 +434,15 @@ public class Main extends Application {
 						case 3:
 							this.cell.setFill(Color.LIGHTGOLDENRODYELLOW);
 							break;
-
 						}
-
-					}
-
-					else {
+					} else {
 						this.cell.setFill(Color.WHITE);
 					}
-
 				}
 				this.cell.setStroke(null);
 				grid.add(cell, col, row);
 			}
 		}
-
 		return grid;
 	}
 
@@ -578,6 +591,7 @@ public class Main extends Application {
 		this.getBoard().initializeBoard();
 		playBoard(true);
 	}
+	
 
 	public static void main(String[] args) {
 		launch(args);
