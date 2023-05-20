@@ -31,6 +31,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
@@ -60,6 +61,11 @@ public class Main extends Application {
 	private int mouseRow;
     private StackPane rootPane;
 	private Background background;
+	
+	Image wolf = new Image("image/wolfR.png");
+	Image gibbon = new Image("image/gibbonG.png");
+	Image penguin = new Image("image/penguinB.png");
+	Image seagull = new Image("image/seagullY.png");
 	
 	private Media mediaPawnMove = new Media(new File("src/sound/move.mp3").toURI().toString());
 	private MediaPlayer mediaPlayerPawnMove = new MediaPlayer(mediaPawnMove);
@@ -137,8 +143,7 @@ public class Main extends Application {
 		this.primaryStage.setTitle("Quoridor");
 		this.primaryStage.setResizable(false);
 
-		Image icon = new Image("image/dikdik.png"); // Icon of the application
-		this.primaryStage.getIcons().add(icon);
+		this.primaryStage.getIcons().add(new Image("image/dikdik.png"));
 		
 	
 		mediaPlayerPawnMove.volumeProperty().bindBidirectional(volumeSlider.valueProperty());
@@ -438,19 +443,23 @@ public class Main extends Application {
 				} else if (board.getBoard()[row][col] == Case.PLAYER1) {
 					cell = new Rectangle(30, 30);
 					possibleCellMap.put(pos,this.cell);
-					this.cell.setFill(Color.BLUE);
+					this.cell.setFill(new ImagePattern(penguin));
+					//this.cell.setFill(Color.BLUE);
 				} else if (board.getBoard()[row][col] == Case.PLAYER2) {
 					cell = new Rectangle(30, 30);
 					possibleCellMap.put(pos,this.cell);
-					this.cell.setFill(Color.RED);
+					this.cell.setFill(new ImagePattern(wolf));
+					//this.cell.setFill(Color.RED);
 				} else if (board.getBoard()[row][col] == Case.PLAYER3) {
 					cell = new Rectangle(30, 30);
 					possibleCellMap.put(pos,this.cell);
-					this.cell.setFill(Color.GREEN);
+					//this.cell.setFill(Color.GREEN);
+					this.cell.setFill(new ImagePattern(gibbon));
 				} else if (board.getBoard()[row][col] == Case.PLAYER4) {
 					cell = new Rectangle(30, 30);
 					possibleCellMap.put(pos,this.cell);
-					this.cell.setFill(Color.YELLOW);
+					this.cell.setFill(new ImagePattern(seagull));
+					//this.cell.setFill(Color.YELLOW);
 				} else {
 					cell = new Rectangle(30, 30);
 					possibleCellMap.put(pos,this.cell);
