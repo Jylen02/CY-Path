@@ -181,7 +181,7 @@ public class Main extends Application {
 		box.setAlignment(Pos.CENTER);
 		box.getChildren().add(sliderContainer);
 		
-		Image backgroundImage = new Image("image/wallpaper.jpg");
+		Image backgroundImage = new Image("image/background.png");
         BackgroundSize backgroundSize = new BackgroundSize(800, 700, true, true, true, true);
         BackgroundImage backgroundImg = new BackgroundImage(backgroundImage, BackgroundRepeat.NO_REPEAT,
                 BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
