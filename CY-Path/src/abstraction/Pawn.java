@@ -265,11 +265,18 @@ public class Pawn {
 	 * @param board  The game board.
 	 * @param pos    The new position for the player.
 	 */
-	public void move(Board board, Position pos) {
-		board.getBoard()[this.getPos().getX()][this.getPos().getY()] = Case.EMPTY;
-		this.setPos(pos);
-		board.getBoard()[this.getPos().getX()][this.getPos().getY()] = this.getPlayerNb();
-		this.possibleMove(board, this.getPos());
+	public boolean move(Board board, Position pos) {
+		if (this.getPossibleDestination().contains(pos)) {
+			board.getBoard()[this.getPos().getX()][this.getPos().getY()] = Case.EMPTY;
+			this.setPos(pos);
+			board.getBoard()[this.getPos().getX()][this.getPos().getY()] = this.getPlayerNb();
+			this.possibleMove(board, this.getPos());
+			this.setPossibleDestination(this.possibleMove(board, this.getPos()));
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 	
 	/**

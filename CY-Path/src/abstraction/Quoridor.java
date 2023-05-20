@@ -53,11 +53,7 @@ public class Quoridor {
 			position = new Position(row, column);
 
 			// Check if the move is in the possible move's list then move
-			if (p.getPossibleDestination().contains(position)) {
-				p.move(board, position);
-				p.setPossibleDestination(p.possibleMove(board, p.getPos()));
-			} // Otherwise, restart the turn
-			else {
+			if (!p.move(board, position)) {
 				System.out.println(board);
 				System.out.println("Error : Please enter a valid coordinates.");
 				roundOfPlay(board, players, turn);

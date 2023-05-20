@@ -328,7 +328,7 @@ public class Main extends Application {
 		
 		grid = updateBoard();
 		grid.setAlignment(Pos.CENTER);
-		handleMove(players[this.getCurrentTurn()],possibleMove);
+		
 		Scene scene = new Scene(new BorderPane(), 800, 700);
 		
 		VBox action = actionList(scene, canDoAction);
@@ -339,6 +339,8 @@ public class Main extends Application {
 		pane.setCenter(grid);
 		pane.setRight(action);
 		//pane.setBottom(wallContainers);
+
+		handleMove(scene, players[this.getCurrentTurn()],possibleMove);
 
 
 		if (this.isPlacingWall()) {
@@ -443,8 +445,6 @@ public class Main extends Application {
 							this.cell.setFill(Color.LIGHTGOLDENRODYELLOW);
 							break;
 						}
-						
-						
 					} else {
 						this.cell.setFill(Color.WHITE);
 					}
@@ -456,20 +456,27 @@ public class Main extends Application {
 		return grid;
 	}
 
-	private void handleMove(Player p, Set<Position> possibleMove) {
-		boolean verif =false;
-		for (Position element : possibleMove) {
-		    if(verif ==false) {
-		    	possibleCellMap.get(element).setOnMouseClicked(event -> pawnMove(p,element));
-		    	verif=true;
-		    	
-		    }
-		}
+	private void handleMove(Scene scene, Player p, Set<Position> possibleMove) {
+		scene.setOnMouseMoved(e -> {
+			mouseColumn = (int) e.getX(); // X : abscisse
+			mouseRow = (int) e.getY(); // Y : ordonnée
+			int row = cursorRowToIndex();
+			int column = cursorColumnToIndex();
+			System.out.println(mouseRow + "," + mouseColumn + " : " + row + "," + column);
+			});
+		scene.setOnMouseClicked(event ->{
+			int column = cursorColumnToIndex();
+			int row = cursorRowToIndex();
+			Position position = new Position(row, column);
+			System.out.println(position);
+			pawnMove(p,position);
+		});
 		
-		
-		}
-	private void pawnMove(Player p, Position ppp) {
-		p.getPawn().move(this.board, ppp);
+		possibleCellMap.get(pos).setOnMouseClicked(e -> pawnMove(p,pos));
+	}
+	
+	private void pawnMove(Player p, Position pos) {
+		p.getPawn().move(this.board, pos);
 		grid = updateBoard();
 	}
 
@@ -544,7 +551,7 @@ public class Main extends Application {
 			}
 		});
 		// Ajouter le mur en cours de placement à la grille du plateau
-		scene.setRoot(wallContainer);
+		//scene.setRoot(wallContainer);
 	}
 
 	private void updateWallOrientation() {
@@ -562,12 +569,12 @@ public class Main extends Application {
 
 	private int cursorRowToIndex() {
 		// TODO bien convertir le curseur
-		return (int) ((mouseRow) / 16.5) - 4;
+		return (int) ((mouseRow-225) / 16.5);
 	}
 
 	private int cursorColumnToIndex() {
 		// TODO bien convertir le curseur
-		return (int) ((mouseColumn - 76 + 8) / 16.5) + 4;
+		return (int) ((mouseColumn -128) / 16.5);
 	}
 
 	private void handleCancel() {
