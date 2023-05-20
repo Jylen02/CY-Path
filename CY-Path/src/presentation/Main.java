@@ -281,15 +281,18 @@ public class Main extends Application {
 				players[this.getCurrentTurn()].getPawn().getPos());
 
 		grid = updateBoard();
+		grid.setAlignment(Pos.CENTER);
 		Scene scene = new Scene(new BorderPane(), 800, 700);
 
 		VBox action = actionList(scene, canDoAction);
 
 		BorderPane pane = new BorderPane();
 		pane.setTop(playerTurn);
-		pane.setAlignment(playerTurn, Pos.CENTER);
+		BorderPane.setAlignment(playerTurn, Pos.CENTER);
 		pane.setCenter(grid);
 		pane.setRight(action);
+		//pane.setBottom(wallContainers);
+
 
 		if (this.isPlacingWall()) {
 			StackPane wallContainer = new StackPane(this.getWallPreview());
@@ -419,7 +422,8 @@ public class Main extends Application {
 		this.setWall(new Wall(Orientation.HORIZONTAL, new Position(0, 0))); // Orientation horizontale par défaut
 
 		// Créer un conteneur pour voir le mur en cours de placement
-		StackPane wallContainer = new StackPane(this.getWallPreview());
+		GridPane wallContainer = new GridPane();
+		wallContainer.getChildren().add(this.getWallPreview());
 
 		// Gestion de l'événement de mouvement de la souris pour suivre le curseur
 		scene.setOnMouseMoved(e -> {
@@ -477,9 +481,7 @@ public class Main extends Application {
 			}
 		});
 		// Ajouter le mur en cours de placement à la grille du plateau
-		if (!grid.getChildren().contains(wallContainer)) {
-			grid.add(wallContainer, 20, 20);
-		}
+		scene.setRoot(wallContainer);
 	}
 
 	private void updateWallOrientation() {
