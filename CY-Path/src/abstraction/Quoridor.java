@@ -21,6 +21,7 @@ public class Quoridor {
 		int row;
 		int column;
 		Position position;
+		int confirm = 0;
 
 		// Verify if there max amount of wall is reach
 		Pawn p = players[turn].getPawn();
@@ -37,7 +38,8 @@ public class Quoridor {
 		// Otherwise, choose an action
 		else {
 			System.out.println("Choice of action :");
-			System.out.println(" - Move the pawn : 1 \n - Put a wall (Remaining wall(s) : " + players[turn].getRemainingWall() + ") : 2");
+			System.out.println(" - Move the pawn : 1 \n - Put a wall (Remaining wall(s) : "
+					+ players[turn].getRemainingWall() + ") : 2");
 			System.out.println("Please select the action you want (1 or 2) :");
 			action = s.nextInt();
 		}
@@ -51,12 +53,31 @@ public class Quoridor {
 			System.out.print("column = ");
 			column = s.nextInt();
 			position = new Position(row, column);
-
 			// Check if the move is in the possible move's list then move
 			if (!p.move(board, position)) {
 				System.out.println(board);
 				System.out.println("Error : Please enter a valid coordinates.");
 				roundOfPlay(board, players, turn);
+			}
+			
+			System.out.println(board);
+			while (confirm != 1 && confirm != 2) {
+				System.out.println("Confirm your action :");
+				System.out.println(" - Yes : 1 \n - No : 2");
+				confirm = s.nextInt();
+				switch (confirm) {
+				case 1:
+					p.setLastPos(p.getPos());
+					break;
+				case 2:
+					p.resetMove(board);
+					System.out.println(board);
+					roundOfPlay(board, players, turn);
+					break;
+				default:
+					System.out.println("Error : Wrong value of confirmation");
+					break;
+				}
 			}
 			break;
 
@@ -76,22 +97,18 @@ public class Quoridor {
 			int orientation = s.nextInt();
 			switch (orientation) {
 			case 1:
-				if (Wall.createWall(board, players, turn, Orientation.VERTICAL , position)) {
-					players[turn].setRemainingWall(players[turn].getRemainingWall()-1);
-				}else{
+				if (!Wall.createWall(board, players, turn, Orientation.VERTICAL, position)) {
 					System.out.println(board);
 					System.out.println("Error : Replay the round !");
 					roundOfPlay(board, players, turn);
-				};
+				}
 				break;
 			case 2:
-				if (Wall.createWall(board, players, turn, Orientation.HORIZONTAL , position)) {
-					players[turn].setRemainingWall(players[turn].getRemainingWall()-1);
-				}else{
+				if (!Wall.createWall(board, players, turn, Orientation.HORIZONTAL, position)) {
 					System.out.println(board);
 					System.out.println("Error : Replay the round !");
 					roundOfPlay(board, players, turn);
-				};
+				}
 				break;
 			default:
 				// Wrong value of wall's orientation
@@ -99,6 +116,25 @@ public class Quoridor {
 				System.out.println("Error : Incorrect wall's orientation.");
 				roundOfPlay(board, players, turn);
 				break;
+			}
+			System.out.println(board);
+			while (confirm != 1 && confirm != 2) {
+				System.out.println("Confirm your action :");
+				System.out.println(" - Yes : 1 \n - No : 2");
+				confirm = s.nextInt();
+				switch (confirm) {
+				case 1:
+					players[turn].setRemainingWall(players[turn].getRemainingWall() - 1);
+					break;
+				case 2:
+					Wall.removeLastWall(board);
+					System.out.println(board);
+					roundOfPlay(board, players, turn);
+					break;
+				default:
+					System.out.println("Error : Wrong value of confirmation");
+					break;
+				}
 			}
 			break;
 		default:

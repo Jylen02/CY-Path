@@ -11,6 +11,7 @@ import abstraction.*;
 import javafx.application.Application;
 import javafx.event.Event;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -34,6 +35,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
@@ -65,7 +67,19 @@ public class Main extends Application {
 	private int mouseRow;
     private StackPane rootPane;
 	private Background background;
-	private MediaPlayer mediaPlayerMusic;
+	
+	Image wolf = new Image("image/wolfR.png");
+	Image gibbon = new Image("image/gibbonG.png");
+	Image penguin = new Image("image/penguinB.png");
+	Image seagull = new Image("image/seagullY.png");
+	
+	private Media mediaPawnMove = new Media(new File("src/sound/move.mp3").toURI().toString());
+	private MediaPlayer mediaPlayerPawnMove = new MediaPlayer(mediaPawnMove);
+	private Media mediaMusic = new Media(new File("src/sound/tw3LOW.mp3").toURI().toString());
+	private MediaPlayer mediaPlayerMusic  = new MediaPlayer(mediaMusic);
+	Label volumeLabel = createLabel("Volume", 40);
+	Slider volumeSlider = new Slider(0, 0.1, 0.05);
+
 
 	// Getters & Setters
 	public Board getBoard() {
@@ -135,27 +149,15 @@ public class Main extends Application {
 		this.primaryStage.setTitle("Quoridor");
 		this.primaryStage.setResizable(false);
 
-		Image icon = new Image("image/dikdik.png"); // Icon of the application
-		this.primaryStage.getIcons().add(icon);
+		this.primaryStage.getIcons().add(new Image("image/dikdik.png"));
 		
-		/*	Deplacement des pions
-		Media mediaPawnMove = new Media(new File("src/sound/move.mp3").toURI().toString());
-		MediaPlayer mediaPlayerPawnMove = new MediaPlayer(mediaPawnMove);
-		mediaPlayerPawnMove.setVolume(0.5); // Set volume at 50%
+	
+		mediaPlayerPawnMove.volumeProperty().bindBidirectional(volumeSlider.valueProperty());
 		mediaPlayerPawnMove.setCycleCount(1); // To repeat the sound 1 time
-		mediaPlayerPawnMove.play(); //A mettre dans la methode move pour jouer le son
-		*/
-		Media mediaMusic = new Media(new File("src/sound/tw3.mp3").toURI().toString());
-		mediaPlayerMusic = new MediaPlayer(mediaMusic);
-		
-		Label volumeLabel = createLabel("Volume", 40);
-		
-		Slider volumeSlider = new Slider(0, 0.1, 0.05);
+
 		mediaPlayerMusic.volumeProperty().bindBidirectional(volumeSlider.valueProperty());
-		
-		//mediaPlayerMusic.setVolume(0.5); // Set volume at 3%
-		mediaPlayerMusic.setCycleCount(MediaPlayer.INDEFINITE); // Repetition à l'infini
-		mediaPlayerMusic.play(); //A mettre dans la methode move pour jouer le son
+		mediaPlayerMusic.setCycleCount(MediaPlayer.INDEFINITE); // Infinite restart
+		mediaPlayerMusic.play(); // background music start with the launch of the app
 		
 		HBox sliderContainer = new HBox(10);
         sliderContainer.setAlignment(Pos.CENTER);
@@ -324,6 +326,7 @@ public class Main extends Application {
 					break;
 				}
 			}
+			this.setCurrentTurn(0);
 			playBoard(true);
 		});
 		box.setAlignment(Pos.CENTER);
@@ -339,20 +342,22 @@ public class Main extends Application {
 
 	private void playBoard(boolean canDoAction) {
 		Label playerTurn = createLabel(this.getPlayers()[this.getCurrentTurn()].getName() + "'s turn", 50);
-		
 		// playerTurn.setStyle("-fx-text-fill: red;");
+		
 		possibleMove = players[this.getCurrentTurn()].getPawn().possibleMove(this.board, players[this.getCurrentTurn()].getPawn().getPos());
 		
 		grid = updateBoard();
 		grid.setAlignment(Pos.CENTER);
 		
+		//possibleMove = players[this.getCurrentTurn()].getPawn().possibleMove(this.board, players[this.getCurrentTurn()].getPawn().getPos());
+				
 		Scene scene = new Scene(new BorderPane(), 800, 700);
 		
 		HBox action = actionList(scene, canDoAction);
 		
 		Label volumeLabel = createLabel("Volume", 40);
 		
-		Slider volumeSlider = new Slider(0, 0.1, 0.05);
+		mediaPlayerMusic.volumeProperty().bindBidirectional(volumeSlider.valueProperty());
 		
 		HBox sliderContainer = new HBox(10);
         sliderContainer.getChildren().addAll(volumeLabel, volumeSlider);
@@ -451,19 +456,23 @@ public class Main extends Application {
 				} else if (board.getBoard()[row][col] == Case.PLAYER1) {
 					cell = new Rectangle(30, 30);
 					possibleCellMap.put(pos,this.cell);
-					this.cell.setFill(Color.BLUE);
+					this.cell.setFill(new ImagePattern(penguin));
+					//this.cell.setFill(Color.BLUE);
 				} else if (board.getBoard()[row][col] == Case.PLAYER2) {
 					cell = new Rectangle(30, 30);
 					possibleCellMap.put(pos,this.cell);
-					this.cell.setFill(Color.RED);
+					this.cell.setFill(new ImagePattern(wolf));
+					//this.cell.setFill(Color.RED);
 				} else if (board.getBoard()[row][col] == Case.PLAYER3) {
 					cell = new Rectangle(30, 30);
 					possibleCellMap.put(pos,this.cell);
-					this.cell.setFill(Color.GREEN);
+					//this.cell.setFill(Color.GREEN);
+					this.cell.setFill(new ImagePattern(gibbon));
 				} else if (board.getBoard()[row][col] == Case.PLAYER4) {
 					cell = new Rectangle(30, 30);
 					possibleCellMap.put(pos,this.cell);
-					this.cell.setFill(Color.YELLOW);
+					this.cell.setFill(new ImagePattern(seagull));
+					//this.cell.setFill(Color.YELLOW);
 				} else {
 					cell = new Rectangle(30, 30);
 					possibleCellMap.put(pos,this.cell);
@@ -518,8 +527,11 @@ public class Main extends Application {
 	
 	private void pawnMove(Player p, Position pos) {
 		if (p.getPawn().move(this.board, pos)) {
+			mediaPlayerPawnMove.stop();
+			mediaPlayerPawnMove.play();
 			grid = updateBoard();
 			playBoard(false);
+			//mediaPlayerPawnMove.play();
 			if (p.getPawn().isWinner()) {
 				Set<Position> poz=p.getPawn().getFinishLine();
 				for (Position position : poz) {
@@ -547,8 +559,8 @@ public class Main extends Application {
 		this.setWall(new Wall(Orientation.HORIZONTAL, new Position(0, 0))); // Orientation horizontale par défaut*/
 
 		// Créer un conteneur pour voir le mur en cours de placement
-		/*GridPane wallContainer = new GridPane();
-		wallContainer.getChildren().add(this.getWallPreview());*/
+		StackPane wallContainer = new StackPane();
+		wallContainer.getChildren().add(this.getWallPreview());
 
 		// Gestion de l'événement de mouvement de la souris pour suivre le curseur
 		/*scene.setOnMouseMoved(e -> {
@@ -604,6 +616,18 @@ public class Main extends Application {
 		});*/
 		// Ajouter le mur en cours de placement à la grille du plateau
 		//scene.setRoot(wallContainer);
+		// Accédez à la racine de la scène existante
+		Parent root = scene.getRoot();
+
+		if (root instanceof StackPane) {
+		    // La racine est déjà un StackPane, ajoutez simplement le nouveau StackPane à la liste des enfants
+		    StackPane existingStackPane = (StackPane) root;
+		    existingStackPane.getChildren().add(wallContainer);
+		} else {
+		    // La racine n'est pas un StackPane, créez un nouveau StackPane contenant la racine existante et le nouveau StackPane
+		    StackPane newRoot = new StackPane(root, wallContainer);
+		    scene.setRoot(newRoot);
+		}
 	}
 
 	private void handlePlaceWall(Scene scene, Button button) {
