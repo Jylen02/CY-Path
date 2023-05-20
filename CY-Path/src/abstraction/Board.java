@@ -267,8 +267,8 @@ public class Board {
 	 * @param player              The player for whom to perform the DFS.
 	 * @param marking             A set of positions marking the nodes visited
 	 *                            during the DFS.
-	 * @param possibleMove The set of Positions representing the possible
-	 *                            destinations for the Pawn.
+	 * @param possibleMove 		  The set of Positions representing the possible
+	 *                            moves for the Pawn.
 	 * @return The updated marking set after performing the DFS.
 	 */
 	public Set<Position> dfs(Position pos, Pawn player, Set<Position> marking, Set<Position> possibleMove) {
