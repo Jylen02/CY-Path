@@ -53,27 +53,33 @@ public class Main extends Application {
 	private Set<Position> positionWall= new LinkedHashSet<Position>();
 	//private LinkedHashMap<Position,Rectangle> cellWallMap = new LinkedHashMap<Position,Rectangle>();
 	
-	// PlaceWall information
+	//A Supprimer
 	private Wall wall;
+	
+	// PlaceWall information
 	private Rectangle wallPreview;
 	private boolean isPlacingWall;
 	private boolean hasPlacedWall;
 	private int mouseColumn;
 	private int mouseRow;
+	
+	//Background A voir si on garde en attribut
     private StackPane rootPane;
 	private Background background;
 	
-	Image wolf = new Image("image/wolfR.png");
-	Image gibbon = new Image("image/gibbonG.png");
-	Image penguin = new Image("image/penguinB.png");
-	Image seagull = new Image("image/seagullY.png");
+	private Image wolf = new Image("image/wolfR.png");
+	private Image gibbon = new Image("image/gibbonG.png");
+	private Image penguin = new Image("image/penguinB.png");
+	private Image seagull = new Image("image/seagullY.png");
 	
 	private Media mediaPawnMove = new Media(new File("src/sound/move.mp3").toURI().toString());
 	private MediaPlayer mediaPlayerPawnMove = new MediaPlayer(mediaPawnMove);
 	private Media mediaMusic = new Media(new File("src/sound/tw3LOW.mp3").toURI().toString());
 	private MediaPlayer mediaPlayerMusic  = new MediaPlayer(mediaMusic);
-	Label volumeLabel = createLabel("Volume", 40);
-	Slider volumeSlider = new Slider(0, 0.1, 0.05);
+	
+	//Slider volume lié entre pages
+	private Label volumeLabel = createLabel("Volume", 40);
+	private Slider volumeSlider = new Slider(0, 0.1, 0.05);
 
 
 	// Getters & Setters
@@ -513,15 +519,16 @@ public class Main extends Application {
 			playBoard(false);
 			//mediaPlayerPawnMove.play();
 			if (p.getPawn().isWinner()) {
-				Set<Position> poz=p.getPawn().getFinishLine();
+				/*Set<Position> poz=p.getPawn().getFinishLine();
 				for (Position position : poz) {
 					possibleCellMap.get(position).setFill(Color.GOLD);
-				}
+				}*/
 				Alert alert = new Alert(Alert.AlertType.INFORMATION);
 				alert.setTitle("winner");
 				alert.setHeaderText("The winner is  "+p.getName());
 				alert.showAndWait();
-				
+				//Finir la partie
+				start(primaryStage);
 			}
 		} 
 	}
