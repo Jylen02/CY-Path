@@ -484,7 +484,10 @@ public class Main extends Application {
 	}
 
 	private void handleMove(Scene scene, Player p, Set<Position> possibleMove) {
-		scene.setOnMouseMoved(e -> {
+		for ( Position position : possibleMove) {
+			possibleCellMap.get(position).setOnMouseClicked(e->pawnMove(p,position));
+		}
+		/*scene.setOnMouseMoved(e -> {
 			mouseColumn = (int) e.getX(); // X : abscisse
 			mouseRow = (int) e.getY(); // Y : ordonnée
 			int row = cursorRowToIndex();
@@ -499,7 +502,7 @@ public class Main extends Application {
 			pawnMove(p,position);
 		});
 		// Verifie que pos appartient grille
-		//possibleCellMap.get(pos).setOnMouseClicked(e -> pawnMove(p,pos));
+		//possibleCellMap.get(pos).setOnMouseClicked(e -> pawnMove(p,pos));*/
 	}
 	
 	private void pawnMove(Player p, Position pos) {
@@ -513,7 +516,7 @@ public class Main extends Application {
 				}
 				Alert alert = new Alert(Alert.AlertType.INFORMATION);
 				alert.setTitle("winner");
-				alert.setContentText("The winner is"+p.getName());
+				alert.setHeaderText("The winner is  "+p.getName());
 				alert.showAndWait();
 				
 			}
