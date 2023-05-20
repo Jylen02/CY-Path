@@ -60,6 +60,7 @@ public class Main extends Application {
 	private int mouseRow;
     private StackPane rootPane;
 	private Background background;
+	private MediaPlayer mediaPlayerMusic;
 
 	// Getters & Setters
 	public Board getBoard() {
@@ -140,16 +141,14 @@ public class Main extends Application {
 		mediaPlayerPawnMove.play(); //A mettre dans la methode move pour jouer le son
 		*/
 		Media mediaMusic = new Media(new File("src/sound/tw3.mp3").toURI().toString());
-		MediaPlayer mediaPlayerMusic = new MediaPlayer(mediaMusic);
+		mediaPlayerMusic = new MediaPlayer(mediaMusic);
 		
 		Label volumeLabel = createLabel("Volume", 40);
 		
-		Slider volumeSlider = new Slider();
-		volumeSlider.setMin(0);
-		volumeSlider.setMax(1);
+		Slider volumeSlider = new Slider(0, 0.1, 0.05);
 		mediaPlayerMusic.volumeProperty().bindBidirectional(volumeSlider.valueProperty());
 		
-		mediaPlayerMusic.setVolume(0.03); // Set volume at 3%
+		//mediaPlayerMusic.setVolume(0.5); // Set volume at 3%
 		mediaPlayerMusic.setCycleCount(MediaPlayer.INDEFINITE); // Repetition à l'infini
 		mediaPlayerMusic.play(); //A mettre dans la methode move pour jouer le son
 		
@@ -346,6 +345,17 @@ public class Main extends Application {
 		
 		HBox action = actionList(scene, canDoAction);
 		
+Label volumeLabel = createLabel("Volume", 40);
+		
+		Slider volumeSlider = new Slider();
+		volumeSlider.setMin(0);
+		volumeSlider.setMax(1);
+		mediaPlayerMusic.volumeProperty().bindBidirectional(volumeSlider.valueProperty());
+		
+		HBox sliderContainer = new HBox(10);
+        sliderContainer.setAlignment(Pos.CENTER);
+        sliderContainer.getChildren().addAll(volumeSlider, volumeLabel);
+        
 		VBox box = new VBox(50);
 		box.getChildren().addAll(playerTurn, grid, action); 
 		box.setAlignment(Pos.CENTER);
