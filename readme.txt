@@ -1,8 +1,5 @@
 CY-Path
 
-To see the Javadoc :
-	- Run the file "index.html" in the "doc" folder which is present in "CY-Path" folder
-
 To run the deliverable:
 	- Make sure your Java version is up to date, otherwise download the latest version of JDK from Oracle's official website and restart the console.
 	- Download the "quoridor.jar" file and place it in the folder of your choice
@@ -41,7 +38,9 @@ Implemented features:
 			-> Cannot place a wall on the edge of the board
 			-> Check that there are a maximum of 20 walls on the board
 			-> DFS to be applied to all players, ensuring that all players have the possibility to win
-	- If there is an error, the turn is restarted 
+	- Players have the option to confirm or not their action
+	- If there is an error, the turn is restarted
+	
 
 Unimplemented features :
 	- Human-machine interface
@@ -66,5 +65,6 @@ How to play ? :
 		-> To place a wall :
 			-> Enter the coordinates of the middle of the wall, corresponding to a "+" square
 			-> Enter the orientation of the wall
+	- Confirm your action
 	- It's now the next player's turn
 	- The game ends when one of the players has reached the opposite side of their starting point
