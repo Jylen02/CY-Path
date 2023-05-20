@@ -175,6 +175,15 @@ public class Wall {
 	}
 
 	/**
+	 * Removes the last wall placed.
+	 *
+	 * @param board       The game board.
+	 */
+	public static void removeLastWall(Board board) {
+		board.getLastWall().updateWall(board, Case.POTENTIALWALL);
+	}
+	
+	/**
 	 * Creates the wall and verifies if it blocks a player's winning path using
 	 * depth-first search.
 	 *
@@ -198,9 +207,5 @@ public class Wall {
 		} else {
 			return false;
 		}
-	}
-
-	public static void removeLastWall(Board board) {
-		board.getLastWall().updateWall(board, Case.POTENTIALWALL);
 	}
 }

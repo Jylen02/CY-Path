@@ -4,9 +4,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Represents the game board for the game. It contains the board
- * layout, player and wall count, and various methods for manipulating the
- * board.
+ * Represents the game board for the game. It contains the board layout, player
+ * and wall count, and various methods for manipulating the board.
  */
 public class Board {
 
@@ -24,7 +23,7 @@ public class Board {
 	 * The last wall placed on the board.
 	 */
 	private Wall lastWall;
-	
+
 	/**
 	 * The size of the board.
 	 */
@@ -36,6 +35,13 @@ public class Board {
 	public static final int MAXWALLCOUNT = 20;
 
 	/**
+	 * The starting position of each player.
+	 */
+	public static final Position[] STARTINGPOSITIONPLAYERS = { new Position(Board.SIZE - 2, Board.SIZE / 2),
+			new Position(1, Board.SIZE / 2), new Position(Board.SIZE / 2, 1),
+			new Position(Board.SIZE / 2, Board.SIZE - 2) };
+
+	/**
 	 * Constructs a Board object with the specified player number.
 	 *
 	 * @param playerNumber The number of players in the game between 2 and 4.
@@ -45,6 +51,11 @@ public class Board {
 		initializeBoard();
 	}
 
+	/**
+	 * Return the board layout.
+	 *
+	 * @return The board layout.
+	 */
 	public Case[][] getBoard() {
 		return board;
 	}
@@ -76,10 +87,20 @@ public class Board {
 		this.playerNumber = playerNumber;
 	}
 
+	/**
+	 * Returns the last wall placed.
+	 *
+	 * @return The last wall placed.
+	 */
 	public Wall getLastWall() {
 		return lastWall;
 	}
 
+	/**
+	 * Sets the last wall placed.
+	 *
+	 * @param lastWall the last wall placed.
+	 */
 	public void setLastWall(Wall lastWall) {
 		this.lastWall = lastWall;
 	}
@@ -137,14 +158,12 @@ public class Board {
 				}
 			}
 		}
-		if (getPlayerNumber() >= 2) {
-			// Set the two first player's pawn placement
-			getBoard()[SIZE - 2][SIZE / 2] = Case.PLAYER1;
-			getBoard()[1][SIZE / 2] = Case.PLAYER2;
-			if (getPlayerNumber() == 4) {
-				// Set the two others player's pawn placement
-				getBoard()[SIZE / 2][1] = Case.PLAYER3;
-				getBoard()[SIZE / 2][SIZE - 2] = Case.PLAYER4;
+		for (int i = 0; i < this.getPlayerNumber(); i++) {
+			for (Case value : Case.values()) {
+				if (value.getValue() == i + 1) {
+					this.getBoard()[Board.STARTINGPOSITIONPLAYERS[i].getX()][Board.STARTINGPOSITIONPLAYERS[i]
+							.getY()] = value;
+				}
 			}
 		}
 	}
@@ -155,7 +174,6 @@ public class Board {
 	 *
 	 * @return A string representation of the current board.
 	 */
-
 	@Override
 	public String toString() {
 		String res = "   ";
