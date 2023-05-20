@@ -21,6 +21,11 @@ public class Board {
 	private int playerNumber;
 
 	/**
+	 * The last wall placed on the board.
+	 */
+	private Wall lastWall;
+	
+	/**
 	 * The size of the board.
 	 */
 	public static final int SIZE = 19;
@@ -69,6 +74,14 @@ public class Board {
 	 */
 	public void setPlayerNumber(int playerNumber) {
 		this.playerNumber = playerNumber;
+	}
+
+	public Wall getLastWall() {
+		return lastWall;
+	}
+
+	public void setLastWall(Wall lastWall) {
+		this.lastWall = lastWall;
 	}
 
 	/**

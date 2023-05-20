@@ -14,6 +14,11 @@ public class Pawn {
 	private Position pos;
 
 	/**
+	 * The last position of the pawn.
+	 */
+	private Position lastPos;
+	
+	/**
 	 * The set of possible destinations for this pawn.
 	 */
 	private Set<Position> possibleDestination;
@@ -37,6 +42,7 @@ public class Pawn {
 	 */
 	public Pawn(Board board, Position pos, Case player) {
 		this.pos = pos;
+		this.lastPos = pos;
 		this.playerNb = player;
 		this.possibleDestination = possibleMove(board, pos);
 		this.finishLine();
@@ -49,6 +55,14 @@ public class Pawn {
 	 */
 	public Position getPos() {
 		return pos;
+	}
+
+	public Position getLastPos() {
+		return lastPos;
+	}
+
+	public void setLastPos(Position lastPos) {
+		this.lastPos = lastPos;
 	}
 
 	/**
@@ -278,6 +292,10 @@ public class Pawn {
 		else {
 			return false;
 		}
+	}
+	
+	public void resetMove(Board board) {
+		
 	}
 	
 	/**

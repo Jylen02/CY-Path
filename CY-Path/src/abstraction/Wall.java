@@ -193,10 +193,14 @@ public class Wall {
 			if (wall.wallError(board, players, turn)) {
 				return false;
 			}
-			;
+			board.setLastWall(wall);
 			return true;
 		} else {
 			return false;
 		}
+	}
+
+	public static void removeLastWall(Board board) {
+		board.getLastWall().updateWall(board, Case.POTENTIALWALL);
 	}
 }

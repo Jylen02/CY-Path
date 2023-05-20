@@ -348,6 +348,7 @@ public class Main extends Application {
 		Label volumeLabel = createLabel("Volume", 40);
 		
 		Slider volumeSlider = new Slider(0, 0.1, 0.05);
+		mediaPlayerMusic.volumeProperty().bindBidirectional(volumeSlider.valueProperty());
 		
 		HBox sliderContainer = new HBox(10);
         sliderContainer.getChildren().addAll(volumeLabel, volumeSlider);
