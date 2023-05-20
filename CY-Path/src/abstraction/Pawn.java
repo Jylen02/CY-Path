@@ -264,6 +264,7 @@ public class Pawn {
 	 *
 	 * @param board  The game board.
 	 * @param pos    The new position for the player.
+	 * @return true if the move has been made, false otherwise
 	 */
 	public boolean move(Board board, Position pos) {
 		if (this.getPossibleDestination().contains(pos)) {
