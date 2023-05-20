@@ -45,6 +45,7 @@ public class Main extends Application {
 	// Board information
 	private Board board; // numberOfPlayers in this class
 	private GridPane grid;
+	private GridPane invisible;
 	private Rectangle cell; // For the construction of the grid
 
 	// Main of quoridor
@@ -346,11 +347,16 @@ public class Main extends Application {
 
 	private void playBoard(boolean canDoAction) {
 		Label playerTurn = createLabel(this.getPlayers()[this.getCurrentTurn()].getName() + "'s turn", 50);
+		Label uselessPlayerTurn = createLabel(this.getPlayers()[this.getCurrentTurn()].getName() + "'s turn", 50);
+		
 		Pawn p = players[this.getCurrentTurn()].getPawn();
 		p.setPossibleMove(p.possibleMove(this.board, p.getPos()));
 
-		grid = updateBoard();
+		grid = updateBoard(false);
 		grid.setAlignment(Pos.CENTER);
+
+		invisible = updateBoard(true);
+		invisible.setAlignment(Pos.CENTER);
 		
 		wallPreview = new Rectangle(65, 5, Color.RED);
 		wallPreview.setOpacity(1);
@@ -362,6 +368,7 @@ public class Main extends Application {
 		Scene scene = new Scene(new StackPane(), 800, 700);
 
 		HBox action = actionList(scene, canDoAction);
+		HBox uselessAction = actionList(scene, canDoAction);
 
 		Label volumeLabel = createLabel("Volume", 40);
 
@@ -370,16 +377,24 @@ public class Main extends Application {
 		HBox sliderContainer = new HBox(10);
 		sliderContainer.getChildren().addAll(volumeLabel, volumeSlider);
 		sliderContainer.setAlignment(Pos.CENTER);
-
+		
+		HBox uselessSliderContainer = new HBox(10);
+		uselessSliderContainer.getChildren().addAll(createLabel("Volume", 40), new Slider(0, 0.1, 0.05));
+		uselessSliderContainer.setAlignment(Pos.CENTER);
+		
+		VBox uselessBox = new VBox(50);
+		uselessBox.getChildren().addAll(uselessPlayerTurn, grid, uselessAction, uselessSliderContainer);
+		uselessBox.setAlignment(Pos.CENTER);
+		
 		box = new VBox(50);
-		box.getChildren().addAll(playerTurn, grid, action, sliderContainer);
+		box.getChildren().addAll(playerTurn, invisible, action, sliderContainer);
 		box.setAlignment(Pos.CENTER);
-
+		
 		if (canDoAction) {
 			handleMove(scene, players[this.getCurrentTurn()]);
 		}
 
-		wallContainer.getChildren().addAll(wallPreview, box);
+		wallContainer.getChildren().addAll(uselessBox, wallPreview, box);
 		scene.setRoot(wallContainer);
 
 		scene.setOnMouseMoved(new EventHandler<MouseEvent>() {
@@ -442,7 +457,7 @@ public class Main extends Application {
 		return box;
 	}
 
-	private GridPane updateBoard() {
+	private GridPane updateBoard(boolean invisible) {
 		GridPane grid = new GridPane();
 		possibleCellMap.clear();
 		cellWallMap.clear();
@@ -457,11 +472,9 @@ public class Main extends Application {
 						this.cell = new Rectangle(30, 5);
 					}
 					this.cell.setFill(Color.LIGHTGRAY);
-					this.cell.setOpacity(0.7);
 				} else if (board.getBoard()[row][col] == Case.NULL) {
 					this.cell = new Rectangle(5, 5);
 					this.cell.setFill(Color.LIGHTGRAY);
-					this.cell.setOpacity(0.7);
 					positionWall.add(pos);
 					cellWallMap.put(pos, this.cell);
 				} else if (board.getBoard()[row][col] == Case.WALL) {
@@ -475,7 +488,6 @@ public class Main extends Application {
 						this.cell = new Rectangle(30, 5);
 					}
 					this.cell.setFill(Color.BLACK);
-					this.cell.setOpacity(0.7);
 				} else if (board.getBoard()[row][col] == Case.PLAYER1) {
 					cell = new Rectangle(30, 30);
 					// possibleCellMap.put(pos,this.cell);
@@ -504,25 +516,23 @@ public class Main extends Application {
 						switch (this.getCurrentTurn()) {
 						case 0:
 							this.cell.setFill(Color.LIGHTBLUE);
-							this.cell.setOpacity(0.7);
 							break;
 						case 1:
 							this.cell.setFill(Color.LIGHTSALMON);
-							this.cell.setOpacity(0.7);
 							break;
 						case 2:
 							this.cell.setFill(Color.LIGHTGREEN);
-							this.cell.setOpacity(0.7);
 							break;
 						case 3:
 							this.cell.setFill(Color.LIGHTGOLDENRODYELLOW);
-							this.cell.setOpacity(0.7);
 							break;
 						}
 					} else {
 						this.cell.setFill(Color.WHITE);
-						this.cell.setOpacity(0.7);
 					}
+				}
+				if (invisible) {
+					this.cell.setOpacity(0);
 				}
 				this.cell.setStroke(null);
 				possibleCellMap.put(pos, this.cell);
@@ -542,7 +552,8 @@ public class Main extends Application {
 		if (p.getPawn().move(this.board, pos)) {
 			mediaPlayerPawnMove.stop();
 			mediaPlayerPawnMove.play();
-			grid = updateBoard();
+			invisible = updateBoard(true);
+			grid = updateBoard(false);
 			playBoard(false);
 			// mediaPlayerPawnMove.play();
 			if (p.getPawn().isWinner()) {
@@ -560,14 +571,14 @@ public class Main extends Application {
 		}
 	}
 
-	private void wallPreview(Scene scene) {
-		/*this.setWallPreview(new Rectangle(65, 5));
+	/*private void wallPreview(Scene scene) {
+		this.setWallPreview(new Rectangle(65, 5));
 		this.getWallPreview().setFill(Color.RED);
 		this.getWallPreview().setOpacity(0.5);
-		this.getWallPreview().setStroke(null);*/
+		this.getWallPreview().setStroke(null);
 		this.setPlacingWall(true);
 
-	}
+	}*/
 
 	private void handlePlaceWall(Scene scene, Button button) {
 		button.setDisable(true);
