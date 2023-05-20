@@ -1,15 +1,12 @@
 package presentation;
 
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
-import java.util.Map;
 import java.io.File;
 import java.util.Set;
 
 import abstraction.*;
 import javafx.application.Application;
-import javafx.event.Event;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -47,17 +44,15 @@ public class Main extends Application {
 	private GridPane grid;
 	private Rectangle cell; // For the construction of the grid
 
+	//Main of quoridor
 	private Player[] players;
 	private int currentTurn = 0;
-
-	// A enlever (récupérer dans players[i].getPawn())
-	private Set<Position> possibleMove;
-	private Position pos;
+	
 	//private Set<Position> possibleCell;
 	private LinkedHashMap<Position,Rectangle> possibleCellMap = new LinkedHashMap<Position,Rectangle>();
-	//
 	private Set<Position> positionWall= new LinkedHashSet<Position>();
-	private LinkedHashMap<Position,Rectangle> cellWallMap = new LinkedHashMap<Position,Rectangle>();
+	//private LinkedHashMap<Position,Rectangle> cellWallMap = new LinkedHashMap<Position,Rectangle>();
+	
 	// PlaceWall information
 	private Wall wall;
 	private Rectangle wallPreview;
@@ -343,8 +338,8 @@ public class Main extends Application {
 	private void playBoard(boolean canDoAction) {
 		Label playerTurn = createLabel(this.getPlayers()[this.getCurrentTurn()].getName() + "'s turn", 50);
 		// playerTurn.setStyle("-fx-text-fill: red;");
-		
-		possibleMove = players[this.getCurrentTurn()].getPawn().possibleMove(this.board, players[this.getCurrentTurn()].getPawn().getPos());
+		Pawn p = players[this.getCurrentTurn()].getPawn();
+		p.setPossibleMove(p.possibleMove(this.board, p.getPos()));
 		
 		grid = updateBoard();
 		grid.setAlignment(Pos.CENTER);
@@ -376,7 +371,7 @@ public class Main extends Application {
 		 */
 		//pane.setBottom(wallContainers);
 		if (canDoAction) {
-			handleMove(scene, players[this.getCurrentTurn()],possibleMove);
+			handleMove(scene, players[this.getCurrentTurn()]);
 		}
 
 		if (this.isPlacingWall()) {
@@ -423,11 +418,11 @@ public class Main extends Application {
 	private GridPane updateBoard() {
 		GridPane grid = new GridPane();
 		possibleCellMap.clear();
-		cellWallMap.clear();
+		//cellWallMap.clear();
 		positionWall.clear();
 		for (int row = 0; row < Board.SIZE; row++) {
 			for (int col = 0; col < Board.SIZE; col++) {
-				pos = new Position(row, col);
+				Position pos = new Position(row, col);
 				if (board.getBoard()[row][col] == Case.BORDER || board.getBoard()[row][col] == Case.POTENTIALWALL) {
 					if (row % 2 == 1) {
 						this.cell = new Rectangle(5, 30);	
@@ -438,14 +433,12 @@ public class Main extends Application {
 				} else if (board.getBoard()[row][col] == Case.NULL) {
 					this.cell = new Rectangle(5, 5);
 					this.cell.setFill(Color.LIGHTGRAY);
-					positionWall.add(pos);
-					cellWallMap.put(pos, this.cell);
+					
+					
 				} else if (board.getBoard()[row][col] == Case.WALL) {
 					// Wall Intersection
 					if ((row + col) % 2 == 0) {
 						this.cell = new Rectangle(5, 5);
-						
-						
 						this.cell.setFill(Color.RED);
 					} else if (row % 2 == 1) {
 						this.cell = new Rectangle(5, 30);
@@ -455,28 +448,28 @@ public class Main extends Application {
 					this.cell.setFill(Color.BLACK);
 				} else if (board.getBoard()[row][col] == Case.PLAYER1) {
 					cell = new Rectangle(30, 30);
-					possibleCellMap.put(pos,this.cell);
+					//possibleCellMap.put(pos,this.cell);
 					this.cell.setFill(new ImagePattern(penguin));
 					//this.cell.setFill(Color.BLUE);
 				} else if (board.getBoard()[row][col] == Case.PLAYER2) {
 					cell = new Rectangle(30, 30);
-					possibleCellMap.put(pos,this.cell);
+					//possibleCellMap.put(pos,this.cell);
 					this.cell.setFill(new ImagePattern(wolf));
 					//this.cell.setFill(Color.RED);
 				} else if (board.getBoard()[row][col] == Case.PLAYER3) {
 					cell = new Rectangle(30, 30);
-					possibleCellMap.put(pos,this.cell);
+					//possibleCellMap.put(pos,this.cell);
 					//this.cell.setFill(Color.GREEN);
 					this.cell.setFill(new ImagePattern(gibbon));
 				} else if (board.getBoard()[row][col] == Case.PLAYER4) {
 					cell = new Rectangle(30, 30);
-					possibleCellMap.put(pos,this.cell);
+					//possibleCellMap.put(pos,this.cell);
 					this.cell.setFill(new ImagePattern(seagull));
 					//this.cell.setFill(Color.YELLOW);
 				} else {
 					cell = new Rectangle(30, 30);
-					possibleCellMap.put(pos,this.cell);
-					if (possibleMove.contains(pos)) {
+					
+					if (players[currentTurn].getPawn().getPossibleMove().contains(pos)) {
 						
 						switch (this.getCurrentTurn()) {
 						case 0:
@@ -497,32 +490,19 @@ public class Main extends Application {
 					}
 				}
 				this.cell.setStroke(null);
+				possibleCellMap.put(pos,this.cell);
+				positionWall.add(pos);
+				//cellWallMap.put(pos, this.cell);
 				grid.add(cell, col, row);
 			}
 		}
 		return grid;
 	}
 
-	private void handleMove(Scene scene, Player p, Set<Position> possibleMove) {
-		for ( Position position : possibleMove) {
+	private void handleMove(Scene scene, Player p) {
+		for ( Position position : p.getPawn().getPossibleMove()) {
 			possibleCellMap.get(position).setOnMouseClicked(e->pawnMove(p,position));
 		}
-		/*scene.setOnMouseMoved(e -> {
-			mouseColumn = (int) e.getX(); // X : abscisse
-			mouseRow = (int) e.getY(); // Y : ordonnée
-			int row = cursorRowToIndex();
-			int column = cursorColumnToIndex();
-			System.out.println(mouseRow + "," + mouseColumn + " : " + row + "," + column);
-			});
-		scene.setOnMouseClicked(event -> {
-			int column = cursorColumnToIndex();
-			int row = cursorRowToIndex();
-			Position position = new Position(row, column);
-			System.out.println(position);
-			pawnMove(p,position);
-		});
-		// Verifie que pos appartient grille
-		//possibleCellMap.get(pos).setOnMouseClicked(e -> pawnMove(p,pos));*/
 	}
 	
 	private void pawnMove(Player p, Position pos) {
@@ -545,25 +525,14 @@ public class Main extends Application {
 			}
 		} 
 	}
-	private void wallPlaced(Position position, Event e) {
+	private void wallPreview(Scene scene, Position position) {
 		
-		
-		/*button.setDisable(true);*/
-		// Création de la prévisualisation du mur
-		/*this.setWallPreview(new Rectangle(65, 5));
-		this.getWallPreview().setFill(Color.RED);
-		this.getWallPreview().setOpacity(0.5);
-		this.getWallPreview().setStroke(null);
-
-		this.setPlacingWall(true);
-		this.setWall(new Wall(Orientation.HORIZONTAL, new Position(0, 0))); // Orientation horizontale par défaut*/
-
 		// Créer un conteneur pour voir le mur en cours de placement
 		StackPane wallContainer = new StackPane();
 		wallContainer.getChildren().add(this.getWallPreview());
 
 		// Gestion de l'événement de mouvement de la souris pour suivre le curseur
-		/*scene.setOnMouseMoved(e -> {
+		scene.setOnMouseMoved(e -> {
 			mouseColumn = (int) e.getX(); // X : abscisse
 			mouseRow = (int) e.getY(); // Y : ordonnée
 			int row = cursorRowToIndex();
@@ -586,34 +555,8 @@ public class Main extends Application {
 			}
 
 			System.out.println(mouseRow + "," + mouseColumn + " : " + row + "," + column);
-		});*/
+		});
 
-		// Gestion de l'événement de clic gauche pour placer le mur
-		/*scene.setOnMouseClicked(e -> {
-			if (e.getButton() == MouseButton.PRIMARY) {
-				// Vérifier si la position du mur est valide (Case.NULL) et le placer
-				int column = cursorColumnToIndex();
-				int row = cursorRowToIndex();
-				this.getWall().setPosition(new Position(row, column));
-				if (Wall.createWall(this.getBoard(), this.getPlayers(), this.getCurrentTurn(), this.getWall().getOrientation(), this.getWall().getPosition())){
-					// Mettre à jour l'affichage du plateau
-					this.setPlacingWall(false);
-					this.setHasPlacedWall(true);
-					// Supprimer le mur en cours de placement de la grille du plateau
-					this.setWallPreview(null);
-					playBoard(false);
-				} else {
-					Alert alert = new Alert(Alert.AlertType.INFORMATION);
-					alert.setTitle("Error");
-					alert.setHeaderText("Invalid coordinates");
-					alert.setContentText("You can't place a wall here");
-					alert.showAndWait();
-				}
-			} else if (e.getButton() == MouseButton.SECONDARY) {
-				// Changer l'orientation du mur avec un clic droit
-				updateWallOrientation();
-			}
-		});*/
 		// Ajouter le mur en cours de placement à la grille du plateau
 		//scene.setRoot(wallContainer);
 		// Accédez à la racine de la scène existante
@@ -646,7 +589,7 @@ public class Main extends Application {
 			}
 		});
 		for ( Position position : positionWall) {
-			cellWallMap.get(position).setOnMouseClicked(e->{
+			possibleCellMap.get(position).setOnMouseClicked(e->{
 				
 				if (e.getButton() == MouseButton.PRIMARY) {
 					// Vérifier si la position du mur est valide (Case.NULL) et le placer
@@ -667,12 +610,9 @@ public class Main extends Application {
 						alert.setContentText("You can't place a wall here");
 						alert.showAndWait();
 					}
-					
 				} 
-				
 			});
 		}
-		
 	}
 
 	private void updateWallOrientation() {

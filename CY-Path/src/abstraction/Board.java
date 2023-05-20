@@ -231,8 +231,8 @@ public class Board {
 	public boolean isWinnable(Pawn player) {
 		Set<Position> marking = new HashSet<Position>();
 		marking.add(player.getPos());
-		for (Position pos : player.getPossibleDestination()) {
-			marking = this.dfs(pos, player, marking, player.getPossibleDestination());
+		for (Position pos : player.getPossibleMove()) {
+			marking = this.dfs(pos, player, marking, player.getPossibleMove());
 		}
 		for (Position pos : player.getFinishLine()) {
 			if (marking.contains(pos)) {
@@ -249,16 +249,16 @@ public class Board {
 	 * @param player              The player for whom to perform the DFS.
 	 * @param marking             A set of positions marking the nodes visited
 	 *                            during the DFS.
-	 * @param possibleDestination The set of Positions representing the possible
+	 * @param possibleMove The set of Positions representing the possible
 	 *                            destinations for the Pawn.
 	 * @return The updated marking set after performing the DFS.
 	 */
-	public Set<Position> dfs(Position pos, Pawn player, Set<Position> marking, Set<Position> possibleDestination) {
+	public Set<Position> dfs(Position pos, Pawn player, Set<Position> marking, Set<Position> possibleMove) {
 		if (!marking.contains(pos)) {
 			marking.add(pos);
-			possibleDestination = player.possibleMove(this, pos);
-			for (Position pos1 : possibleDestination) {
-				marking = this.dfs(pos1, player, marking, possibleDestination);
+			possibleMove = player.possibleMove(this, pos);
+			for (Position pos1 : possibleMove) {
+				marking = this.dfs(pos1, player, marking, possibleMove);
 			}
 		}
 		return marking;

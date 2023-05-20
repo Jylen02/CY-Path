@@ -161,12 +161,12 @@ public class Wall {
 	public boolean wallError(Board board, Player[] players, Integer turn) {
 		for (int i = 0; i < players.length; i++) {
 			players[i].getPawn()
-					.setPossibleDestination(players[i].getPawn().possibleMove(board, players[i].getPawn().getPos()));
+					.setPossibleMove(players[i].getPawn().possibleMove(board, players[i].getPawn().getPos()));
 		}
 		if (!board.isWinnableForAll(players)) {
 			this.updateWall(board, Case.POTENTIALWALL);
 			for (int i = 0; i < players.length; i++) {
-				players[i].getPawn().setPossibleDestination(
+				players[i].getPawn().setPossibleMove(
 						players[i].getPawn().possibleMove(board, players[i].getPawn().getPos()));
 			}
 			return true;

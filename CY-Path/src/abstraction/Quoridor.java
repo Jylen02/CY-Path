@@ -28,7 +28,7 @@ public class Quoridor {
 
 		// Display the possible destinations of a pawn
 		System.out.println("Possible move :");
-		System.out.println(p.getPossibleDestination());
+		System.out.println(p.getPossibleMove());
 
 		// Check if the max amount of wall is reached, the player can only move
 		if (players[turn].getRemainingWall() == 0) {
@@ -201,7 +201,7 @@ public class Quoridor {
 		// Initialize first possible move for each pawn
 		for (int i = 0; i < numberOfPlayers; i++) {
 			players[i].getPawn()
-					.setPossibleDestination(players[i].getPawn().possibleMove(board, players[i].getPawn().getPos()));
+					.setPossibleMove(players[i].getPawn().possibleMove(board, players[i].getPawn().getPos()));
 		}
 		// While no one has won, play turn
 
@@ -215,7 +215,7 @@ public class Quoridor {
 				System.out.println(players[turn].getName() + " has won. Congratulations !");
 			}
 			for (int i = 0; i < numberOfPlayers; i++) {
-				players[i].getPawn().setPossibleDestination(
+				players[i].getPawn().setPossibleMove(
 						players[i].getPawn().possibleMove(board, players[i].getPawn().getPos()));
 			}
 			turn = (turn + 1) % numberOfPlayers;
