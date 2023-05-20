@@ -320,6 +320,7 @@ public class Main extends Application {
 					break;
 				}
 			}
+			this.setCurrentTurn(0);
 			playBoard(true);
 		});
 		box.setAlignment(Pos.CENTER);
