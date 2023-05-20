@@ -323,6 +323,7 @@ public class Main extends Application {
 
 	private void playBoard(boolean canDoAction) {
 		Label playerTurn = createLabel(this.getPlayers()[this.getCurrentTurn()].getName() + "'s turn", 50);
+		
 		// playerTurn.setStyle("-fx-text-fill: red;");
 		possibleMove = players[this.getCurrentTurn()].getPawn().possibleMove(this.board, players[this.getCurrentTurn()].getPawn().getPos());
 		
@@ -331,13 +332,19 @@ public class Main extends Application {
 		
 		Scene scene = new Scene(new BorderPane(), 800, 700);
 		
-		VBox action = actionList(scene, canDoAction);
-
-		BorderPane pane = new BorderPane();
+		HBox action = actionList(scene, canDoAction);
+		
+		VBox box = new VBox(50);
+		box.getChildren().addAll(playerTurn, grid, action); 
+		box.setAlignment(Pos.CENTER);
+		/*BorderPane pane = new BorderPane();
 		pane.setTop(playerTurn);
 		BorderPane.setAlignment(playerTurn, Pos.CENTER);
 		pane.setCenter(grid);
-		pane.setRight(action);
+		pane.setBottom(action);
+		BorderPane.setAlignment(action, Pos.TOP_CENTER);
+		//pane.setRight(boxVide);
+		 */
 		//pane.setBottom(wallContainers);
 		if (canDoAction) {
 			handleMove(scene, players[this.getCurrentTurn()],possibleMove);
@@ -351,14 +358,14 @@ public class Main extends Application {
 				grid.getChildren().add(wallContainer);
 			}
 		}
-		scene.setRoot(pane);
+		scene.setRoot(box);
 
 		primaryStage.setScene(scene);
 		primaryStage.sizeToScene();
 		primaryStage.show();
 	}
 
-	private VBox actionList(Scene scene, boolean canDoAction) {
+	private HBox actionList(Scene scene, boolean canDoAction) {
 		Button exit = createButton("Exit", 100, 50, 20);
 		exit.setOnAction(e -> start(primaryStage));
 
@@ -377,13 +384,9 @@ public class Main extends Application {
 		Button confirm = createButton("Confirm", 100, 50, 20);
 		confirm.setOnAction(e -> handleConfirm());
 
-		HBox confirms = new HBox(20);
-		confirms.getChildren().addAll(cancel, confirm);
-		confirms.setAlignment(Pos.CENTER);
-
-		VBox box = new VBox(20);
-		box.getChildren().addAll(exit, restart, wall, confirms);
-		box.setAlignment(Pos.CENTER);
+		HBox box = new HBox(20);
+		box.getChildren().addAll(exit, restart, wall,cancel, confirm);
+		box.setAlignment(Pos.TOP_CENTER);
 
 		return box;
 	}
@@ -568,12 +571,12 @@ public class Main extends Application {
 
 	private int cursorRowToIndex() {
 		// TODO bien convertir le curseur
-		return (int) ((mouseRow-225) / 17);
+		return (int) ((mouseRow-200) / 17);
 	}
 
 	private int cursorColumnToIndex() {
 		// TODO bien convertir le curseur
-		return (int) ((mouseColumn -128) / 17);
+		return (int) ((mouseColumn -240) / 17);
 	}
 
 	private void handleCancel() {
