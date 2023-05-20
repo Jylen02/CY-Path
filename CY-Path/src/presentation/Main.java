@@ -1,12 +1,15 @@
 package presentation;
 
+import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.io.File;
 import java.util.Set;
 
 import abstraction.*;
 import javafx.application.Application;
+import javafx.event.Event;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -50,7 +53,9 @@ public class Main extends Application {
 	private Position pos;
 	//private Set<Position> possibleCell;
 	private LinkedHashMap<Position,Rectangle> possibleCellMap = new LinkedHashMap<Position,Rectangle>();
-
+	//
+	private Set<Position> positionWall= new LinkedHashSet<Position>();
+	private LinkedHashMap<Position,Rectangle> cellWallMap = new LinkedHashMap<Position,Rectangle>();
 	// PlaceWall information
 	private Wall wall;
 	private Rectangle wallPreview;
@@ -413,12 +418,14 @@ public class Main extends Application {
 	private GridPane updateBoard() {
 		GridPane grid = new GridPane();
 		possibleCellMap.clear();
+		cellWallMap.clear();
+		positionWall.clear();
 		for (int row = 0; row < Board.SIZE; row++) {
 			for (int col = 0; col < Board.SIZE; col++) {
 				pos = new Position(row, col);
 				if (board.getBoard()[row][col] == Case.BORDER || board.getBoard()[row][col] == Case.POTENTIALWALL) {
 					if (row % 2 == 1) {
-						this.cell = new Rectangle(5, 30);
+						this.cell = new Rectangle(5, 30);	
 					} else {
 						this.cell = new Rectangle(30, 5);
 					}
@@ -426,10 +433,14 @@ public class Main extends Application {
 				} else if (board.getBoard()[row][col] == Case.NULL) {
 					this.cell = new Rectangle(5, 5);
 					this.cell.setFill(Color.LIGHTGRAY);
+					positionWall.add(pos);
+					cellWallMap.put(pos, this.cell);
 				} else if (board.getBoard()[row][col] == Case.WALL) {
 					// Wall Intersection
 					if ((row + col) % 2 == 0) {
 						this.cell = new Rectangle(5, 5);
+						
+						
 						this.cell.setFill(Color.RED);
 					} else if (row % 2 == 1) {
 						this.cell = new Rectangle(5, 30);
@@ -522,24 +533,25 @@ public class Main extends Application {
 			}
 		} 
 	}
-
-	private void handlePlaceWall(Scene scene, Button button) {
-		button.setDisable(true);
+	private void wallPlaced(Position position, Event e) {
+		
+		
+		/*button.setDisable(true);*/
 		// Création de la prévisualisation du mur
-		this.setWallPreview(new Rectangle(65, 5));
+		/*this.setWallPreview(new Rectangle(65, 5));
 		this.getWallPreview().setFill(Color.RED);
 		this.getWallPreview().setOpacity(0.5);
 		this.getWallPreview().setStroke(null);
 
 		this.setPlacingWall(true);
-		this.setWall(new Wall(Orientation.HORIZONTAL, new Position(0, 0))); // Orientation horizontale par défaut
+		this.setWall(new Wall(Orientation.HORIZONTAL, new Position(0, 0))); // Orientation horizontale par défaut*/
 
 		// Créer un conteneur pour voir le mur en cours de placement
-		GridPane wallContainer = new GridPane();
-		wallContainer.getChildren().add(this.getWallPreview());
+		/*GridPane wallContainer = new GridPane();
+		wallContainer.getChildren().add(this.getWallPreview());*/
 
 		// Gestion de l'événement de mouvement de la souris pour suivre le curseur
-		scene.setOnMouseMoved(e -> {
+		/*scene.setOnMouseMoved(e -> {
 			mouseColumn = (int) e.getX(); // X : abscisse
 			mouseRow = (int) e.getY(); // Y : ordonnée
 			int row = cursorRowToIndex();
@@ -562,10 +574,10 @@ public class Main extends Application {
 			}
 
 			System.out.println(mouseRow + "," + mouseColumn + " : " + row + "," + column);
-		});
+		});*/
 
 		// Gestion de l'événement de clic gauche pour placer le mur
-		scene.setOnMouseClicked(e -> {
+		/*scene.setOnMouseClicked(e -> {
 			if (e.getButton() == MouseButton.PRIMARY) {
 				// Vérifier si la position du mur est valide (Case.NULL) et le placer
 				int column = cursorColumnToIndex();
@@ -589,9 +601,54 @@ public class Main extends Application {
 				// Changer l'orientation du mur avec un clic droit
 				updateWallOrientation();
 			}
-		});
+		});*/
 		// Ajouter le mur en cours de placement à la grille du plateau
 		//scene.setRoot(wallContainer);
+	}
+
+	private void handlePlaceWall(Scene scene, Button button) {
+		button.setDisable(true);
+		this.setWallPreview(new Rectangle(65, 5));
+		this.getWallPreview().setFill(Color.RED);
+		this.getWallPreview().setOpacity(0.5);
+		this.getWallPreview().setStroke(null);
+
+		this.setPlacingWall(true);
+		this.setWall(new Wall(Orientation.HORIZONTAL, new Position(0, 0)));
+		scene.setOnMouseClicked(e->{
+			if (e.getButton() == MouseButton.SECONDARY) {
+				// Changer l'orientation du mur avec un clic droit
+				updateWallOrientation();
+			}
+		});
+		for ( Position position : positionWall) {
+			cellWallMap.get(position).setOnMouseClicked(e->{
+				
+				if (e.getButton() == MouseButton.PRIMARY) {
+					// Vérifier si la position du mur est valide (Case.NULL) et le placer
+					//int column = cursorColumnToIndex();
+					//int row = cursorRowToIndex();
+					this.getWall().setPosition(position);
+					if (Wall.createWall(this.getBoard(), this.getPlayers(), this.getCurrentTurn(), this.getWall().getOrientation(), this.getWall().getPosition())){
+						// Mettre à jour l'affichage du plateau
+						this.setPlacingWall(false);
+						this.setHasPlacedWall(true);
+						// Supprimer le mur en cours de placement de la grille du plateau
+						this.setWallPreview(null);
+						playBoard(false);
+					} else {
+						Alert alert = new Alert(Alert.AlertType.INFORMATION);
+						alert.setTitle("Error");
+						alert.setHeaderText("Invalid coordinates");
+						alert.setContentText("You can't place a wall here");
+						alert.showAndWait();
+					}
+					
+				} 
+				
+			});
+		}
+		
 	}
 
 	private void updateWallOrientation() {
