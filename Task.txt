@@ -100,5 +100,5 @@ Mettre le tout dans un dossier + sélection en ouvrant l'explorateur de fichier
 15.5. Poser mur (Durée estimée : 30min) : A Faire
 
 16. IHM : Fonctionnalités
-16.1. Ajouter un bruit à chaque fois qu'on bouge un pion ou mur (Durée estimée : 20min) : A Faire
-16.2. Musique de fond (menu ?)
+16.1. Ajouter un bruit à chaque fois qu'on bouge un pion ou mur (Durée estimée : 20min) : Quasi Terminé - Noaman
+16.2. Musique de fond (menu ?) Quasi Terminé - Noaman
