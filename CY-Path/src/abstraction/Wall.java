@@ -151,6 +151,15 @@ public class Wall {
 	}
 
 	/**
+	 * Removes the last wall placed.
+	 *
+	 * @param board       The game board.
+	 */
+	public static void removeLastWall(Board board) {
+		board.getLastWall().updateWall(board, Case.POTENTIALWALL);
+	}
+	
+	/**
 	 * Verifies if the placed wall blocks a player and removes it if necessary.
 	 * 
 	 * @param board   The game board.
@@ -198,9 +207,5 @@ public class Wall {
 		} else {
 			return false;
 		}
-	}
-
-	public static void removeLastWall(Board board) {
-		board.getLastWall().updateWall(board, Case.POTENTIALWALL);
 	}
 }
