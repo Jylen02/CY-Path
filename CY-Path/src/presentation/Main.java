@@ -439,20 +439,25 @@ public class Main extends Application {
 					this.cell.setFill(Color.BLACK);
 				} else if (board.getBoard()[row][col] == Case.PLAYER1) {
 					cell = new Rectangle(30, 30);
+					possibleCellMap.put(pos,this.cell);
 					this.cell.setFill(Color.BLUE);
 				} else if (board.getBoard()[row][col] == Case.PLAYER2) {
 					cell = new Rectangle(30, 30);
+					possibleCellMap.put(pos,this.cell);
 					this.cell.setFill(Color.RED);
 				} else if (board.getBoard()[row][col] == Case.PLAYER3) {
 					cell = new Rectangle(30, 30);
+					possibleCellMap.put(pos,this.cell);
 					this.cell.setFill(Color.GREEN);
 				} else if (board.getBoard()[row][col] == Case.PLAYER4) {
 					cell = new Rectangle(30, 30);
+					possibleCellMap.put(pos,this.cell);
 					this.cell.setFill(Color.YELLOW);
 				} else {
 					cell = new Rectangle(30, 30);
+					possibleCellMap.put(pos,this.cell);
 					if (possibleMove.contains(pos)) {
-						possibleCellMap.put(pos,this.cell);
+						
 						switch (this.getCurrentTurn()) {
 						case 0:
 							this.cell.setFill(Color.LIGHTBLUE);
@@ -501,6 +506,17 @@ public class Main extends Application {
 		if (p.getPawn().move(this.board, pos)) {
 			grid = updateBoard();
 			playBoard(false);
+			if (p.getPawn().isWinner()) {
+				Set<Position> poz=p.getPawn().getFinishLine();
+				for (Position position : poz) {
+					possibleCellMap.get(position).setFill(Color.GOLD);
+				}
+				Alert alert = new Alert(Alert.AlertType.INFORMATION);
+				alert.setTitle("winner");
+				alert.setContentText("The winner is"+p.getName());
+				alert.showAndWait();
+				
+			}
 		} 
 	}
 
@@ -590,7 +606,7 @@ public class Main extends Application {
 
 	private int cursorRowToIndex() {
 		// TODO bien convertir le curseur
-		return (int) ((mouseRow-200) / 17);
+		return (int) ((mouseRow-146) / 17);
 	}
 
 	private int cursorColumnToIndex() {
