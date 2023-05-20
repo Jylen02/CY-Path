@@ -568,12 +568,12 @@ public class Main extends Application {
 
 	private int cursorRowToIndex() {
 		// TODO bien convertir le curseur
-		return (int) ((mouseRow-225) / 16.5);
+		return (int) ((mouseRow-225) / 17);
 	}
 
 	private int cursorColumnToIndex() {
 		// TODO bien convertir le curseur
-		return (int) ((mouseColumn -128) / 16.5);
+		return (int) ((mouseColumn -128) / 17);
 	}
 
 	private void handleCancel() {
