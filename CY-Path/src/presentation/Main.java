@@ -147,7 +147,18 @@ public class Main extends Application {
 	public void start(Stage primaryStage) {
 		this.primaryStage = primaryStage;
 		this.primaryStage.setTitle("Quoridor");
+<<<<<<< Updated upstream
 		this.primaryStage.setResizable(false);
+=======
+		this.primaryStage.setWidth(800);
+		this.primaryStage.setHeight(700);
+		
+		
+        Image icon = new Image("image/dikdik.png"); //Icon of the application
+        this.primaryStage.getIcons().add(icon);
+        
+		// this.primaryStage.setResizable(false);
+>>>>>>> Stashed changes
 
 		this.primaryStage.getIcons().add(new Image("image/dikdik.png"));
 		
