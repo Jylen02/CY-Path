@@ -1,5 +1,6 @@
 package presentation;
 
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.io.File;
@@ -53,13 +54,13 @@ public class Main extends Application {
 	// private Set<Position> possibleCell;
 	private LinkedHashMap<Position, Rectangle> possibleCellMap = new LinkedHashMap<Position, Rectangle>();
 	private Set<Position> positionWall = new LinkedHashSet<Position>();
-	// private LinkedHashMap<Position,Rectangle> cellWallMap = new
-	// LinkedHashMap<Position,Rectangle>();
+	private LinkedHashMap<Position,Rectangle> cellWallMap = new LinkedHashMap<Position,Rectangle>();
 
 	// A Supprimer
 	private Wall wall;
 
 	// PlaceWall information
+	private VBox box;
 	private StackPane wallContainer;
 	private Rectangle wallPreview;
 	private boolean isPlacingWall;
@@ -350,8 +351,15 @@ public class Main extends Application {
 
 		grid = updateBoard();
 		grid.setAlignment(Pos.CENTER);
-
-		Scene scene = new Scene(new BorderPane(), 800, 700);
+		
+		wallPreview = new Rectangle(65, 5, Color.RED);
+		wallPreview.setOpacity(1);
+		wallPreview.setStroke(null);
+		wallPreview.setVisible(false);
+		
+		wallContainer = new StackPane();
+		
+		Scene scene = new Scene(new StackPane(), 800, 700);
 
 		HBox action = actionList(scene, canDoAction);
 
@@ -363,7 +371,7 @@ public class Main extends Application {
 		sliderContainer.getChildren().addAll(volumeLabel, volumeSlider);
 		sliderContainer.setAlignment(Pos.CENTER);
 
-		VBox box = new VBox(50);
+		box = new VBox(50);
 		box.getChildren().addAll(playerTurn, grid, action, sliderContainer);
 		box.setAlignment(Pos.CENTER);
 
@@ -371,19 +379,22 @@ public class Main extends Application {
 			handleMove(scene, players[this.getCurrentTurn()]);
 		}
 
-		if (this.isPlacingWall()) {
-			wallContainer = new StackPane(this.getWallPreview());
-		}
-		scene.setRoot(box);
+		wallContainer.getChildren().addAll(wallPreview, box);
+		scene.setRoot(wallContainer);
 
 		scene.setOnMouseMoved(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
-				if (!isPlacingWall) {
-					double mouseColumn = event.getX() - wallPreview.getWidth() / 2;
-					double mouseRow = event.getY() - wallPreview.getHeight() / 2;
-					wallPreview.setTranslateX(mouseColumn);
-					wallPreview.setTranslateY(mouseRow);
+				if (isPlacingWall) {
+					mouseColumn =  (int) (event.getX() - wallPreview.getWidth() / 2);
+					mouseRow = (int) (event.getY() - wallPreview.getHeight() / 2);
+					if (wallPreview.getWidth() > wallPreview.getHeight()) {
+						wallPreview.setTranslateX(mouseColumn-367);
+						wallPreview.setTranslateY(mouseRow-346);
+					} else {
+						wallPreview.setTranslateX(mouseColumn-365-32);
+						wallPreview.setTranslateY(mouseRow-347+30);
+					}
 				}
 			}
 		});
@@ -400,21 +411,17 @@ public class Main extends Application {
 		Button restart = createButton("Restart", 100, 50, 20);
 		restart.setOnAction(e -> handleRestartButton());
 
-		wallPreview = new Rectangle(65, 5, Color.RED);
-		wallPreview.setOpacity(0.5);
-		wallPreview.setStroke(null);
-		wallPreview.setVisible(false);
-
 		Button wall = createButton("Wall --", 100, 50, 20);
 		wall.setOnAction(e -> {
 			handlePlaceWall(scene, wall);
-			if (isPlacingWall) {
+			wallPreview.setVisible(true);
+			/*if (isPlacingWall) {
 				wallPreview.setVisible(true);
 				isPlacingWall = false;
 			} else {
 				wallPreview.setVisible(false);
 				isPlacingWall = true;
-			}
+			}*/
 		});
 
 
@@ -428,9 +435,9 @@ public class Main extends Application {
 		Button confirm = createButton("Confirm", 100, 50, 20);
 		confirm.setOnAction(e -> handleConfirm());
 
-		HBox box = new HBox(29);
-		box.getChildren().addAll(exit, restart, wall, cancel, confirm, wallPreview);
-		box.setAlignment(Pos.TOP_RIGHT);
+		HBox box = new HBox(20);
+		box.getChildren().addAll(exit, restart, wall, cancel, confirm);
+		box.setAlignment(Pos.TOP_CENTER);
 
 		return box;
 	}
@@ -438,7 +445,7 @@ public class Main extends Application {
 	private GridPane updateBoard() {
 		GridPane grid = new GridPane();
 		possibleCellMap.clear();
-		// cellWallMap.clear();
+		cellWallMap.clear();
 		positionWall.clear();
 		for (int row = 0; row < Board.SIZE; row++) {
 			for (int col = 0; col < Board.SIZE; col++) {
@@ -450,10 +457,13 @@ public class Main extends Application {
 						this.cell = new Rectangle(30, 5);
 					}
 					this.cell.setFill(Color.LIGHTGRAY);
+					this.cell.setOpacity(0.7);
 				} else if (board.getBoard()[row][col] == Case.NULL) {
 					this.cell = new Rectangle(5, 5);
 					this.cell.setFill(Color.LIGHTGRAY);
-
+					this.cell.setOpacity(0.7);
+					positionWall.add(pos);
+					cellWallMap.put(pos, this.cell);
 				} else if (board.getBoard()[row][col] == Case.WALL) {
 					// Wall Intersection
 					if ((row + col) % 2 == 0) {
@@ -465,6 +475,7 @@ public class Main extends Application {
 						this.cell = new Rectangle(30, 5);
 					}
 					this.cell.setFill(Color.BLACK);
+					this.cell.setOpacity(0.7);
 				} else if (board.getBoard()[row][col] == Case.PLAYER1) {
 					cell = new Rectangle(30, 30);
 					// possibleCellMap.put(pos,this.cell);
@@ -493,25 +504,28 @@ public class Main extends Application {
 						switch (this.getCurrentTurn()) {
 						case 0:
 							this.cell.setFill(Color.LIGHTBLUE);
+							this.cell.setOpacity(0.7);
 							break;
 						case 1:
 							this.cell.setFill(Color.LIGHTSALMON);
+							this.cell.setOpacity(0.7);
 							break;
 						case 2:
 							this.cell.setFill(Color.LIGHTGREEN);
+							this.cell.setOpacity(0.7);
 							break;
 						case 3:
 							this.cell.setFill(Color.LIGHTGOLDENRODYELLOW);
+							this.cell.setOpacity(0.7);
 							break;
 						}
 					} else {
 						this.cell.setFill(Color.WHITE);
+						this.cell.setOpacity(0.7);
 					}
 				}
 				this.cell.setStroke(null);
 				possibleCellMap.put(pos, this.cell);
-				positionWall.add(pos);
-				// cellWallMap.put(pos, this.cell);
 				grid.add(cell, col, row);
 			}
 		}
@@ -547,73 +561,33 @@ public class Main extends Application {
 	}
 
 	private void wallPreview(Scene scene) {
-		this.setWallPreview(new Rectangle(65, 5));
+		/*this.setWallPreview(new Rectangle(65, 5));
 		this.getWallPreview().setFill(Color.RED);
 		this.getWallPreview().setOpacity(0.5);
-		this.getWallPreview().setStroke(null);
+		this.getWallPreview().setStroke(null);*/
 		this.setPlacingWall(true);
 
-		// Créer un conteneur pour voir le mur en cours de placement
-		wallContainer = new StackPane();
-		wallContainer.getChildren().add(this.getWallPreview());
-
-		// Gestion de l'événement de mouvement de la souris pour suivre le curseur
-		scene.setOnMouseMoved(e -> {
-			mouseColumn = (int) e.getX(); // X : abscisse
-			mouseRow = (int) e.getY(); // Y : ordonnée
-			int row = cursorRowToIndex();
-			int column = cursorColumnToIndex();
-			if (0 < row && row < 18 && 0 < column && column < 18) {
-				if (row % 2 == 0 && column % 2 == 0) {
-					this.getWallPreview().setFill(Color.BLACK);
-					this.getWallPreview().setX(row); // Mettre à jour la position X du rectangle
-					this.getWallPreview().setY(column); // Mettre à jour la position Y du rectangle
-				} else {
-					this.getWallPreview().setFill(Color.RED);
-				}
-			}
-			if (this.getWall().getOrientation() == Orientation.HORIZONTAL) {
-				wallContainer.setTranslateX(mouseColumn - 360);
-				wallContainer.setTranslateY(mouseRow - 405);
-			} else {
-				wallContainer.setTranslateX(mouseColumn - 332);
-				wallContainer.setTranslateY(mouseRow - 435);
-			}
-
-		});
-
-		// Ajouter le mur en cours de placement à la grille du plateau
-		// scene.setRoot(wallContainer);
-		// Accédez à la racine de la scène existante
-		/*
-		 * Parent root = scene.getRoot();
-		 * 
-		 * if (root instanceof StackPane) { // La racine est déjà un StackPane, ajoutez
-		 * simplement le nouveau StackPane à la liste des enfants StackPane
-		 * existingStackPane = (StackPane) root;
-		 * existingStackPane.getChildren().add(wallContainer); } else { // La racine
-		 * n'est pas un StackPane, créez un nouveau StackPane contenant la racine
-		 * existante et le nouveau StackPane StackPane newRoot = new StackPane(root,
-		 * wallContainer); scene.setRoot(newRoot); }
-		 */
 	}
 
 	private void handlePlaceWall(Scene scene, Button button) {
 		button.setDisable(true);
-		wallPreview(scene);
-
+		//wallPreview(scene);
+		this.setPlacingWall(true);
 		this.setWall(new Wall(Orientation.HORIZONTAL, new Position(0, 0)));
 
 		scene.setOnMouseClicked(e -> {
+			//Collections.reverse(wallContainer.getChildren());
 			if (e.getButton() == MouseButton.SECONDARY) {
 				// Changer l'orientation du mur avec un clic droit
 				updateWallOrientation();
 			}
 		});
 		for (Position position : positionWall) {
+			cellWallMap.get(position).setOnMouseEntered(e -> wallPreview.setFill(Color.BLACK));
+			cellWallMap.get(position).setOnMouseExited(e -> wallPreview.setFill(Color.RED));
 			possibleCellMap.get(position).setOnMouseClicked(e -> {
-
 				if (e.getButton() == MouseButton.PRIMARY) {
+					
 					// Vérifier si la position du mur est valide (Case.NULL) et le placer
 					// int column = cursorColumnToIndex();
 					// int row = cursorRowToIndex();
@@ -626,14 +600,9 @@ public class Main extends Application {
 						// Supprimer le mur en cours de placement de la grille du plateau
 						this.setWallPreview(null);
 						playBoard(false);
-					} else {
-						Alert alert = new Alert(Alert.AlertType.INFORMATION);
-						alert.setTitle("Error");
-						alert.setHeaderText("Invalid coordinates");
-						alert.setContentText("You can't place a wall here");
-						alert.showAndWait();
 					}
 				}
+				//Collections.reverse(wallContainer.getChildren());
 			});
 		}
 	}
