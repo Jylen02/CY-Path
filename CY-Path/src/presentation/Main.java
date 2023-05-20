@@ -60,7 +60,14 @@ public class Main extends Application {
 	private int mouseRow;
     private StackPane rootPane;
 	private Background background;
-	private MediaPlayer mediaPlayerMusic;
+	
+	private Media mediaPawnMove = new Media(new File("src/sound/move.mp3").toURI().toString());
+	private MediaPlayer mediaPlayerPawnMove = new MediaPlayer(mediaPawnMove);
+	private Media mediaMusic = new Media(new File("src/sound/tw3LOW.mp3").toURI().toString());
+	private MediaPlayer mediaPlayerMusic  = new MediaPlayer(mediaMusic);
+	Label volumeLabel = createLabel("Volume", 40);
+	Slider volumeSlider = new Slider(0, 0.1, 0.05);
+
 
 	// Getters & Setters
 	public Board getBoard() {
@@ -133,24 +140,13 @@ public class Main extends Application {
 		Image icon = new Image("image/dikdik.png"); // Icon of the application
 		this.primaryStage.getIcons().add(icon);
 		
-		/*	Deplacement des pions
-		Media mediaPawnMove = new Media(new File("src/sound/move.mp3").toURI().toString());
-		MediaPlayer mediaPlayerPawnMove = new MediaPlayer(mediaPawnMove);
-		mediaPlayerPawnMove.setVolume(0.5); // Set volume at 50%
+	
+		mediaPlayerPawnMove.volumeProperty().bindBidirectional(volumeSlider.valueProperty());
 		mediaPlayerPawnMove.setCycleCount(1); // To repeat the sound 1 time
-		mediaPlayerPawnMove.play(); //A mettre dans la methode move pour jouer le son
-		*/
-		Media mediaMusic = new Media(new File("src/sound/tw3.mp3").toURI().toString());
-		mediaPlayerMusic = new MediaPlayer(mediaMusic);
-		
-		Label volumeLabel = createLabel("Volume", 40);
-		
-		Slider volumeSlider = new Slider(0, 0.1, 0.05);
+
 		mediaPlayerMusic.volumeProperty().bindBidirectional(volumeSlider.valueProperty());
-		
-		//mediaPlayerMusic.setVolume(0.5); // Set volume at 3%
-		mediaPlayerMusic.setCycleCount(MediaPlayer.INDEFINITE); // Repetition à l'infini
-		mediaPlayerMusic.play(); //A mettre dans la methode move pour jouer le son
+		mediaPlayerMusic.setCycleCount(MediaPlayer.INDEFINITE); // Infinite restart
+		mediaPlayerMusic.play(); // background music start with the launch of the app
 		
 		HBox sliderContainer = new HBox(10);
         sliderContainer.setAlignment(Pos.CENTER);
@@ -347,7 +343,6 @@ public class Main extends Application {
 		
 		Label volumeLabel = createLabel("Volume", 40);
 		
-		Slider volumeSlider = new Slider(0, 0.1, 0.05);
 		mediaPlayerMusic.volumeProperty().bindBidirectional(volumeSlider.valueProperty());
 		
 		HBox sliderContainer = new HBox(10);
@@ -508,8 +503,11 @@ public class Main extends Application {
 	
 	private void pawnMove(Player p, Position pos) {
 		if (p.getPawn().move(this.board, pos)) {
+			mediaPlayerPawnMove.stop();
+			mediaPlayerPawnMove.play();
 			grid = updateBoard();
 			playBoard(false);
+			//mediaPlayerPawnMove.play();
 			if (p.getPawn().isWinner()) {
 				Set<Position> poz=p.getPawn().getFinishLine();
 				for (Position position : poz) {
