@@ -617,7 +617,7 @@ public class Main extends Application {
 		// Ajouter le mur en cours de placement à la grille du plateau
 		//scene.setRoot(wallContainer);
 		// Accédez à la racine de la scène existante
-		Parent root = scene.getRoot();
+		/*Parent root = scene.getRoot();
 
 		if (root instanceof StackPane) {
 		    // La racine est déjà un StackPane, ajoutez simplement le nouveau StackPane à la liste des enfants
@@ -627,7 +627,7 @@ public class Main extends Application {
 		    // La racine n'est pas un StackPane, créez un nouveau StackPane contenant la racine existante et le nouveau StackPane
 		    StackPane newRoot = new StackPane(root, wallContainer);
 		    scene.setRoot(newRoot);
-		}
+		}*/
 	}
 
 	private void handlePlaceWall(Scene scene, Button button) {
