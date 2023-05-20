@@ -1,6 +1,5 @@
 package presentation;
 
-import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.io.File;
@@ -10,7 +9,6 @@ import abstraction.*;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -27,7 +25,6 @@ import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -55,17 +52,15 @@ public class Main extends Application {
 	// private Set<Position> possibleCell;
 	private LinkedHashMap<Position, Rectangle> possibleCellMap = new LinkedHashMap<Position, Rectangle>();
 	private Set<Position> positionWall = new LinkedHashSet<Position>();
-	private LinkedHashMap<Position,Rectangle> cellWallMap = new LinkedHashMap<Position,Rectangle>();
-
-	// A Supprimer
-	private Wall wall;
+	private LinkedHashMap<Position, Rectangle> cellWallMap = new LinkedHashMap<Position, Rectangle>();
 
 	// PlaceWall information
-	private VBox box;
+	//private VBox box;
 	private StackPane wallContainer;
 	private Rectangle wallPreview;
 	private boolean isPlacingWall;
 	private boolean hasPlacedWall;
+	private boolean hasMoved;
 	private int mouseColumn;
 	private int mouseRow;
 
@@ -138,14 +133,6 @@ public class Main extends Application {
 
 	public void setHasPlacedWall(boolean hasPlacedWall) {
 		this.hasPlacedWall = hasPlacedWall;
-	}
-
-	public Wall getWall() {
-		return wall;
-	}
-
-	public void setWall(Wall wall) {
-		this.wall = wall;
 	}
 
 	@Override
@@ -307,28 +294,15 @@ public class Main extends Application {
 			this.setPlayers(new Player[this.getBoard().getPlayerNumber()]);
 			for (int i = 0; i < this.getBoard().getPlayerNumber(); i++) {
 				String playerName = name[i].getText();
-				switch (i) {
-				case 0:
-					players[0] = new Player(playerName,
-							new Pawn(board, new Position(Board.SIZE - 2, Board.SIZE / 2), Case.PLAYER1),
-							Board.MAXWALLCOUNT / this.getBoard().getPlayerNumber());
-					break;
-				case 1:
-					players[1] = new Player(playerName, new Pawn(board, new Position(1, Board.SIZE / 2), Case.PLAYER2),
-							Board.MAXWALLCOUNT / this.getBoard().getPlayerNumber());
-					break;
-				case 2:
-					players[2] = new Player(playerName, new Pawn(board, new Position(Board.SIZE / 2, 1), Case.PLAYER3),
-							Board.MAXWALLCOUNT / this.getBoard().getPlayerNumber());
-					break;
-				case 3:
-
-					players[3] = new Player(playerName,
-							new Pawn(board, new Position(Board.SIZE / 2, Board.SIZE - 2), Case.PLAYER4),
-							Board.MAXWALLCOUNT / this.getBoard().getPlayerNumber());
-					break;
-				default:
-					break;
+				for (Case value : Case.values()) {
+					if (value.getValue() == i + 1) {
+						players[i] = new Player(playerName,
+								new Pawn(board,
+										new Position(Board.STARTINGPOSITIONPLAYERS[i].getX(),
+												Board.STARTINGPOSITIONPLAYERS[i].getY()),
+										value),
+								Board.MAXWALLCOUNT / this.getBoard().getPlayerNumber());
+					}
 				}
 			}
 			this.setCurrentTurn(0);
@@ -348,27 +322,27 @@ public class Main extends Application {
 	private void playBoard(boolean canDoAction) {
 		Label playerTurn = createLabel(this.getPlayers()[this.getCurrentTurn()].getName() + "'s turn", 50);
 		Label uselessPlayerTurn = createLabel(this.getPlayers()[this.getCurrentTurn()].getName() + "'s turn", 50);
-		
-		Pawn p = players[this.getCurrentTurn()].getPawn();
-		p.setPossibleMove(p.possibleMove(this.board, p.getPos()));
 
 		grid = updateBoard(false);
 		grid.setAlignment(Pos.CENTER);
 
 		invisible = updateBoard(true);
 		invisible.setAlignment(Pos.CENTER);
-		
+
+		Pawn p = players[this.getCurrentTurn()].getPawn();
+		p.setPossibleMove(p.possibleMove(this.board, p.getPos()));
+
 		wallPreview = new Rectangle(65, 5, Color.RED);
 		wallPreview.setOpacity(1);
 		wallPreview.setStroke(null);
 		wallPreview.setVisible(false);
-		
+
 		wallContainer = new StackPane();
-		
+
 		Scene scene = new Scene(new StackPane(), 800, 700);
 
 		HBox action = actionList(scene, canDoAction);
-		HBox uselessAction = actionList(scene, canDoAction);
+		HBox uselessAction = actionList(scene, false);
 
 		Label volumeLabel = createLabel("Volume", 40);
 
@@ -377,19 +351,19 @@ public class Main extends Application {
 		HBox sliderContainer = new HBox(10);
 		sliderContainer.getChildren().addAll(volumeLabel, volumeSlider);
 		sliderContainer.setAlignment(Pos.CENTER);
-		
+
 		HBox uselessSliderContainer = new HBox(10);
 		uselessSliderContainer.getChildren().addAll(createLabel("Volume", 40), new Slider(0, 0.1, 0.05));
 		uselessSliderContainer.setAlignment(Pos.CENTER);
-		
+
 		VBox uselessBox = new VBox(50);
 		uselessBox.getChildren().addAll(uselessPlayerTurn, grid, uselessAction, uselessSliderContainer);
 		uselessBox.setAlignment(Pos.CENTER);
-		
-		box = new VBox(50);
+
+		VBox box = new VBox(50);
 		box.getChildren().addAll(playerTurn, invisible, action, sliderContainer);
 		box.setAlignment(Pos.CENTER);
-		
+
 		if (canDoAction) {
 			handleMove(scene, players[this.getCurrentTurn()]);
 		}
@@ -401,14 +375,14 @@ public class Main extends Application {
 			@Override
 			public void handle(MouseEvent event) {
 				if (isPlacingWall) {
-					mouseColumn =  (int) (event.getX() - wallPreview.getWidth() / 2);
+					mouseColumn = (int) (event.getX() - wallPreview.getWidth() / 2);
 					mouseRow = (int) (event.getY() - wallPreview.getHeight() / 2);
 					if (wallPreview.getWidth() > wallPreview.getHeight()) {
-						wallPreview.setTranslateX(mouseColumn-367);
-						wallPreview.setTranslateY(mouseRow-346);
+						wallPreview.setTranslateX(mouseColumn - 367);
+						wallPreview.setTranslateY(mouseRow - 346);
 					} else {
-						wallPreview.setTranslateX(mouseColumn-365-32);
-						wallPreview.setTranslateY(mouseRow-347+30);
+						wallPreview.setTranslateX(mouseColumn - 365 - 32);
+						wallPreview.setTranslateY(mouseRow - 347 + 30);
 					}
 				}
 			}
@@ -421,34 +395,34 @@ public class Main extends Application {
 
 	private HBox actionList(Scene scene, boolean canDoAction) {
 		Button exit = createButton("Exit", 100, 50, 20);
-		exit.setOnAction(e -> start(primaryStage));
+		exit.setOnAction(e -> handleExitButton());
 
 		Button restart = createButton("Restart", 100, 50, 20);
 		restart.setOnAction(e -> handleRestartButton());
 
-		Button wall = createButton("Wall --", 100, 50, 20);
-		wall.setOnAction(e -> {
-			handlePlaceWall(scene, wall);
-			wallPreview.setVisible(true);
-			/*if (isPlacingWall) {
-				wallPreview.setVisible(true);
-				isPlacingWall = false;
-			} else {
-				wallPreview.setVisible(false);
-				isPlacingWall = true;
-			}*/
-		});
-
-
-		if (!canDoAction) {
-			wall.setDisable(true);
-		}
-
 		Button cancel = createButton("Cancel", 100, 50, 20);
 		cancel.setOnAction(e -> handleCancel());
+		cancel.setDisable(true);
 
 		Button confirm = createButton("Confirm", 100, 50, 20);
 		confirm.setOnAction(e -> handleConfirm());
+		confirm.setDisable(true);
+
+		Button wall = createButton("Wall (" + players[currentTurn].getRemainingWall() + ")", 100, 50, 20);
+		wall.setOnAction(e -> {
+			handlePlaceWall(scene, wall);
+			wallPreview.setVisible(true);
+			cancel.setDisable(false);
+		});
+
+		if (!canDoAction || players[currentTurn].getRemainingWall() == 0) {
+			wall.setDisable(true);
+		}
+
+		if (hasMoved || hasPlacedWall) {
+			cancel.setDisable(false);
+			confirm.setDisable(false);
+		}
 
 		HBox box = new HBox(20);
 		box.getChildren().addAll(exit, restart, wall, cancel, confirm);
@@ -544,16 +518,19 @@ public class Main extends Application {
 
 	private void handleMove(Scene scene, Player p) {
 		for (Position position : p.getPawn().getPossibleMove()) {
-			possibleCellMap.get(position).setOnMouseClicked(e -> pawnMove(p, position));
+			possibleCellMap.get(position).setOnMouseClicked(e -> movePawn(p, position));
 		}
 	}
 
-	private void pawnMove(Player p, Position pos) {
+	private void movePawn(Player p, Position pos) {
 		if (p.getPawn().move(this.board, pos)) {
+			hasMoved = true;
 			mediaPlayerPawnMove.stop();
 			mediaPlayerPawnMove.play();
+
 			invisible = updateBoard(true);
 			grid = updateBoard(false);
+
 			playBoard(false);
 			// mediaPlayerPawnMove.play();
 			if (p.getPawn().isWinner()) {
@@ -571,23 +548,30 @@ public class Main extends Application {
 		}
 	}
 
-	/*private void wallPreview(Scene scene) {
-		this.setWallPreview(new Rectangle(65, 5));
-		this.getWallPreview().setFill(Color.RED);
-		this.getWallPreview().setOpacity(0.5);
-		this.getWallPreview().setStroke(null);
-		this.setPlacingWall(true);
-
-	}*/
+	/*
+	 * private void wallPreview(Scene scene) { this.setWallPreview(new Rectangle(65,
+	 * 5)); this.getWallPreview().setFill(Color.RED);
+	 * this.getWallPreview().setOpacity(0.5); this.getWallPreview().setStroke(null);
+	 * this.setPlacingWall(true);
+	 * 
+	 * }
+	 */
+	private void placeWall(Orientation orientation, Position position) {
+		if (Wall.createWall(this.getBoard(), this.getPlayers(), this.getCurrentTurn(), orientation, position)) {
+			// Mettre à jour l'affichage du plateau
+			this.setPlacingWall(false);
+			this.setHasPlacedWall(true);
+			// Supprimer le mur en cours de placement de la grille du plateau
+			this.setWallPreview(null);
+			playBoard(false);
+		}
+	}
 
 	private void handlePlaceWall(Scene scene, Button button) {
 		button.setDisable(true);
-		//wallPreview(scene);
 		this.setPlacingWall(true);
-		this.setWall(new Wall(Orientation.HORIZONTAL, new Position(0, 0)));
 
 		scene.setOnMouseClicked(e -> {
-			//Collections.reverse(wallContainer.getChildren());
 			if (e.getButton() == MouseButton.SECONDARY) {
 				// Changer l'orientation du mur avec un clic droit
 				updateWallOrientation();
@@ -598,98 +582,111 @@ public class Main extends Application {
 			cellWallMap.get(position).setOnMouseExited(e -> wallPreview.setFill(Color.RED));
 			possibleCellMap.get(position).setOnMouseClicked(e -> {
 				if (e.getButton() == MouseButton.PRIMARY) {
-					
-					// Vérifier si la position du mur est valide (Case.NULL) et le placer
-					// int column = cursorColumnToIndex();
-					// int row = cursorRowToIndex();
-					this.getWall().setPosition(position);
-					if (Wall.createWall(this.getBoard(), this.getPlayers(), this.getCurrentTurn(),
-							this.getWall().getOrientation(), this.getWall().getPosition())) {
-						// Mettre à jour l'affichage du plateau
-						this.setPlacingWall(false);
-						this.setHasPlacedWall(true);
-						// Supprimer le mur en cours de placement de la grille du plateau
-						this.setWallPreview(null);
-						playBoard(false);
+					if (wallPreview.getWidth() > wallPreview.getHeight()) {
+						placeWall(Orientation.HORIZONTAL, position);
+					} else {
+						placeWall(Orientation.VERTICAL, position);
 					}
+
 				}
-				//Collections.reverse(wallContainer.getChildren());
 			});
 		}
 	}
 
 	private void updateWallOrientation() {
 		// Mettre à jour la taille et l'orientation du mur en cours de placement
-		if (this.getWall().getOrientation() == Orientation.HORIZONTAL) {
+		if (wallPreview.getWidth() > wallPreview.getHeight()) {
 			this.getWallPreview().setWidth(5);
 			this.getWallPreview().setHeight(65);
-			this.getWall().setOrientation(Orientation.VERTICAL);
 		} else {
 			this.getWallPreview().setWidth(65);
 			this.getWallPreview().setHeight(5);
-			this.getWall().setOrientation(Orientation.HORIZONTAL);
 		}
-	}
-
-	private int cursorRowToIndex() {
-		// TODO bien convertir le curseur
-		return (int) ((mouseRow - 146) / 17);
-	}
-
-	private int cursorColumnToIndex() {
-		// TODO bien convertir le curseur
-		return (int) ((mouseColumn - 240) / 17);
 	}
 
 	private void handleCancel() {
 		// Si on veut annuler le placement du mur en cours
-		// TODO Control
 		if (this.isPlacingWall()) {
 			this.setPlacingWall(false);
-			// Supprimer le mur en cours de placement de la grille du plateau
 			this.setWallPreview(null);
-			// Réinitialiser l'affichage du plateau
-			playBoard(true);
 		}
 
 		// Si on veut annuler un mur posé
-		if (this.getWall() != null) {
-			// Détecter si j'ai posé un mur sinon erreur
-			if (this.hasPlacedWall()) {
-				this.getWall().updateWall(board, Case.POTENTIALWALL);
-				this.setHasPlacedWall(false);
-			}
-			playBoard(true);
+		// Détecter si j'ai posé un mur
+		if (this.hasPlacedWall()) {
+			Wall.removeLastWall(board);
+			this.setHasPlacedWall(false);
+		}
+		
+		// Si on veut annuler un mouvement de pion
+		// Détecter si j'ai bougé un pion
+		if (hasMoved) {
+			players[this.getCurrentTurn()].getPawn().resetMove(board);
+			hasMoved = false;
 		}
 
-		// TODO Si on veut annuler le déplacement d'un pion à implémenter
+		// Réinitialiser l'affichage du plateau
+		playBoard(true);
 	}
 
 	private void handleConfirm() {
-		// Reset Wall preview
-		this.setPlacingWall(false);
-		this.setHasPlacedWall(false);
-		this.setWallPreview(null);
-		this.setWall(null);
+		if (hasPlacedWall) {
+			hasPlacedWall = false;
+			// Reset Wall preview
+			this.setPlacingWall(false);
+			this.setWallPreview(null);
 
-		// Change turn
-		this.setCurrentTurn((currentTurn + 1) % board.getPlayerNumber());
-		playBoard(true);
+			// Update wall information
+			players[currentTurn].setRemainingWall(players[currentTurn].getRemainingWall() - 1);
+
+			// Change turn
+			this.setCurrentTurn((currentTurn + 1) % board.getPlayerNumber());
+
+			playBoard(true);
+		} else if (hasMoved) {
+			hasMoved = false;
+			Pawn p = this.players[currentTurn].getPawn();
+			p.setLastPos(p.getPos());
+
+			// Change turn
+			this.setCurrentTurn((currentTurn + 1) % board.getPlayerNumber());
+			playBoard(true);
+		}
 	}
 
 	private void handleRestartButton() {
 		// Reset Wall preview
 		this.setWallPreview(null);
-		this.setWall(null);
 		this.setPlacingWall(false);
+		
+		// Reset action
 		this.setHasPlacedWall(false);
-
+		hasMoved = false;
+		
 		// Reset the game state
 		this.setCurrentTurn(0);
 		this.getBoard().initializeBoard();
+		for (int i = 0; i < this.getBoard().getPlayerNumber(); i++) {
+			players[i].getPawn().setPos(new Position(Board.STARTINGPOSITIONPLAYERS[i].getX(),Board.STARTINGPOSITIONPLAYERS[i]
+							.getY()));
+			players[i].getPawn()
+					.setPossibleMove(players[i].getPawn().possibleMove(board, players[i].getPawn().getPos()));
+		}
+		grid = updateBoard(false);
 		playBoard(true);
 	}
 
+	private void handleExitButton() {
+		// Reset Wall preview
+		this.setWallPreview(null);
+		this.setPlacingWall(false);
+		
+		// Reset action
+		this.setHasPlacedWall(false);
+		hasMoved = false;
+				
+		start(primaryStage);
+	}
 	public static void main(String[] args) {
 		launch(args);
 	}
