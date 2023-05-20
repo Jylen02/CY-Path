@@ -339,9 +339,9 @@ public class Main extends Application {
 		pane.setCenter(grid);
 		pane.setRight(action);
 		//pane.setBottom(wallContainers);
-
-		handleMove(scene, players[this.getCurrentTurn()],possibleMove);
-
+		if (canDoAction) {
+			handleMove(scene, players[this.getCurrentTurn()],possibleMove);
+		}
 
 		if (this.isPlacingWall()) {
 			StackPane wallContainer = new StackPane(this.getWallPreview());
@@ -471,13 +471,15 @@ public class Main extends Application {
 			System.out.println(position);
 			pawnMove(p,position);
 		});
-		
+		// Verifie que pos appartient grille
 		possibleCellMap.get(pos).setOnMouseClicked(e -> pawnMove(p,pos));
 	}
 	
 	private void pawnMove(Player p, Position pos) {
-		p.getPawn().move(this.board, pos);
-		grid = updateBoard();
+		if (p.getPawn().move(this.board, pos)) {
+			grid = updateBoard();
+			playBoard(false);
+		} 
 	}
 
 	private void handlePlaceWall(Scene scene, Button button) {
