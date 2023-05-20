@@ -140,12 +140,12 @@ public class Main extends Application {
 		*/
 		Media mediaMusic = new Media(new File("src/sound/tw3.mp3").toURI().toString());
 		MediaPlayer mediaPlayerMusic = new MediaPlayer(mediaMusic);
-		mediaPlayerMusic.setVolume(0.1); // Set volume at 10%
+		mediaPlayerMusic.setVolume(0.03); // Set volume at 3%
 		mediaPlayerMusic.setCycleCount(MediaPlayer.INDEFINITE); // Repetition à l'infini
 		mediaPlayerMusic.play(); //A mettre dans la methode move pour jouer le son
 		
 
-
+  
 		VBox box = new VBox(20);
 
 		Label title = createLabel("Quoridor", 140);
@@ -173,7 +173,7 @@ public class Main extends Application {
 		
 		rootPane.getChildren().add(box);
 
-		Scene scene = new Scene(rootPane, 800, 700);
+		Scene scene = new Scene(rootPane, 800, 700);  
 
 		this.primaryStage.setScene(scene);
 		this.primaryStage.sizeToScene();
@@ -182,7 +182,7 @@ public class Main extends Application {
 
 	private Button createButton(String text, int i, int j, int pixel) {
 		Button button = new Button(text);
-		button.setPrefSize(i, j);
+		button.setPrefSize(i, j);  
 		button.setStyle("-fx-font-size: " + pixel + "px;");
 		return button;
 	}
