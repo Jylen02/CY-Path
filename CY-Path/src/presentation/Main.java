@@ -476,7 +476,7 @@ public class Main extends Application {
 			int column = cursorColumnToIndex();
 			System.out.println(mouseRow + "," + mouseColumn + " : " + row + "," + column);
 			});
-		scene.setOnMouseClicked(event ->{
+		scene.setOnMouseClicked(event -> {
 			int column = cursorColumnToIndex();
 			int row = cursorRowToIndex();
 			Position position = new Position(row, column);
@@ -484,7 +484,7 @@ public class Main extends Application {
 			pawnMove(p,position);
 		});
 		// Verifie que pos appartient grille
-		possibleCellMap.get(pos).setOnMouseClicked(e -> pawnMove(p,pos));
+		//possibleCellMap.get(pos).setOnMouseClicked(e -> pawnMove(p,pos));
 	}
 	
 	private void pawnMove(Player p, Position pos) {
@@ -541,17 +541,14 @@ public class Main extends Application {
 				// Vérifier si la position du mur est valide (Case.NULL) et le placer
 				int column = cursorColumnToIndex();
 				int row = cursorRowToIndex();
-				if (row % 2 == 0 && column % 2 == 0) {
-					if (this.getBoard().getBoard()[row][column] == Case.NULL) {
-						this.getWall().setPosition(new Position(row, column));
-						this.getWall().wallError(this.getBoard(), this.getPlayers(), this.getCurrentTurn());
-						// Mettre à jour l'affichage du plateau
-						this.setPlacingWall(false);
-						this.setHasPlacedWall(true);
-						// Supprimer le mur en cours de placement de la grille du plateau
-						this.setWallPreview(null);
-						playBoard(false);
-					}
+				this.getWall().setPosition(new Position(row, column));
+				if (Wall.createWall(this.getBoard(), this.getPlayers(), this.getCurrentTurn(), this.getWall().getOrientation(), this.getWall().getPosition())){
+					// Mettre à jour l'affichage du plateau
+					this.setPlacingWall(false);
+					this.setHasPlacedWall(true);
+					// Supprimer le mur en cours de placement de la grille du plateau
+					this.setWallPreview(null);
+					playBoard(false);
 				} else {
 					Alert alert = new Alert(Alert.AlertType.INFORMATION);
 					alert.setTitle("Error");
@@ -583,12 +580,12 @@ public class Main extends Application {
 
 	private int cursorRowToIndex() {
 		// TODO bien convertir le curseur
-		return (int) ((mouseRow-225) / 16.5);
+		return (int) ((mouseRow-225) / 17);
 	}
 
 	private int cursorColumnToIndex() {
 		// TODO bien convertir le curseur
-		return (int) ((mouseColumn -128) / 16.5);
+		return (int) ((mouseColumn -128) / 17);
 	}
 
 	private void handleCancel() {
@@ -634,7 +631,6 @@ public class Main extends Application {
 		this.getBoard().initializeBoard();
 		playBoard(true);
 	}
-	
 
 	public static void main(String[] args) {
 		launch(args);
