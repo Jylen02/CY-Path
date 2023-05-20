@@ -330,13 +330,15 @@ public class Main extends Application {
 
 	private void playBoard(boolean canDoAction) {
 		Label playerTurn = createLabel(this.getPlayers()[this.getCurrentTurn()].getName() + "'s turn", 50);
-		
 		// playerTurn.setStyle("-fx-text-fill: red;");
+		
 		possibleMove = players[this.getCurrentTurn()].getPawn().possibleMove(this.board, players[this.getCurrentTurn()].getPawn().getPos());
 		
 		grid = updateBoard();
 		grid.setAlignment(Pos.CENTER);
 		
+		//possibleMove = players[this.getCurrentTurn()].getPawn().possibleMove(this.board, players[this.getCurrentTurn()].getPawn().getPos());
+				
 		Scene scene = new Scene(new BorderPane(), 800, 700);
 		
 		HBox action = actionList(scene, canDoAction);

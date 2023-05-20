@@ -70,7 +70,7 @@ public class Quoridor {
 					p.setLastPos(p.getPos());
 					break;
 				case 2:
-					p.setPos(p.getLastPos());
+					p.resetMove(board);
 					System.out.println(board);
 					roundOfPlay(board, players, turn);
 					break;
