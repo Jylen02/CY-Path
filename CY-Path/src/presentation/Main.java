@@ -14,6 +14,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
@@ -140,11 +141,21 @@ public class Main extends Application {
 		*/
 		Media mediaMusic = new Media(new File("src/sound/tw3.mp3").toURI().toString());
 		MediaPlayer mediaPlayerMusic = new MediaPlayer(mediaMusic);
+		
+		Label volumeLabel = createLabel("Volume", 40);
+		
+		Slider volumeSlider = new Slider();
+		volumeSlider.setMin(0);
+		volumeSlider.setMax(1);
+		mediaPlayerMusic.volumeProperty().bindBidirectional(volumeSlider.valueProperty());
+		
 		mediaPlayerMusic.setVolume(0.03); // Set volume at 3%
 		mediaPlayerMusic.setCycleCount(MediaPlayer.INDEFINITE); // Repetition à l'infini
 		mediaPlayerMusic.play(); //A mettre dans la methode move pour jouer le son
 		
-
+		HBox sliderContainer = new HBox(10);
+        sliderContainer.setAlignment(Pos.CENTER);
+        sliderContainer.getChildren().addAll(volumeSlider, volumeLabel);
   
 		VBox box = new VBox(20);
 
@@ -161,6 +172,7 @@ public class Main extends Application {
 
 		box.getChildren().addAll(title, play, rules, exit);
 		box.setAlignment(Pos.CENTER);
+		box.getChildren().add(sliderContainer);
 		
 		Image backgroundImage = new Image("image/wallpaper.jpg");
         BackgroundSize backgroundSize = new BackgroundSize(800, 700, true, true, true, true);
