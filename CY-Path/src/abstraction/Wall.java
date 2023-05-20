@@ -6,12 +6,12 @@ package abstraction;
 public class Wall {
 
 	/**
-	 * The orientation of the wall
+	 * The orientation of the wall.
 	 */
 	private Orientation orientation;
 
 	/**
-	 * The current position of the middle of the wall
+	 * The current position of the middle of the wall.
 	 */
 	private Position position;
 
@@ -154,18 +154,18 @@ public class Wall {
 	 * 
 	 * @param board   The game board.
 	 * @param players Array of players in the game.
-	 * @param turn    The current turn number.+
+	 * @param turn    The current turn number.
 	 * @return true if the wall blocked a player, false otherwise.
 	 */
 	public boolean wallError(Board board, Player[] players, Integer turn) {
 		for (int i = 0; i < players.length; i++) {
 			players[i].getPawn()
-					.setPossibleDestination(players[i].getPawn().possibleMove(board, players[i].getPawn().getPos()));
+					.setPossibleMove(players[i].getPawn().possibleMove(board, players[i].getPawn().getPos()));
 		}
 		if (!board.isWinnableForAll(players)) {
 			this.updateWall(board, Case.POTENTIALWALL);
 			for (int i = 0; i < players.length; i++) {
-				players[i].getPawn().setPossibleDestination(
+				players[i].getPawn().setPossibleMove(
 						players[i].getPawn().possibleMove(board, players[i].getPawn().getPos()));
 			}
 			return true;
@@ -173,6 +173,15 @@ public class Wall {
 		return false;
 	}
 
+	/**
+	 * Removes the last wall placed.
+	 *
+	 * @param board       The game board.
+	 */
+	public static void removeLastWall(Board board) {
+		board.getLastWall().updateWall(board, Case.POTENTIALWALL);
+	}
+	
 	/**
 	 * Creates the wall and verifies if it blocks a player's winning path using
 	 * depth-first search.
@@ -192,7 +201,7 @@ public class Wall {
 			if (wall.wallError(board, players, turn)) {
 				return false;
 			}
-			;
+			board.setLastWall(wall);
 			return true;
 		} else {
 			return false;

@@ -78,27 +78,31 @@
 12. IHM : Choix icone pour chaque joueur + Icone de l'application (Durée estimée : 1h) : A Faire
 Mettre le tout dans un dossier + sélection en ouvrant l'explorateur de fichier
 
---13. IHM : Affichage plateau (Durée : 1h) : Terminé - Christophe, Noaman, Warren 
+13. IHM : Affichage plateau (Durée : 1h) : Terminé - Christophe, Noaman, Warren 
 --13.1. Message : "Tour du joueur ..."
 --13.2. Bouton exit -> Retour au menu
---13.3. Bouton Restart -> Recommence la partie
+13.3. Bouton Restart -> Recommence la partie : A Faire à la fin
 --13.4. Bouton wall pour récuperer un mur (transparent suivant le curseur)
---13.5. Bouton cancel -> Annule l'action en cours (poser un mur/ bouger pion)
---13.6. Bouton confirm -> Confirmer l'action effectué -> passer au prochain joueur
-			ajouter vérification action effectué !
+13.5. Bouton cancel -> Annule l'action en cours (poser un mur/ bouger pion) : A Faire à la fin
+        Modifier structure de la classe pour annuler la dernière action (Durée : 1h30) - Terminé - Christophe, Jeremy 
+13.6. Bouton confirm -> Confirmer l'action effectué -> passer au prochain joueur : A Faire à la fin
+			ajouter vérification action effectué ! (attribut)
 
 14. IHM : Fonctionnalités pion
-14.1. Voir déplacement possible (Durée : 1h) : A modifier - Abd-Ennour
-14.2. Bouger pion (Durée estimée : 1h) : A Faire
-14.3. Verifier si un joueur à gagner -> message (Durée estimée : 10min) : A Faire
+--14.1. Voir déplacement possible (Durée : 1h) : Terminé - Abd-Ennour
+14.2. Bouger pion (Durée estimée : 1h - Durée : 1h) : En Cours - Abd-Ennour, Noaman
+      Problème actualisation des mouvements possibles 
+--14.3. Verifier si un joueur à gagner -> message (Durée estimée : 10min - Durée : 15min) : Terminé - Abd-Ennour, 
 
 15. IHM : Fonctionnalités murs
---15.1. Prévisualiser un mur transparent (Durée : 1h) : Terminé - Christophe
+--15.1. Prévisualiser un mur transparent (Durée : 2h) : Problème technique - Christophe
 --15.2. Ne plus pouvoir cliquer sur le bouton pour récuperer un mur si on le possède déjà (Durée : 10min) : Terminé - Jeremy
-15.3. Curseur souris -> index (Durée estimée : 2h) : En Cours - Christophe
+--15.3. Curseur souris -> index (Durée estimée : 2h - Durée : 2h) : Annulé - Christophe
 --15.4. Tourner le mur (clic droit) (Durée estimée : 20min - Durée estimée : 10min) : Terminé - Christophe
 15.5. Poser mur (Durée estimée : 30min) : A Faire
 
 16. IHM : Fonctionnalités
-16.1. Ajouter un bruit à chaque fois qu'on bouge un pion ou mur (Durée estimée : 20min) : A Faire
-16.2. Musique de fond (menu ?)
+16.1. Pouvoir cliquer sur les cases du plateau pour effectuer l'action (Durée : 3h) : En Cours - Abd-Ennour
+16.2. Ajouter un bruit à chaque fois qu'on bouge un pion ou mur (Durée estimée : 20min - Durée : 30min) : Quasi Terminé - Noaman, Warren
+--16.3. Musique de fond (Durée : 40min ): Terminé - Noaman, Warren
+        Bouton à mettre en attribut

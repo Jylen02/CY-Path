@@ -4,9 +4,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Represents the game board for the game. It contains the board
- * layout, player and wall count, and various methods for manipulating the
- * board.
+ * Represents the game board for the game. It contains the board layout, player
+ * and wall count, and various methods for manipulating the board.
  */
 public class Board {
 
@@ -21,6 +20,11 @@ public class Board {
 	private int playerNumber;
 
 	/**
+	 * The last wall placed on the board.
+	 */
+	private Wall lastWall;
+
+	/**
 	 * The size of the board.
 	 */
 	public static final int SIZE = 19;
@@ -29,6 +33,13 @@ public class Board {
 	 * The number of walls that can be placed on the board in total.
 	 */
 	public static final int MAXWALLCOUNT = 20;
+
+	/**
+	 * The starting position of each player.
+	 */
+	public static final Position[] STARTINGPOSITIONPLAYERS = { new Position(Board.SIZE - 2, Board.SIZE / 2),
+			new Position(1, Board.SIZE / 2), new Position(Board.SIZE / 2, 1),
+			new Position(Board.SIZE / 2, Board.SIZE - 2) };
 
 	/**
 	 * Constructs a Board object with the specified player number.
@@ -40,6 +51,11 @@ public class Board {
 		initializeBoard();
 	}
 
+	/**
+	 * Return the board layout.
+	 *
+	 * @return The board layout.
+	 */
 	public Case[][] getBoard() {
 		return board;
 	}
@@ -69,6 +85,24 @@ public class Board {
 	 */
 	public void setPlayerNumber(int playerNumber) {
 		this.playerNumber = playerNumber;
+	}
+
+	/**
+	 * Returns the last wall placed.
+	 *
+	 * @return The last wall placed.
+	 */
+	public Wall getLastWall() {
+		return lastWall;
+	}
+
+	/**
+	 * Sets the last wall placed.
+	 *
+	 * @param lastWall the last wall placed.
+	 */
+	public void setLastWall(Wall lastWall) {
+		this.lastWall = lastWall;
 	}
 
 	/**
@@ -124,14 +158,12 @@ public class Board {
 				}
 			}
 		}
-		if (getPlayerNumber() >= 2) {
-			// Set the two first player's pawn placement
-			getBoard()[SIZE - 2][SIZE / 2] = Case.PLAYER1;
-			getBoard()[1][SIZE / 2] = Case.PLAYER2;
-			if (getPlayerNumber() == 4) {
-				// Set the two others player's pawn placement
-				getBoard()[SIZE / 2][1] = Case.PLAYER3;
-				getBoard()[SIZE / 2][SIZE - 2] = Case.PLAYER4;
+		for (int i = 0; i < this.getPlayerNumber(); i++) {
+			for (Case value : Case.values()) {
+				if (value.getValue() == i + 1) {
+					this.getBoard()[Board.STARTINGPOSITIONPLAYERS[i].getX()][Board.STARTINGPOSITIONPLAYERS[i]
+							.getY()] = value;
+				}
 			}
 		}
 	}
@@ -142,7 +174,6 @@ public class Board {
 	 *
 	 * @return A string representation of the current board.
 	 */
-
 	@Override
 	public String toString() {
 		String res = "   ";
@@ -218,8 +249,8 @@ public class Board {
 	public boolean isWinnable(Pawn player) {
 		Set<Position> marking = new HashSet<Position>();
 		marking.add(player.getPos());
-		for (Position pos : player.getPossibleDestination()) {
-			marking = this.dfs(pos, player, marking, player.getPossibleDestination());
+		for (Position pos : player.getPossibleMove()) {
+			marking = this.dfs(pos, player, marking, player.getPossibleMove());
 		}
 		for (Position pos : player.getFinishLine()) {
 			if (marking.contains(pos)) {
@@ -236,16 +267,16 @@ public class Board {
 	 * @param player              The player for whom to perform the DFS.
 	 * @param marking             A set of positions marking the nodes visited
 	 *                            during the DFS.
-	 * @param possibleDestination The set of Positions representing the possible
-	 *                            destinations for the Pawn.
+	 * @param possibleMove 		  The set of Positions representing the possible
+	 *                            moves for the Pawn.
 	 * @return The updated marking set after performing the DFS.
 	 */
-	public Set<Position> dfs(Position pos, Pawn player, Set<Position> marking, Set<Position> possibleDestination) {
+	public Set<Position> dfs(Position pos, Pawn player, Set<Position> marking, Set<Position> possibleMove) {
 		if (!marking.contains(pos)) {
 			marking.add(pos);
-			possibleDestination = player.possibleMove(this, pos);
-			for (Position pos1 : possibleDestination) {
-				marking = this.dfs(pos1, player, marking, possibleDestination);
+			possibleMove = player.possibleMove(this, pos);
+			for (Position pos1 : possibleMove) {
+				marking = this.dfs(pos1, player, marking, possibleMove);
 			}
 		}
 		return marking;
