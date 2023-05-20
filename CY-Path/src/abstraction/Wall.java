@@ -7,12 +7,12 @@ public class Wall {
 
 	// private final int HEIGHT = 2;
 	/**
-	 * The orientation of the wall
+	 * The orientation of the wall.
 	 */
 	private Orientation orientation;
 
 	/**
-	 * The current position of the middle of the wall
+	 * The current position of the middle of the wall.
 	 */
 	private Position position;
 
@@ -155,7 +155,7 @@ public class Wall {
 	 * 
 	 * @param board   The game board.
 	 * @param players Array of players in the game.
-	 * @param turn    The current turn number.+
+	 * @param turn    The current turn number.
 	 * @return true if the wall blocked a player, false otherwise.
 	 */
 	public boolean wallError(Board board, Player[] players, Integer turn) {

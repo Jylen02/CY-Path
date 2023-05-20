@@ -6,7 +6,13 @@ import java.util.Scanner;
  * The main class for running the game.
  */
 public class Quoridor {
-
+	
+	/**
+	  * Prompts the user to enter the coordinates of a position and returns that position.
+	 *
+	 * @param s 	The Scanner used for reading user input.
+	 * @return The Position created from the entered coordinates.
+	 */
 	public static Position enterPosition(Scanner s) {
 		System.out.println("Please enter the coordinates : ");
 		System.out.print("row = ");
@@ -15,7 +21,16 @@ public class Quoridor {
 		int column = s.nextInt();
 		return new Position(row, column);
 	}
-
+	
+	/**
+	 * Prompts the user for confirmation of an action and performs the corresponding action based on the input.
+	 *
+	 * @param s        The Scanner used for reading user input.
+	 * @param action   The action to be confirmed.
+	 * @param board    The game board.
+	 * @param players  An array of Player objects representing the players in the game.
+	 * @param turn     The current player's turn.
+	 */
 	public static void confirmation(Scanner s, int action, Board board, Player[] players, Integer turn) {
 		int confirm = 0;
 		Pawn p = players[turn].getPawn();
@@ -48,6 +63,16 @@ public class Quoridor {
 		}
 	}
 
+	/**
+	 * Places a wall on the game board at the specified position and orientation.
+	 *
+	 * @param board       	The game board.
+	 * @param players     	An array of Player objects representing the players in the game.
+	 * @param turn        	The current player's turn.
+	 * @param position    	The position where the wall is to be placed.
+	 * @param orientation 	The orientation of the wall.
+	 * @return true if the wall is successfully placed, false otherwise.
+	 */
 	public static boolean placeWall(Board board, Player[] players, Integer turn, Position position,
 			Orientation orientation) {
 		if (!Wall.createWall(board, players, turn, orientation, position)) {

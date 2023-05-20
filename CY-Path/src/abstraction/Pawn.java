@@ -19,7 +19,7 @@ public class Pawn {
 	private Position lastPos;
 
 	/**
-	 * The set of possible destinations for this pawn.
+	 * The set of possible moves for this pawn.
 	 */
 	private Set<Position> possibleMove;
 
@@ -57,10 +57,20 @@ public class Pawn {
 		return pos;
 	}
 
+	/**
+	 * Returns the last position of the pawn.
+	 *
+	 * @return The last position of the pawn.
+	 */
 	public Position getLastPos() {
 		return lastPos;
 	}
-
+	
+	/**
+	 * Sets the last position of the pawn.
+	 *
+	 * @param lastPos The last position of the pawn.
+	 */
 	public void setLastPos(Position lastPos) {
 		this.lastPos = lastPos;
 	}
@@ -102,34 +112,65 @@ public class Pawn {
 	}
 
 	/**
-	 * Returns the possible destinations for this pawn.
+	 * Returns the possible moves for this pawn.
 	 *
-	 * @return The set of possible destinations.
+	 * @return The set of possible moves.
 	 */
 	public Set<Position> getPossibleMove() {
 		return this.possibleMove;
 	}
 
 	/**
-	 * Sets the possible destinations for the Pawn.
+	 * Sets the possible moves for the Pawn.
 	 *
-	 * @param possibleMove A set of Positions representing the possible
-	 *                            destinations for the Pawn.
+	 * @param possibleMove A set of Positions representing the possible moves
+	 *                     for the Pawn.
 	 */
 	public void setPossibleMove(Set<Position> possibleMove) {
 		this.possibleMove = possibleMove;
 	}
 
 	/**
+	 * Determines the finish line for this pawn based on the associated player.
+	 */
+	public void finishLine() {
+		this.setFinishLine(new HashSet<Position>());
+		switch (this.playerNb) {
+		case PLAYER1:
+			for (int j = 1; j < Board.SIZE; j += 2) {
+				this.getFinishLine().add(new Position(1, j));
+			}
+			break;
+		case PLAYER2:
+			for (int j = 1; j < Board.SIZE; j += 2) {
+				this.getFinishLine().add(new Position(Board.SIZE - 2, j));
+			}
+			break;
+		case PLAYER3:
+			for (int i = 1; i < Board.SIZE; i += 2) {
+				this.getFinishLine().add(new Position(i, Board.SIZE - 2));
+			}
+			break;
+		case PLAYER4:
+			for (int i = 1; i < Board.SIZE; i += 2) {
+				this.getFinishLine().add(new Position(i, 1));
+			}
+			break;
+		default:
+			break;
+		}
+	}
+
+	/**
 	 * Moves the pawn towards the top, if possible. Checks the potential wall and
-	 * the next case in the board. Adds the new position to possible destinations if
+	 * the next case in the board. Adds the new position to possible moves if
 	 * it is empty or triggers a special move.
 	 *
-	 * @param board               The game board.
-	 * @param possibleMove The set of Positions representing the possible
-	 *                            destinations for the Pawn.
-	 * @param pos                 The current position of the pawn.
-	 * @param canSpecialMove      Indicates if it can do a special move or not.
+	 * @param board          The game board.
+	 * @param possibleMove   The set of Positions representing the possible
+	 *                       moves for the Pawn.
+	 * @param pos            The current position of the pawn.
+	 * @param canSpecialMove Indicates if it can do a special move or not.
 	 */
 	public void topMove(Board board, Set<Position> possibleMove, Position pos, Boolean canSpecialMove) {
 		if (board.getBoard()[pos.getX() - 1][pos.getY()] == Case.POTENTIALWALL) {
@@ -145,14 +186,14 @@ public class Pawn {
 
 	/**
 	 * Moves the pawn towards the right, if possible. Checks the potential wall and
-	 * the next case in the board. Adds the new position to possible destinations if
+	 * the next case in the board. Adds the new position to possible moves if
 	 * it is empty or triggers a special move.
 	 *
-	 * @param board               The game board.
-	 * @param possibleMove The set of Positions representing the possible
-	 *                            destinations for the Pawn.
-	 * @param pos                 The current position of the pawn.
-	 * @param canSpecialMove      Indicates if it can do a special move or not.
+	 * @param board          The game board.
+	 * @param possibleMove   The set of Positions representing the possible
+	 *                       moves for the Pawn.
+	 * @param pos            The current position of the pawn.
+	 * @param canSpecialMove Indicates if it can do a special move or not.
 	 */
 	public void rightMove(Board board, Set<Position> possibleMove, Position pos, Boolean canSpecialMove) {
 		if (board.getBoard()[pos.getX()][pos.getY() + 1] == Case.POTENTIALWALL) {
@@ -168,14 +209,14 @@ public class Pawn {
 
 	/**
 	 * Moves the pawn towards the bottom, if possible. Checks the potential wall and
-	 * the next case in the board. Adds the new position to possible destinations if
+	 * the next case in the board. Adds the new position to possible moves if
 	 * it is empty or triggers a special move.
 	 *
-	 * @param board               The game board.
-	 * @param possibleMove The set of Positions representing the possible
-	 *                            destinations for the Pawn.
-	 * @param pos                 The current position of the pawn.
-	 * @param canSpecialMove      Indicates if it can do a special move or not.
+	 * @param board          The game board.
+	 * @param possibleMove   The set of Positions representing the possible
+	 *                       moves for the Pawn.
+	 * @param pos            The current position of the pawn.
+	 * @param canSpecialMove Indicates if it can do a special move or not.
 	 */
 	public void botMove(Board board, Set<Position> possibleMove, Position pos, Boolean canSpecialMove) {
 		if (board.getBoard()[pos.getX() + 1][pos.getY()] == Case.POTENTIALWALL) {
@@ -191,14 +232,14 @@ public class Pawn {
 
 	/**
 	 * Moves the pawn towards the left, if possible. Checks the potential wall and
-	 * the next case in the board. Adds the new position to possible destinations if
+	 * the next case in the board. Adds the new position to possible moves if
 	 * it is empty or triggers a special move.
 	 *
-	 * @param board               The game board.
-	 * @param possibleMove The set of Positions representing the possible
-	 *                            destinations for the Pawn.
-	 * @param pos                 The current position of the pawn.
-	 * @param canSpecialMove      Indicates if it can do a special move or not.
+	 * @param board          The game board.
+	 * @param possibleMove   The set of Positions representing the possible
+	 *                       moves for the Pawn.
+	 * @param pos            The current position of the pawn.
+	 * @param canSpecialMove Indicates if it can do a special move or not.
 	 */
 	public void leftMove(Board board, Set<Position> possibleMove, Position pos, Boolean canSpecialMove) {
 		if (board.getBoard()[pos.getX()][pos.getY() - 1] == Case.POTENTIALWALL) {
@@ -216,11 +257,11 @@ public class Pawn {
 	 * Performs a special move depending on the specified movement direction. Checks
 	 * the potential wall and triggers appropriate move or other moves.
 	 *
-	 * @param board               The game board.
+	 * @param board        The game board.
 	 * @param possibleMove The set of Positions representing the possible
-	 *                            destinations for the Pawn.
-	 * @param pos                 The current position of the pawn.
-	 * @param m                   The specified movement direction.
+	 *                     moves for the Pawn.
+	 * @param pos          The current position of the pawn.
+	 * @param m            The specified movement direction.
 	 */
 	public void specialMove(Board board, Set<Position> possibleMove, Position pos, Movement m) {
 		switch (m) {
@@ -268,7 +309,7 @@ public class Pawn {
 	 *
 	 * @param board The current state of the game board.
 	 * @param pos   The position from which to calculate possible moves.
-	 * @return The set of Positions representing the possible destinations for the
+	 * @return The set of Positions representing the possible moves for the
 	 *         Pawn.
 	 */
 	public Set<Position> possibleMove(Board board, Position pos) {
@@ -280,6 +321,12 @@ public class Pawn {
 		return possibleMove;
 	}
 
+	/**
+	 * Update the player's position.
+	 *
+	 * @param board The current state of the game board.
+	 * @param pos   The new player's position.
+	 */
 	public void updatePos(Board board, Position pos) {
 		board.getBoard()[this.getPos().getX()][this.getPos().getY()] = Case.EMPTY;
 		this.setPos(pos);
@@ -288,54 +335,28 @@ public class Pawn {
 	}
 
 	/**
-	 * Moves a player to a new position on the board.
+	 * If possible, moves a player to a new position on the board.
 	 *
 	 * @param board The game board.
 	 * @param pos   The new position for the player.
-	 * @return true if the move has been made, false otherwise
+	 * @return true if the move has been made, false otherwise.
 	 */
 	public boolean move(Board board, Position pos) {
 		if (this.getPossibleMove().contains(pos)) {
-			this.updatePos(board,pos);
+			this.updatePos(board, pos);
 			return true;
 		} else {
 			return false;
 		}
 	}
-
-	public void resetMove(Board board) {
-		this.updatePos(board,this.getLastPos());
-	}
-
+	
 	/**
-	 * Determines the finish line for this pawn based on the associated player.
+	 * Resets the current player's move on the game board, restoring their position to the last recorded position.
+	 *
+	 * @param board The game board.
 	 */
-	public void finishLine() {
-		this.setFinishLine(new HashSet<Position>());
-		switch (this.playerNb) {
-		case PLAYER1:
-			for (int j = 1; j < Board.SIZE; j += 2) {
-				this.getFinishLine().add(new Position(1, j));
-			}
-			break;
-		case PLAYER2:
-			for (int j = 1; j < Board.SIZE; j += 2) {
-				this.getFinishLine().add(new Position(Board.SIZE - 2, j));
-			}
-			break;
-		case PLAYER3:
-			for (int i = 1; i < Board.SIZE; i += 2) {
-				this.getFinishLine().add(new Position(i, Board.SIZE - 2));
-			}
-			break;
-		case PLAYER4:
-			for (int i = 1; i < Board.SIZE; i += 2) {
-				this.getFinishLine().add(new Position(i, 1));
-			}
-			break;
-		default:
-			break;
-		}
+	public void resetMove(Board board) {
+		this.updatePos(board, this.getLastPos());
 	}
 
 	/**

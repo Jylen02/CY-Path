@@ -72,7 +72,7 @@ public class Player {
 	/**
 	 * Sets the number of wall remaining.
 	 *
-	 * @param name The new player's name.
+	 * @param remainingWall The new player's name.
 	 */
 	public void setRemainingWall(int remainingWall) {
 		this.remainingWall = remainingWall;
