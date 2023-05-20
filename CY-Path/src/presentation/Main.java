@@ -2,6 +2,7 @@ package presentation;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.io.File;
 import java.util.Set;
 
 import abstraction.*;
@@ -16,11 +17,18 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
@@ -49,6 +57,8 @@ public class Main extends Application {
 	private boolean hasPlacedWall;
 	private int mouseColumn;
 	private int mouseRow;
+    private StackPane rootPane;
+	private Background background;
 
 	// Getters & Setters
 	public Board getBoard() {
@@ -110,7 +120,8 @@ public class Main extends Application {
 	public void setWall(Wall wall) {
 		this.wall = wall;
 	}
-
+	
+	
 	@Override
 	public void start(Stage primaryStage) {
 		this.primaryStage = primaryStage;
@@ -119,6 +130,21 @@ public class Main extends Application {
 
 		Image icon = new Image("image/dikdik.png"); // Icon of the application
 		this.primaryStage.getIcons().add(icon);
+		
+		/*	Deplacement des pions
+		Media mediaPawnMove = new Media(new File("src/sound/move.mp3").toURI().toString());
+		MediaPlayer mediaPlayerPawnMove = new MediaPlayer(mediaPawnMove);
+		mediaPlayerPawnMove.setVolume(0.5); // Set volume at 50%
+		mediaPlayerPawnMove.setCycleCount(1); // To repeat the sound 1 time
+		mediaPlayerPawnMove.play(); //A mettre dans la methode move pour jouer le son
+		*/
+		Media mediaMusic = new Media(new File("src/sound/tw3.mp3").toURI().toString());
+		MediaPlayer mediaPlayerMusic = new MediaPlayer(mediaMusic);
+		mediaPlayerMusic.setVolume(0.1); // Set volume at 10%
+		mediaPlayerMusic.setCycleCount(MediaPlayer.INDEFINITE); // Repetition à l'infini
+		mediaPlayerMusic.play(); //A mettre dans la methode move pour jouer le son
+		
+
 
 		VBox box = new VBox(20);
 
@@ -135,8 +161,19 @@ public class Main extends Application {
 
 		box.getChildren().addAll(title, play, rules, exit);
 		box.setAlignment(Pos.CENTER);
+		
+		Image backgroundImage = new Image("image/wallpaper.jpg");
+        BackgroundSize backgroundSize = new BackgroundSize(800, 700, true, true, true, true);
+        BackgroundImage backgroundImg = new BackgroundImage(backgroundImage, BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
+        background = new Background(backgroundImg);
 
-		Scene scene = new Scene(box, 800, 700);
+        rootPane = new StackPane();
+        rootPane.setBackground(background);
+		
+		rootPane.getChildren().add(box);
+
+		Scene scene = new Scene(rootPane, 800, 700);
 
 		this.primaryStage.setScene(scene);
 		this.primaryStage.sizeToScene();
@@ -177,7 +214,10 @@ public class Main extends Application {
 
 		VBox box = new VBox(title, listOfRules, back);
 		box.setAlignment(Pos.CENTER);
-
+		
+		/*rootPane = new StackPane();
+        rootPane.setBackground(background);
+		rootPane.getChildren().add(box);*/
 		Scene scene = new Scene(box, 800, 700);
 
 		this.primaryStage.setScene(scene);
@@ -209,7 +249,10 @@ public class Main extends Application {
 
 		box.getChildren().addAll(title, label, twoPlayer, fourPlayer, back);
 		box.setAlignment(Pos.CENTER);
-
+		/*
+		rootPane = new StackPane();
+        rootPane.setBackground(background);
+		rootPane.getChildren().add(box); */
 		Scene scene = new Scene(box, 800, 700);
 
 		this.primaryStage.setScene(scene);
@@ -568,6 +611,7 @@ public class Main extends Application {
 		this.getBoard().initializeBoard();
 		playBoard(true);
 	}
+	
 
 	public static void main(String[] args) {
 		launch(args);
