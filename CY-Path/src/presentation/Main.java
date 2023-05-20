@@ -1,5 +1,7 @@
 package presentation;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Set;
 
 import abstraction.*;
@@ -37,6 +39,8 @@ public class Main extends Application {
 	// A enlever (récupérer dans players[i].getPawn())
 	private Set<Position> possibleMove;
 	private Position pos;
+	//private Set<Position> possibleCell;
+	private LinkedHashMap<Position,Rectangle> possibleCellMap = new LinkedHashMap<Position,Rectangle>();
 
 	// PlaceWall information
 	private Wall wall;
@@ -277,12 +281,12 @@ public class Main extends Application {
 	private void playBoard(boolean canDoAction) {
 		Label playerTurn = createLabel(this.getPlayers()[this.getCurrentTurn()].getName() + "'s turn", 50);
 		// playerTurn.setStyle("-fx-text-fill: red;");
-		possibleMove = players[this.getCurrentTurn()].getPawn().possibleMove(this.board,
-				players[this.getCurrentTurn()].getPawn().getPos());
-
+		possibleMove = players[this.getCurrentTurn()].getPawn().possibleMove(this.board, players[this.getCurrentTurn()].getPawn().getPos());
+		
 		grid = updateBoard();
+		handleMove(players[this.getCurrentTurn()],possibleMove);
 		Scene scene = new Scene(new BorderPane(), 800, 700);
-
+		
 		VBox action = actionList(scene, canDoAction);
 
 		BorderPane pane = new BorderPane();
@@ -312,7 +316,7 @@ public class Main extends Application {
 
 		Button restart = createButton("Restart", 100, 50, 20);
 		restart.setOnAction(e -> handleRestartButton());
-
+		
 		Button wall = createButton("Wall --", 100, 50, 20);
 		wall.setOnAction(e -> handlePlaceWall(scene, wall));
 		if (!canDoAction) {
@@ -338,7 +342,7 @@ public class Main extends Application {
 
 	private GridPane updateBoard() {
 		GridPane grid = new GridPane();
-
+		possibleCellMap.clear();
 		for (int row = 0; row < Board.SIZE; row++) {
 			for (int col = 0; col < Board.SIZE; col++) {
 				pos = new Position(row, col);
@@ -378,6 +382,7 @@ public class Main extends Application {
 				} else {
 					cell = new Rectangle(30, 30);
 					if (possibleMove.contains(pos)) {
+						possibleCellMap.put(pos,this.cell);
 						switch (this.getCurrentTurn()) {
 						case 0:
 							this.cell.setFill(Color.LIGHTBLUE);
@@ -392,6 +397,8 @@ public class Main extends Application {
 							this.cell.setFill(Color.LIGHTGOLDENRODYELLOW);
 							break;
 						}
+						
+						
 					} else {
 						this.cell.setFill(Color.WHITE);
 					}
@@ -403,8 +410,21 @@ public class Main extends Application {
 		return grid;
 	}
 
-	private void handleMove() {
-		// TODO: Implement the logic for handling the Move click
+	private void handleMove(Player p, Set<Position> possibleMove) {
+		boolean verif =false;
+		for (Position element : possibleMove) {
+		    if(verif ==false) {
+		    	possibleCellMap.get(element).setOnMouseClicked(event -> pawnMove(p,element));
+		    	verif=true;
+		    	
+		    }
+		}
+		
+		
+		}
+	private void pawnMove(Player p, Position ppp) {
+		p.getPawn().move(this.board, ppp);
+		grid = updateBoard();
 	}
 
 	private void handlePlaceWall(Scene scene, Button button) {
