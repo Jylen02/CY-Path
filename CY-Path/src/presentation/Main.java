@@ -154,7 +154,7 @@ public class Main extends Application {
 		
 		HBox sliderContainer = new HBox(10);
         sliderContainer.setAlignment(Pos.CENTER);
-        sliderContainer.getChildren().addAll(volumeSlider, volumeLabel);
+        sliderContainer.getChildren().addAll(volumeLabel, volumeSlider);
   
 		VBox box = new VBox(20);
 
@@ -345,19 +345,16 @@ public class Main extends Application {
 		
 		HBox action = actionList(scene, canDoAction);
 		
-Label volumeLabel = createLabel("Volume", 40);
+		Label volumeLabel = createLabel("Volume", 40);
 		
-		Slider volumeSlider = new Slider();
-		volumeSlider.setMin(0);
-		volumeSlider.setMax(1);
-		mediaPlayerMusic.volumeProperty().bindBidirectional(volumeSlider.valueProperty());
+		Slider volumeSlider = new Slider(0, 0.1, 0.05);
 		
 		HBox sliderContainer = new HBox(10);
+        sliderContainer.getChildren().addAll(volumeLabel, volumeSlider);
         sliderContainer.setAlignment(Pos.CENTER);
-        sliderContainer.getChildren().addAll(volumeSlider, volumeLabel);
         
 		VBox box = new VBox(50);
-		box.getChildren().addAll(playerTurn, grid, action); 
+		box.getChildren().addAll(playerTurn, grid, action, sliderContainer); 
 		box.setAlignment(Pos.CENTER);
 		/*BorderPane pane = new BorderPane();
 		pane.setTop(playerTurn);
