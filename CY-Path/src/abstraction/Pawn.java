@@ -162,147 +162,108 @@ public class Pawn {
 	}
 
 	/**
-	 * Moves the pawn towards the top, if possible. Checks the potential wall and
-	 * the next case in the board. Adds the new position to possible moves if
-	 * it is empty or triggers a special move.
+	 * Move the pawn in a given direction on the board.
+	 * If the new position is valid and corresponds to a potential wall,
+	 * the movement is performed by adding the new position to the set of possible moves.
+	 * If the square is occupied and special movement is allowed, the specialMove method is called.
 	 *
-	 * @param board          The game board.
-	 * @param possibleMove   The set of Positions representing the possible
-	 *                       moves for the Pawn.
-	 * @param pos            The current position of the pawn.
-	 * @param canSpecialMove Indicates if it can do a special move or not.
+	 * @param board           The game board.
+	 * @param possibleMove    The set of possible moves.
+	 * @param pos             The current position of the pawn.
+	 * @param canSpecialMove  Indicates whether special movement is allowed.
+	 * @param offsetX         The horizontal offset for the movement.
+	 * @param offsetY         The vertical offset for the movement.
 	 */
-	public void topMove(Board board, Set<Position> possibleMove, Position pos, Boolean canSpecialMove) {
-		if (board.getBoard()[pos.getX() - 1][pos.getY()] == Case.POTENTIALWALL) {
-			if (board.getBoard()[pos.getX() - 2][pos.getY()] == Case.EMPTY) {
-				possibleMove.add(new Position(pos.getX() - 2, pos.getY()));
-			} else {
-				if (canSpecialMove) {
-					specialMove(board, possibleMove, new Position(pos.getX() - 2, pos.getY()), Movement.TOP);
-				}
-			}
-		}
-	}
+	private void directionMove(Board board, Set<Position> possibleMove, Position pos, boolean canSpecialMove, int offsetX, int offsetY) {
+        int newX = pos.getX() + offsetX;
+        int newY = pos.getY() + offsetY;
 
+        // Vérifies if the new position is out of the grid
+        if (newX >= 1 && newX <= 17 && newY >= 1 && newY <= 17) {
+            Position newPosition = new Position(newX, newY);
+            if (board.getBoard()[newPosition.getX()-(offsetX / 2)][newPosition.getY()- (offsetY /2)] == Case.POTENTIALWALL) {
+                    if (board.getBoard()[newPosition.getX()][newPosition.getY()] == Case.EMPTY) {
+                        possibleMove.add(newPosition);
+                    } else if (canSpecialMove) {
+                        specialMove(board, possibleMove, newPosition, offsetX, offsetY);
+                    }
+            }
+        }
+    }
+	
 	/**
-	 * Moves the pawn towards the right, if possible. Checks the potential wall and
-	 * the next case in the board. Adds the new position to possible moves if
-	 * it is empty or triggers a special move.
+	 * Perform a special movement based on the given horizontal and vertical offsets.
+	 * If a potential wall is present in the specified direction, the directionMove method is called
+	 * to perform the movement in that direction. Otherwise, movements in the left and right directions
+	 * are performed by calling the directionMove method.
 	 *
-	 * @param board          The game board.
-	 * @param possibleMove   The set of Positions representing the possible
-	 *                       moves for the Pawn.
-	 * @param pos            The current position of the pawn.
-	 * @param canSpecialMove Indicates if it can do a special move or not.
+	 * @param board           The game board.
+	 * @param possibleMove    The set of possible moves.
+	 * @param pos             The current position of the pawn.
+	 * @param offsetX         The horizontal offset for the movement.
+	 * @param offsetY         The vertical offset for the movement.
 	 */
-	public void rightMove(Board board, Set<Position> possibleMove, Position pos, Boolean canSpecialMove) {
-		if (board.getBoard()[pos.getX()][pos.getY() + 1] == Case.POTENTIALWALL) {
-			if (board.getBoard()[pos.getX()][pos.getY() + 2] == Case.EMPTY) {
-				possibleMove.add(new Position(pos.getX(), pos.getY() + 2));
-			} else {
-				if (canSpecialMove) {
-					specialMove(board, possibleMove, new Position(pos.getX(), pos.getY() + 2), Movement.RIGHT);
-				}
-			}
-		}
+	private void specialMove(Board board, Set<Position> possibleMove, Position pos, int offsetX, int offsetY) {
+		String combined = offsetX+"_"+offsetY;
+		/* to use the switch depending on the two variables */
+	    switch (combined) {
+	        case "-2_0":
+	            if (isPotentialWall(board, pos, -2, 0)) {
+	                directionMove(board, possibleMove, pos, false,-2,0);
+	            } else {
+	            	 directionMove(board, possibleMove, pos, false,0,-2);
+	            	 directionMove(board, possibleMove, pos, false,0,2);
+	            }
+	            break;
+	        case "0_2":
+	            if (isPotentialWall(board, pos, 0, 2)) {
+	                directionMove(board, possibleMove, pos, false,0,2);
+	            } else {
+	            	 directionMove(board, possibleMove, pos, false,-2,0);
+	            	 directionMove(board, possibleMove, pos, false,2,0);
+	            }
+	            break;
+	        case "2_0":
+	            if (isPotentialWall(board, pos, 2, 0)) {
+	            	 directionMove(board, possibleMove, pos, false,2,0);
+	            } else {
+	            	directionMove(board, possibleMove, pos, false,0,-2);
+	                directionMove(board, possibleMove, pos, false,0,2);
+	            }
+	            break;
+	        case "0_-2":
+	            if (isPotentialWall(board, pos, 0, -2)) {
+	            	directionMove(board, possibleMove, pos, false,0,-2);
+	            } else {
+	            	 directionMove(board, possibleMove, pos, false,-2,0);
+	            	 directionMove(board, possibleMove, pos, false,2,0);
+	            }
+	            break;
+	        default:
+	            break;
+	    }
 	}
-
+	
 	/**
-	 * Moves the pawn towards the bottom, if possible. Checks the potential wall and
-	 * the next case in the board. Adds the new position to possible moves if
-	 * it is empty or triggers a special move.
+	 * Checks if there is a potential wall at the specified position based on the given horizontal and vertical offsets.
 	 *
-	 * @param board          The game board.
-	 * @param possibleMove   The set of Positions representing the possible
-	 *                       moves for the Pawn.
-	 * @param pos            The current position of the pawn.
-	 * @param canSpecialMove Indicates if it can do a special move or not.
+	 * @param board     The game board.
+	 * @param pos       The current position.
+	 * @param offsetX   The horizontal offset from the current position.
+	 * @param offsetY   The vertical offset from the current position.
+	 * @return          True if there is a potential wall at the calculated position, false otherwise.
 	 */
-	public void botMove(Board board, Set<Position> possibleMove, Position pos, Boolean canSpecialMove) {
-		if (board.getBoard()[pos.getX() + 1][pos.getY()] == Case.POTENTIALWALL) {
-			if (board.getBoard()[pos.getX() + 2][pos.getY()] == Case.EMPTY) {
-				possibleMove.add(new Position(pos.getX() + 2, pos.getY()));
-			} else {
-				if (canSpecialMove) {
-					specialMove(board, possibleMove, new Position(pos.getX() + 2, pos.getY()), Movement.BOT);
-				}
-			}
-		}
+	private boolean isPotentialWall(Board board, Position pos, int offsetX, int offsetY) {
+	    int newX = pos.getX() + offsetX;
+	    int newY = pos.getY() + offsetY;
+
+	    if (newX >= 1 && newX <= 17 && newY >= 1 && newY <= 17) {
+	        return board.getBoard()[newX-(offsetX / 2)][newY-(offsetY / 2)] == Case.POTENTIALWALL;
+	    }
+	    return false;
 	}
 
-	/**
-	 * Moves the pawn towards the left, if possible. Checks the potential wall and
-	 * the next case in the board. Adds the new position to possible moves if
-	 * it is empty or triggers a special move.
-	 *
-	 * @param board          The game board.
-	 * @param possibleMove   The set of Positions representing the possible
-	 *                       moves for the Pawn.
-	 * @param pos            The current position of the pawn.
-	 * @param canSpecialMove Indicates if it can do a special move or not.
-	 */
-	public void leftMove(Board board, Set<Position> possibleMove, Position pos, Boolean canSpecialMove) {
-		if (board.getBoard()[pos.getX()][pos.getY() - 1] == Case.POTENTIALWALL) {
-			if (board.getBoard()[pos.getX()][pos.getY() - 2] == Case.EMPTY) {
-				possibleMove.add(new Position(pos.getX(), pos.getY() - 2));
-			} else {
-				if (canSpecialMove) {
-					specialMove(board, possibleMove, new Position(pos.getX(), pos.getY() - 2), Movement.LEFT);
-				}
-			}
-		}
-	}
-
-	/**
-	 * Performs a special move depending on the specified movement direction. Checks
-	 * the potential wall and triggers appropriate move or other moves.
-	 *
-	 * @param board        The game board.
-	 * @param possibleMove The set of Positions representing the possible
-	 *                     moves for the Pawn.
-	 * @param pos          The current position of the pawn.
-	 * @param m            The specified movement direction.
-	 */
-	public void specialMove(Board board, Set<Position> possibleMove, Position pos, Movement m) {
-		switch (m) {
-		case TOP:
-			if (board.getBoard()[pos.getX() - 1][pos.getY()] == Case.POTENTIALWALL) {
-				topMove(board, possibleMove, pos, false);
-			} else {
-				leftMove(board, possibleMove, pos, false);
-				rightMove(board, possibleMove, pos, false);
-			}
-			break;
-		case RIGHT:
-			if (board.getBoard()[pos.getX()][pos.getY() + 1] == Case.POTENTIALWALL) {
-				rightMove(board, possibleMove, pos, false);
-			} else {
-				topMove(board, possibleMove, pos, false);
-				botMove(board, possibleMove, pos, false);
-			}
-			break;
-		case BOT:
-			if (board.getBoard()[pos.getX() + 1][pos.getY()] == Case.POTENTIALWALL) {
-				botMove(board, possibleMove, pos, false);
-			} else {
-				leftMove(board, possibleMove, pos, false);
-				rightMove(board, possibleMove, pos, false);
-			}
-			break;
-		case LEFT:
-			if (board.getBoard()[pos.getX()][pos.getY() - 1] == Case.POTENTIALWALL) {
-				leftMove(board, possibleMove, pos, false);
-			} else {
-				topMove(board, possibleMove, pos, false);
-				botMove(board, possibleMove, pos, false);
-			}
-			break;
-		default:
-			break;
-		}
-
-	}
-
+	
 	/**
 	 * Calculates the possible moves for this pawn given a specific board and
 	 * position.
@@ -312,14 +273,14 @@ public class Pawn {
 	 * @return The set of Positions representing the possible moves for the
 	 *         Pawn.
 	 */
-	public Set<Position> possibleMove(Board board, Position pos) {
-		Set<Position> possibleMove = new HashSet<Position>();
-		topMove(board, possibleMove, pos, true);
-		rightMove(board, possibleMove, pos, true);
-		botMove(board, possibleMove, pos, true);
-		leftMove(board, possibleMove, pos, true);
-		return possibleMove;
-	}
+	 public Set<Position> possibleMove(Board board, Position pos) {
+        Set<Position> possibleMove = new HashSet<>();
+        directionMove(board, possibleMove, pos, true, -2, 0); // Déplacement vers le haut
+        directionMove(board, possibleMove, pos, true, 2, 0); // Déplacement vers le bas
+        directionMove(board, possibleMove, pos, true, 0, 2); // Déplacement vers la droite
+        directionMove(board, possibleMove, pos, true, 0, -2); // Déplacement vers la gauche
+        return possibleMove;
+    }
 
 	/**
 	 * Update the player's position.
