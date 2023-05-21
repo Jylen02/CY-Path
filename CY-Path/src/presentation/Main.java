@@ -357,9 +357,15 @@ public class Main extends Application {
 		uselessSliderContainer.setAlignment(Pos.CENTER);
 
 		VBox uselessBox = new VBox(50);
+		
+		uselessSliderContainer.setVisible(false); 	//Rendre invisible tous les éléments de la uselessBox sauf la grid
+		uselessAction.setVisible(false);
+		uselessPlayerTurn.setVisible(false);
+		
 		uselessBox.getChildren().addAll(uselessPlayerTurn, grid, uselessAction, uselessSliderContainer);
 		uselessBox.setAlignment(Pos.CENTER);
-
+		
+		
 		VBox box = new VBox(50);
 		box.getChildren().addAll(playerTurn, invisible, action, sliderContainer);
 		box.setAlignment(Pos.CENTER);
