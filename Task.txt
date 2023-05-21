@@ -90,8 +90,8 @@ Mettre le tout dans un dossier + sélection en ouvrant l'explorateur de fichier
 
 14. IHM : Fonctionnalités pion
 --14.1. Voir déplacement possible (Durée : 1h) : Terminé - Abd-Ennour
-14.2. Bouger pion (Durée estimée : 1h - Durée : 1h) : En Cours - Abd-Ennour, Noaman
-      Problème actualisation des mouvements possibles 
+14.2. Bouger pion ( Durée : 2h) : Terminé - Abd-Ennour, Noaman
+      Problème actualisation des mouvements possibles (Durée: 5min) : Réglé - Abd-Ennour
 --14.3. Verifier si un joueur à gagner -> message (Durée estimée : 10min - Durée : 15min) : Terminé - Abd-Ennour, 
 
 15. IHM : Fonctionnalités murs
@@ -102,7 +102,7 @@ Mettre le tout dans un dossier + sélection en ouvrant l'explorateur de fichier
 15.5. Poser mur (Durée estimée : 30min) : A Faire
 
 16. IHM : Fonctionnalités
-16.1. Pouvoir cliquer sur les cases du plateau pour effectuer l'action (Durée : 3h) : En Cours - Abd-Ennour
+16.1. Pouvoir cliquer sur les cases du plateau pour effectuer l'action au lieu du curseur (Durée : 3h) : Terminé - Abd-Ennour
 16.2. Ajouter un bruit à chaque fois qu'on bouge un pion ou mur (Durée estimée : 20min - Durée : 30min) : Quasi Terminé - Noaman, Warren
 --16.3. Musique de fond (Durée : 40min ): Terminé - Noaman, Warren
         Bouton à mettre en attribut
