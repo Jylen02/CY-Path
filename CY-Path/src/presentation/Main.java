@@ -68,10 +68,10 @@ public class Main extends Application {
 	private StackPane rootPane;
 	private Background background;
 
-	private Image wolf = new Image("image/wolfR.png");
-	private Image gibbon = new Image("image/gibbonG.png");
-	private Image penguin = new Image("image/penguinB.png");
-	private Image seagull = new Image("image/seagullY.png");
+	private Image wolf = new Image(new File("src/image/wolfR.png").toURI().toString());
+	private Image gibbon = new Image(new File("src/image/gibbonG.png").toURI().toString());
+	private Image penguin = new Image(new File("src/image/penguinB.png").toURI().toString());
+	private Image seagull = new Image(new File("src/image/seagullY.png").toURI().toString());
 
 	private Media mediaPawnMove = new Media(new File("src/sound/move.mp3").toURI().toString());
 	private MediaPlayer mediaPlayerPawnMove = new MediaPlayer(mediaPawnMove);
@@ -141,7 +141,7 @@ public class Main extends Application {
 		this.primaryStage.setTitle("Quoridor");
 		this.primaryStage.setResizable(false);
 
-		this.primaryStage.getIcons().add(new Image("image/dikdik.png"));
+		this.primaryStage.getIcons().add(new Image(new File("src/image/dikdik.png").toURI().toString()));
 
 		mediaPlayerPawnMove.volumeProperty().bindBidirectional(volumeSlider.valueProperty());
 		mediaPlayerPawnMove.setCycleCount(1); // To repeat the sound 1 time
@@ -171,7 +171,7 @@ public class Main extends Application {
 		box.setAlignment(Pos.CENTER);
 		box.getChildren().add(sliderContainer);
 
-		Image backgroundImage = new Image("image/background.png");
+		Image backgroundImage = new Image(new File("src/image/background.png").toURI().toString());
 		BackgroundSize backgroundSize = new BackgroundSize(800, 700, true, true, true, true);
 		BackgroundImage backgroundImg = new BackgroundImage(backgroundImage, BackgroundRepeat.NO_REPEAT,
 				BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
@@ -400,21 +400,21 @@ public class Main extends Application {
 	}
 
 	private HBox actionList(Scene scene, boolean canDoAction) {
-		Button exit = createButton("Exit", 100, 50, 20);
+		Button exit = createButton("Exit", 110, 50, 20);
 		exit.setOnAction(e -> handleExitButton());
 
-		Button restart = createButton("Restart", 100, 50, 20);
+		Button restart = createButton("Restart", 110, 50, 20);
 		restart.setOnAction(e -> handleRestartButton());
 
-		Button cancel = createButton("Cancel", 100, 50, 20);
+		Button cancel = createButton("Cancel", 110, 50, 20);
 		cancel.setOnAction(e -> handleCancel());
 		cancel.setDisable(true);
 
-		Button confirm = createButton("Confirm", 100, 50, 20);
+		Button confirm = createButton("Confirm", 110, 50, 20);
 		confirm.setOnAction(e -> handleConfirm());
 		confirm.setDisable(true);
 
-		Button wall = createButton("Wall (" + players[currentTurn].getRemainingWall() + ")", 100, 50, 20);
+		Button wall = createButton("Wall (" + players[currentTurn].getRemainingWall() + ")", 110, 50, 20);
 		wall.setOnAction(e -> {
 			handlePlaceWall(scene, wall);
 			wallPreview.setVisible(true);
@@ -677,6 +677,7 @@ public class Main extends Application {
 							.getY()));
 			players[i].getPawn()
 					.setPossibleMove(players[i].getPawn().possibleMove(board, players[i].getPawn().getPos()));
+			players[i].setRemainingWall(Board.MAXWALLCOUNT / this.getBoard().getPlayerNumber() );
 		}
 		grid = updateBoard(false);
 		playBoard(true);
