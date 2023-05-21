@@ -68,16 +68,16 @@ public class Main extends Application {
 	private StackPane rootPane;
 	private Background background;
 
-	private Image wolf = new Image(new File("src/image/wolfR.png").toURI().toString());
-	private Image gibbon = new Image(new File("src/image/gibbonG.png").toURI().toString());
-	private Image penguin = new Image(new File("src/image/penguinB.png").toURI().toString());
-	private Image seagull = new Image(new File("src/image/seagullY.png").toURI().toString());
+	private Image wolf = new Image(getClass().getResource("/image/wolfR.png").toExternalForm());
+	private Image gibbon = new Image(getClass().getResource("/image/gibbonG.png").toExternalForm());
+	private Image penguin = new Image(getClass().getResource("/image/penguinB.png").toExternalForm());
+	private Image seagull = new Image(getClass().getResource("/image/seagullY.png").toExternalForm());
 
-	private Media mediaPawnMove = new Media(new File("src/sound/move.mp3").toURI().toString());
+	private Media mediaPawnMove = new Media(getClass().getResource("/sound/move.mp3").toString());
 	private MediaPlayer mediaPlayerPawnMove = new MediaPlayer(mediaPawnMove);
-	private Media mediaMusic = new Media(new File("src/sound/tw3LOW.mp3").toURI().toString());
+	private Media mediaMusic = new Media(getClass().getResource("/sound/tw3LOW.mp3").toString());
 	private MediaPlayer mediaPlayerMusic = new MediaPlayer(mediaMusic);
-
+	
 	// Slider volume lié entre pages
 	private Label volumeLabel = createLabel("Volume", 40);
 	private Slider volumeSlider = new Slider(0, 0.1, 0.05);
@@ -141,7 +141,8 @@ public class Main extends Application {
 		this.primaryStage.setTitle("Quoridor");
 		this.primaryStage.setResizable(false);
 
-		this.primaryStage.getIcons().add(new Image(new File("src/image/dikdik.png").toURI().toString()));
+		this.primaryStage.getIcons().add(new Image(getClass().getResource("/image/dikdik.png").toExternalForm()));
+
 
 		mediaPlayerPawnMove.volumeProperty().bindBidirectional(volumeSlider.valueProperty());
 		mediaPlayerPawnMove.setCycleCount(1); // To repeat the sound 1 time
@@ -171,7 +172,7 @@ public class Main extends Application {
 		box.setAlignment(Pos.CENTER);
 		box.getChildren().add(sliderContainer);
 
-		Image backgroundImage = new Image(new File("src/image/background.png").toURI().toString());
+		Image backgroundImage = new Image(getClass().getResource("/image/background.png").toExternalForm());
 		BackgroundSize backgroundSize = new BackgroundSize(800, 700, true, true, true, true);
 		BackgroundImage backgroundImg = new BackgroundImage(backgroundImage, BackgroundRepeat.NO_REPEAT,
 				BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);

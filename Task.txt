@@ -112,6 +112,7 @@ Mettre le tout dans un dossier
 --16.2. Ajouter un bruit à chaque fois qu'on bouge un pion ou mur (Durée estimée : 20min - Durée : 30min) : Terminé - Noaman, Warren
 --16.3. Musique de fond (Durée : 40min ): Terminé - Noaman, Warren
         Bouton à mettre en attribut
+16.4. Mettre le background à toutes les pages Stackpane
 
 17. IHM : Optimiser le code
 17.1. Séparer en plusieurs classes les différentes pages / différentes actions possible ?
