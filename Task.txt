@@ -23,6 +23,7 @@
      Apres chaque move()
      Afficher gagnant
      Bouton rejouer (appeler initializeBoard())
+--3.5. Optimisation/factorisation code déplacement du pion (Durée : 2h) : Terminé - Warren
 
 --4. Poser un mur
 --4.2. Vérifier Mur posable (Durée estimée : 2-3h - Durée : 2h) : Terminé - Warren
