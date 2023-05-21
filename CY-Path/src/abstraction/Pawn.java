@@ -178,7 +178,7 @@ public class Pawn {
         int newX = pos.getX() + offsetX;
         int newY = pos.getY() + offsetY;
 
-        // Vérifies if the new position is out of the grid
+        /* Verifies if the new position is on the grid */
         if (newX >= 1 && newX <= 17 && newY >= 1 && newY <= 17) {
             Position newPosition = new Position(newX, newY);
             if (board.getBoard()[newPosition.getX()-(offsetX / 2)][newPosition.getY()- (offsetY /2)] == Case.POTENTIALWALL) {
@@ -275,10 +275,10 @@ public class Pawn {
 	 */
 	 public Set<Position> possibleMove(Board board, Position pos) {
         Set<Position> possibleMove = new HashSet<>();
-        directionMove(board, possibleMove, pos, true, -2, 0); // Déplacement vers le haut
-        directionMove(board, possibleMove, pos, true, 2, 0); // Déplacement vers le bas
-        directionMove(board, possibleMove, pos, true, 0, 2); // Déplacement vers la droite
-        directionMove(board, possibleMove, pos, true, 0, -2); // Déplacement vers la gauche
+        directionMove(board, possibleMove, pos, true, -2, 0); // topMove
+        directionMove(board, possibleMove, pos, true, 2, 0); // botMove
+        directionMove(board, possibleMove, pos, true, 0, 2); // rightMove
+        directionMove(board, possibleMove, pos, true, 0, -2); // leftMove
         return possibleMove;
     }
 
