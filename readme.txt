@@ -33,16 +33,24 @@ Implemented features:
 			-> Check if the pawn has crossed the board (thus winning)
 		-> Place a wall
 			-> Choose its orientation and position
-			-> Check that the wall does not extend beyond the board
+			-> Check that Sthe wall does not extend beyond the board
 			-> Check that there is no overlap with another wall
 			-> Cannot place a wall on the edge of the board
 			-> Check that there are a maximum of 20 walls on the board
 			-> DFS to be applied to all players, ensuring that all players have the possibility to win
 	- If there is an error, the turn is restarted 
 
-Unimplemented features :
-	- Human-machine interface
-	- Players can choose there icon for their pawn
+Human-machine interface only features :
+	- See the rules of the game
+	- There is an icon for the application
+	- Players have icon on their pawn
+	- Exit the game (there is no backup of the current game, all progress will be lose)
+	- Restart the game
+	- Background music & sound when we do an action (Moving a pawn)
+	- The sound's volume can be controled 
+
+Not implemented features:
+	- Sound when we do an action (Placing a wall)
 
 Board display description :
 	- Players are indicated by their number
@@ -63,5 +71,8 @@ How to play ? :
 		-> To place a wall :
 			-> Enter the coordinates of the middle of the wall, corresponding to a "+" square
 			-> Enter the orientation of the wall
+	- The updated board is displayed
+	- A confirmation is need to make the action
+	- The player can also cancel its action and make another action
 	- It's now the next player's turn
 	- The game ends when one of the players has reached the opposite side of their starting point

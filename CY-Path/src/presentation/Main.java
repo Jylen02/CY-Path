@@ -400,21 +400,21 @@ public class Main extends Application {
 	}
 
 	private HBox actionList(Scene scene, boolean canDoAction) {
-		Button exit = createButton("Exit", 100, 50, 20);
+		Button exit = createButton("Exit", 110, 50, 20);
 		exit.setOnAction(e -> handleExitButton());
 
-		Button restart = createButton("Restart", 100, 50, 20);
+		Button restart = createButton("Restart", 110, 50, 20);
 		restart.setOnAction(e -> handleRestartButton());
 
-		Button cancel = createButton("Cancel", 100, 50, 20);
+		Button cancel = createButton("Cancel", 110, 50, 20);
 		cancel.setOnAction(e -> handleCancel());
 		cancel.setDisable(true);
 
-		Button confirm = createButton("Confirm", 100, 50, 20);
+		Button confirm = createButton("Confirm", 110, 50, 20);
 		confirm.setOnAction(e -> handleConfirm());
 		confirm.setDisable(true);
 
-		Button wall = createButton("Wall (" + players[currentTurn].getRemainingWall() + ")", 100, 50, 20);
+		Button wall = createButton("Wall (" + players[currentTurn].getRemainingWall() + ")", 110, 50, 20);
 		wall.setOnAction(e -> {
 			handlePlaceWall(scene, wall);
 			wallPreview.setVisible(true);
@@ -677,6 +677,7 @@ public class Main extends Application {
 							.getY()));
 			players[i].getPawn()
 					.setPossibleMove(players[i].getPawn().possibleMove(board, players[i].getPawn().getPos()));
+			players[i].setRemainingWall(Board.MAXWALLCOUNT / this.getBoard().getPlayerNumber() );
 		}
 		grid = updateBoard(false);
 		playBoard(true);

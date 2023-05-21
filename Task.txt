@@ -51,8 +51,8 @@
 
 --6. DFS (Durée : 8h) : Terminé - Jeremy, Christophe, Abd-Ennour
 
---7. Documentation de toutes les classes (avant IHM !!) (Durée : 1h) : Terminé - Jeremy, Noaman, Warren
-7.1. Commentaires pour toutes les méthodes de classe (si utile)
+--7. Documentation de toutes les classes (avant IHM !!) (Durée : 2h) : Terminé - Jeremy, Noaman, Warren
+--7.1. Commentaires pour toutes les méthodes de classe (si utile)
 
 --8. Affichage IHM : Menu (Durée : 1h) : Terminé - Christophe, Noaman
 --8.1. Titre "Quoridor"
@@ -81,9 +81,12 @@ Mettre le tout dans un dossier
 
 --13. IHM : Affichage plateau (Durée : 1h) : Terminé - Christophe, Noaman, Warren 
 --13.1. Message : "Tour du joueur ..."
---13.2. Bouton exit -> Retour au menu
---13.3. Bouton Restart -> Recommence la partie (Durée : 5min) : Terminé - Christophe
+--13.2. Bouton exit -> Retour au menu (Durée : 10min) : Terminé - Christophe
+	Réinitialiser tout les attributs
+--13.3. Bouton Restart -> Recommence la partie (Durée : 10min) : Terminé - Christophe
+	Réinitialiser tout les attributs
 --13.4. Bouton wall pour récuperer un mur (transparent suivant le curseur)
+	Aggrandir bouton pour que tout le texte rendre dedans 
 --13.5. Bouton cancel -> Annule l'action en cours (poser un mur/ bouger pion) (Durée 15min) : Terminé - Christophe
         Modifier structure de la classe pour annuler la dernière action (Durée : 1h30) - Terminé - Christophe, Jeremy 
 --13.6. Bouton confirm -> Confirmer l'action effectué -> passer au prochain joueur (Durée 15min) : Terminé - Christophe
@@ -96,8 +99,9 @@ Mettre le tout dans un dossier
 --14.3. Verifier si un joueur à gagner -> message (Durée estimée : 10min - Durée : 15min) : Terminé - Abd-Ennour, 
 
 --15. IHM : Fonctionnalités murs
---15.1. Prévisualiser un mur transparent (Durée : 4h) : Quasi terminé - Christophe, Noaman
+--15.1. Prévisualiser un mur transparent (Durée : 7h) : Terminé, mais potentiel modification - Christophe, Noaman
         Pb StackPane, on ne peut pas avoir le mur transparent 1er plan et cliquer bouton 2nd plan
+	Cherche une autre méthode d'affichage ?
 --15.2. Ne plus pouvoir cliquer sur le bouton pour récuperer un mur si on le possède déjà (Durée : 10min) : Terminé - Jeremy
 --15.3. Curseur souris -> index (Durée estimée : 2h - Durée : 2h) : Annulé - Christophe
 --15.4. Tourner le mur (clic droit) (Durée estimée : 20min - Durée estimée : 10min) : Terminé - Christophe
@@ -108,3 +112,12 @@ Mettre le tout dans un dossier
 --16.2. Ajouter un bruit à chaque fois qu'on bouge un pion ou mur (Durée estimée : 20min - Durée : 30min) : Terminé - Noaman, Warren
 --16.3. Musique de fond (Durée : 40min ): Terminé - Noaman, Warren
         Bouton à mettre en attribut
+
+17. IHM : Optimiser le code
+17.1. Séparer en plusieurs classes les différentes pages / différentes actions possible ?
+17.2. Réinitialisation des attributs des boutons à rassembler en une méthode commune si dupliquat de code.
+
+18. Controle
+18.1. Implémenter la classe Observable dans les classes la nécessitant
+18.2. Mettre les méthodes setChanged/notifyObserver... dans les getters/setters ou méthodes 
+18.3. Relier Présentation (IHM) et Abstraction (classe)
