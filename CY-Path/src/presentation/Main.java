@@ -68,10 +68,10 @@ public class Main extends Application {
 	private StackPane rootPane;
 	private Background background;
 
-	private Image wolf = new Image("image/wolfR.png");
-	private Image gibbon = new Image("image/gibbonG.png");
-	private Image penguin = new Image("image/penguinB.png");
-	private Image seagull = new Image("image/seagullY.png");
+	private Image wolf = new Image(new File("src/image/wolfR.png").toURI().toString());
+	private Image gibbon = new Image(new File("src/image/gibbonG.png").toURI().toString());
+	private Image penguin = new Image(new File("src/image/penguinB.png").toURI().toString());
+	private Image seagull = new Image(new File("src/image/seagullY.png").toURI().toString());
 
 	private Media mediaPawnMove = new Media(new File("src/sound/move.mp3").toURI().toString());
 	private MediaPlayer mediaPlayerPawnMove = new MediaPlayer(mediaPawnMove);
@@ -141,7 +141,7 @@ public class Main extends Application {
 		this.primaryStage.setTitle("Quoridor");
 		this.primaryStage.setResizable(false);
 
-		this.primaryStage.getIcons().add(new Image("image/dikdik.png"));
+		this.primaryStage.getIcons().add(new Image(new File("src/image/dikdik.png").toURI().toString()));
 
 		mediaPlayerPawnMove.volumeProperty().bindBidirectional(volumeSlider.valueProperty());
 		mediaPlayerPawnMove.setCycleCount(1); // To repeat the sound 1 time
@@ -171,7 +171,7 @@ public class Main extends Application {
 		box.setAlignment(Pos.CENTER);
 		box.getChildren().add(sliderContainer);
 
-		Image backgroundImage = new Image("image/background.png");
+		Image backgroundImage = new Image(new File("src/image/background.png").toURI().toString());
 		BackgroundSize backgroundSize = new BackgroundSize(800, 700, true, true, true, true);
 		BackgroundImage backgroundImg = new BackgroundImage(backgroundImage, BackgroundRepeat.NO_REPEAT,
 				BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
