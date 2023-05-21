@@ -275,10 +275,10 @@ public class Pawn {
 	 */
 	 public Set<Position> possibleMove(Board board, Position pos) {
         Set<Position> possibleMove = new HashSet<>();
-        directionMove(board, possibleMove, pos, true, -2, 0); // Déplacement vers le haut
-        directionMove(board, possibleMove, pos, true, 2, 0); // Déplacement vers le bas
-        directionMove(board, possibleMove, pos, true, 0, 2); // Déplacement vers la droite
-        directionMove(board, possibleMove, pos, true, 0, -2); // Déplacement vers la gauche
+        directionMove(board, possibleMove, pos, true, -2, 0); // topMove
+        directionMove(board, possibleMove, pos, true, 2, 0); // botMove
+        directionMove(board, possibleMove, pos, true, 0, 2); // rightMove
+        directionMove(board, possibleMove, pos, true, 0, -2); // leftMove
         return possibleMove;
     }
 
