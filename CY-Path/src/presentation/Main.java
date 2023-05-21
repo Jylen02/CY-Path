@@ -322,15 +322,15 @@ public class Main extends Application {
 	private void playBoard(boolean canDoAction) {
 		Label playerTurn = createLabel(this.getPlayers()[this.getCurrentTurn()].getName() + "'s turn", 50);
 		Label uselessPlayerTurn = createLabel(this.getPlayers()[this.getCurrentTurn()].getName() + "'s turn", 50);
-
+		
+		Pawn p = players[this.getCurrentTurn()].getPawn();
+		p.setPossibleMove(p.possibleMove(this.board, p.getPos()));
+		
 		grid = updateBoard(false);
 		grid.setAlignment(Pos.CENTER);
 
 		invisible = updateBoard(true);
 		invisible.setAlignment(Pos.CENTER);
-
-		Pawn p = players[this.getCurrentTurn()].getPawn();
-		p.setPossibleMove(p.possibleMove(this.board, p.getPos()));
 
 		wallPreview = new Rectangle(65, 5, Color.RED);
 		wallPreview.setOpacity(1);
