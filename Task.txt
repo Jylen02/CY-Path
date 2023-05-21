@@ -23,6 +23,7 @@
      Apres chaque move()
      Afficher gagnant
      Bouton rejouer (appeler initializeBoard())
+--3.5. Optimisation/factorisation code déplacement du pion (Durée : 2h) : Terminé - Warren
 
 --4. Poser un mur
 --4.2. Vérifier Mur posable (Durée estimée : 2-3h - Durée : 2h) : Terminé - Warren
@@ -91,7 +92,7 @@ Mettre le tout dans un dossier
 --14. IHM : Fonctionnalités pion
 --14.1. Voir déplacement possible (Durée : 1h) : Terminé - Abd-Ennour
 --14.2. Bouger pion (Durée estimée : 1h - Durée : 2h) : Terminé- Abd-Ennour, Noaman
-      Problème actualisation des mouvements possibles -> corrigé
+      Problème actualisation des mouvements possibles (Durée: 5min) : Rég lé - Abd-Ennour
 --14.3. Verifier si un joueur à gagner -> message (Durée estimée : 10min - Durée : 15min) : Terminé - Abd-Ennour, 
 
 --15. IHM : Fonctionnalités murs
@@ -103,7 +104,7 @@ Mettre le tout dans un dossier
 --15.5. Poser mur (Durée estimée : 30min - Durée 15min) : Terminé - Christophe
 
 --16. IHM : Fonctionnalités
---16.1. Pouvoir cliquer sur les cases du plateau pour effectuer l'action (Durée : 4h) : Terminé - Abd-Ennour, Christophe
+--16.1. Pouvoir cliquer sur les cases du plateau pour effectuer l'action (Durée : 3h) : Terminé - Abd-Ennour, Christophe
 --16.2. Ajouter un bruit à chaque fois qu'on bouge un pion ou mur (Durée estimée : 20min - Durée : 30min) : Terminé - Noaman, Warren
 --16.3. Musique de fond (Durée : 40min ): Terminé - Noaman, Warren
         Bouton à mettre en attribut

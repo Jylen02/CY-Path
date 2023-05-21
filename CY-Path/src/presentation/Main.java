@@ -322,15 +322,15 @@ public class Main extends Application {
 	private void playBoard(boolean canDoAction) {
 		Label playerTurn = createLabel(this.getPlayers()[this.getCurrentTurn()].getName() + "'s turn", 50);
 		Label uselessPlayerTurn = createLabel(this.getPlayers()[this.getCurrentTurn()].getName() + "'s turn", 50);
-
+		
+		Pawn p = players[this.getCurrentTurn()].getPawn();
+		p.setPossibleMove(p.possibleMove(this.board, p.getPos()));
+		
 		grid = updateBoard(false);
 		grid.setAlignment(Pos.CENTER);
 
 		invisible = updateBoard(true);
 		invisible.setAlignment(Pos.CENTER);
-
-		Pawn p = players[this.getCurrentTurn()].getPawn();
-		p.setPossibleMove(p.possibleMove(this.board, p.getPos()));
 
 		wallPreview = new Rectangle(65, 5, Color.RED);
 		wallPreview.setOpacity(1);
@@ -357,9 +357,15 @@ public class Main extends Application {
 		uselessSliderContainer.setAlignment(Pos.CENTER);
 
 		VBox uselessBox = new VBox(50);
+		
+		uselessSliderContainer.setVisible(false); 	//Rendre invisible tous les éléments de la uselessBox sauf la grid
+		uselessAction.setVisible(false);
+		uselessPlayerTurn.setVisible(false);
+		
 		uselessBox.getChildren().addAll(uselessPlayerTurn, grid, uselessAction, uselessSliderContainer);
 		uselessBox.setAlignment(Pos.CENTER);
-
+		
+		
 		VBox box = new VBox(50);
 		box.getChildren().addAll(playerTurn, invisible, action, sliderContainer);
 		box.setAlignment(Pos.CENTER);
