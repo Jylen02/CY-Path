@@ -90,6 +90,7 @@ Not implemented features:
 	- Sound when we do an action (Placing a wall)
 	- Can't move the pawn when placing wall
 	- Accurate rules
+	- Backup of the game
 
 How to play ? :
 	- Press the "Play" button

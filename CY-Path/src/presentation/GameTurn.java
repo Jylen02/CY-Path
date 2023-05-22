@@ -312,10 +312,6 @@ public class GameTurn extends Application {
 			}
 			// mediaPlayerPawnMove.play();
 			if (p.getPawn().isWinner()) {
-				/*
-				 * Set<Position> poz=p.getPawn().getFinishLine(); for (Position position : poz)
-				 * { possibleCellMap.get(position).setFill(Color.GOLD); }
-				 */
 				Alert alert = new Alert(Alert.AlertType.INFORMATION);
 				alert.setTitle("winner");
 				alert.setHeaderText("The winner is  " + p.getName());
