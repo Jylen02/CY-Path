@@ -34,40 +34,40 @@ import javafx.stage.Stage;
 
 public class GameTurn extends Application {
 
-	private Stage primaryStage;
+	protected Stage primaryStage;
 	private StackPane backgroundPane;
 
 	// Board information
-	private Board board;
-	private GridPane grid;
-	private GridPane invisible;
+	protected Board board;
+	protected GridPane grid;
+	protected GridPane invisible;
 	private Rectangle cell; // For the construction of the grid
 
 	// Players information
-	private Player[] players;
-	private int currentTurn;
-	private boolean canDoAction;
+	protected Player[] players;
+	protected int currentTurn;
+	protected boolean canDoAction;
 
 	private Image wolf = new Image(getClass().getResource("/image/wolfR.png").toExternalForm());
 	private Image gibbon = new Image(getClass().getResource("/image/gibbonG.png").toExternalForm());
 	private Image penguin = new Image(getClass().getResource("/image/penguinB.png").toExternalForm());
 	private Image seagull = new Image(getClass().getResource("/image/seagullY.png").toExternalForm());
 
-	private MediaPlayer mediaPlayerPawnMove;
-	private MediaPlayer mediaPlaceWall;
+	protected MediaPlayer mediaPlayerPawnMove;
+	protected MediaPlayer mediaPlaceWall;
 	private MediaPlayer mediaPlayerMusic;
-	private Slider volumeSlider;
+	private Slider volumeSlider = new Slider(0,0.1,0.05);
 
-	private LinkedHashMap<Position, Rectangle> possibleCellMap = new LinkedHashMap<Position, Rectangle>();
-	private Set<Position> positionWall = new LinkedHashSet<Position>();
-	private LinkedHashMap<Position, Rectangle> cellWallMap = new LinkedHashMap<Position, Rectangle>();
+	protected LinkedHashMap<Position, Rectangle> possibleCellMap = new LinkedHashMap<Position, Rectangle>();
+	protected Set<Position> positionWall = new LinkedHashSet<Position>();
+	protected LinkedHashMap<Position, Rectangle> cellWallMap = new LinkedHashMap<Position, Rectangle>();
 
-	private Rectangle wallPreview;
+	protected Rectangle wallPreview;
 
 	// Action information
-	private boolean isPlacingWall;
-	private boolean hasPlacedWall;
-	private boolean hasMoved;
+	protected boolean isPlacingWall;
+	protected boolean hasPlacedWall;
+	protected boolean hasMoved;
 
 	private int mouseColumn;
 	private int mouseRow;
@@ -106,7 +106,7 @@ public class GameTurn extends Application {
 		HBox uselessAction = actionList(scene, false);
 
 		Label volumeLabel = Menu.createLabel("Volume", 40);
-		mediaPlayerMusic.volumeProperty().bindBidirectional(volumeSlider.valueProperty());
+		//mediaPlayerMusic.volumeProperty().bindBidirectional(volumeSlider.valueProperty());
 
 		HBox sliderContainer = new HBox(10);
 		sliderContainer.getChildren().addAll(volumeLabel, volumeSlider);
@@ -129,8 +129,10 @@ public class GameTurn extends Application {
 		box.getChildren().addAll(playerTurn, invisible, action, sliderContainer);
 		box.setAlignment(Pos.CENTER);
 
-		if (canDoAction && !isPlacingWall) {
-			handleMove(scene, players[this.currentTurn]);
+		if (canDoAction) {
+			//handleMove(scene, players[this.currentTurn]);
+			HandleMovePawn movePawn = new HandleMovePawn(this);
+			movePawn.handleMove();
 		}
 
 		StackPane sceneContent = new StackPane();
@@ -197,7 +199,7 @@ public class GameTurn extends Application {
 		return box;
 	}
 
-	private GridPane updateBoard(boolean invisible) {
+	protected GridPane updateBoard(boolean invisible) {
 		GridPane grid = new GridPane();
 		possibleCellMap.clear();
 		cellWallMap.clear();
@@ -295,8 +297,8 @@ public class GameTurn extends Application {
 	private void movePawn(Player p, Position pos) {
 		if (p.getPawn().move(this.board, pos)) {
 			hasMoved = true;
-			mediaPlayerPawnMove.stop();
-			mediaPlayerPawnMove.play();
+			//mediaPlayerPawnMove.stop();
+			//mediaPlayerPawnMove.play();
 
 			invisible = updateBoard(true);
 			grid = updateBoard(false);
