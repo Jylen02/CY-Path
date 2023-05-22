@@ -42,7 +42,7 @@ public class GameTurn extends Application {
 	protected Board board;
 	protected GridPane grid;
 	protected GridPane invisibleGrid;
-	private Rectangle cell; // For the construction of the grid
+	private Rectangle cell; // For the construction of the grid 
 
 	private Image wolf = new Image(getClass().getResource("/image/wolfR.png").toExternalForm());
 	private Image gibbon = new Image(getClass().getResource("/image/gibbonG.png").toExternalForm());
@@ -112,7 +112,7 @@ public class GameTurn extends Application {
 				e.printStackTrace();
 			}
 			Alert alert = new Alert(Alert.AlertType.INFORMATION);
-			alert.setTitle("Alert");
+			alert.setTitle(board.getPlayers()[board.getCurrentTurn()].getName());
 			alert.setHeaderText("You can't make any move, your turn has been skipped");
 			alert.showAndWait();
 		} else {
@@ -144,8 +144,8 @@ public class GameTurn extends Application {
 
 			VBox uselessBox = new VBox(50);
 
-			uselessSliderContainer.setVisible(false); // Rendre invisible tous les éléments de la uselessBox sauf la
-														// grid
+			uselessSliderContainer.setVisible(false); 
+			// Rendre invisible tous les éléments de la uselessBox sauf la grid
 			uselessAction.setVisible(false);
 			uselessPlayerTurn.setVisible(false);
 
