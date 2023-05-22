@@ -84,7 +84,14 @@ public class GameTurn extends Application {
 
 		Pawn p = players[this.currentTurn].getPawn();
 		p.setPossibleMove(p.possibleMove(this.board, p.getPos()));
-
+		if (p.getPossibleMove()==null /*Set vide : new Set<Position>[]*/) {
+			//Skip turn + affiche alert
+			handleConfirm();
+			//Alerte à faire : peux pas bouger
+			
+			//Partie nulle -> Restart
+		}
+		
 		grid = updateBoard(false);
 		grid.setAlignment(Pos.CENTER);
 
