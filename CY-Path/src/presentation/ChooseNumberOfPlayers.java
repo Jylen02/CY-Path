@@ -6,7 +6,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -42,9 +41,7 @@ public class ChooseNumberOfPlayers extends Application {
 	 */
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		VBox box = new VBox(10);
-
-		Button back = Menu.createButton("Back", 100, 50, 20);
+		Button back = Menu.createButton("Back", 130, 50, 20);
 		back.setOnAction(e -> {
 			Menu menuInstance = new Menu();
 			menuInstance.start(primaryStage);
@@ -54,8 +51,7 @@ public class ChooseNumberOfPlayers extends Application {
 
 		Label label = Menu.createLabel("Choose the number of players", 50);
 
-		RadioButton twoPlayer = new RadioButton("2 Players");
-		twoPlayer.getStyleClass().add("radio-button");
+		Button twoPlayer = Menu.createButton("2 Players", 130, 50, 20);
 		twoPlayer.setOnAction(e -> {
 			CreatePlayers createPlayersInstance = new CreatePlayers(new Board(2), backgroundPane);
 			try {
@@ -65,8 +61,7 @@ public class ChooseNumberOfPlayers extends Application {
 			}
 		});
 
-		RadioButton fourPlayer = new RadioButton("4 Players");
-		fourPlayer.getStyleClass().add("radio-button");
+		Button fourPlayer = Menu.createButton("4 Players", 130, 50, 20);
 		fourPlayer.setOnAction(e -> {
 			CreatePlayers createPlayersInstance = new CreatePlayers(new Board(4), backgroundPane);
 			try {
@@ -76,6 +71,7 @@ public class ChooseNumberOfPlayers extends Application {
 			}
 		});
 
+		VBox box = new VBox(10);
 		box.getChildren().addAll(title, label, twoPlayer, fourPlayer, back);
 		box.setAlignment(Pos.CENTER);
 
@@ -89,5 +85,4 @@ public class ChooseNumberOfPlayers extends Application {
 		primaryStage.sizeToScene();
 		primaryStage.show();
 	}
-
 }

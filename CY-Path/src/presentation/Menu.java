@@ -65,31 +65,40 @@ public class Menu extends Application {
 
 		Label title = createLabel("Quoridor", 140);
 
-		Button play = createButton("Play", 300, 100, 50);
-		play.setOnAction(e -> {
+		Button newGame = createButton("New Game", 300, 100, 50);
+		newGame.setOnAction(e -> {
 			ChooseNumberOfPlayers chooseNumberOfPlayersInstance = new ChooseNumberOfPlayers(backgroundPane);
 			try {
 				chooseNumberOfPlayersInstance.start(primaryStage);
 			} catch (Exception e1) {
-				e1.printStackTrace();
+				primaryStage.close();
 			}
+		});
+		
+		Button loadGame = createButton("Load Game", 300, 100, 50);
+		loadGame.setOnAction(e -> {
+			
 		});
 
 		Button rules = createButton("Rules", 300, 100, 50);
 		rules.setOnAction(e -> {
 			Rules rulesInstance = new Rules(backgroundPane);
-			try {
-				rulesInstance.start(primaryStage);
-			} catch (Exception e1) {
-				e1.printStackTrace();
-			}
+			startException(rulesInstance,primaryStage);
 		});
 
 		Button exit = createButton("Exit", 300, 100, 50);
 		exit.setOnAction(e -> primaryStage.close());
 
-		VBox box = new VBox(20);
-		box.getChildren().addAll(title, play, rules, exit, sliderContainer);
+		HBox play = new HBox(50);
+		play.getChildren().addAll(newGame, loadGame);
+		play.setAlignment(Pos.CENTER);
+		
+		HBox info = new HBox(50);
+		info.getChildren().addAll(rules, exit);
+		info.setAlignment(Pos.CENTER);
+		
+		VBox box = new VBox(50);
+		box.getChildren().addAll(title, play, info);
 		box.setAlignment(Pos.CENTER);
 
 		StackPane sceneContent = new StackPane();
@@ -131,7 +140,14 @@ public class Menu extends Application {
 		label.setStyle("-fx-font-size: " + pixel + "px; -fx-text-fill: white;");
 		return label;
 	}
-
+	
+	protected static void startException(Application name, Stage primaryStage) {
+		try {
+			name.start(primaryStage);
+		} catch (Exception e1) {
+			primaryStage.close();
+		}
+	}
 	/**
 	 * The main method is the entry point of the Java application. It launches the
 	 * JavaFX application by calling the launch method.
