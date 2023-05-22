@@ -26,6 +26,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
@@ -52,11 +53,11 @@ public class GameTurn extends Application {
 	private Image gibbon = new Image(getClass().getResource("/image/gibbonG.png").toExternalForm());
 	private Image penguin = new Image(getClass().getResource("/image/penguinB.png").toExternalForm());
 	private Image seagull = new Image(getClass().getResource("/image/seagullY.png").toExternalForm());
-
-	protected MediaPlayer mediaPlayerPawnMove;
-	protected MediaPlayer mediaPlaceWall;
-	private MediaPlayer mediaPlayerMusic;
-	private Slider volumeSlider = new Slider(0,0.1,0.05);
+	
+	protected MediaPlayer mediaPlayerPawnMove = BackgroundMusic.getInstance().getPawnMovePlayer();
+	protected MediaPlayer mediaPlayerWallPlaced = BackgroundMusic.getInstance().getWallPlacedPlayer();
+	private Slider volumeSlider = BackgroundMusic.getInstance().getVolumeSlider();
+	
 
 	protected LinkedHashMap<Position, Rectangle> possibleCellMap = new LinkedHashMap<Position, Rectangle>();
 	protected Set<Position> positionWall = new LinkedHashSet<Position>();
@@ -105,8 +106,7 @@ public class GameTurn extends Application {
 		HBox action = actionList(scene, canDoAction);
 		HBox uselessAction = actionList(scene, false);
 
-		Label volumeLabel = Menu.createLabel("Volume", 40);
-		//mediaPlayerMusic.volumeProperty().bindBidirectional(volumeSlider.valueProperty());
+		Label volumeLabel = Menu.createLabel("Volume", 40);	
 
 		HBox sliderContainer = new HBox(10);
 		sliderContainer.getChildren().addAll(volumeLabel, volumeSlider);
@@ -297,8 +297,10 @@ public class GameTurn extends Application {
 	private void movePawn(Player p, Position pos) {
 		if (p.getPawn().move(this.board, pos)) {
 			hasMoved = true;
-			//mediaPlayerPawnMove.stop();
-			//mediaPlayerPawnMove.play();
+
+			mediaPlayerPawnMove.stop();
+			mediaPlayerPawnMove.play();
+
 
 			invisible = updateBoard(true);
 			grid = updateBoard(false);
@@ -324,6 +326,8 @@ public class GameTurn extends Application {
 
 	private void placeWall(Orientation orientation, Position position) {
 		if (Wall.createWall(this.board, this.players, this.currentTurn, orientation, position)) {
+			mediaPlayerWallPlaced.stop();
+			mediaPlayerWallPlaced.play();
 			// Mettre à jour l'affichage du plateau
 			this.isPlacingWall = false;
 			this.hasPlacedWall = true;
@@ -358,7 +362,6 @@ public class GameTurn extends Application {
 					} else {
 						placeWall(Orientation.VERTICAL, position);
 					}
-
 				}
 			});
 		}
