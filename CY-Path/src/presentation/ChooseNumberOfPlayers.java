@@ -55,7 +55,7 @@ public class ChooseNumberOfPlayers extends Application {
 		Label label = Menu.createLabel("Choose the number of players", 50);
 
 		RadioButton twoPlayer = new RadioButton("2 Players");
-		twoPlayer.setStyle("-fx-text-fill: white;");
+		twoPlayer.getStyleClass().add("radio-button");
 		twoPlayer.setOnAction(e -> {
 			CreatePlayers createPlayersInstance = new CreatePlayers(new Board(2), backgroundPane);
 			try {
@@ -66,7 +66,7 @@ public class ChooseNumberOfPlayers extends Application {
 		});
 
 		RadioButton fourPlayer = new RadioButton("4 Players");
-		fourPlayer.setStyle("-fx-text-fill: white;");
+		fourPlayer.getStyleClass().add("radio-button");
 		fourPlayer.setOnAction(e -> {
 			CreatePlayers createPlayersInstance = new CreatePlayers(new Board(4), backgroundPane);
 			try {
@@ -83,6 +83,9 @@ public class ChooseNumberOfPlayers extends Application {
 		sceneContent.getChildren().addAll(backgroundPane, box);
 
 		Scene scene = new Scene(sceneContent, 800, 700);
+		
+		String  style= getClass().getResource("style.css").toExternalForm();
+		scene.getStylesheets().add(style);
 
 		primaryStage.setScene(scene);
 		primaryStage.sizeToScene();

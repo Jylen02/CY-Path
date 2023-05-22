@@ -38,6 +38,7 @@ public class Rules extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		Label title = Menu.createLabel("Rules", 140);
+		title.getStyleClass().add("label-title");
 
 		ListView<String> listOfRules = new ListView<>();
 		listOfRules.getItems().addAll("Goal : To be the first to reach the line opposite to one’s base line.", "",
@@ -52,6 +53,7 @@ public class Rules extends Application {
 				"Rules 9 : If a pawn is blocked, no player can place a wall",
 				"Rules 10 : The fences must be placed between 2 sets of 2 squares",
 				"Rules 11 : The first player who reaches one of the 9 squares opposite his base line is the winner");
+		listOfRules.getStyleClass().add("list-view-rules");
 
 		Button back = Menu.createButton("Back", 100, 50, 20);
 		back.setOnAction(e -> {
@@ -66,7 +68,10 @@ public class Rules extends Application {
 		sceneContent.getChildren().addAll(backgroundPane, box);
 
 		Scene scene = new Scene(sceneContent, 800, 700);
-
+		
+		String  style= getClass().getResource("style.css").toExternalForm();
+		scene.getStylesheets().add(style);
+		
 		primaryStage.setScene(scene);
 		primaryStage.sizeToScene();
 		primaryStage.show();
