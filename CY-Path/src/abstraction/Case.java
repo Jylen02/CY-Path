@@ -45,7 +45,7 @@ public enum Case {
 	 * Placed wall.
 	 */
 	WALL(6),
-	
+
 	/**
 	 * Border case.
 	 */
