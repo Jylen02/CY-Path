@@ -101,7 +101,7 @@ Mettre le tout dans un dossier
 --15. IHM : Fonctionnalités murs
 --15.1. Prévisualiser un mur transparent (Durée : 7h) : Terminé, mais potentiel modification - Christophe, Noaman
         Pb StackPane, on ne peut pas avoir le mur transparent 1er plan et cliquer bouton 2nd plan
-	Cherche une autre méthode d'affichage ?
+	Cherche une autre méthode d'affichage ? -> coloriage -> abandon 
 --15.2. Ne plus pouvoir cliquer sur le bouton pour récuperer un mur si on le possède déjà (Durée : 10min) : Terminé - Jeremy
 --15.3. Curseur souris -> index (Durée estimée : 2h - Durée : 2h) : Annulé - Christophe
 --15.4. Tourner le mur (clic droit) (Durée estimée : 20min - Durée estimée : 10min) : Terminé - Christophe
@@ -117,7 +117,7 @@ Mettre le tout dans un dossier
 
 17. IHM : Optimiser le code 
 --17.1. Séparer en plusieurs classes les différentes pages / différentes actions possible (Durée : 2h) : Terminé - Christophe
-17.2. Réinitialisation des attributs des boutons à rassembler en une méthode commune si dupliquat de code : A faire
+--17.2. Réinitialisation des attributs des boutons à rassembler en une méthode commune si dupliquat de code : Pas besoin
 17.3. Création bouton Backup + faire backup : En Cours - Jeremy
        Modifier les classes Abstraction pour être sauvegardable
 
