@@ -22,7 +22,6 @@ public class CreatePlayers extends Application {
 	private StackPane backgroundPane;
 	
 	private Board board;
-	private Player[] players;
 	
 	private MediaPlayer mediaPlayerPawnMove;
 	private MediaPlayer mediaPlayerMusic;
@@ -63,7 +62,7 @@ public class CreatePlayers extends Application {
 	Button start = Menu.createButton("Start", 100, 50, 20);
 	start.setOnAction(e -> {
 		// Get each player's name
-		this.players = new Player[this.board.getPlayerNumber()];
+		Player[] players = new Player[this.board.getPlayerNumber()];
 		for (int i = 0; i < this.board.getPlayerNumber(); i++) {
 			String playerName = name[i].getText();
 			for (Case value : Case.values()) {

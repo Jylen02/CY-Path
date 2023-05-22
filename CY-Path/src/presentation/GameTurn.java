@@ -61,12 +61,13 @@ public class GameTurn extends Application {
 	private Set<Position> positionWall = new LinkedHashSet<Position>();
 	private LinkedHashMap<Position, Rectangle> cellWallMap = new LinkedHashMap<Position, Rectangle>();
 
-	// PlaceWall information
-	private StackPane wallContainer;
 	private Rectangle wallPreview;
+	
+	// Action information
 	private boolean isPlacingWall;
 	private boolean hasPlacedWall;
 	private boolean hasMoved;
+	
 	private int mouseColumn;
 	private int mouseRow;
 		
@@ -100,8 +101,6 @@ public class GameTurn extends Application {
 		wallPreview.setOpacity(1);
 		wallPreview.setStroke(null);
 		wallPreview.setVisible(false);
-
-		wallContainer = new StackPane();
 
 		Scene scene = new Scene(new StackPane(), 800, 700);
 
@@ -137,8 +136,9 @@ public class GameTurn extends Application {
 			handleMove(scene, players[this.currentTurn]);
 		}
 
-		wallContainer.getChildren().addAll(backgroundPane, uselessBox, wallPreview, box);
-		scene.setRoot(wallContainer);
+		StackPane sceneContent = new StackPane();
+		sceneContent.getChildren().addAll(backgroundPane, uselessBox, wallPreview, box);
+		scene.setRoot(sceneContent);
 
 		scene.setOnMouseMoved(new EventHandler<MouseEvent>() {
 			@Override

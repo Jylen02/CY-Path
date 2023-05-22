@@ -42,9 +42,10 @@ public class Rules extends Application {
 		VBox box = new VBox(title, listOfRules, back);
 		box.setAlignment(Pos.CENTER);
 
-		backgroundPane.getChildren().add(box);
-		
-		Scene scene = new Scene(backgroundPane, 800, 700);
+		StackPane sceneContent = new StackPane();
+        sceneContent.getChildren().addAll(backgroundPane, box);
+        
+		Scene scene = new Scene(sceneContent, 800, 700);
 
 		primaryStage.setScene(scene);
 		primaryStage.sizeToScene();
