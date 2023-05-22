@@ -132,10 +132,11 @@ public class GameTurn extends Application {
 		}
 
 		StackPane sceneContent = new StackPane();
-		sceneContent.getChildren().addAll(backgroundPane, uselessBox, wallPreview, box);
+		//sceneContent.getChildren().addAll(backgroundPane, uselessBox, wallPreview, box);
+		sceneContent.getChildren().addAll(backgroundPane, box);
 		scene.setRoot(sceneContent);
 
-		scene.setOnMouseMoved(new EventHandler<MouseEvent>() {
+		/*scene.setOnMouseMoved(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
 				if (isPlacingWall) {
@@ -150,7 +151,7 @@ public class GameTurn extends Application {
 					}
 				}
 			}
-		});
+		});*/
 
 		primaryStage.setScene(scene);
 		primaryStage.sizeToScene();
