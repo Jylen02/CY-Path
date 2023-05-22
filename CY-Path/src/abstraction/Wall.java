@@ -155,19 +155,18 @@ public class Wall {
 	 * 
 	 * @param board   The game board.
 	 * @param players Array of players in the game.
-	 * @param turn    The current turn number.
 	 * @return true if the wall blocked a player, false otherwise.
 	 */
-	public boolean wallError(Board board, Integer turn) {
+	public boolean wallError(Board board) {
 		for (int i = 0; i < board.getPlayers().length; i++) {
-			board.getPlayers()[i].getPawn()
-					.setPossibleMove(board.getPlayers()[i].getPawn().possibleMove(board, board.getPlayers()[i].getPawn().getPos()));
+			board.getPlayers()[i].getPawn().setPossibleMove(
+					board.getPlayers()[i].getPawn().possibleMove(board, board.getPlayers()[i].getPawn().getPos()));
 		}
 		if (!board.isWinnableForAll()) {
 			this.updateWall(board, Case.POTENTIALWALL);
 			for (int i = 0; i < board.getPlayers().length; i++) {
-				board.getPlayers()[i].getPawn()
-						.setPossibleMove(board.getPlayers()[i].getPawn().possibleMove(board, board.getPlayers()[i].getPawn().getPos()));
+				board.getPlayers()[i].getPawn().setPossibleMove(
+						board.getPlayers()[i].getPawn().possibleMove(board, board.getPlayers()[i].getPawn().getPos()));
 			}
 			return true;
 		}
@@ -188,17 +187,15 @@ public class Wall {
 	 * depth-first search.
 	 *
 	 * @param board       The game board.
-	 * @param turn        The current turn number.
 	 * @param orientation The orientation of the wall (horizontal or vertical).
 	 * @param pos         The position of the wall.
 	 * @return true if the wall has been created, false otherwise.
 	 */
-	public static boolean createWall(Board board, Integer turn, Orientation orientation,
-			Position pos) {
+	public static boolean createWall(Board board, Orientation orientation, Position pos) {
 		Wall wall = new Wall(orientation, pos);
 		if (wall.verifyWall(board)) {
 			wall.updateWall(board, Case.WALL);
-			if (wall.wallError(board, turn)) {
+			if (wall.wallError(board)) {
 				return false;
 			}
 			board.setLastWall(wall);
