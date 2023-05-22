@@ -129,4 +129,6 @@ Mettre le tout dans un dossier
 19. Documentation JavaDoc IHM : A faire
 19.1. Commentaires pour toutes les méthodes de classe (si utile)
 
-Si un joueur est complètement bloqué (possibleMove == null) -> déclarer match nul ou bien sauter son tour
+Potentiel modification
+-Si un joueur est complètement bloqué (possibleMove == null) -> déclarer match nul ou bien sauter son tour
+-Rajouter Player[] dans Board pour pouvoir faire une méthode qui actualise les déplacements possibles de chaque pion + simplifier certaines modifications dans la console/IHM
