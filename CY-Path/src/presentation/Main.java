@@ -524,7 +524,11 @@ public class Main extends Application {
 
 	private void handleMove(Scene scene, Player p) {
 		for (Position position : p.getPawn().getPossibleMove()) {
-			possibleCellMap.get(position).setOnMouseClicked(e -> movePawn(p, position));
+			possibleCellMap.get(position).setOnMouseClicked(e -> {
+			    if (e.getButton() == MouseButton.PRIMARY && !isPlacingWall) {
+			        movePawn(p, position);
+			    }
+			});
 		}
 	}
 
