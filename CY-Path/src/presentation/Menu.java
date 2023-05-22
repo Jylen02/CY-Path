@@ -23,9 +23,9 @@ public class Menu extends Application {
 
 	private Media mediaPawnMove = new Media(getClass().getResource("/sound/move.mp3").toString());
 	private MediaPlayer mediaPlayerPawnMove = new MediaPlayer(mediaPawnMove);
-	private Media mediaMusic = new Media(getClass().getResource("/sound/tw3LOW.mp3").toString());
-	private MediaPlayer mediaPlayerMusic = new MediaPlayer(mediaMusic);
-	
+	private MediaPlayer mediaPlayerMusic;
+	private Slider volumeSlider;
+
 	@Override
 	public void start(Stage primaryStage) {
 		primaryStage.setTitle("Quoridor");
@@ -41,17 +41,15 @@ public class Menu extends Application {
 
 		StackPane backgroundPane = new StackPane();
 		backgroundPane.setBackground(background);
-		
-		Slider volumeSlider = new Slider(0, 0.1, 0.05);
-		Label volumeLabel = createLabel("Volume", 40);
-		
-		mediaPlayerPawnMove.volumeProperty().bindBidirectional(volumeSlider.valueProperty());
-		mediaPlayerPawnMove.setCycleCount(1); // To repeat the sound 1 time
 
+		Label volumeLabel = createLabel("Volume", 40);
+
+		mediaPlayerMusic = BackgroundMusic.getInstance().getMediaPlayer();
+		volumeSlider = BackgroundMusic.getInstance().getVolumeSlider();
 		mediaPlayerMusic.volumeProperty().bindBidirectional(volumeSlider.valueProperty());
 		mediaPlayerMusic.setCycleCount(MediaPlayer.INDEFINITE); // Infinite restart
 		mediaPlayerMusic.play(); // background music start with the launch of the app
-		
+
 		HBox sliderContainer = new HBox(10);
 		sliderContainer.setAlignment(Pos.CENTER);
 		sliderContainer.getChildren().addAll(volumeLabel, volumeSlider);
@@ -60,7 +58,8 @@ public class Menu extends Application {
 
 		Button play = createButton("Play", 300, 100, 50);
 		play.setOnAction(e -> {
-			ChooseNumberOfPlayers chooseNumberOfPlayersInstance = new ChooseNumberOfPlayers(mediaPlayerPawnMove, mediaPlayerMusic, volumeSlider, backgroundPane);
+			ChooseNumberOfPlayers chooseNumberOfPlayersInstance = new ChooseNumberOfPlayers(mediaPlayerPawnMove,
+					mediaPlayerMusic, volumeSlider, backgroundPane);
 			try {
 				chooseNumberOfPlayersInstance.start(primaryStage);
 			} catch (Exception e1) {
@@ -70,8 +69,8 @@ public class Menu extends Application {
 
 		Button rules = createButton("Rules", 300, 100, 50);
 		rules.setOnAction(e -> {
-		    Rules rulesInstance = new Rules(backgroundPane);
-		    try {
+			Rules rulesInstance = new Rules(backgroundPane);
+			try {
 				rulesInstance.start(primaryStage);
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -82,14 +81,14 @@ public class Menu extends Application {
 		exit.setOnAction(e -> primaryStage.close());
 
 		VBox box = new VBox(20);
-		box.getChildren().addAll(title, play, rules, exit,sliderContainer);
+		box.getChildren().addAll(title, play, rules, exit, sliderContainer);
 		box.setAlignment(Pos.CENTER);
-		
+
 		StackPane sceneContent = new StackPane();
-        sceneContent.getChildren().addAll(backgroundPane, box);
-        
+		sceneContent.getChildren().addAll(backgroundPane, box);
+
 		Scene scene = new Scene(sceneContent, 800, 700);
-		
+
 		primaryStage.setScene(scene);
 		primaryStage.sizeToScene();
 		primaryStage.show();
@@ -107,7 +106,7 @@ public class Menu extends Application {
 		label.setStyle("-fx-font-size: " + pixel + "px; -fx-text-fill: white;");
 		return label;
 	}
-	
+
 	public static void main(String[] args) {
 		launch(args);
 	}

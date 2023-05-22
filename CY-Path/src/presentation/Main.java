@@ -54,7 +54,7 @@ public class Main extends Application {
 	private LinkedHashMap<Position, Rectangle> cellWallMap = new LinkedHashMap<Position, Rectangle>();
 
 	// PlaceWall information
-	//private VBox box;
+	// private VBox box;
 	private StackPane wallContainer;
 	private Rectangle wallPreview;
 	private boolean isPlacingWall;
@@ -76,7 +76,7 @@ public class Main extends Application {
 	private MediaPlayer mediaPlayerPawnMove = new MediaPlayer(mediaPawnMove);
 	private Media mediaMusic = new Media(getClass().getResource("/sound/tw3LOW.mp3").toString());
 	private MediaPlayer mediaPlayerMusic = new MediaPlayer(mediaMusic);
-	
+
 	// Slider volume lié entre pages
 	private Label volumeLabel = createLabel("Volume", 40);
 	private Slider volumeSlider = new Slider(0, 0.1, 0.05);
@@ -141,7 +141,6 @@ public class Main extends Application {
 		this.primaryStage.setResizable(false);
 
 		this.primaryStage.getIcons().add(new Image(getClass().getResource("/image/dikdik.png").toExternalForm()));
-
 
 		mediaPlayerPawnMove.volumeProperty().bindBidirectional(volumeSlider.valueProperty());
 		mediaPlayerPawnMove.setCycleCount(1); // To repeat the sound 1 time
@@ -322,10 +321,10 @@ public class Main extends Application {
 	private void playBoard(boolean canDoAction) {
 		Label playerTurn = createLabel(this.getPlayers()[this.getCurrentTurn()].getName() + "'s turn", 50);
 		Label uselessPlayerTurn = createLabel(this.getPlayers()[this.getCurrentTurn()].getName() + "'s turn", 50);
-		
+
 		Pawn p = players[this.getCurrentTurn()].getPawn();
 		p.setPossibleMove(p.possibleMove(this.board, p.getPos()));
-		
+
 		grid = updateBoard(false);
 		grid.setAlignment(Pos.CENTER);
 
@@ -357,15 +356,14 @@ public class Main extends Application {
 		uselessSliderContainer.setAlignment(Pos.CENTER);
 
 		VBox uselessBox = new VBox(50);
-		
-		uselessSliderContainer.setVisible(false); 	//Rendre invisible tous les éléments de la uselessBox sauf la grid
+
+		uselessSliderContainer.setVisible(false); // Rendre invisible tous les éléments de la uselessBox sauf la grid
 		uselessAction.setVisible(false);
 		uselessPlayerTurn.setVisible(false);
-		
+
 		uselessBox.getChildren().addAll(uselessPlayerTurn, grid, uselessAction, uselessSliderContainer);
 		uselessBox.setAlignment(Pos.CENTER);
-		
-		
+
 		VBox box = new VBox(50);
 		box.getChildren().addAll(playerTurn, invisible, action, sliderContainer);
 		box.setAlignment(Pos.CENTER);
@@ -525,9 +523,9 @@ public class Main extends Application {
 	private void handleMove(Scene scene, Player p) {
 		for (Position position : p.getPawn().getPossibleMove()) {
 			possibleCellMap.get(position).setOnMouseClicked(e -> {
-			    if (e.getButton() == MouseButton.PRIMARY && !isPlacingWall) {
-			        movePawn(p, position);
-			    }
+				if (e.getButton() == MouseButton.PRIMARY && !isPlacingWall) {
+					movePawn(p, position);
+				}
 			});
 		}
 	}
@@ -627,7 +625,7 @@ public class Main extends Application {
 			Wall.removeLastWall(board);
 			this.setHasPlacedWall(false);
 		}
-		
+
 		// Si on veut annuler un mouvement de pion
 		// Détecter si j'ai bougé un pion
 		if (hasMoved) {
@@ -668,20 +666,20 @@ public class Main extends Application {
 		// Reset Wall preview
 		this.setWallPreview(null);
 		this.setPlacingWall(false);
-		
+
 		// Reset action
 		this.setHasPlacedWall(false);
 		hasMoved = false;
-		
+
 		// Reset the game state
 		this.setCurrentTurn(0);
 		this.getBoard().initializeBoard();
 		for (int i = 0; i < this.getBoard().getPlayerNumber(); i++) {
-			players[i].getPawn().setPos(new Position(Board.STARTINGPOSITIONPLAYERS[i].getX(),Board.STARTINGPOSITIONPLAYERS[i]
-							.getY()));
+			players[i].getPawn().setPos(
+					new Position(Board.STARTINGPOSITIONPLAYERS[i].getX(), Board.STARTINGPOSITIONPLAYERS[i].getY()));
 			players[i].getPawn()
 					.setPossibleMove(players[i].getPawn().possibleMove(board, players[i].getPawn().getPos()));
-			players[i].setRemainingWall(Board.MAXWALLCOUNT / this.getBoard().getPlayerNumber() );
+			players[i].setRemainingWall(Board.MAXWALLCOUNT / this.getBoard().getPlayerNumber());
 		}
 		grid = updateBoard(false);
 		playBoard(true);
@@ -691,13 +689,14 @@ public class Main extends Application {
 		// Reset Wall preview
 		this.setWallPreview(null);
 		this.setPlacingWall(false);
-		
+
 		// Reset action
 		this.setHasPlacedWall(false);
 		hasMoved = false;
-				
+
 		start(primaryStage);
 	}
+
 	public static void main(String[] args) {
 		launch(args);
 	}

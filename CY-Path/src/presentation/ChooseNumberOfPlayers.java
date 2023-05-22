@@ -14,20 +14,21 @@ import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 
 public class ChooseNumberOfPlayers extends Application {
-	
+
 	private StackPane backgroundPane;
-	
+
 	private MediaPlayer mediaPlayerPawnMove;
 	private MediaPlayer mediaPlayerMusic;
 	private Slider volumeSlider;
-	
-	public ChooseNumberOfPlayers(MediaPlayer mediaPlayerPawnMove, MediaPlayer mediaPlayerMusic, Slider volumeSlider, StackPane backgroundPane) {
+
+	public ChooseNumberOfPlayers(MediaPlayer mediaPlayerPawnMove, MediaPlayer mediaPlayerMusic, Slider volumeSlider,
+			StackPane backgroundPane) {
 		this.mediaPlayerPawnMove = mediaPlayerPawnMove;
 		this.mediaPlayerMusic = mediaPlayerMusic;
 		this.volumeSlider = volumeSlider;
 		this.backgroundPane = backgroundPane;
 	}
-	
+
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		VBox box = new VBox(10);
@@ -45,7 +46,8 @@ public class ChooseNumberOfPlayers extends Application {
 		RadioButton twoPlayer = new RadioButton("2 Players");
 		twoPlayer.setStyle("-fx-text-fill: white;");
 		twoPlayer.setOnAction(e -> {
-			CreatePlayers createPlayersInstance = new CreatePlayers(new Board(2), mediaPlayerPawnMove, mediaPlayerMusic, volumeSlider, backgroundPane);
+			CreatePlayers createPlayersInstance = new CreatePlayers(new Board(2), mediaPlayerPawnMove, mediaPlayerMusic,
+					volumeSlider, backgroundPane);
 			try {
 				createPlayersInstance.start(primaryStage);
 			} catch (Exception e1) {
@@ -56,7 +58,8 @@ public class ChooseNumberOfPlayers extends Application {
 		RadioButton fourPlayer = new RadioButton("4 Players");
 		fourPlayer.setStyle("-fx-text-fill: white;");
 		fourPlayer.setOnAction(e -> {
-			CreatePlayers createPlayersInstance = new CreatePlayers(new Board(4), mediaPlayerPawnMove, mediaPlayerMusic, volumeSlider, backgroundPane);
+			CreatePlayers createPlayersInstance = new CreatePlayers(new Board(4), mediaPlayerPawnMove, mediaPlayerMusic,
+					volumeSlider, backgroundPane);
 			try {
 				createPlayersInstance.start(primaryStage);
 			} catch (Exception e1) {
@@ -66,16 +69,15 @@ public class ChooseNumberOfPlayers extends Application {
 
 		box.getChildren().addAll(title, label, twoPlayer, fourPlayer, back);
 		box.setAlignment(Pos.CENTER);
-		
-		StackPane sceneContent = new StackPane();
-        sceneContent.getChildren().addAll(backgroundPane, box);
-        
-		Scene scene = new Scene(sceneContent, 800, 700);
 
+		StackPane sceneContent = new StackPane();
+		sceneContent.getChildren().addAll(backgroundPane, box);
+
+		Scene scene = new Scene(sceneContent, 800, 700);
 
 		primaryStage.setScene(scene);
 		primaryStage.sizeToScene();
 		primaryStage.show();
 	}
-	
+
 }

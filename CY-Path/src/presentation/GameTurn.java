@@ -36,42 +36,43 @@ public class GameTurn extends Application {
 
 	private Stage primaryStage;
 	private StackPane backgroundPane;
-	
+
 	// Board information
 	private Board board;
 	private GridPane grid;
 	private GridPane invisible;
 	private Rectangle cell; // For the construction of the grid
-	
-	//Players information
+
+	// Players information
 	private Player[] players;
 	private int currentTurn;
 	private boolean canDoAction;
-	
+
 	private Image wolf = new Image(getClass().getResource("/image/wolfR.png").toExternalForm());
 	private Image gibbon = new Image(getClass().getResource("/image/gibbonG.png").toExternalForm());
 	private Image penguin = new Image(getClass().getResource("/image/penguinB.png").toExternalForm());
 	private Image seagull = new Image(getClass().getResource("/image/seagullY.png").toExternalForm());
-	
+
 	private MediaPlayer mediaPlayerPawnMove;
 	private MediaPlayer mediaPlayerMusic;
 	private Slider volumeSlider;
-	
+
 	private LinkedHashMap<Position, Rectangle> possibleCellMap = new LinkedHashMap<Position, Rectangle>();
 	private Set<Position> positionWall = new LinkedHashSet<Position>();
 	private LinkedHashMap<Position, Rectangle> cellWallMap = new LinkedHashMap<Position, Rectangle>();
 
 	private Rectangle wallPreview;
-	
+
 	// Action information
 	private boolean isPlacingWall;
 	private boolean hasPlacedWall;
 	private boolean hasMoved;
-	
+
 	private int mouseColumn;
 	private int mouseRow;
-		
-	public GameTurn(Board board, Player[] players, MediaPlayer mediaPlayerPawnMove, MediaPlayer mediaPlayerMusic, Slider volumeSlider, StackPane backgroundPane, Stage primaryStage) {
+
+	public GameTurn(Board board, Player[] players, MediaPlayer mediaPlayerPawnMove, MediaPlayer mediaPlayerMusic,
+			Slider volumeSlider, StackPane backgroundPane, Stage primaryStage) {
 		this.board = board;
 		this.players = players;
 		this.currentTurn = 0;
@@ -82,15 +83,15 @@ public class GameTurn extends Application {
 		this.backgroundPane = backgroundPane;
 		this.primaryStage = primaryStage;
 	}
-	
+
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		Label playerTurn = Menu.createLabel(this.players[this.currentTurn].getName() + "'s turn", 50);
 		Label uselessPlayerTurn = Menu.createLabel(this.players[this.currentTurn].getName() + "'s turn", 50);
-		
+
 		Pawn p = players[this.currentTurn].getPawn();
 		p.setPossibleMove(p.possibleMove(this.board, p.getPos()));
-		
+
 		grid = updateBoard(false);
 		grid.setAlignment(Pos.CENTER);
 
@@ -119,15 +120,14 @@ public class GameTurn extends Application {
 		uselessSliderContainer.setAlignment(Pos.CENTER);
 
 		VBox uselessBox = new VBox(50);
-		
-		uselessSliderContainer.setVisible(false); 	//Rendre invisible tous les éléments de la uselessBox sauf la grid
+
+		uselessSliderContainer.setVisible(false); // Rendre invisible tous les éléments de la uselessBox sauf la grid
 		uselessAction.setVisible(false);
 		uselessPlayerTurn.setVisible(false);
-		
+
 		uselessBox.getChildren().addAll(uselessPlayerTurn, grid, uselessAction, uselessSliderContainer);
 		uselessBox.setAlignment(Pos.CENTER);
-		
-		
+
 		VBox box = new VBox(50);
 		box.getChildren().addAll(playerTurn, invisible, action, sliderContainer);
 		box.setAlignment(Pos.CENTER);
@@ -284,13 +284,13 @@ public class GameTurn extends Application {
 		}
 		return grid;
 	}
-	
+
 	private void handleMove(Scene scene, Player p) {
 		for (Position position : p.getPawn().getPossibleMove()) {
 			possibleCellMap.get(position).setOnMouseClicked(e -> {
-			    if (e.getButton() == MouseButton.PRIMARY && !isPlacingWall) {
-			        movePawn(p, position);
-			    }
+				if (e.getButton() == MouseButton.PRIMARY && !isPlacingWall) {
+					movePawn(p, position);
+				}
 			});
 		}
 	}
@@ -389,7 +389,7 @@ public class GameTurn extends Application {
 			Wall.removeLastWall(board);
 			this.hasPlacedWall = false;
 		}
-		
+
 		// Si on veut annuler un mouvement de pion
 		// Détecter si j'ai bougé un pion
 		if (hasMoved) {
@@ -445,21 +445,21 @@ public class GameTurn extends Application {
 		// Reset Wall preview
 		this.isPlacingWall = false;
 		this.wallPreview = null;
-		
+
 		// Reset action
 		hasPlacedWall = false;
 		hasMoved = false;
 		this.canDoAction = true;
-		
+
 		// Reset the game state
 		this.currentTurn = 0;
 		this.board.initializeBoard();
 		for (int i = 0; i < this.board.getPlayerNumber(); i++) {
-			players[i].getPawn().setPos(new Position(Board.STARTINGPOSITIONPLAYERS[i].getX(),Board.STARTINGPOSITIONPLAYERS[i]
-							.getY()));
+			players[i].getPawn().setPos(
+					new Position(Board.STARTINGPOSITIONPLAYERS[i].getX(), Board.STARTINGPOSITIONPLAYERS[i].getY()));
 			players[i].getPawn()
 					.setPossibleMove(players[i].getPawn().possibleMove(board, players[i].getPawn().getPos()));
-			players[i].setRemainingWall(Board.MAXWALLCOUNT / this.board.getPlayerNumber() );
+			players[i].setRemainingWall(Board.MAXWALLCOUNT / this.board.getPlayerNumber());
 		}
 		grid = updateBoard(false);
 		try {
@@ -471,16 +471,15 @@ public class GameTurn extends Application {
 
 	private void handleExitButton() {
 		// Save to implement
-		
-		
+
 		// Reset Wall preview
 		this.wallPreview = null;
 		this.isPlacingWall = false;
-		
+
 		// Reset action
 		this.hasPlacedWall = false;
 		hasMoved = false;
-				
+
 		Menu menuInstance = new Menu();
 		menuInstance.start(primaryStage);
 	}

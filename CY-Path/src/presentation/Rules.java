@@ -12,11 +12,11 @@ import javafx.stage.Stage;
 
 public class Rules extends Application {
 	private StackPane backgroundPane;
-	
+
 	public Rules(StackPane backgroundPane) {
 		this.backgroundPane = backgroundPane;
 	}
-	
+
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		Label title = Menu.createLabel("Rules", 140);
@@ -43,8 +43,8 @@ public class Rules extends Application {
 		box.setAlignment(Pos.CENTER);
 
 		StackPane sceneContent = new StackPane();
-        sceneContent.getChildren().addAll(backgroundPane, box);
-        
+		sceneContent.getChildren().addAll(backgroundPane, box);
+
 		Scene scene = new Scene(sceneContent, 800, 700);
 
 		primaryStage.setScene(scene);
@@ -52,5 +52,4 @@ public class Rules extends Application {
 		primaryStage.show();
 	}
 
-	
 }
