@@ -19,6 +19,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -27,6 +28,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Popup;
 import javafx.stage.Stage;
 
 public class GameTurn extends Application {
@@ -162,22 +164,31 @@ public class GameTurn extends Application {
 		primaryStage.show();
 	}
 
-	private HBox actionList(Scene scene, boolean canDoAction) {
-		Button exit = Menu.createButton("Exit", 110, 50, 20);
+	private HBox actionList(Scene scene, boolean canDoAction) {		
+		Button loadGame = Menu.createButton("Load", 80, 35, 15);
+		/* remplacer le setOnAction par la bonne methode*/
+		loadGame.setOnAction(e -> handleExitButton());
+		
+		Button saveGame = Menu.createButton("Save", 80, 35, 15);
+		/* remplacer le setOnAction par la bonne methode*/
+		saveGame.setOnAction(e -> handleExitButton());
+        
+	
+		Button exit = Menu.createButton("Exit", 80, 35, 15);
 		exit.setOnAction(e -> handleExitButton());
 
-		Button restart = Menu.createButton("Restart", 110, 50, 20);
+		Button restart = Menu.createButton("Restart", 80, 35, 15);
 		restart.setOnAction(e -> handleRestartButton());
 
-		Button cancel = Menu.createButton("Cancel", 110, 50, 20);
+		Button cancel = Menu.createButton("Cancel", 80, 35, 15);
 		cancel.setOnAction(e -> handleCancel());
 		cancel.setDisable(true);
 
-		Button confirm = Menu.createButton("Confirm", 110, 50, 20);
+		Button confirm = Menu.createButton("Confirm", 80, 35, 15);
 		confirm.setOnAction(e -> handleConfirm());
 		confirm.setDisable(true);
 
-		Button wall = Menu.createButton("Wall (" + players[currentTurn].getRemainingWall() + ")", 110, 50, 20);
+		Button wall = Menu.createButton("Wall (" + players[currentTurn].getRemainingWall() + ")", 80, 35, 15);
 		wall.setOnAction(e -> {
 			HandlePlaceWall placeWall = new HandlePlaceWall(this);
 			placeWall.handlePlaceWall(scene, wall);
@@ -196,7 +207,7 @@ public class GameTurn extends Application {
 		}
 
 		HBox box = new HBox(20);
-		box.getChildren().addAll(exit, restart, wall, cancel, confirm);
+		box.getChildren().addAll(loadGame, saveGame, exit, restart, wall, cancel, confirm);
 		box.setAlignment(Pos.TOP_CENTER);
 
 		return box;
