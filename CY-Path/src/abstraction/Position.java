@@ -1,9 +1,14 @@
 package abstraction;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+
 /**
  * Represents a position in a 2D coordinate system.
  */
-public class Position {
+public class Position implements Serializable{
 
 	/**
 	 * The x-coordinate of the position (Rows of the board).
@@ -101,5 +106,15 @@ public class Position {
 	@Override
 	public int hashCode() {
 		return getX() * 100 + getY();
+		
+	}
+	// Méthode pour sérialiser la classe Board
+	private void writeObject(ObjectOutputStream out) throws IOException {
+		out.defaultWriteObject();
+	}
+
+	// Méthode pour désérialiser la classe Board
+	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+		in.defaultReadObject();
 	}
 }

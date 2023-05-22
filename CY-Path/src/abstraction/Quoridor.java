@@ -1,5 +1,6 @@
 package abstraction;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 /**
@@ -187,61 +188,93 @@ public class Quoridor {
 			System.out.println(" - New game : 1 \n - Load a game : 2");
 			System.out.println("Please select the action you want (1 or 2) :");
 			choice = s.nextInt();
-		}
-		switch (choice) {
-		case 1:
-			// Enter the number of players
-			while (numberOfPlayers != 2 && numberOfPlayers != 4) {
-				System.out.println("Please enter the number of players (2 or 4)");
-				numberOfPlayers = s.nextInt();
-			}
-			s.nextLine();
-			System.out.println("Please enter the name of each players");
-			board = new Board(numberOfPlayers);
-			for (int i = 0; i < numberOfPlayers; i++) {
-				System.out.println("Player " + (i + 1) + " : ");
-				for (Case value : Case.values()) {
-					if (value.getValue() == i + 1) {
-						board.getPlayers()[i] = new Player(s.nextLine(),
-								new Pawn(board,
-										new Position(Board.STARTINGPOSITIONPLAYERS[i].getX(),
-												Board.STARTINGPOSITIONPLAYERS[i].getY()),
-										value),
-								Board.MAXWALLCOUNT / numberOfPlayers);
+			switch (choice) {
+			case 1:
+				// Enter the number of players
+				while (numberOfPlayers != 2 && numberOfPlayers != 4) {
+					System.out.println("Please enter the number of players (2 or 4)");
+					numberOfPlayers = s.nextInt();
+					if (numberOfPlayers != 2 && numberOfPlayers != 4) {
+						System.out.println("Your response is not in the list of available answers.");
 					}
 				}
+				s.nextLine();
+				System.out.println("Please enter the name of each players");
+				board = new Board(numberOfPlayers);
+				for (int i = 0; i < numberOfPlayers; i++) {
+					System.out.println("Player " + (i + 1) + " : ");
+					for (Case value : Case.values()) {
+						if (value.getValue() == i + 1) {
+							board.getPlayers()[i] = new Player(s.nextLine(),
+									new Pawn(board,
+											new Position(Board.STARTINGPOSITIONPLAYERS[i].getX(),
+													Board.STARTINGPOSITIONPLAYERS[i].getY()),
+											value),
+									Board.MAXWALLCOUNT / numberOfPlayers);
+						}
+					}
+				}
+				break;
+			case 2:
+				try {
+					SaveLoadGame.load(board, "save1.svg");
+				} catch (IOException e) {
+					System.out.println("There is no save");
+					choice = 0;
+				}
+				break;
+			default:
+				System.out.println("Your response is not in the list of available answers.");
+				break;
 			}
-			break;
-		default:
-			break;
-
 		}
-
-		// board = new Board(numberOfPlayers);
-
 		System.out.println(board);
 		boolean win = false;
-		int turn = 0;
 		// Initialize first possible move for each pawn
-		for (int i = 0; i < numberOfPlayers; i++) {
+		for (int i = 0; i < board.getPlayerNumber(); i++) {
 			board.getPlayers()[i].getPawn().setPossibleMove(
 					board.getPlayers()[i].getPawn().possibleMove(board, board.getPlayers()[i].getPawn().getPos()));
 		}
 		// While no one has won, play turn
 		while (!win) {
-			System.out.println(board.getPlayers()[turn].getName() + "'s turn :");
-			roundOfPlay(board);
-			System.out.println(board);
-			// If someone has won, finish the game and display the winner
-			if (board.getPlayers()[turn].getPawn().isWinner()) {
-				win = true;
-				System.out.println(board.getPlayers()[turn].getName() + " has won. Congratulations !");
+			System.out.println(board.getPlayers()[board.getCurrentTurn()].getName() + "'s turn :");
+			choice = 0;
+			while (choice != 1 && choice != 2) {
+				System.out.println("Do you want to save the game : ");
+				System.out.println(" - Yes : 1 \n - No : 2");
+				System.out.println("Please select your choice (1 or 2) :");
+				choice = s.nextInt();
+				switch (choice) {
+				case 1:
+					try {
+						SaveLoadGame.save(board, "save1.svg");
+						Quoridor.main(args);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					win = true;
+					break;
+				case 2:
+					roundOfPlay(board);
+					System.out.println(board);
+					// If someone has won, finish the game and display the winner
+					if (board.getPlayers()[board.getCurrentTurn()].getPawn().isWinner()) {
+						win = true;
+						System.out.println(
+								board.getPlayers()[board.getCurrentTurn()].getName() + " has won. Congratulations !");
+					} else {
+						for (int i = 0; i < numberOfPlayers; i++) {
+							board.getPlayers()[i].getPawn().setPossibleMove(board.getPlayers()[i].getPawn()
+									.possibleMove(board, board.getPlayers()[i].getPawn().getPos()));
+						}
+						board.setCurrentTurn((board.getCurrentTurn() + 1) % board.getPlayerNumber());
+					}
+					break;
+				default:
+					System.out.println("Your response is not in the list of available answers.");
+					break;
+				}
 			}
-			for (int i = 0; i < numberOfPlayers; i++) {
-				board.getPlayers()[i].getPawn().setPossibleMove(
-						board.getPlayers()[i].getPawn().possibleMove(board, board.getPlayers()[i].getPawn().getPos()));
-			}
-			board.setCurrentTurn((board.getCurrentTurn() + 1) % numberOfPlayers);
 		}
 		s.close();
 	}
