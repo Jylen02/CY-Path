@@ -23,9 +23,16 @@ public class Board implements Serializable {
 	 */
 	private int playerNumber;
 
+	/**
+	 * The information of each players.
+	 */
 	private Player[] players;
 
+	/**
+	 * The current turn of the game.
+	 */
 	private int currentTurn;
+	
 	/**
 	 * The last wall placed on the board.
 	 */
