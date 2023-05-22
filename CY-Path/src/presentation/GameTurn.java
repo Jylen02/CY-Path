@@ -181,6 +181,9 @@ public class GameTurn extends Application {
 					}
 				}
 			});
+			
+			String  style= getClass().getResource("style.css").toExternalForm();
+			scene.getStylesheets().add(style);
 
 			primaryStage.setScene(scene);
 			primaryStage.sizeToScene();
@@ -195,6 +198,7 @@ public class GameTurn extends Application {
 	 * @return The VBox object representing the action list UI component.
 	 */
 	private HBox actionList(Scene scene, boolean canDoAction) {
+		
 		Button loadGame = Menu.createButton("Load", 80, 35, 15);
 		/* remplacer le setOnAction par la bonne methode */
 		loadGame.setOnAction(e -> handleExitButton());
@@ -209,19 +213,19 @@ public class GameTurn extends Application {
 		Button restart = Menu.createButton("Restart", 80, 35, 15);
 		restart.setOnAction(e -> handleRestartButton());
 
-		Button cancel = Menu.createButton("Cancel", 80, 35, 15);
+		Button cancel = Menu.createButton("Cancel", 90, 35, 15);
 		cancel.setOnAction(e -> handleCancel());
 		cancel.setDisable(true);
-		cancel.setStyle("-fx-background-color: #FF8675");
+		cancel.getStyleClass().add("cancel-button");
 
-		Button confirm = Menu.createButton("Confirm", 80, 35, 15);
+		Button confirm = Menu.createButton("Confirm", 90, 35, 15);
 		confirm.setOnAction(e -> handleConfirm());
 		confirm.setDisable(true);
-		confirm.setStyle("-fx-background-color: #87E990");
+		confirm.getStyleClass().add("confirm-button");
 
 		Button wall = Menu.createButton("Wall (" + board.getPlayers()[board.getCurrentTurn()].getRemainingWall() + ")",
-				80, 35, 15);
-		wall.setStyle("-fx-background-color: #C4C9C7");
+				90, 35, 15);
+		wall.getStyleClass().add("wall-button");
 		wall.setOnAction(e -> {
 			HandlePlaceWall placeWall = new HandlePlaceWall(this);
 			placeWall.handlePlaceWall(scene, wall);

@@ -56,11 +56,15 @@ public class CreatePlayers extends Application {
 		Label label = Menu.createLabel("Choose the name of each players", 50);
 
 		VBox box = new VBox(title, label);
+		box.setSpacing(10);
 
 		// Choose each player's name
 		TextField[] name = new TextField[board.getPlayerNumber()];
 		for (int i = 0; i < this.board.getPlayerNumber(); i++) {
 			name[i] = new TextField("Player " + (i + 1));
+			name[i].getStyleClass().add("text-field");
+			name[i].setMaxWidth(400);
+			name[i].setMaxHeight(40);
 			box.getChildren().add(name[i]);
 		}
 
@@ -104,6 +108,9 @@ public class CreatePlayers extends Application {
 		sceneContent.getChildren().addAll(backgroundPane, box);
 
 		Scene scene = new Scene(sceneContent, 800, 700);
+		
+		String  style= getClass().getResource("style.css").toExternalForm();
+		scene.getStylesheets().add(style);
 
 		primaryStage.setScene(scene);
 		primaryStage.sizeToScene();

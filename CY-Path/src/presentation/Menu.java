@@ -96,6 +96,9 @@ public class Menu extends Application {
 		sceneContent.getChildren().addAll(backgroundPane, box);
 
 		Scene scene = new Scene(sceneContent, 800, 700);
+		
+		String  style= getClass().getResource("style.css").toExternalForm();
+		scene.getStylesheets().add(style);
 
 		primaryStage.setScene(scene);
 		primaryStage.sizeToScene();
