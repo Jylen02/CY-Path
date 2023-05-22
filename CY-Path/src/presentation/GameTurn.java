@@ -470,6 +470,9 @@ public class GameTurn extends Application {
 	}
 
 	private void handleExitButton() {
+		// Save to implement
+		
+		
 		// Reset Wall preview
 		this.wallPreview = null;
 		this.isPlacingWall = false;
