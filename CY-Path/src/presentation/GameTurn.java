@@ -198,12 +198,8 @@ public class GameTurn extends Application {
 	private HBox actionList(Scene scene, boolean canDoAction) {
 		
 		Button loadGame = Menu.createButton("Load", 80, 35, 15);
-		/* remplacer le setOnAction par la bonne methode */
-		loadGame.setOnAction(e -> handleExitButton());
 
 		Button saveGame = Menu.createButton("Save", 80, 35, 15);
-		/* remplacer le setOnAction par la bonne methode */
-		saveGame.setOnAction(e -> handleExitButton());
 
 		Button exit = Menu.createButton("Exit", 80, 35, 15);
 		exit.setOnAction(e -> handleExitButton());
