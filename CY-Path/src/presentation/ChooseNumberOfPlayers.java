@@ -7,25 +7,15 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
-import javafx.scene.control.Slider;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 
 public class ChooseNumberOfPlayers extends Application {
 
 	private StackPane backgroundPane;
 
-	private MediaPlayer mediaPlayerPawnMove;
-	private MediaPlayer mediaPlayerMusic;
-	private Slider volumeSlider;
-
-	public ChooseNumberOfPlayers(MediaPlayer mediaPlayerPawnMove, MediaPlayer mediaPlayerMusic, Slider volumeSlider,
-			StackPane backgroundPane) {
-		this.mediaPlayerPawnMove = mediaPlayerPawnMove;
-		this.mediaPlayerMusic = mediaPlayerMusic;
-		this.volumeSlider = volumeSlider;
+	public ChooseNumberOfPlayers(StackPane backgroundPane) {
 		this.backgroundPane = backgroundPane;
 	}
 
@@ -46,8 +36,7 @@ public class ChooseNumberOfPlayers extends Application {
 		RadioButton twoPlayer = new RadioButton("2 Players");
 		twoPlayer.setStyle("-fx-text-fill: white;");
 		twoPlayer.setOnAction(e -> {
-			CreatePlayers createPlayersInstance = new CreatePlayers(new Board(2), mediaPlayerPawnMove, mediaPlayerMusic,
-					volumeSlider, backgroundPane);
+			CreatePlayers createPlayersInstance = new CreatePlayers(new Board(2), backgroundPane);
 			try {
 				createPlayersInstance.start(primaryStage);
 			} catch (Exception e1) {
@@ -58,8 +47,7 @@ public class ChooseNumberOfPlayers extends Application {
 		RadioButton fourPlayer = new RadioButton("4 Players");
 		fourPlayer.setStyle("-fx-text-fill: white;");
 		fourPlayer.setOnAction(e -> {
-			CreatePlayers createPlayersInstance = new CreatePlayers(new Board(4), mediaPlayerPawnMove, mediaPlayerMusic,
-					volumeSlider, backgroundPane);
+			CreatePlayers createPlayersInstance = new CreatePlayers(new Board(4), backgroundPane);
 			try {
 				createPlayersInstance.start(primaryStage);
 			} catch (Exception e1) {

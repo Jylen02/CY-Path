@@ -22,7 +22,6 @@ import javafx.stage.Stage;
 public class Menu extends Application {
 
 	private Media mediaPawnMove = new Media(getClass().getResource("/sound/move.mp3").toString());
-	private MediaPlayer mediaPlayerPawnMove = new MediaPlayer(mediaPawnMove);
 	private MediaPlayer mediaPlayerMusic;
 	private Slider volumeSlider;
 
@@ -58,8 +57,7 @@ public class Menu extends Application {
 
 		Button play = createButton("Play", 300, 100, 50);
 		play.setOnAction(e -> {
-			ChooseNumberOfPlayers chooseNumberOfPlayersInstance = new ChooseNumberOfPlayers(mediaPlayerPawnMove,
-					mediaPlayerMusic, volumeSlider, backgroundPane);
+			ChooseNumberOfPlayers chooseNumberOfPlayersInstance = new ChooseNumberOfPlayers(backgroundPane);
 			try {
 				chooseNumberOfPlayersInstance.start(primaryStage);
 			} catch (Exception e1) {

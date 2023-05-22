@@ -10,11 +10,9 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 
 public class CreatePlayers extends Application {
@@ -23,16 +21,8 @@ public class CreatePlayers extends Application {
 
 	private Board board;
 
-	private MediaPlayer mediaPlayerPawnMove;
-	private MediaPlayer mediaPlayerMusic;
-	private Slider volumeSlider;
-
-	public CreatePlayers(Board board, MediaPlayer mediaPlayerPawnMove, MediaPlayer mediaPlayerMusic,
-			Slider volumeSlider, StackPane backgroundPane) {
+	public CreatePlayers(Board board, StackPane backgroundPane) {
 		this.board = board;
-		this.mediaPlayerPawnMove = mediaPlayerPawnMove;
-		this.mediaPlayerMusic = mediaPlayerMusic;
-		this.volumeSlider = volumeSlider;
 		this.backgroundPane = backgroundPane;
 	}
 
@@ -53,8 +43,7 @@ public class CreatePlayers extends Application {
 
 		Button back = Menu.createButton("Back", 100, 50, 20);
 		back.setOnAction(e -> {
-			ChooseNumberOfPlayers chooseNumberOfPlayersInstance = new ChooseNumberOfPlayers(mediaPlayerPawnMove,
-					mediaPlayerMusic, volumeSlider, backgroundPane);
+			ChooseNumberOfPlayers chooseNumberOfPlayersInstance = new ChooseNumberOfPlayers(backgroundPane);
 			try {
 				chooseNumberOfPlayersInstance.start(primaryStage);
 			} catch (Exception e1) {
@@ -79,8 +68,7 @@ public class CreatePlayers extends Application {
 					}
 				}
 			}
-			GameTurn gameTurnInstance = new GameTurn(board, players, mediaPlayerPawnMove, mediaPlayerMusic,
-					volumeSlider, backgroundPane, primaryStage);
+			GameTurn gameTurnInstance = new GameTurn(board, players, backgroundPane, primaryStage);
 			try {
 				gameTurnInstance.start(primaryStage);
 			} catch (Exception e1) {

@@ -26,7 +26,6 @@ public class BackgroundMusic {
 		if (instance == null) {
 			instance = new BackgroundMusic();
 		}
-
 		return instance;
 	}
 

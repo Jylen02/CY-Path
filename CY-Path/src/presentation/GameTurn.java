@@ -54,6 +54,7 @@ public class GameTurn extends Application {
 	private Image seagull = new Image(getClass().getResource("/image/seagullY.png").toExternalForm());
 
 	private MediaPlayer mediaPlayerPawnMove;
+	private MediaPlayer mediaPlaceWall;
 	private MediaPlayer mediaPlayerMusic;
 	private Slider volumeSlider;
 
@@ -71,15 +72,11 @@ public class GameTurn extends Application {
 	private int mouseColumn;
 	private int mouseRow;
 
-	public GameTurn(Board board, Player[] players, MediaPlayer mediaPlayerPawnMove, MediaPlayer mediaPlayerMusic,
-			Slider volumeSlider, StackPane backgroundPane, Stage primaryStage) {
+	public GameTurn(Board board, Player[] players, StackPane backgroundPane, Stage primaryStage) {
 		this.board = board;
 		this.players = players;
 		this.currentTurn = 0;
 		this.canDoAction = true;
-		this.mediaPlayerPawnMove = mediaPlayerPawnMove;
-		this.mediaPlayerMusic = mediaPlayerMusic;
-		this.volumeSlider = volumeSlider;
 		this.backgroundPane = backgroundPane;
 		this.primaryStage = primaryStage;
 	}

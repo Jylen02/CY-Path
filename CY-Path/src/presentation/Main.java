@@ -74,7 +74,7 @@ public class Main extends Application {
 
 	private Media mediaPawnMove = new Media(getClass().getResource("/sound/move.mp3").toString());
 	private MediaPlayer mediaPlayerPawnMove = new MediaPlayer(mediaPawnMove);
-	private Media mediaMusic = new Media(getClass().getResource("/sound/tw3LOW.mp3").toString());
+	private Media mediaMusic = new Media(getClass().getResource("/sound/tw3.mp3").toString());
 	private MediaPlayer mediaPlayerMusic = new MediaPlayer(mediaMusic);
 
 	// Slider volume lié entre pages
