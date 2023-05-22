@@ -83,14 +83,14 @@ Human-machine interface only features :
 	- Players have icon on their pawn
 	- Exit the game (there is no backup of the current game, all progress will be lose)
 	- Restart the game
-	- Background music & sound when we do an action (Moving a pawn)
+	- Background music & sound when we do an action (Moving a pawn and Placing a wall)
+	- Can't move the pawn when placing wall
 	- The sound's volume can be controled 
 
 Not implemented features:
-	- Sound when we do an action (Placing a wall)
-	- Can't move the pawn when placing wall
 	- Accurate rules
 	- Backup of the game
+	- Observator
 
 How to play ? :
 	- Press the "Play" button

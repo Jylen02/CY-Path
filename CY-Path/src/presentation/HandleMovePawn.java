@@ -27,7 +27,7 @@ public class HandleMovePawn {
 			gameTurn.mediaPlayerPawnMove.stop();
 			gameTurn.mediaPlayerPawnMove.play();
 
-			gameTurn.invisible = gameTurn.updateBoard(true);
+			gameTurn.invisibleGrid = gameTurn.updateBoard(true);
 			gameTurn.grid = gameTurn.updateBoard(false);
 
 			gameTurn.canDoAction = false;

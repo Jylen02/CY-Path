@@ -37,7 +37,7 @@ public class GameTurn extends Application {
 	// Board information
 	protected Board board;
 	protected GridPane grid;
-	protected GridPane invisible;
+	protected GridPane invisibleGrid;
 	private Rectangle cell; // For the construction of the grid
 
 	// Players information
@@ -54,7 +54,6 @@ public class GameTurn extends Application {
 	protected MediaPlayer mediaPlayerWallPlaced = BackgroundMusic.getInstance().getWallPlacedPlayer();
 	private Slider volumeSlider = BackgroundMusic.getInstance().getVolumeSlider();
 	
-
 	protected LinkedHashMap<Position, Rectangle> possibleCellMap = new LinkedHashMap<Position, Rectangle>();
 	protected Set<Position> positionWall = new LinkedHashSet<Position>();
 	protected LinkedHashMap<Position, Rectangle> cellWallMap = new LinkedHashMap<Position, Rectangle>();
@@ -89,8 +88,8 @@ public class GameTurn extends Application {
 		grid = updateBoard(false);
 		grid.setAlignment(Pos.CENTER);
 
-		invisible = updateBoard(true);
-		invisible.setAlignment(Pos.CENTER);
+		invisibleGrid = updateBoard(true);
+		invisibleGrid.setAlignment(Pos.CENTER);
 
 		wallPreview = new Rectangle(65, 5, Color.RED);
 		wallPreview.setOpacity(1);
@@ -118,11 +117,12 @@ public class GameTurn extends Application {
 		uselessAction.setVisible(false);
 		uselessPlayerTurn.setVisible(false);
 
-		uselessBox.getChildren().addAll(uselessPlayerTurn, grid, uselessAction, uselessSliderContainer);
+		//uselessBox.getChildren().addAll(uselessPlayerTurn, grid, uselessAction, uselessSliderContainer);
 		uselessBox.setAlignment(Pos.CENTER);
 
 		VBox box = new VBox(50);
-		box.getChildren().addAll(playerTurn, invisible, action, sliderContainer);
+		//box.getChildren().addAll(playerTurn, invisibleGrid, action, sliderContainer);
+		box.getChildren().addAll(playerTurn, grid, action, sliderContainer);
 		box.setAlignment(Pos.CENTER);
 
 		if (canDoAction) {

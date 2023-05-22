@@ -128,3 +128,5 @@ Mettre le tout dans un dossier
 
 19. Documentation JavaDoc IHM : A faire
 19.1. Commentaires pour toutes les méthodes de classe (si utile)
+
+Si un joueur est complètement bloqué (possibleMove == null) -> déclarer match nul ou bien sauter son tour

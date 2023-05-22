@@ -44,8 +44,14 @@ public class HandlePlaceWall {
 			}
 		});
 		for (Position position : gameTurn.positionWall) {
-			gameTurn.cellWallMap.get(position).setOnMouseEntered(e -> gameTurn.wallPreview.setFill(Color.BLACK));
-			gameTurn.cellWallMap.get(position).setOnMouseExited(e -> gameTurn.wallPreview.setFill(Color.RED));
+			gameTurn.cellWallMap.get(position).setOnMouseEntered(e ->{
+				//Coloriage des murs selon l'orientation
+				gameTurn.wallPreview.setFill(Color.BLACK);
+			});
+			gameTurn.cellWallMap.get(position).setOnMouseExited(e -> {
+				//Enlever coloriage
+				gameTurn.wallPreview.setFill(Color.RED);
+			});
 			gameTurn.possibleCellMap.get(position).setOnMouseClicked(e -> {
 				if (e.getButton() == MouseButton.PRIMARY) {
 					if (gameTurn.wallPreview.getWidth() > gameTurn.wallPreview.getHeight()) {
