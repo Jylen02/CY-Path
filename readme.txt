@@ -22,10 +22,12 @@ To run the deliverable:
 	- Then enter the command "java -jar quoridor.jar"
 
 Implemented features:
+	- Choice between a new game or an existing game
 	- Choice of the number of players (2 or 4 players)
 	- Choice of players' names
 	- Initialization and display of the board
 	- Players play one at a time and the turn skip automatically
+	- Choice to save the current game
 	- Player's possible move are displayed.
 	- Player's remaining wall are displayed.
 	- Choice of action
@@ -51,9 +53,11 @@ Board display description :
 	- Coordinates are indicated at the top and left of the board
 
 How to play ? :
+	- Choose between a new game or an existing game
 	- Enter the number of players (2 or 4)
 	- Enter the names of each players
 	- Player's turn :
+		-> You can save the current game if you want
 		-> A list of possible moves for the active player is provided
 		-> The number of remaining walls is displayed
 		-> Choose an action between "move the pawn" or "place a wall"
@@ -89,7 +93,7 @@ Human-machine interface only features :
 	- The sound's volume can be controled 
 
 Not implemented features:
-	- Backup of the game (Save and Load Button)
+	- Backup of the game (Save and Load)
 	- Observator
 
 How to play ? :
