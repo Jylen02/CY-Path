@@ -6,7 +6,6 @@ import java.util.Set;
 
 import abstraction.Board;
 import abstraction.Case;
-import abstraction.Orientation;
 import abstraction.Pawn;
 import abstraction.Player;
 import abstraction.Position;
@@ -15,13 +14,12 @@ import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
-import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -30,44 +28,44 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Popup;
 import javafx.stage.Stage;
 
 public class GameTurn extends Application {
 
-	private Stage primaryStage;
+	protected Stage primaryStage;
 	private StackPane backgroundPane;
 
 	// Board information
-	private Board board;
-	private GridPane grid;
-	private GridPane invisible;
+	protected Board board;
+	protected GridPane grid;
+	protected GridPane invisibleGrid;
 	private Rectangle cell; // For the construction of the grid
 
 	// Players information
-	private Player[] players;
-	private int currentTurn;
-	private boolean canDoAction;
+	protected Player[] players;
+	protected int currentTurn;
+	protected boolean canDoAction;
 
 	private Image wolf = new Image(getClass().getResource("/image/wolfR.png").toExternalForm());
 	private Image gibbon = new Image(getClass().getResource("/image/gibbonG.png").toExternalForm());
 	private Image penguin = new Image(getClass().getResource("/image/penguinB.png").toExternalForm());
 	private Image seagull = new Image(getClass().getResource("/image/seagullY.png").toExternalForm());
+	
+	protected MediaPlayer mediaPlayerPawnMove = BackgroundMusic.getInstance().getPawnMovePlayer();
+	protected MediaPlayer mediaPlayerWallPlaced = BackgroundMusic.getInstance().getWallPlacedPlayer();
+	private Slider volumeSlider = BackgroundMusic.getInstance().getVolumeSlider();
+	
+	protected LinkedHashMap<Position, Rectangle> possibleCellMap = new LinkedHashMap<Position, Rectangle>();
+	protected Set<Position> positionWall = new LinkedHashSet<Position>();
+	protected LinkedHashMap<Position, Rectangle> cellWallMap = new LinkedHashMap<Position, Rectangle>();
 
-	private MediaPlayer mediaPlayerPawnMove;
-	private MediaPlayer mediaPlaceWall;
-	private MediaPlayer mediaPlayerMusic;
-	private Slider volumeSlider;
-
-	private LinkedHashMap<Position, Rectangle> possibleCellMap = new LinkedHashMap<Position, Rectangle>();
-	private Set<Position> positionWall = new LinkedHashSet<Position>();
-	private LinkedHashMap<Position, Rectangle> cellWallMap = new LinkedHashMap<Position, Rectangle>();
-
-	private Rectangle wallPreview;
+	protected Rectangle wallPreview;
 
 	// Action information
-	private boolean isPlacingWall;
-	private boolean hasPlacedWall;
-	private boolean hasMoved;
+	protected boolean isPlacingWall;
+	protected boolean hasPlacedWall;
+	protected boolean hasMoved;
 
 	private int mouseColumn;
 	private int mouseRow;
@@ -88,12 +86,19 @@ public class GameTurn extends Application {
 
 		Pawn p = players[this.currentTurn].getPawn();
 		p.setPossibleMove(p.possibleMove(this.board, p.getPos()));
-
+		/*if (p.getPossibleMove()==null Set vide : new Set<Position>[]) {
+			//Skip turn + affiche alert
+			handleConfirm();
+			//Alerte à faire : peux pas bouger
+			
+			//Partie nulle -> Restart
+		}*/
+		
 		grid = updateBoard(false);
 		grid.setAlignment(Pos.CENTER);
 
-		invisible = updateBoard(true);
-		invisible.setAlignment(Pos.CENTER);
+		invisibleGrid = updateBoard(true);
+		invisibleGrid.setAlignment(Pos.CENTER);
 
 		wallPreview = new Rectangle(65, 5, Color.RED);
 		wallPreview.setOpacity(1);
@@ -105,8 +110,7 @@ public class GameTurn extends Application {
 		HBox action = actionList(scene, canDoAction);
 		HBox uselessAction = actionList(scene, false);
 
-		Label volumeLabel = Menu.createLabel("Volume", 40);
-		mediaPlayerMusic.volumeProperty().bindBidirectional(volumeSlider.valueProperty());
+		Label volumeLabel = Menu.createLabel("Volume", 40);	
 
 		HBox sliderContainer = new HBox(10);
 		sliderContainer.getChildren().addAll(volumeLabel, volumeSlider);
@@ -126,11 +130,12 @@ public class GameTurn extends Application {
 		uselessBox.setAlignment(Pos.CENTER);
 
 		VBox box = new VBox(50);
-		box.getChildren().addAll(playerTurn, invisible, action, sliderContainer);
+		box.getChildren().addAll(playerTurn, invisibleGrid, action, sliderContainer);
 		box.setAlignment(Pos.CENTER);
 
-		if (canDoAction && !isPlacingWall) {
-			handleMove(scene, players[this.currentTurn]);
+		if (canDoAction) {
+			HandleMovePawn movePawn = new HandleMovePawn(this);
+			movePawn.handleMove();
 		}
 
 		StackPane sceneContent = new StackPane();
@@ -159,24 +164,35 @@ public class GameTurn extends Application {
 		primaryStage.show();
 	}
 
-	private HBox actionList(Scene scene, boolean canDoAction) {
-		Button exit = Menu.createButton("Exit", 110, 50, 20);
+	private HBox actionList(Scene scene, boolean canDoAction) {		
+		Button loadGame = Menu.createButton("Load", 80, 35, 15);
+		/* remplacer le setOnAction par la bonne methode*/
+		loadGame.setOnAction(e -> handleExitButton());
+		
+		Button saveGame = Menu.createButton("Save", 80, 35, 15);
+		/* remplacer le setOnAction par la bonne methode*/
+		saveGame.setOnAction(e -> handleExitButton());
+        
+	
+		Button exit = Menu.createButton("Exit", 80, 35, 15);
 		exit.setOnAction(e -> handleExitButton());
 
-		Button restart = Menu.createButton("Restart", 110, 50, 20);
+		Button restart = Menu.createButton("Restart", 80, 35, 15);
 		restart.setOnAction(e -> handleRestartButton());
 
-		Button cancel = Menu.createButton("Cancel", 110, 50, 20);
+		Button cancel = Menu.createButton("Cancel", 80, 35, 15);
 		cancel.setOnAction(e -> handleCancel());
 		cancel.setDisable(true);
 
-		Button confirm = Menu.createButton("Confirm", 110, 50, 20);
+		Button confirm = Menu.createButton("Confirm", 80, 35, 15);
 		confirm.setOnAction(e -> handleConfirm());
 		confirm.setDisable(true);
 
-		Button wall = Menu.createButton("Wall (" + players[currentTurn].getRemainingWall() + ")", 110, 50, 20);
+		Button wall = Menu.createButton("Wall (" + players[currentTurn].getRemainingWall() + ")", 80, 35, 15);
 		wall.setOnAction(e -> {
-			handlePlaceWall(scene, wall);
+			HandlePlaceWall placeWall = new HandlePlaceWall(this);
+			placeWall.handlePlaceWall(scene, wall);
+			//handlePlaceWall(scene, wall);
 			wallPreview.setVisible(true);
 			cancel.setDisable(false);
 		});
@@ -191,13 +207,13 @@ public class GameTurn extends Application {
 		}
 
 		HBox box = new HBox(20);
-		box.getChildren().addAll(exit, restart, wall, cancel, confirm);
+		box.getChildren().addAll(loadGame, saveGame, exit, restart, wall, cancel, confirm);
 		box.setAlignment(Pos.TOP_CENTER);
 
 		return box;
 	}
 
-	private GridPane updateBoard(boolean invisible) {
+	protected GridPane updateBoard(boolean invisible) {
 		GridPane grid = new GridPane();
 		possibleCellMap.clear();
 		cellWallMap.clear();
@@ -207,21 +223,17 @@ public class GameTurn extends Application {
 				Position pos = new Position(row, col);
 				if (board.getBoard()[row][col] == Case.BORDER || board.getBoard()[row][col] == Case.POTENTIALWALL) {
 					if (row % 2 == 1) {
-						this.cell = new Rectangle(5, 30);
+						this.cell = new Rectangle(5, 30, Color.LIGHTGRAY);
 					} else {
-						this.cell = new Rectangle(30, 5);
+						this.cell = new Rectangle(30, 5, Color.LIGHTGRAY);
 					}
-					this.cell.setFill(Color.LIGHTGRAY);
 				} else if (board.getBoard()[row][col] == Case.NULL) {
-					this.cell = new Rectangle(5, 5);
-					this.cell.setFill(Color.LIGHTGRAY);
+					this.cell = new Rectangle(5, 5, Color.LIGHTGRAY);
 					positionWall.add(pos);
 					cellWallMap.put(pos, this.cell);
 				} else if (board.getBoard()[row][col] == Case.WALL) {
-					// Wall Intersection
 					if ((row + col) % 2 == 0) {
-						this.cell = new Rectangle(5, 5);
-						this.cell.setFill(Color.RED);
+						this.cell = new Rectangle(5, 5, Color.RED);
 					} else if (row % 2 == 1) {
 						this.cell = new Rectangle(5, 30);
 					} else {
@@ -230,24 +242,16 @@ public class GameTurn extends Application {
 					this.cell.setFill(Color.BLACK);
 				} else if (board.getBoard()[row][col] == Case.PLAYER1) {
 					cell = new Rectangle(30, 30);
-					// possibleCellMap.put(pos,this.cell);
 					this.cell.setFill(new ImagePattern(penguin));
-					// this.cell.setFill(Color.BLUE);
 				} else if (board.getBoard()[row][col] == Case.PLAYER2) {
 					cell = new Rectangle(30, 30);
-					// possibleCellMap.put(pos,this.cell);
 					this.cell.setFill(new ImagePattern(wolf));
-					// this.cell.setFill(Color.RED);
 				} else if (board.getBoard()[row][col] == Case.PLAYER3) {
 					cell = new Rectangle(30, 30);
-					// possibleCellMap.put(pos,this.cell);
-					// this.cell.setFill(Color.GREEN);
 					this.cell.setFill(new ImagePattern(gibbon));
 				} else if (board.getBoard()[row][col] == Case.PLAYER4) {
 					cell = new Rectangle(30, 30);
-					// possibleCellMap.put(pos,this.cell);
 					this.cell.setFill(new ImagePattern(seagull));
-					// this.cell.setFill(Color.YELLOW);
 				} else {
 					cell = new Rectangle(30, 30);
 
@@ -282,102 +286,10 @@ public class GameTurn extends Application {
 		return grid;
 	}
 
-	private void handleMove(Scene scene, Player p) {
-		for (Position position : p.getPawn().getPossibleMove()) {
-			possibleCellMap.get(position).setOnMouseClicked(e -> {
-				if (e.getButton() == MouseButton.PRIMARY && !isPlacingWall) {
-					movePawn(p, position);
-				}
-			});
-		}
-	}
-
-	private void movePawn(Player p, Position pos) {
-		if (p.getPawn().move(this.board, pos)) {
-			hasMoved = true;
-			mediaPlayerPawnMove.stop();
-			mediaPlayerPawnMove.play();
-
-			invisible = updateBoard(true);
-			grid = updateBoard(false);
-
-			this.canDoAction = false;
-			try {
-				start(primaryStage);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			// mediaPlayerPawnMove.play();
-			if (p.getPawn().isWinner()) {
-				Alert alert = new Alert(Alert.AlertType.INFORMATION);
-				alert.setTitle("winner");
-				alert.setHeaderText("The winner is  " + p.getName());
-				alert.showAndWait();
-				// Finir la partie
-				Menu menuInstance = new Menu();
-				menuInstance.start(primaryStage);
-			}
-		}
-	}
-
-	private void placeWall(Orientation orientation, Position position) {
-		if (Wall.createWall(this.board, this.players, this.currentTurn, orientation, position)) {
-			// Mettre à jour l'affichage du plateau
-			this.isPlacingWall = false;
-			this.hasPlacedWall = true;
-			// Supprimer le mur en cours de placement de la grille du plateau
-			this.wallPreview = null;
-			this.canDoAction = false;
-			try {
-				start(primaryStage);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-	}
-
-	private void handlePlaceWall(Scene scene, Button button) {
-		button.setDisable(true);
-		this.isPlacingWall = true;
-
-		scene.setOnMouseClicked(e -> {
-			if (e.getButton() == MouseButton.SECONDARY) {
-				// Changer l'orientation du mur avec un clic droit
-				updateWallOrientation();
-			}
-		});
-		for (Position position : positionWall) {
-			cellWallMap.get(position).setOnMouseEntered(e -> wallPreview.setFill(Color.BLACK));
-			cellWallMap.get(position).setOnMouseExited(e -> wallPreview.setFill(Color.RED));
-			possibleCellMap.get(position).setOnMouseClicked(e -> {
-				if (e.getButton() == MouseButton.PRIMARY) {
-					if (wallPreview.getWidth() > wallPreview.getHeight()) {
-						placeWall(Orientation.HORIZONTAL, position);
-					} else {
-						placeWall(Orientation.VERTICAL, position);
-					}
-
-				}
-			});
-		}
-	}
-
-	private void updateWallOrientation() {
-		// Mettre à jour la taille et l'orientation du mur en cours de placement
-		if (wallPreview.getWidth() > wallPreview.getHeight()) {
-			this.wallPreview.setWidth(5);
-			this.wallPreview.setHeight(65);
-		} else {
-			this.wallPreview.setWidth(65);
-			this.wallPreview.setHeight(5);
-		}
-	}
-
 	private void handleCancel() {
 		// Si on veut annuler le placement du mur en cours
 		if (this.isPlacingWall) {
 			this.isPlacingWall = false;
-			this.wallPreview = null;
 		}
 
 		// Si on veut annuler un mur posé
@@ -391,7 +303,7 @@ public class GameTurn extends Application {
 		// Détecter si j'ai bougé un pion
 		if (hasMoved) {
 			players[this.currentTurn].getPawn().resetMove(board);
-			hasMoved = false;
+			this.hasMoved = false;
 		}
 
 		// Réinitialiser l'affichage du plateau
@@ -405,10 +317,8 @@ public class GameTurn extends Application {
 
 	private void handleConfirm() {
 		if (hasPlacedWall) {
-			hasPlacedWall = false;
-			// Reset Wall preview
+			this.hasPlacedWall = false;
 			this.isPlacingWall = false;
-			this.wallPreview = null;
 
 			// Update wall information
 			players[currentTurn].setRemainingWall(players[currentTurn].getRemainingWall() - 1);
@@ -423,12 +333,14 @@ public class GameTurn extends Application {
 				e.printStackTrace();
 			}
 		} else if (hasMoved) {
-			hasMoved = false;
+			this.hasMoved = false;
+			
 			Pawn p = this.players[currentTurn].getPawn();
 			p.setLastPos(p.getPos());
 
 			// Change turn
 			this.currentTurn = (currentTurn + 1) % board.getPlayerNumber();
+			
 			this.canDoAction = true;
 			try {
 				start(primaryStage);
@@ -441,11 +353,10 @@ public class GameTurn extends Application {
 	private void handleRestartButton() {
 		// Reset Wall preview
 		this.isPlacingWall = false;
-		this.wallPreview = null;
 
 		// Reset action
-		hasPlacedWall = false;
-		hasMoved = false;
+		this.hasPlacedWall = false;
+		this.hasMoved = false;
 		this.canDoAction = true;
 
 		// Reset the game state
@@ -453,6 +364,8 @@ public class GameTurn extends Application {
 		this.board.initializeBoard();
 		for (int i = 0; i < this.board.getPlayerNumber(); i++) {
 			players[i].getPawn().setPos(
+					new Position(Board.STARTINGPOSITIONPLAYERS[i].getX(), Board.STARTINGPOSITIONPLAYERS[i].getY()));
+			players[i].getPawn().setLastPos(
 					new Position(Board.STARTINGPOSITIONPLAYERS[i].getX(), Board.STARTINGPOSITIONPLAYERS[i].getY()));
 			players[i].getPawn()
 					.setPossibleMove(players[i].getPawn().possibleMove(board, players[i].getPawn().getPos()));
@@ -467,7 +380,7 @@ public class GameTurn extends Application {
 	}
 
 	private void handleExitButton() {
-		// Save to implement
+		// Save to implement if we want
 
 		// Reset Wall preview
 		this.wallPreview = null;

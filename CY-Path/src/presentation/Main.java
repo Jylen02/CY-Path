@@ -459,7 +459,6 @@ public class Main extends Application {
 					// Wall Intersection
 					if ((row + col) % 2 == 0) {
 						this.cell = new Rectangle(5, 5);
-						this.cell.setFill(Color.RED);
 					} else if (row % 2 == 1) {
 						this.cell = new Rectangle(5, 30);
 					} else {

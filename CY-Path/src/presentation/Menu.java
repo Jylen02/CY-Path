@@ -15,13 +15,12 @@ import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.stage.Popup;
 import javafx.stage.Stage;
 
 public class Menu extends Application {
 
-	private Media mediaPawnMove = new Media(getClass().getResource("/sound/move.mp3").toString());
 	private MediaPlayer mediaPlayerMusic;
 	private Slider volumeSlider;
 
@@ -42,8 +41,8 @@ public class Menu extends Application {
 		backgroundPane.setBackground(background);
 
 		Label volumeLabel = createLabel("Volume", 40);
-
-		mediaPlayerMusic = BackgroundMusic.getInstance().getMediaPlayer();
+		
+		mediaPlayerMusic = BackgroundMusic.getInstance().getMusicPlayer();
 		volumeSlider = BackgroundMusic.getInstance().getVolumeSlider();
 		mediaPlayerMusic.volumeProperty().bindBidirectional(volumeSlider.valueProperty());
 		mediaPlayerMusic.setCycleCount(MediaPlayer.INDEFINITE); // Infinite restart
@@ -74,7 +73,8 @@ public class Menu extends Application {
 				e1.printStackTrace();
 			}
 		});
-
+	
+		
 		Button exit = createButton("Exit", 300, 100, 50);
 		exit.setOnAction(e -> primaryStage.close());
 
