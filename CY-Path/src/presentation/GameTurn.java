@@ -26,6 +26,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
@@ -52,11 +53,11 @@ public class GameTurn extends Application {
 	private Image gibbon = new Image(getClass().getResource("/image/gibbonG.png").toExternalForm());
 	private Image penguin = new Image(getClass().getResource("/image/penguinB.png").toExternalForm());
 	private Image seagull = new Image(getClass().getResource("/image/seagullY.png").toExternalForm());
-
-	private MediaPlayer mediaPlayerPawnMove;
-	private MediaPlayer mediaPlaceWall;
-	private MediaPlayer mediaPlayerMusic;
-	private Slider volumeSlider;
+	
+	private MediaPlayer mediaPlayerPawnMove = BackgroundMusic.getInstance().getPawnMovePlayer();
+	private MediaPlayer mediaPlayerWallPlaced = BackgroundMusic.getInstance().getWallPlacedPlayer();
+	private Slider volumeSlider = BackgroundMusic.getInstance().getVolumeSlider();
+	
 
 	private LinkedHashMap<Position, Rectangle> possibleCellMap = new LinkedHashMap<Position, Rectangle>();
 	private Set<Position> positionWall = new LinkedHashSet<Position>();
@@ -105,8 +106,7 @@ public class GameTurn extends Application {
 		HBox action = actionList(scene, canDoAction);
 		HBox uselessAction = actionList(scene, false);
 
-		Label volumeLabel = Menu.createLabel("Volume", 40);
-		mediaPlayerMusic.volumeProperty().bindBidirectional(volumeSlider.valueProperty());
+		Label volumeLabel = Menu.createLabel("Volume", 40);	
 
 		HBox sliderContainer = new HBox(10);
 		sliderContainer.getChildren().addAll(volumeLabel, volumeSlider);
@@ -295,8 +295,10 @@ public class GameTurn extends Application {
 	private void movePawn(Player p, Position pos) {
 		if (p.getPawn().move(this.board, pos)) {
 			hasMoved = true;
+
 			mediaPlayerPawnMove.stop();
 			mediaPlayerPawnMove.play();
+
 
 			invisible = updateBoard(true);
 			grid = updateBoard(false);
@@ -356,7 +358,8 @@ public class GameTurn extends Application {
 					} else {
 						placeWall(Orientation.VERTICAL, position);
 					}
-
+					mediaPlayerWallPlaced.stop();
+					mediaPlayerWallPlaced.play();
 				}
 			});
 		}
