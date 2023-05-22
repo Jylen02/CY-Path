@@ -1,9 +1,14 @@
 package abstraction;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+
 /**
  * Represents a wall in a game.
  */
-public class Wall {
+public class Wall implements Serializable {
 
 	// private final int HEIGHT = 2;
 	/**
@@ -203,5 +208,15 @@ public class Wall {
 		} else {
 			return false;
 		}
+	}
+	
+	// Méthode pour sérialiser la classe Board
+	private void writeObject(ObjectOutputStream out) throws IOException {
+		out.defaultWriteObject();
+	}
+
+	// Méthode pour désérialiser la classe Board
+	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+		in.defaultReadObject();
 	}
 }
