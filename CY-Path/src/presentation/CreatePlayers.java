@@ -12,12 +12,15 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 
 public class CreatePlayers extends Application {
 
+	private StackPane backgroundPane;
+	
 	private Board board;
 	private Player[] players;
 	
@@ -25,11 +28,12 @@ public class CreatePlayers extends Application {
 	private MediaPlayer mediaPlayerMusic;
 	private Slider volumeSlider;
 
-    public CreatePlayers(Board board, MediaPlayer mediaPlayerPawnMove, MediaPlayer mediaPlayerMusic, Slider volumeSlider) {
+    public CreatePlayers(Board board, MediaPlayer mediaPlayerPawnMove, MediaPlayer mediaPlayerMusic, Slider volumeSlider, StackPane backgroundPane) {
     	this.board = board;
 		this.mediaPlayerPawnMove = mediaPlayerPawnMove;
 		this.mediaPlayerMusic = mediaPlayerMusic;
 		this.volumeSlider = volumeSlider;
+		this.backgroundPane = backgroundPane;
     }
 	@Override
 	public void start(Stage primaryStage) throws Exception {
@@ -48,7 +52,7 @@ public class CreatePlayers extends Application {
 
 	Button back = Menu.createButton("Back", 100, 50, 20);
 	back.setOnAction(e -> {
-		ChooseNumberOfPlayers chooseNumberOfPlayersInstance = new ChooseNumberOfPlayers(mediaPlayerPawnMove, mediaPlayerMusic, volumeSlider);
+		ChooseNumberOfPlayers chooseNumberOfPlayersInstance = new ChooseNumberOfPlayers(mediaPlayerPawnMove, mediaPlayerMusic, volumeSlider, backgroundPane);
 		try {
 			chooseNumberOfPlayersInstance.start(primaryStage);
 		} catch (Exception e1) {
@@ -73,7 +77,7 @@ public class CreatePlayers extends Application {
 				}
 			}
 		}
-		GameTurn gameTurnInstance = new GameTurn(board, players, mediaPlayerPawnMove, mediaPlayerMusic, volumeSlider, primaryStage);
+		GameTurn gameTurnInstance = new GameTurn(board, players, mediaPlayerPawnMove, mediaPlayerMusic, volumeSlider, backgroundPane, primaryStage);
 		try {
 			gameTurnInstance.start(primaryStage);
 		} catch (Exception e1) {
@@ -83,7 +87,10 @@ public class CreatePlayers extends Application {
 	box.setAlignment(Pos.CENTER);
 	box.getChildren().addAll(back, start);
 
-	Scene scene = new Scene(box, 800, 700);
+	StackPane sceneContent = new StackPane();
+    sceneContent.getChildren().addAll(backgroundPane, box);
+    
+	Scene scene = new Scene(sceneContent, 800, 700);
 
 	primaryStage.setScene(scene);
 	primaryStage.sizeToScene();

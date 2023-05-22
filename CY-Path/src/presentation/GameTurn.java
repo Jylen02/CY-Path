@@ -35,6 +35,8 @@ import javafx.stage.Stage;
 public class GameTurn extends Application {
 
 	private Stage primaryStage;
+	private StackPane backgroundPane;
+	
 	// Board information
 	private Board board;
 	private GridPane grid;
@@ -68,7 +70,7 @@ public class GameTurn extends Application {
 	private int mouseColumn;
 	private int mouseRow;
 		
-	public GameTurn(Board board, Player[] players, MediaPlayer mediaPlayerPawnMove, MediaPlayer mediaPlayerMusic, Slider volumeSlider, Stage primaryStage) {
+	public GameTurn(Board board, Player[] players, MediaPlayer mediaPlayerPawnMove, MediaPlayer mediaPlayerMusic, Slider volumeSlider, StackPane backgroundPane, Stage primaryStage) {
 		this.board = board;
 		this.players = players;
 		this.currentTurn = 0;
@@ -76,6 +78,7 @@ public class GameTurn extends Application {
 		this.mediaPlayerPawnMove = mediaPlayerPawnMove;
 		this.mediaPlayerMusic = mediaPlayerMusic;
 		this.volumeSlider = volumeSlider;
+		this.backgroundPane = backgroundPane;
 		this.primaryStage = primaryStage;
 	}
 	
@@ -134,7 +137,7 @@ public class GameTurn extends Application {
 			handleMove(scene, players[this.currentTurn]);
 		}
 
-		wallContainer.getChildren().addAll(uselessBox, wallPreview, box);
+		wallContainer.getChildren().addAll(backgroundPane, uselessBox, wallPreview, box);
 		scene.setRoot(wallContainer);
 
 		scene.setOnMouseMoved(new EventHandler<MouseEvent>() {

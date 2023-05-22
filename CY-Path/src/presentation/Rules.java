@@ -6,11 +6,17 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class Rules extends Application {
-
+	private StackPane backgroundPane;
+	
+	public Rules(StackPane backgroundPane) {
+		this.backgroundPane = backgroundPane;
+	}
+	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		Label title = Menu.createLabel("Rules", 140);
@@ -36,11 +42,9 @@ public class Rules extends Application {
 		VBox box = new VBox(title, listOfRules, back);
 		box.setAlignment(Pos.CENTER);
 
-		/*
-		 * rootPane = new StackPane(); rootPane.setBackground(background);
-		 * rootPane.getChildren().add(box);
-		 */
-		Scene scene = new Scene(box, 800, 700);
+		backgroundPane.getChildren().add(box);
+		
+		Scene scene = new Scene(backgroundPane, 800, 700);
 
 		primaryStage.setScene(scene);
 		primaryStage.sizeToScene();
