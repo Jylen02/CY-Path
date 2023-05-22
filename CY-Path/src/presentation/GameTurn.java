@@ -14,12 +14,12 @@ import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -28,7 +28,6 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
-import javafx.stage.Popup;
 import javafx.stage.Stage;
 
 public class GameTurn extends Application {
@@ -51,11 +50,11 @@ public class GameTurn extends Application {
 	private Image gibbon = new Image(getClass().getResource("/image/gibbonG.png").toExternalForm());
 	private Image penguin = new Image(getClass().getResource("/image/penguinB.png").toExternalForm());
 	private Image seagull = new Image(getClass().getResource("/image/seagullY.png").toExternalForm());
-	
+
 	protected MediaPlayer mediaPlayerPawnMove = BackgroundMusic.getInstance().getPawnMovePlayer();
 	protected MediaPlayer mediaPlayerWallPlaced = BackgroundMusic.getInstance().getWallPlacedPlayer();
 	private Slider volumeSlider = BackgroundMusic.getInstance().getVolumeSlider();
-	
+
 	protected LinkedHashMap<Position, Rectangle> possibleCellMap = new LinkedHashMap<Position, Rectangle>();
 	protected Set<Position> positionWall = new LinkedHashSet<Position>();
 	protected LinkedHashMap<Position, Rectangle> cellWallMap = new LinkedHashMap<Position, Rectangle>();
@@ -86,94 +85,103 @@ public class GameTurn extends Application {
 
 		Pawn p = players[this.currentTurn].getPawn();
 		p.setPossibleMove(p.possibleMove(this.board, p.getPos()));
-		/*if (p.getPossibleMove()==null Set vide : new Set<Position>[]) {
-			//Skip turn + affiche alert
-			handleConfirm();
-			//Alerte à faire : peux pas bouger
-			
-			//Partie nulle -> Restart
-		}*/
-		
-		grid = updateBoard(false);
-		grid.setAlignment(Pos.CENTER);
+		if (p.getPossibleMove().isEmpty()) {
+			// Skip turn + affiche alert
+			this.currentTurn = (currentTurn + 1) % board.getPlayerNumber();
 
-		invisibleGrid = updateBoard(true);
-		invisibleGrid.setAlignment(Pos.CENTER);
+			try {
+				start(primaryStage);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			// Alerte à faire : peux pas bouger
+			Alert alert = new Alert(Alert.AlertType.INFORMATION);
+			alert.setTitle("Alert");
+			alert.setHeaderText("You can't make any move, your turn has been skipped");
+			alert.showAndWait();
+		} else {
 
-		wallPreview = new Rectangle(65, 5, Color.RED);
-		wallPreview.setOpacity(1);
-		wallPreview.setStroke(null);
-		wallPreview.setVisible(false);
+			grid = updateBoard(false);
+			grid.setAlignment(Pos.CENTER);
 
-		Scene scene = new Scene(new StackPane(), 800, 700);
+			invisibleGrid = updateBoard(true);
+			invisibleGrid.setAlignment(Pos.CENTER);
 
-		HBox action = actionList(scene, canDoAction);
-		HBox uselessAction = actionList(scene, false);
+			wallPreview = new Rectangle(65, 5, Color.RED);
+			wallPreview.setOpacity(1);
+			wallPreview.setStroke(null);
+			wallPreview.setVisible(false);
 
-		Label volumeLabel = Menu.createLabel("Volume", 40);	
+			Scene scene = new Scene(new StackPane(), 800, 700);
 
-		HBox sliderContainer = new HBox(10);
-		sliderContainer.getChildren().addAll(volumeLabel, volumeSlider);
-		sliderContainer.setAlignment(Pos.CENTER);
+			HBox action = actionList(scene, canDoAction);
+			HBox uselessAction = actionList(scene, false);
 
-		HBox uselessSliderContainer = new HBox(10);
-		uselessSliderContainer.getChildren().addAll(Menu.createLabel("Volume", 40), new Slider(0, 0.1, 0.05));
-		uselessSliderContainer.setAlignment(Pos.CENTER);
+			Label volumeLabel = Menu.createLabel("Volume", 40);
 
-		VBox uselessBox = new VBox(50);
+			HBox sliderContainer = new HBox(10);
+			sliderContainer.getChildren().addAll(volumeLabel, volumeSlider);
+			sliderContainer.setAlignment(Pos.CENTER);
 
-		uselessSliderContainer.setVisible(false); // Rendre invisible tous les éléments de la uselessBox sauf la grid
-		uselessAction.setVisible(false);
-		uselessPlayerTurn.setVisible(false);
+			HBox uselessSliderContainer = new HBox(10);
+			uselessSliderContainer.getChildren().addAll(Menu.createLabel("Volume", 40), new Slider(0, 0.1, 0.05));
+			uselessSliderContainer.setAlignment(Pos.CENTER);
 
-		uselessBox.getChildren().addAll(uselessPlayerTurn, grid, uselessAction, uselessSliderContainer);
-		uselessBox.setAlignment(Pos.CENTER);
+			VBox uselessBox = new VBox(50);
 
-		VBox box = new VBox(50);
-		box.getChildren().addAll(playerTurn, invisibleGrid, action, sliderContainer);
-		box.setAlignment(Pos.CENTER);
+			uselessSliderContainer.setVisible(false); // Rendre invisible tous les éléments de la uselessBox sauf la
+														// grid
+			uselessAction.setVisible(false);
+			uselessPlayerTurn.setVisible(false);
 
-		if (canDoAction) {
-			HandleMovePawn movePawn = new HandleMovePawn(this);
-			movePawn.handleMove();
-		}
+			uselessBox.getChildren().addAll(uselessPlayerTurn, grid, uselessAction, uselessSliderContainer);
+			uselessBox.setAlignment(Pos.CENTER);
 
-		StackPane sceneContent = new StackPane();
-		sceneContent.getChildren().addAll(backgroundPane, uselessBox, wallPreview, box);
-		scene.setRoot(sceneContent);
+			VBox box = new VBox(50);
+			box.getChildren().addAll(playerTurn, invisibleGrid, action, sliderContainer);
+			box.setAlignment(Pos.CENTER);
 
-		scene.setOnMouseMoved(new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent event) {
-				if (isPlacingWall) {
-					mouseColumn = (int) (event.getX() - wallPreview.getWidth() / 2);
-					mouseRow = (int) (event.getY() - wallPreview.getHeight() / 2);
-					if (wallPreview.getWidth() > wallPreview.getHeight()) {
-						wallPreview.setTranslateX(mouseColumn - 367);
-						wallPreview.setTranslateY(mouseRow - 346);
-					} else {
-						wallPreview.setTranslateX(mouseColumn - 365 - 32);
-						wallPreview.setTranslateY(mouseRow - 347 + 30);
+			if (canDoAction) {
+				HandleMovePawn movePawn = new HandleMovePawn(this);
+				movePawn.handleMove();
+			}
+
+			StackPane sceneContent = new StackPane();
+			sceneContent.getChildren().addAll(backgroundPane, uselessBox, wallPreview, box);
+			scene.setRoot(sceneContent);
+
+			scene.setOnMouseMoved(new EventHandler<MouseEvent>() {
+				@Override
+				public void handle(MouseEvent event) {
+					if (isPlacingWall) {
+						mouseColumn = (int) (event.getX() - wallPreview.getWidth() / 2);
+						mouseRow = (int) (event.getY() - wallPreview.getHeight() / 2);
+						if (wallPreview.getWidth() > wallPreview.getHeight()) {
+							wallPreview.setTranslateX(mouseColumn - 367);
+							wallPreview.setTranslateY(mouseRow - 346);
+						} else {
+							wallPreview.setTranslateX(mouseColumn - 365 - 32);
+							wallPreview.setTranslateY(mouseRow - 347 + 30);
+						}
 					}
 				}
-			}
-		});
+			});
 
-		primaryStage.setScene(scene);
-		primaryStage.sizeToScene();
-		primaryStage.show();
+			primaryStage.setScene(scene);
+			primaryStage.sizeToScene();
+			primaryStage.show();
+		}
 	}
 
-	private HBox actionList(Scene scene, boolean canDoAction) {		
+	private HBox actionList(Scene scene, boolean canDoAction) {
 		Button loadGame = Menu.createButton("Load", 80, 35, 15);
-		/* remplacer le setOnAction par la bonne methode*/
+		/* remplacer le setOnAction par la bonne methode */
 		loadGame.setOnAction(e -> handleExitButton());
-		
+
 		Button saveGame = Menu.createButton("Save", 80, 35, 15);
-		/* remplacer le setOnAction par la bonne methode*/
+		/* remplacer le setOnAction par la bonne methode */
 		saveGame.setOnAction(e -> handleExitButton());
-        
-	
+
 		Button exit = Menu.createButton("Exit", 80, 35, 15);
 		exit.setOnAction(e -> handleExitButton());
 
@@ -192,7 +200,7 @@ public class GameTurn extends Application {
 		wall.setOnAction(e -> {
 			HandlePlaceWall placeWall = new HandlePlaceWall(this);
 			placeWall.handlePlaceWall(scene, wall);
-			//handlePlaceWall(scene, wall);
+			// handlePlaceWall(scene, wall);
 			wallPreview.setVisible(true);
 			cancel.setDisable(false);
 		});
@@ -334,13 +342,13 @@ public class GameTurn extends Application {
 			}
 		} else if (hasMoved) {
 			this.hasMoved = false;
-			
+
 			Pawn p = this.players[currentTurn].getPawn();
 			p.setLastPos(p.getPos());
 
 			// Change turn
 			this.currentTurn = (currentTurn + 1) % board.getPlayerNumber();
-			
+
 			this.canDoAction = true;
 			try {
 				start(primaryStage);
