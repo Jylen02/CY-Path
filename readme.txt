@@ -41,6 +41,7 @@ Implemented features:
 			-> Check that the player still have remaining walls to place
 			-> DFS to be applied to all players, ensuring that all players have the possibility to win
 	- If there is an error, the turn is restarted 
+	- If a player can't move, his turn is skipped
 
 Board display description :
 	- Players are indicated by their number
