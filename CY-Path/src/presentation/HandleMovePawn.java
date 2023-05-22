@@ -24,8 +24,8 @@ public class HandleMovePawn {
 
     public void movePawn(Player p, Position pos) {
 		if (p.getPawn().move(gameTurn.board, pos)) {
-			//mediaPlayerPawnMove.stop();
-			//mediaPlayerPawnMove.play();
+			gameTurn.mediaPlayerPawnMove.stop();
+			gameTurn.mediaPlayerPawnMove.play();
 
 			gameTurn.invisible = gameTurn.updateBoard(true);
 			gameTurn.grid = gameTurn.updateBoard(false);

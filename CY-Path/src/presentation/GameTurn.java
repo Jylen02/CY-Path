@@ -6,7 +6,6 @@ import java.util.Set;
 
 import abstraction.Board;
 import abstraction.Case;
-import abstraction.Orientation;
 import abstraction.Pawn;
 import abstraction.Player;
 import abstraction.Position;
@@ -15,18 +14,15 @@ import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
-import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
@@ -178,7 +174,9 @@ public class GameTurn extends Application {
 
 		Button wall = Menu.createButton("Wall (" + players[currentTurn].getRemainingWall() + ")", 110, 50, 20);
 		wall.setOnAction(e -> {
-			handlePlaceWall(scene, wall);
+			HandlePlaceWall placeWall = new HandlePlaceWall(this);
+			placeWall.handlePlaceWall(scene, wall);
+			//handlePlaceWall(scene, wall);
 			wallPreview.setVisible(true);
 			cancel.setDisable(false);
 		});
@@ -209,21 +207,18 @@ public class GameTurn extends Application {
 				Position pos = new Position(row, col);
 				if (board.getBoard()[row][col] == Case.BORDER || board.getBoard()[row][col] == Case.POTENTIALWALL) {
 					if (row % 2 == 1) {
-						this.cell = new Rectangle(5, 30);
+						this.cell = new Rectangle(5, 30, Color.LIGHTGRAY);
 					} else {
-						this.cell = new Rectangle(30, 5);
+						this.cell = new Rectangle(30, 5, Color.LIGHTGRAY);
 					}
-					this.cell.setFill(Color.LIGHTGRAY);
 				} else if (board.getBoard()[row][col] == Case.NULL) {
-					this.cell = new Rectangle(5, 5);
-					this.cell.setFill(Color.LIGHTGRAY);
+					this.cell = new Rectangle(5, 5, Color.LIGHTGRAY);
 					positionWall.add(pos);
 					cellWallMap.put(pos, this.cell);
 				} else if (board.getBoard()[row][col] == Case.WALL) {
 					// Wall Intersection
 					if ((row + col) % 2 == 0) {
-						this.cell = new Rectangle(5, 5);
-						this.cell.setFill(Color.RED);
+						this.cell = new Rectangle(5, 5, Color.RED);
 					} else if (row % 2 == 1) {
 						this.cell = new Rectangle(5, 30);
 					} else {
@@ -232,24 +227,16 @@ public class GameTurn extends Application {
 					this.cell.setFill(Color.BLACK);
 				} else if (board.getBoard()[row][col] == Case.PLAYER1) {
 					cell = new Rectangle(30, 30);
-					// possibleCellMap.put(pos,this.cell);
 					this.cell.setFill(new ImagePattern(penguin));
-					// this.cell.setFill(Color.BLUE);
 				} else if (board.getBoard()[row][col] == Case.PLAYER2) {
 					cell = new Rectangle(30, 30);
-					// possibleCellMap.put(pos,this.cell);
 					this.cell.setFill(new ImagePattern(wolf));
-					// this.cell.setFill(Color.RED);
 				} else if (board.getBoard()[row][col] == Case.PLAYER3) {
 					cell = new Rectangle(30, 30);
-					// possibleCellMap.put(pos,this.cell);
-					// this.cell.setFill(Color.GREEN);
 					this.cell.setFill(new ImagePattern(gibbon));
 				} else if (board.getBoard()[row][col] == Case.PLAYER4) {
 					cell = new Rectangle(30, 30);
-					// possibleCellMap.put(pos,this.cell);
 					this.cell.setFill(new ImagePattern(seagull));
-					// this.cell.setFill(Color.YELLOW);
 				} else {
 					cell = new Rectangle(30, 30);
 
@@ -282,100 +269,6 @@ public class GameTurn extends Application {
 			}
 		}
 		return grid;
-	}
-
-	private void handleMove(Scene scene, Player p) {
-		for (Position position : p.getPawn().getPossibleMove()) {
-			possibleCellMap.get(position).setOnMouseClicked(e -> {
-				if (e.getButton() == MouseButton.PRIMARY && !isPlacingWall) {
-					movePawn(p, position);
-				}
-			});
-		}
-	}
-
-	private void movePawn(Player p, Position pos) {
-		if (p.getPawn().move(this.board, pos)) {
-			hasMoved = true;
-
-			mediaPlayerPawnMove.stop();
-			mediaPlayerPawnMove.play();
-
-
-			invisible = updateBoard(true);
-			grid = updateBoard(false);
-
-			this.canDoAction = false;
-			try {
-				start(primaryStage);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			// mediaPlayerPawnMove.play();
-			if (p.getPawn().isWinner()) {
-				Alert alert = new Alert(Alert.AlertType.INFORMATION);
-				alert.setTitle("winner");
-				alert.setHeaderText("The winner is  " + p.getName());
-				alert.showAndWait();
-				// Finir la partie
-				Menu menuInstance = new Menu();
-				menuInstance.start(primaryStage);
-			}
-		}
-	}
-
-	private void placeWall(Orientation orientation, Position position) {
-		if (Wall.createWall(this.board, this.players, this.currentTurn, orientation, position)) {
-			mediaPlayerWallPlaced.stop();
-			mediaPlayerWallPlaced.play();
-			// Mettre à jour l'affichage du plateau
-			this.isPlacingWall = false;
-			this.hasPlacedWall = true;
-			// Supprimer le mur en cours de placement de la grille du plateau
-			this.wallPreview = null;
-			this.canDoAction = false;
-			try {
-				start(primaryStage);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-	}
-
-	private void handlePlaceWall(Scene scene, Button button) {
-		button.setDisable(true);
-		this.isPlacingWall = true;
-
-		scene.setOnMouseClicked(e -> {
-			if (e.getButton() == MouseButton.SECONDARY) {
-				// Changer l'orientation du mur avec un clic droit
-				updateWallOrientation();
-			}
-		});
-		for (Position position : positionWall) {
-			cellWallMap.get(position).setOnMouseEntered(e -> wallPreview.setFill(Color.BLACK));
-			cellWallMap.get(position).setOnMouseExited(e -> wallPreview.setFill(Color.RED));
-			possibleCellMap.get(position).setOnMouseClicked(e -> {
-				if (e.getButton() == MouseButton.PRIMARY) {
-					if (wallPreview.getWidth() > wallPreview.getHeight()) {
-						placeWall(Orientation.HORIZONTAL, position);
-					} else {
-						placeWall(Orientation.VERTICAL, position);
-					}
-				}
-			});
-		}
-	}
-
-	private void updateWallOrientation() {
-		// Mettre à jour la taille et l'orientation du mur en cours de placement
-		if (wallPreview.getWidth() > wallPreview.getHeight()) {
-			this.wallPreview.setWidth(5);
-			this.wallPreview.setHeight(65);
-		} else {
-			this.wallPreview.setWidth(65);
-			this.wallPreview.setHeight(5);
-		}
 	}
 
 	private void handleCancel() {
