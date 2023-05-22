@@ -55,7 +55,7 @@ public class Board implements Serializable {
 	 */
 	public Board(int playerNumber) {
 		this.playerNumber = playerNumber;
-		this.currentTurn = 1;
+		this.currentTurn = 0;
 		this.players = new Player[playerNumber];
 		initializeBoard();
 	}
