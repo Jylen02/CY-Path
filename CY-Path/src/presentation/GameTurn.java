@@ -223,7 +223,6 @@ public class GameTurn extends Application {
 					positionWall.add(pos);
 					cellWallMap.put(pos, this.cell);
 				} else if (board.getBoard()[row][col] == Case.WALL) {
-					// Wall Intersection
 					if ((row + col) % 2 == 0) {
 						this.cell = new Rectangle(5, 5, Color.RED);
 					} else if (row % 2 == 1) {
@@ -282,7 +281,6 @@ public class GameTurn extends Application {
 		// Si on veut annuler le placement du mur en cours
 		if (this.isPlacingWall) {
 			this.isPlacingWall = false;
-			this.wallPreview = null;
 		}
 
 		// Si on veut annuler un mur posé
@@ -296,7 +294,7 @@ public class GameTurn extends Application {
 		// Détecter si j'ai bougé un pion
 		if (hasMoved) {
 			players[this.currentTurn].getPawn().resetMove(board);
-			hasMoved = false;
+			this.hasMoved = false;
 		}
 
 		// Réinitialiser l'affichage du plateau
@@ -310,10 +308,8 @@ public class GameTurn extends Application {
 
 	private void handleConfirm() {
 		if (hasPlacedWall) {
-			hasPlacedWall = false;
-			// Reset Wall preview
+			this.hasPlacedWall = false;
 			this.isPlacingWall = false;
-			this.wallPreview = null;
 
 			// Update wall information
 			players[currentTurn].setRemainingWall(players[currentTurn].getRemainingWall() - 1);
@@ -328,12 +324,14 @@ public class GameTurn extends Application {
 				e.printStackTrace();
 			}
 		} else if (hasMoved) {
-			hasMoved = false;
+			this.hasMoved = false;
+			
 			Pawn p = this.players[currentTurn].getPawn();
 			p.setLastPos(p.getPos());
 
 			// Change turn
 			this.currentTurn = (currentTurn + 1) % board.getPlayerNumber();
+			
 			this.canDoAction = true;
 			try {
 				start(primaryStage);
@@ -346,11 +344,10 @@ public class GameTurn extends Application {
 	private void handleRestartButton() {
 		// Reset Wall preview
 		this.isPlacingWall = false;
-		this.wallPreview = null;
 
 		// Reset action
-		hasPlacedWall = false;
-		hasMoved = false;
+		this.hasPlacedWall = false;
+		this.hasMoved = false;
 		this.canDoAction = true;
 
 		// Reset the game state
@@ -358,6 +355,8 @@ public class GameTurn extends Application {
 		this.board.initializeBoard();
 		for (int i = 0; i < this.board.getPlayerNumber(); i++) {
 			players[i].getPawn().setPos(
+					new Position(Board.STARTINGPOSITIONPLAYERS[i].getX(), Board.STARTINGPOSITIONPLAYERS[i].getY()));
+			players[i].getPawn().setLastPos(
 					new Position(Board.STARTINGPOSITIONPLAYERS[i].getX(), Board.STARTINGPOSITIONPLAYERS[i].getY()));
 			players[i].getPawn()
 					.setPossibleMove(players[i].getPawn().possibleMove(board, players[i].getPawn().getPos()));
@@ -372,7 +371,7 @@ public class GameTurn extends Application {
 	}
 
 	private void handleExitButton() {
-		// Save to implement
+		// Save to implement if we want
 
 		// Reset Wall preview
 		this.wallPreview = null;
