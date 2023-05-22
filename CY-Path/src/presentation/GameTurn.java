@@ -42,8 +42,6 @@ public class GameTurn extends Application {
 	private Rectangle cell; // For the construction of the grid
 
 	// Players information
-	protected Player[] players;
-	protected int currentTurn;
 	protected boolean canDoAction;
 
 	private Image wolf = new Image(getClass().getResource("/image/wolfR.png").toExternalForm());
@@ -69,10 +67,8 @@ public class GameTurn extends Application {
 	private int mouseColumn;
 	private int mouseRow;
 
-	public GameTurn(Board board, Player[] players, StackPane backgroundPane, Stage primaryStage) {
+	public GameTurn(Board board, StackPane backgroundPane, Stage primaryStage) {
 		this.board = board;
-		this.players = players;
-		this.currentTurn = 0;
 		this.canDoAction = true;
 		this.backgroundPane = backgroundPane;
 		this.primaryStage = primaryStage;
@@ -80,14 +76,14 @@ public class GameTurn extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		Label playerTurn = Menu.createLabel(this.players[this.currentTurn].getName() + "'s turn", 50);
-		Label uselessPlayerTurn = Menu.createLabel(this.players[this.currentTurn].getName() + "'s turn", 50);
+		Label playerTurn = Menu.createLabel(board.getPlayers()[board.getCurrentTurn()].getName() + "'s turn", 50);
+		Label uselessPlayerTurn = Menu.createLabel(board.getPlayers()[board.getCurrentTurn()].getName() + "'s turn", 50);
 
-		Pawn p = players[this.currentTurn].getPawn();
+		Pawn p = board.getPlayers()[board.getCurrentTurn()].getPawn();
 		p.setPossibleMove(p.possibleMove(this.board, p.getPos()));
 		if (p.getPossibleMove().isEmpty()) {
 			// Skip turn + affiche alert
-			this.currentTurn = (currentTurn + 1) % board.getPlayerNumber();
+			board.setCurrentTurn((board.getCurrentTurn() + 1) % board.getPlayerNumber());
 
 			try {
 				start(primaryStage);
@@ -196,7 +192,7 @@ public class GameTurn extends Application {
 		confirm.setOnAction(e -> handleConfirm());
 		confirm.setDisable(true);
 
-		Button wall = Menu.createButton("Wall (" + players[currentTurn].getRemainingWall() + ")", 80, 35, 15);
+		Button wall = Menu.createButton("Wall (" +board.getPlayers()[board.getCurrentTurn()].getRemainingWall() + ")", 80, 35, 15);
 		wall.setOnAction(e -> {
 			HandlePlaceWall placeWall = new HandlePlaceWall(this);
 			placeWall.handlePlaceWall(scene, wall);
@@ -205,7 +201,7 @@ public class GameTurn extends Application {
 			cancel.setDisable(false);
 		});
 
-		if (!canDoAction || players[currentTurn].getRemainingWall() == 0) {
+		if (!canDoAction || board.getPlayers()[board.getCurrentTurn()].getRemainingWall() == 0) {
 			wall.setDisable(true);
 		}
 
@@ -263,9 +259,9 @@ public class GameTurn extends Application {
 				} else {
 					cell = new Rectangle(30, 30);
 
-					if (players[currentTurn].getPawn().getPossibleMove().contains(pos)) {
+					if (board.getPlayers()[board.getCurrentTurn()].getPawn().getPossibleMove().contains(pos)) {
 
-						switch (this.currentTurn) {
+						switch (board.getCurrentTurn()) {
 						case 0:
 							this.cell.setFill(Color.LIGHTBLUE);
 							break;
@@ -310,7 +306,7 @@ public class GameTurn extends Application {
 		// Si on veut annuler un mouvement de pion
 		// Détecter si j'ai bougé un pion
 		if (hasMoved) {
-			players[this.currentTurn].getPawn().resetMove(board);
+			board.getPlayers()[board.getCurrentTurn()].getPawn().resetMove(board);
 			this.hasMoved = false;
 		}
 
@@ -329,10 +325,10 @@ public class GameTurn extends Application {
 			this.isPlacingWall = false;
 
 			// Update wall information
-			players[currentTurn].setRemainingWall(players[currentTurn].getRemainingWall() - 1);
+			board.getPlayers()[board.getCurrentTurn()].setRemainingWall(board.getPlayers()[board.getCurrentTurn()].getRemainingWall() - 1);
 
 			// Change turn
-			this.currentTurn = (currentTurn + 1) % board.getPlayerNumber();
+			board.setCurrentTurn((board.getCurrentTurn() + 1) % board.getPlayerNumber());
 
 			this.canDoAction = true;
 			try {
@@ -343,11 +339,11 @@ public class GameTurn extends Application {
 		} else if (hasMoved) {
 			this.hasMoved = false;
 
-			Pawn p = this.players[currentTurn].getPawn();
+			Pawn p = board.getPlayers()[board.getCurrentTurn()].getPawn();
 			p.setLastPos(p.getPos());
 
 			// Change turn
-			this.currentTurn = (currentTurn + 1) % board.getPlayerNumber();
+			board.setCurrentTurn((board.getCurrentTurn() + 1) % board.getPlayerNumber());
 
 			this.canDoAction = true;
 			try {
@@ -368,16 +364,16 @@ public class GameTurn extends Application {
 		this.canDoAction = true;
 
 		// Reset the game state
-		this.currentTurn = 0;
+		board.setCurrentTurn(0);
 		this.board.initializeBoard();
 		for (int i = 0; i < this.board.getPlayerNumber(); i++) {
-			players[i].getPawn().setPos(
+			board.getPlayers()[i].getPawn().setPos(
 					new Position(Board.STARTINGPOSITIONPLAYERS[i].getX(), Board.STARTINGPOSITIONPLAYERS[i].getY()));
-			players[i].getPawn().setLastPos(
+			board.getPlayers()[i].getPawn().setLastPos(
 					new Position(Board.STARTINGPOSITIONPLAYERS[i].getX(), Board.STARTINGPOSITIONPLAYERS[i].getY()));
-			players[i].getPawn()
-					.setPossibleMove(players[i].getPawn().possibleMove(board, players[i].getPawn().getPos()));
-			players[i].setRemainingWall(Board.MAXWALLCOUNT / this.board.getPlayerNumber());
+			board.getPlayers()[i].getPawn()
+					.setPossibleMove(board.getPlayers()[i].getPawn().possibleMove(board, board.getPlayers()[i].getPawn().getPos()));
+			board.getPlayers()[i].setRemainingWall(Board.MAXWALLCOUNT / this.board.getPlayerNumber());
 		}
 		grid = updateBoard(false);
 		try {

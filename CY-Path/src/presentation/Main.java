@@ -564,7 +564,7 @@ public class Main extends Application {
 	 * }
 	 */
 	private void placeWall(Orientation orientation, Position position) {
-		if (Wall.createWall(this.getBoard(), this.getPlayers(), this.getCurrentTurn(), orientation, position)) {
+		if (Wall.createWall(this.getBoard(), this.getCurrentTurn(), orientation, position)) {
 			// Mettre à jour l'affichage du plateau
 			this.setPlacingWall(false);
 			this.setHasPlacedWall(true);

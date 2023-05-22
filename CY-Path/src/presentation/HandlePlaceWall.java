@@ -16,7 +16,7 @@ public class HandlePlaceWall {
     }
     
     public void placeWall(Orientation orientation, Position position) {
-		if (Wall.createWall(gameTurn.board, gameTurn.players, gameTurn.currentTurn, orientation, position)) {
+		if (Wall.createWall(gameTurn.board, gameTurn.currentTurn, orientation, position)) {
 			gameTurn.mediaPlayerWallPlaced.stop();
 			gameTurn.mediaPlayerWallPlaced.play();
 			// Mettre à jour l'affichage du plateau

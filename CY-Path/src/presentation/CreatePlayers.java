@@ -54,12 +54,11 @@ public class CreatePlayers extends Application {
 		Button start = Menu.createButton("Start", 100, 50, 20);
 		start.setOnAction(e -> {
 			// Get each player's name
-			Player[] players = new Player[this.board.getPlayerNumber()];
 			for (int i = 0; i < this.board.getPlayerNumber(); i++) {
 				String playerName = name[i].getText();
 				for (Case value : Case.values()) {
 					if (value.getValue() == i + 1) {
-						players[i] = new Player(playerName,
+						board.getPlayers()[i] = new Player(playerName,
 								new Pawn(board,
 										new Position(Board.STARTINGPOSITIONPLAYERS[i].getX(),
 												Board.STARTINGPOSITIONPLAYERS[i].getY()),
@@ -68,7 +67,7 @@ public class CreatePlayers extends Application {
 					}
 				}
 			}
-			GameTurn gameTurnInstance = new GameTurn(board, players, backgroundPane, primaryStage);
+			GameTurn gameTurnInstance = new GameTurn(board, backgroundPane, primaryStage);
 			try {
 				gameTurnInstance.start(primaryStage);
 			} catch (Exception e1) {
