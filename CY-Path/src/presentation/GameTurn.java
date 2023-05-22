@@ -84,13 +84,13 @@ public class GameTurn extends Application {
 
 		Pawn p = players[this.currentTurn].getPawn();
 		p.setPossibleMove(p.possibleMove(this.board, p.getPos()));
-		if (p.getPossibleMove()==null /*Set vide : new Set<Position>[]*/) {
+		/*if (p.getPossibleMove()==null Set vide : new Set<Position>[]) {
 			//Skip turn + affiche alert
 			handleConfirm();
 			//Alerte à faire : peux pas bouger
 			
 			//Partie nulle -> Restart
-		}
+		}*/
 		
 		grid = updateBoard(false);
 		grid.setAlignment(Pos.CENTER);
@@ -124,26 +124,23 @@ public class GameTurn extends Application {
 		uselessAction.setVisible(false);
 		uselessPlayerTurn.setVisible(false);
 
-		//uselessBox.getChildren().addAll(uselessPlayerTurn, grid, uselessAction, uselessSliderContainer);
+		uselessBox.getChildren().addAll(uselessPlayerTurn, grid, uselessAction, uselessSliderContainer);
 		uselessBox.setAlignment(Pos.CENTER);
 
 		VBox box = new VBox(50);
-		//box.getChildren().addAll(playerTurn, invisibleGrid, action, sliderContainer);
-		box.getChildren().addAll(playerTurn, grid, action, sliderContainer);
+		box.getChildren().addAll(playerTurn, invisibleGrid, action, sliderContainer);
 		box.setAlignment(Pos.CENTER);
 
 		if (canDoAction) {
-			//handleMove(scene, players[this.currentTurn]);
 			HandleMovePawn movePawn = new HandleMovePawn(this);
 			movePawn.handleMove();
 		}
 
 		StackPane sceneContent = new StackPane();
-		//sceneContent.getChildren().addAll(backgroundPane, uselessBox, wallPreview, box);
-		sceneContent.getChildren().addAll(backgroundPane, box);
+		sceneContent.getChildren().addAll(backgroundPane, uselessBox, wallPreview, box);
 		scene.setRoot(sceneContent);
 
-		/*scene.setOnMouseMoved(new EventHandler<MouseEvent>() {
+		scene.setOnMouseMoved(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
 				if (isPlacingWall) {
@@ -158,7 +155,7 @@ public class GameTurn extends Application {
 					}
 				}
 			}
-		});*/
+		});
 
 		primaryStage.setScene(scene);
 		primaryStage.sizeToScene();
