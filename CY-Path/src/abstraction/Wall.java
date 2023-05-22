@@ -1,9 +1,14 @@
 package abstraction;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+
 /**
  * Represents a wall in a game.
  */
-public class Wall {
+public class Wall implements Serializable {
 
 	/**
 	 * The orientation of the wall.
@@ -154,19 +159,18 @@ public class Wall {
 	 * 
 	 * @param board   The game board.
 	 * @param players Array of players in the game.
-	 * @param turn    The current turn number.
 	 * @return true if the wall blocked a player, false otherwise.
 	 */
-	public boolean wallError(Board board, Player[] players, Integer turn) {
-		for (int i = 0; i < players.length; i++) {
-			players[i].getPawn()
-					.setPossibleMove(players[i].getPawn().possibleMove(board, players[i].getPawn().getPos()));
+	public boolean wallError(Board board) {
+		for (int i = 0; i < board.getPlayers().length; i++) {
+			board.getPlayers()[i].getPawn().setPossibleMove(
+					board.getPlayers()[i].getPawn().possibleMove(board, board.getPlayers()[i].getPawn().getPos()));
 		}
-		if (!board.isWinnableForAll(players)) {
+		if (!board.isWinnableForAll()) {
 			this.updateWall(board, Case.POTENTIALWALL);
-			for (int i = 0; i < players.length; i++) {
-				players[i].getPawn().setPossibleMove(
-						players[i].getPawn().possibleMove(board, players[i].getPawn().getPos()));
+			for (int i = 0; i < board.getPlayers().length; i++) {
+				board.getPlayers()[i].getPawn().setPossibleMove(
+						board.getPlayers()[i].getPawn().possibleMove(board, board.getPlayers()[i].getPawn().getPos()));
 			}
 			return true;
 		}
@@ -176,29 +180,26 @@ public class Wall {
 	/**
 	 * Removes the last wall placed.
 	 *
-	 * @param board       The game board.
+	 * @param board The game board.
 	 */
 	public static void removeLastWall(Board board) {
 		board.getLastWall().updateWall(board, Case.POTENTIALWALL);
 	}
-	
+
 	/**
 	 * Creates the wall and verifies if it blocks a player's winning path using
 	 * depth-first search.
 	 *
 	 * @param board       The game board.
-	 * @param players     Array of players in the game.
-	 * @param turn        The current turn number.
 	 * @param orientation The orientation of the wall (horizontal or vertical).
 	 * @param pos         The position of the wall.
 	 * @return true if the wall has been created, false otherwise.
 	 */
-	public static boolean createWall(Board board, Player[] players, Integer turn, Orientation orientation,
-			Position pos) {
+	public static boolean createWall(Board board, Orientation orientation, Position pos) {
 		Wall wall = new Wall(orientation, pos);
 		if (wall.verifyWall(board)) {
 			wall.updateWall(board, Case.WALL);
-			if (wall.wallError(board, players, turn)) {
+			if (wall.wallError(board)) {
 				return false;
 			}
 			board.setLastWall(wall);
@@ -206,5 +207,15 @@ public class Wall {
 		} else {
 			return false;
 		}
+	}
+	
+	// Méthode pour sérialiser la classe Board
+	private void writeObject(ObjectOutputStream out) throws IOException {
+		out.defaultWriteObject();
+	}
+
+	// Méthode pour désérialiser la classe Board
+	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+		in.defaultReadObject();
 	}
 }

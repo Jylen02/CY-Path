@@ -101,7 +101,7 @@ Mettre le tout dans un dossier
 --15. IHM : Fonctionnalités murs
 --15.1. Prévisualiser un mur transparent (Durée : 7h) : Terminé, mais potentiel modification - Christophe, Noaman
         Pb StackPane, on ne peut pas avoir le mur transparent 1er plan et cliquer bouton 2nd plan
-	Cherche une autre méthode d'affichage ?
+	Cherche une autre méthode d'affichage ? -> coloriage -> abandon 
 --15.2. Ne plus pouvoir cliquer sur le bouton pour récuperer un mur si on le possède déjà (Durée : 10min) : Terminé - Jeremy
 --15.3. Curseur souris -> index (Durée estimée : 2h - Durée : 2h) : Annulé - Christophe
 --15.4. Tourner le mur (clic droit) (Durée estimée : 20min - Durée estimée : 10min) : Terminé - Christophe
@@ -110,18 +110,29 @@ Mettre le tout dans un dossier
 --16. IHM : Fonctionnalités
 --16.1. Pouvoir cliquer sur les cases du plateau pour effectuer l'action (Durée : 3h) : Terminé - Abd-Ennour, Christophe
 --16.2. Ajouter un bruit à chaque fois qu'on bouge un pion ou mur (Durée estimée : 20min - Durée : 30min) : Terminé - Noaman, Warren
---16.3. Musique de fond (Durée : 40min ) : Terminé - Noaman, Warren
+--16.3. Musique de fond (Durée : 40min) : Terminé - Noaman, Warren
         Bouton à mettre en attribut
-16.4. Mettre le background à toutes les pages Stackpane : A faire
+--16.4. Mettre le background à toutes les pages Stackpane (Duére : 1h) : Terminé - Christophe
+--16.5. Changer l'implémentation des musiques (Durée : 30min) : Terminé - Noaman
 
-17. IHM : Optimiser le code : A faire
-17.1. Séparer en plusieurs classes les différentes pages / différentes actions possible ? : A faire
-17.2. Réinitialisation des attributs des boutons à rassembler en une méthode commune si dupliquat de code. : A faire
+17. IHM : Optimiser le code 
+--17.1. Séparer en plusieurs classes les différentes pages / différentes actions possible (Durée : 2h) : Terminé - Christophe
+--17.2. Réinitialisation des attributs des boutons à rassembler en une méthode commune si dupliquat de code (Durée : 10min) : Terminé - Christophe
+17.3. Création bouton Save pour faire une backup : A faire
+      Création bouton Load pour charger une backup : A faire
+      Modifier les classes Abstraction pour être sauvegardable : (Durée : 3h) Terminé - Jeremy
 
 18. Controle
 18.1. Implémenter la classe Observable dans les classes la nécessitant : A faire
 18.2. Mettre les méthodes setChanged/notifyObserver... dans les getters/setters ou méthodes : A faire
 18.3. Relier Présentation (IHM) et Abstraction (classe) : A faire
 
-19. Documentation JavaDoc IHM : A faire
+--19. Documentation JavaDoc IHM (Durée : 20min) : Terminé - Christophe
 19.1. Commentaires pour toutes les méthodes de classe (si utile)
+
+--20. Esthetique
+--20.1. Creer et ajouter des styles css sur toutes les pages/boutons/labels (Durée : 1h30) : Terminé - Warren
+
+Potentielles modifications :
+--Si un joueur est complètement bloqué -> sauter son tour (Durée : 5min) : Terminé - Christophe
+--Rajouter Player[] dans Board pour pouvoir faire une méthode qui actualise les déplacements possibles de chaque pion + simplifier certaines modifications dans la console/IHM (Durée : 30min) : Terminé - Jeremy

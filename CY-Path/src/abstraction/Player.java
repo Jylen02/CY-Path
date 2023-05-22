@@ -1,9 +1,14 @@
 package abstraction;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+
 /**
  * Represents a player in a game.
  */
-public class Player {
+public class Player implements Serializable {
 
 	/**
 	 * The pawn associated with the player.
@@ -23,8 +28,8 @@ public class Player {
 	/**
 	 * Creates a new player with the specified player number and associated pawn.
 	 *
-	 * @param name 			The player's name.
-	 * @param pawn 			The pawn associated with the player.
+	 * @param name          The player's name.
+	 * @param pawn          The pawn associated with the player.
 	 * @param remainingWall The number of wall remaining for this player.
 	 */
 	public Player(String name, Pawn pawn, int remainingWall) {
@@ -59,7 +64,7 @@ public class Player {
 	public Pawn getPawn() {
 		return pawn;
 	}
-	
+
 	/**
 	 * Returns the number of wall remaining.
 	 *
@@ -68,7 +73,7 @@ public class Player {
 	public int getRemainingWall() {
 		return remainingWall;
 	}
-	
+
 	/**
 	 * Sets the number of wall remaining.
 	 *
@@ -76,5 +81,15 @@ public class Player {
 	 */
 	public void setRemainingWall(int remainingWall) {
 		this.remainingWall = remainingWall;
+	}
+
+	// Méthode pour sérialiser la classe Board
+	private void writeObject(ObjectOutputStream out) throws IOException {
+		out.defaultWriteObject();
+	}
+
+	// Méthode pour désérialiser la classe Board
+	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+		in.defaultReadObject();
 	}
 }

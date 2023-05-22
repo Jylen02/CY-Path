@@ -22,10 +22,12 @@ To run the deliverable:
 	- Then enter the command "java -jar quoridor.jar"
 
 Implemented features:
+	- Choice between a new game or an existing game
 	- Choice of the number of players (2 or 4 players)
 	- Choice of players' names
 	- Initialization and display of the board
 	- Players play one at a time and the turn skip automatically
+	- Choice to save the current game
 	- Player's possible move are displayed.
 	- Player's remaining wall are displayed.
 	- Choice of action
@@ -41,6 +43,7 @@ Implemented features:
 			-> Check that the player still have remaining walls to place
 			-> DFS to be applied to all players, ensuring that all players have the possibility to win
 	- If there is an error, the turn is restarted 
+	- If a player can't move, his turn is skipped
 
 Board display description :
 	- Players are indicated by their number
@@ -50,9 +53,11 @@ Board display description :
 	- Coordinates are indicated at the top and left of the board
 
 How to play ? :
+	- Choose between a new game or an existing game
 	- Enter the number of players (2 or 4)
 	- Enter the names of each players
 	- Player's turn :
+		-> You can save the current game if you want
 		-> A list of possible moves for the active player is provided
 		-> The number of remaining walls is displayed
 		-> Choose an action between "move the pawn" or "place a wall"
@@ -78,18 +83,18 @@ To run the IHM version of the deliverable :
 
 Human-machine interface only features :
 	- Same features as terminal's ones
-	- See the rules of the game
+	- See the rules of the game (somes rules are customed by ourselves)
 	- There is an icon for the application
 	- Players have icon on their pawn
 	- Exit the game (there is no backup of the current game, all progress will be lose)
 	- Restart the game
-	- Background music & sound when we do an action (Moving a pawn)
+	- Background music & sound when we do an action (Moving a pawn and Placing a wall)
+	- Can't move the pawn when placing wall
 	- The sound's volume can be controled 
 
 Not implemented features:
-	- Sound when we do an action (Placing a wall)
-	- Can't move the pawn when placing wall
-	- Accurate rules
+	- Backup of the game (Save and Load)
+	- Observator
 
 How to play ? :
 	- Press the "Play" button
@@ -106,6 +111,7 @@ How to play ? :
 			   the wall will be colored in black if you can place it there.
 			-> Right click to change the orientation of the wall
 			-> Left click to place the wall
+	- If a player can't move, his turn is skipped
 	- The updated board is displayed
 	- The player can cancel its action and make another action (Press "Cancel" button)
 	- A confirmation is needed to make the action (Press "Confirm" button)
