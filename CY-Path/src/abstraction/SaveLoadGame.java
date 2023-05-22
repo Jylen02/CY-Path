@@ -1,6 +1,7 @@
 package abstraction;
 
 import java.io.FileOutputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -10,8 +11,7 @@ public class SaveLoadGame {
 
 	public static void save(Board board, String Filename) throws IOException {
 		try {
-			FileOutputStream fileOut = new FileOutputStream(
-					"C:\\Users\\jerem\\Desktop\\Études\\Cours\\2022-2023\\Projet\\CY-Path\\CY-Path\\log\\" + Filename);
+			FileOutputStream fileOut = new FileOutputStream(Filename);
 			ObjectOutputStream out = new ObjectOutputStream(fileOut);
 
 			out.writeObject(board.getBoard());
@@ -31,8 +31,7 @@ public class SaveLoadGame {
 
 	public static void load(Board board, String Filename) throws IOException {
 		try {
-			FileInputStream fileIn = new FileInputStream(
-					"C:\\Users\\jerem\\Desktop\\Études\\Cours\\2022-2023\\Projet\\CY-Path\\CY-Path\\log\\" + Filename);
+			FileInputStream fileIn = new FileInputStream(Filename);
 			ObjectInputStream in = new ObjectInputStream(fileIn);
 
 			board.setBoard((Case[][]) in.readObject());
@@ -40,7 +39,6 @@ public class SaveLoadGame {
 			board.setPlayers((Player[]) in.readObject());
 			board.setCurrentTurn((Integer) in.readObject());
 			board.setLastWall((Wall) in.readObject());
-
 			in.close();
 			fileIn.close();
 
