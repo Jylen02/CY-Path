@@ -164,7 +164,8 @@ public class GameTurn extends Application {
 			StackPane sceneContent = new StackPane();
 			sceneContent.getChildren().addAll(backgroundPane, uselessBox, wallPreview, box);
 			scene.setRoot(sceneContent);
-
+			scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
+			
 			scene.setOnMouseMoved(new EventHandler<MouseEvent>() {
 				@Override
 				public void handle(MouseEvent event) {
@@ -181,9 +182,6 @@ public class GameTurn extends Application {
 					}
 				}
 			});
-			
-			String  style= getClass().getResource("style.css").toExternalForm();
-			scene.getStylesheets().add(style);
 
 			primaryStage.setScene(scene);
 			primaryStage.sizeToScene();

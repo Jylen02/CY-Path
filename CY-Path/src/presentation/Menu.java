@@ -96,9 +96,7 @@ public class Menu extends Application {
 		sceneContent.getChildren().addAll(backgroundPane, box);
 
 		Scene scene = new Scene(sceneContent, 800, 700);
-		
-		String  style= getClass().getResource("style.css").toExternalForm();
-		scene.getStylesheets().add(style);
+		scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
 
 		primaryStage.setScene(scene);
 		primaryStage.sizeToScene();
@@ -118,7 +116,6 @@ public class Menu extends Application {
 		Button button = new Button(text);
 		button.setPrefSize(i, j);
 		button.setStyle("-fx-font-size: " + pixel + "px;");
-		// button.setStyle("style.css");
 		return button;
 	}
 

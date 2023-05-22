@@ -131,6 +131,9 @@ Mettre le tout dans un dossier
 --19. Documentation JavaDoc IHM (Durée : 20min) : Terminé - Christophe
 19.1. Commentaires pour toutes les méthodes de classe (si utile)
 
+--20. Esthetique
+20.1. Creer et ajouter des styles css sur toutes les pages/boutons/labels (Durée : 1h30) : Terminé - Warren
+
 Potentielles modifications :
 --Si un joueur est complètement bloqué -> sauter son tour (Durée : 5min) : Terminé - Christophe
 --Rajouter Player[] dans Board pour pouvoir faire une méthode qui actualise les déplacements possibles de chaque pion + simplifier certaines modifications dans la console/IHM (Durée : 30min) : Terminé - Jeremy
