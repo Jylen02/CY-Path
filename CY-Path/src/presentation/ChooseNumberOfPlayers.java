@@ -11,14 +11,35 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+/**
+ * The ChooseNumberOfPlayers class represents the menu for choosing the number
+ * of players in the Quoridor game application. It extends the Application class
+ * and provides functionality for selecting the number of players and navigating
+ * back to the main menu.
+ */
 public class ChooseNumberOfPlayers extends Application {
 
 	private StackPane backgroundPane;
 
+	/**
+	 * Constructs a new ChooseNumberOfPlayers instance with the specified background
+	 * pane.
+	 *
+	 * @param backgroundPane the background pane to be used in the choose number of
+	 *                       players menu
+	 */
 	public ChooseNumberOfPlayers(StackPane backgroundPane) {
 		this.backgroundPane = backgroundPane;
 	}
 
+	/**
+	 * The start method is the entry point of the JavaFX application. It initializes
+	 * and configures the primary stage and sets up the choose number of players
+	 * menu scene with the player selection options and a back button.
+	 *
+	 * @param primaryStage the primary stage of the JavaFX application
+	 * @throws Exception if an exception occurs during the start process
+	 */
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		VBox box = new VBox(10);

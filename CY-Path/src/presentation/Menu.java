@@ -18,11 +18,23 @@ import javafx.scene.layout.VBox;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 
+/**
+ * The Menu class represents the main menu of the Quoridor game application. It
+ * extends the Application class and provides functionality for displaying the
+ * menu options and handling user interactions.
+ */
 public class Menu extends Application {
 
 	private MediaPlayer mediaPlayerMusic;
 	private Slider volumeSlider;
 
+	/**
+	 * The start method is the entry point of the JavaFX application. It initializes
+	 * and configures the primary stage and sets up the menu scene with various UI
+	 * elements.
+	 *
+	 * @param primaryStage the primary stage of the JavaFX application
+	 */
 	@Override
 	public void start(Stage primaryStage) {
 		primaryStage.setTitle("Quoridor");
@@ -40,7 +52,7 @@ public class Menu extends Application {
 		backgroundPane.setBackground(background);
 
 		Label volumeLabel = createLabel("Volume", 40);
-		
+
 		mediaPlayerMusic = BackgroundMusic.getInstance().getMusicPlayer();
 		volumeSlider = BackgroundMusic.getInstance().getVolumeSlider();
 		mediaPlayerMusic.volumeProperty().bindBidirectional(volumeSlider.valueProperty());
@@ -72,8 +84,7 @@ public class Menu extends Application {
 				e1.printStackTrace();
 			}
 		});
-	
-		
+
 		Button exit = createButton("Exit", 300, 100, 50);
 		exit.setOnAction(e -> primaryStage.close());
 
@@ -91,19 +102,42 @@ public class Menu extends Application {
 		primaryStage.show();
 	}
 
+	/**
+	 * Creates a button with the given text and size.
+	 *
+	 * @param text   the text to be displayed on the button
+	 * @param width  the width of the button
+	 * @param height the height of the button
+	 * @param pixel  the font size of the button text
+	 * @return the created button
+	 */
 	protected static Button createButton(String text, int i, int j, int pixel) {
 		Button button = new Button(text);
 		button.setPrefSize(i, j);
 		button.setStyle("-fx-font-size: " + pixel + "px;");
+		// button.setStyle("style.css");
 		return button;
 	}
 
+	/**
+	 * Creates a label with the given text and font size.
+	 *
+	 * @param text  the text to be displayed on the label
+	 * @param pixel the font size of the label text
+	 * @return the created label
+	 */
 	protected static Label createLabel(String text, int pixel) {
 		Label label = new Label(text);
 		label.setStyle("-fx-font-size: " + pixel + "px; -fx-text-fill: white;");
 		return label;
 	}
 
+	/**
+	 * The main method is the entry point of the Java application. It launches the
+	 * JavaFX application by calling the launch method.
+	 *
+	 * @param args the command-line arguments
+	 */
 	public static void main(String[] args) {
 		launch(args);
 	}

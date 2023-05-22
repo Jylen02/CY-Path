@@ -15,17 +15,40 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+/**
+ * The CreatePlayers class represents the menu for creating players in the
+ * Quoridor game application. It extends the Application class and provides
+ * functionality for choosing the names of each player and starting the game
+ * with the selected players.
+ */
 public class CreatePlayers extends Application {
 
 	private StackPane backgroundPane;
 
 	private Board board;
 
+	/**
+	 * Constructs a new CreatePlayers instance with the specified board and
+	 * background pane.
+	 *
+	 * @param board          the game board for the Quoridor game
+	 * @param backgroundPane the background pane to be used in the create players
+	 *                       menu
+	 */
 	public CreatePlayers(Board board, StackPane backgroundPane) {
 		this.board = board;
 		this.backgroundPane = backgroundPane;
 	}
 
+	/**
+	 * The start method is the entry point of the JavaFX application. It initializes
+	 * and configures the primary stage and sets up the create players menu scene
+	 * with text fields for entering player names, a back button, and a start
+	 * button.
+	 *
+	 * @param primaryStage the primary stage of the JavaFX application
+	 * @throws Exception if an exception occurs during the start process
+	 */
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		Label title = Menu.createLabel("Quoridor", 100);

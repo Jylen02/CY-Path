@@ -114,6 +114,7 @@ Mettre le tout dans un dossier
         Bouton à mettre en attribut
 --16.4. Mettre le background à toutes les pages Stackpane (Duére : 1h) : Terminé - Christophe
 --16.5. Changer l'implémentation des musiques (Durée : 30min) : Terminé - Noaman
+16.6. Style.css : A faire
 
 17. IHM : Optimiser le code 
 --17.1. Séparer en plusieurs classes les différentes pages / différentes actions possible (Durée : 2h) : Terminé - Christophe
@@ -129,6 +130,6 @@ Mettre le tout dans un dossier
 19. Documentation JavaDoc IHM : A faire
 19.1. Commentaires pour toutes les méthodes de classe (si utile)
 
-Potentiel modification
--Si un joueur est complètement bloqué (possibleMove == null) -> déclarer match nul ou bien sauter son tour
--Rajouter Player[] dans Board pour pouvoir faire une méthode qui actualise les déplacements possibles de chaque pion + simplifier certaines modifications dans la console/IHM
+Potentielles modifications :
+-Si un joueur est complètement bloqué -> sauter son tour (Durée : 5min) : Terminé - Christophe
+-Rajouter Player[] dans Board pour pouvoir faire une méthode qui actualise les déplacements possibles de chaque pion + simplifier certaines modifications dans la console/IHM (Durée : 30min) : Terminé - Jeremy

@@ -79,7 +79,7 @@ To run the IHM version of the deliverable :
 
 Human-machine interface only features :
 	- Same features as terminal's ones
-	- See the rules of the game
+	- See the rules of the game (somes rules are customed by ourselves)
 	- There is an icon for the application
 	- Players have icon on their pawn
 	- Exit the game (there is no backup of the current game, all progress will be lose)
@@ -89,8 +89,7 @@ Human-machine interface only features :
 	- The sound's volume can be controled 
 
 Not implemented features:
-	- Accurate rules
-	- Backup of the game
+	- Backup of the game (Save and Load Button)
 	- Observator
 
 How to play ? :
@@ -108,6 +107,7 @@ How to play ? :
 			   the wall will be colored in black if you can place it there.
 			-> Right click to change the orientation of the wall
 			-> Left click to place the wall
+	- If a player can't move, his turn is skipped
 	- The updated board is displayed
 	- The player can cancel its action and make another action (Press "Cancel" button)
 	- A confirmation is needed to make the action (Press "Confirm" button)
