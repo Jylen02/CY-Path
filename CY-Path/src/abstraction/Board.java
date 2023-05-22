@@ -1,5 +1,9 @@
 package abstraction;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -7,7 +11,7 @@ import java.util.Set;
  * Represents the game board for the game. It contains the board layout, player
  * and wall count, and various methods for manipulating the board.
  */
-public class Board {
+public class Board implements Serializable {
 
 	/**
 	 * The representation of the board.
@@ -19,6 +23,9 @@ public class Board {
 	 */
 	private int playerNumber;
 
+	private Player[] players;
+
+	private int currentTurn;
 	/**
 	 * The last wall placed on the board.
 	 */
@@ -48,6 +55,8 @@ public class Board {
 	 */
 	public Board(int playerNumber) {
 		this.playerNumber = playerNumber;
+		this.currentTurn = 1;
+		this.players = new Player[playerNumber];
 		initializeBoard();
 	}
 
@@ -85,6 +94,22 @@ public class Board {
 	 */
 	public void setPlayerNumber(int playerNumber) {
 		this.playerNumber = playerNumber;
+	}
+
+	public Player[] getPlayers() {
+		return players;
+	}
+
+	public void setPlayers(Player[] players) {
+		this.players = players;
+	}
+
+	public int getCurrentTurn() {
+		return currentTurn;
+	}
+
+	public void setCurrentTurn(int currentTurn) {
+		this.currentTurn = currentTurn;
 	}
 
 	/**
@@ -232,12 +257,12 @@ public class Board {
 	 * @param players Array of players in the game.
 	 * @return true if all players can reach their goals, false otherwise.
 	 */
-	public boolean isWinnableForAll(Player[] players) {
+	public boolean isWinnableForAll() {
 		int i = 0;
-		while (i < players.length && this.isWinnable(players[i].getPawn())) {
+		while (i < this.getPlayers().length && this.isWinnable(this.getPlayers()[i].getPawn())) {
 			i++;
 		}
-		return i == players.length;
+		return i == this.getPlayers().length;
 	}
 
 	/**
@@ -263,12 +288,12 @@ public class Board {
 	/**
 	 * Performs a depth-first search (DFS) on the game board from a given position.
 	 * 
-	 * @param pos                 The position from which to start the DFS.
-	 * @param player              The player for whom to perform the DFS.
-	 * @param marking             A set of positions marking the nodes visited
-	 *                            during the DFS.
-	 * @param possibleMove 		  The set of Positions representing the possible
-	 *                            moves for the Pawn.
+	 * @param pos          The position from which to start the DFS.
+	 * @param player       The player for whom to perform the DFS.
+	 * @param marking      A set of positions marking the nodes visited during the
+	 *                     DFS.
+	 * @param possibleMove The set of Positions representing the possible moves for
+	 *                     the Pawn.
 	 * @return The updated marking set after performing the DFS.
 	 */
 	public Set<Position> dfs(Position pos, Pawn player, Set<Position> marking, Set<Position> possibleMove) {
@@ -280,5 +305,15 @@ public class Board {
 			}
 		}
 		return marking;
+	}
+
+	// Méthode pour sérialiser la classe Board
+	private void writeObject(ObjectOutputStream out) throws IOException {
+		out.defaultWriteObject();
+	}
+
+	// Méthode pour désérialiser la classe Board
+	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+		in.defaultReadObject();
 	}
 }
