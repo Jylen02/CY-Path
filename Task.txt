@@ -121,7 +121,7 @@ Mettre le tout dans un dossier
 --17.2. Réinitialisation des attributs des boutons à rassembler en une méthode commune si dupliquat de code (Durée : 10min) : Terminé - Christophe
 17.3. Création bouton Save pour faire une backup : A faire
       Création bouton Load pour charger une backup : A faire
-       Modifier les classes Abstraction pour être sauvegardable : Terminé - Jeremy
+      Modifier les classes Abstraction pour être sauvegardable : (Durée : 3h) Terminé - Jeremy
 
 18. Controle
 18.1. Implémenter la classe Observable dans les classes la nécessitant : A faire
