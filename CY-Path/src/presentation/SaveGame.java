@@ -5,7 +5,6 @@ import java.io.IOException;
 import abstraction.Board;
 import abstraction.SaveLoadGame;
 import javafx.application.Application;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -60,15 +59,9 @@ public class SaveGame extends Application {
 		Button save3 = Menu.createButton("Save 3", 130, 50, 20);
 		save3.setOnAction(e -> SaveVerification("save3.svg", primaryStage));
 
-		VBox box = new VBox(10);
-		box.getChildren().addAll(title, save1, save2, save3, back);
-		box.setAlignment(Pos.CENTER);
+		VBox box = Menu.createVBox(10, title, save1, save2, save3, back);
 
-		StackPane sceneContent = new StackPane();
-		sceneContent.getChildren().addAll(backgroundPane, box);
-
-		Scene scene = new Scene(sceneContent, 800, 700);
-		scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
+		Scene scene = Menu.createScene(backgroundPane, box);
 
 		primaryStage.setScene(scene);
 		primaryStage.sizeToScene();

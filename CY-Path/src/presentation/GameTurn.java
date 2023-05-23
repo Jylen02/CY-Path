@@ -126,34 +126,29 @@ public class GameTurn extends Application {
 			HBox uselessAction = actionList(scene, false);
 
 			Label volumeLabel = Menu.createLabel("Volume", 40);
+			
+			HBox sliderContainer = Menu.createHBox(10, volumeLabel, volumeSlider);
+			
+			HBox uselessSliderContainer = Menu.createHBox(10, Menu.createLabel("Volume", 40), new Slider(0, 0.1, 0.05));
 
-			HBox sliderContainer = new HBox(10);
-			sliderContainer.getChildren().addAll(volumeLabel, volumeSlider);
-			sliderContainer.setAlignment(Pos.CENTER);
 
-			HBox uselessSliderContainer = new HBox(10);
-			uselessSliderContainer.getChildren().addAll(Menu.createLabel("Volume", 40), new Slider(0, 0.1, 0.05));
-			uselessSliderContainer.setAlignment(Pos.CENTER);
-
-			VBox uselessBox = new VBox(50);
-
-			uselessSliderContainer.setVisible(false);
+			VBox uselessBox = Menu.createVBox(50, uselessPlayerTurn, grid, uselessAction, uselessSliderContainer);
 			// Rendre invisible tous les éléments de la uselessBox sauf la grid
+			uselessSliderContainer.setVisible(false);
 			uselessAction.setVisible(false);
 			uselessPlayerTurn.setVisible(false);
 
-			uselessBox.getChildren().addAll(uselessPlayerTurn, grid, uselessAction, uselessSliderContainer);
-			uselessBox.setAlignment(Pos.CENTER);
+			
+			
+			VBox box = Menu.createVBox(50, playerTurn, invisibleGrid, action, sliderContainer);
 
-			VBox box = new VBox(50);
-			box.getChildren().addAll(playerTurn, invisibleGrid, action, sliderContainer);
-			box.setAlignment(Pos.CENTER);
 
 			if (canDoAction) {
 				HandleMovePawn movePawn = new HandleMovePawn(this);
 				movePawn.handleMove();
 			}
-
+			
+			
 			StackPane sceneContent = new StackPane();
 			sceneContent.getChildren().addAll(backgroundPane, uselessBox, wallPreview, box);
 			scene.setRoot(sceneContent);
@@ -244,10 +239,8 @@ public class GameTurn extends Application {
 			loadGame.setDisable(false);
 			saveGame.setDisable(false);
 		}
-
-		HBox box = new HBox(20);
-		box.getChildren().addAll(exit, restart, cancel, wall, confirm, saveGame, loadGame);
-		box.setAlignment(Pos.TOP_CENTER);
+		
+		HBox box = Menu.createHBox(20, exit, restart, cancel, wall, confirm, saveGame, loadGame);
 
 		return box;
 	}
