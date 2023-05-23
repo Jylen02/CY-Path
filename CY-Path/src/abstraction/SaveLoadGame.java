@@ -22,7 +22,6 @@ public class SaveLoadGame {
 			out.close();
 			fileOut.close();
 
-			System.out.println("Partie sauvegardée avec succès dans le fichier : " + Filename);
 		} catch (IOException e) {
 			throw new IOException(e.getMessage());
 		}
@@ -38,6 +37,7 @@ public class SaveLoadGame {
 			board.setPlayers((Player[]) in.readObject());
 			board.setCurrentTurn((Integer) in.readObject());
 			board.setLastWall((Wall) in.readObject());
+			
 			in.close();
 			fileIn.close();
 
