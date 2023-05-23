@@ -7,6 +7,7 @@ import abstraction.Player;
 import abstraction.Position;
 import javafx.application.Application;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -96,11 +97,14 @@ public class CreatePlayers extends Application {
 		});
 		box.getChildren().addAll(back, start);
 
+		Node[] nodes = { backgroundPane, box};
+		Scene scene = Menu.createScene(nodes);
+		/*
 		StackPane sceneContent = new StackPane();
 		sceneContent.getChildren().addAll(backgroundPane, box);
 
 		Scene scene = new Scene(sceneContent, 800, 700);
-		scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
+		scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());*/
 
 		primaryStage.setScene(scene);
 		primaryStage.sizeToScene();

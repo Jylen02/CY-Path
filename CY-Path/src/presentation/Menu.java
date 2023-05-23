@@ -158,7 +158,7 @@ public class Menu extends Application {
 		}
 
 		Scene scene = new Scene(sceneContent, 800, 700);
-		scene.getStylesheets().add(Application.class.getResource("style.css").toExternalForm());
+		scene.getStylesheets().add(Menu.class.getResource("style.css").toExternalForm());
 		return scene;
 	}
 	
