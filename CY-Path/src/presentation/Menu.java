@@ -2,6 +2,7 @@ package presentation;
 
 import javafx.application.Application;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -98,11 +99,8 @@ public class Menu extends Application {
 		box.getChildren().addAll(title, play, info, sliderContainer);
 		box.setAlignment(Pos.CENTER);
 
-		StackPane sceneContent = new StackPane();
-		sceneContent.getChildren().addAll(backgroundPane, box);
-
-		Scene scene = new Scene(sceneContent, 800, 700);
-		scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
+		Node[] nodes = { backgroundPane, box };
+		Scene scene = createScene(nodes);
 
 		primaryStage.setScene(scene);
 		primaryStage.sizeToScene();
@@ -138,6 +136,32 @@ public class Menu extends Application {
 		return label;
 	}
 
+	protected static VBox createVBox(int spacing) {
+		VBox box = new VBox(spacing);
+		box.setAlignment(Pos.CENTER);
+		return box;
+	}
+
+	protected static HBox createHBox(Node[] nodes, int spacing) {
+		HBox box = new HBox(spacing);
+		for (int i = 0; i < nodes.length; i++) {
+			box.getChildren().add(nodes[i]);
+		}
+		box.setAlignment(Pos.CENTER);
+		return box;
+	}
+
+	protected static Scene createScene(Node[] nodes) {
+		StackPane sceneContent = new StackPane();
+		for (int i = 0; i < nodes.length; i++) {
+			sceneContent.getChildren().add(nodes[i]);
+		}
+
+		Scene scene = new Scene(sceneContent, 800, 700);
+		scene.getStylesheets().add(Application.class.getResource("style.css").toExternalForm());
+		return scene;
+	}
+	
 	/**
 	 * Launches the specified JavaFX application with the given primary stage and
 	 * handles any exceptions that occur during the launch.

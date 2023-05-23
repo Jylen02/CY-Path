@@ -57,6 +57,7 @@ public class CreatePlayers extends Application {
 
 		VBox box = new VBox(title, label);
 		box.setSpacing(10);
+		box.setAlignment(Pos.CENTER);
 
 		// Choose each player's name
 		TextField[] name = new TextField[board.getPlayerNumber()];
@@ -93,7 +94,6 @@ public class CreatePlayers extends Application {
 			GameTurn gameTurnInstance = new GameTurn(board, backgroundPane, primaryStage);
 			Menu.launchVerification(gameTurnInstance, primaryStage);
 		});
-		box.setAlignment(Pos.CENTER);
 		box.getChildren().addAll(back, start);
 
 		StackPane sceneContent = new StackPane();
