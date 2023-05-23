@@ -26,9 +26,6 @@ import javafx.stage.Stage;
  */
 public class Menu extends Application {
 
-	private MediaPlayer mediaPlayerMusic;
-	private Slider volumeSlider;
-
 	/**
 	 * The start method is the entry point of the JavaFX application. It initializes
 	 * and configures the primary stage and sets up the menu scene with various UI
@@ -54,8 +51,8 @@ public class Menu extends Application {
 
 		Label volumeLabel = createLabel("Volume", 40);
 
-		mediaPlayerMusic = BackgroundMusic.getInstance().getMusicPlayer();
-		volumeSlider = BackgroundMusic.getInstance().getVolumeSlider();
+		MediaPlayer mediaPlayerMusic = BackgroundMusic.getInstance().getMusicPlayer();
+		Slider volumeSlider = BackgroundMusic.getInstance().getVolumeSlider();
 		mediaPlayerMusic.volumeProperty().bindBidirectional(volumeSlider.valueProperty());
 		mediaPlayerMusic.setCycleCount(MediaPlayer.INDEFINITE); // Infinite restart
 		mediaPlayerMusic.play(); // background music start with the launch of the app

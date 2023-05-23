@@ -95,7 +95,7 @@ Mettre le tout dans un dossier
 --14. IHM : Fonctionnalités pion
 --14.1. Voir déplacement possible (Durée : 1h) : Terminé - Abd-Ennour
 --14.2. Bouger pion (Durée estimée : 1h - Durée : 2h) : Terminé- Abd-Ennour, Noaman
-      Problème actualisation des mouvements possibles (Durée: 5min) : Rég lé - Abd-Ennour
+      Problème actualisation des mouvements possibles (Durée: 5min) : Réglé - Abd-Ennour
 --14.3. Verifier si un joueur à gagner -> message (Durée estimée : 10min - Durée : 15min) : Terminé - Abd-Ennour, 
 
 --15. IHM : Fonctionnalités murs
@@ -121,7 +121,7 @@ Mettre le tout dans un dossier
 --17.3. Création bouton Save pour faire une backup (Durée : 10min) : Terminé - Christophe
         Création bouton Load pour charger une backup (Durée : 20min) : Terminé - Christophe
       Modifier les classes Abstraction pour être sauvegardable + console : (Durée : 3h30) Terminé - Jeremy
-17.4. Optimiser la création des VBox/HBox : A faire
+17.4. Optimiser la création des VBox/HBox/Scene (Durée estimée : 15min ) : A faire - Noaman
 
 18. Controle
 18.1. Implémenter la classe Observable dans les classes la nécessitant : A faire
@@ -129,7 +129,7 @@ Mettre le tout dans un dossier
 18.3. Relier Présentation (IHM) et Abstraction (classe) : A faire
 
 --19. Documentation JavaDoc IHM (Durée : 30min) : Terminé - Christophe
-19.1. Commentaires pour toutes les méthodes de classe (si utile)
+--19.1. Commentaires pour toutes les méthodes de classe (si utile)
 
 --20. Esthetique
 --20.1. Creer et ajouter des styles css sur toutes les pages/boutons/labels (Durée : 1h30) : Terminé - Warren
