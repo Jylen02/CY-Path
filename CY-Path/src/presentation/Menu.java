@@ -99,8 +99,8 @@ public class Menu extends Application {
 		box.getChildren().addAll(title, play, info, sliderContainer);
 		box.setAlignment(Pos.CENTER);
 
-		Node[] nodes = { backgroundPane, box };
-		Scene scene = createScene(nodes);
+		Scene scene = createScene(backgroundPane, box);
+
 
 		primaryStage.setScene(scene);
 		primaryStage.sizeToScene();
@@ -151,7 +151,7 @@ public class Menu extends Application {
 		return box;
 	}
 
-	protected static Scene createScene(Node[] nodes) {
+	protected static Scene createScene(Node... nodes) {
 		StackPane sceneContent = new StackPane();
 		for (int i = 0; i < nodes.length; i++) {
 			sceneContent.getChildren().add(nodes[i]);
