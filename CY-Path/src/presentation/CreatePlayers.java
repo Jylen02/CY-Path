@@ -6,7 +6,6 @@ import abstraction.Pawn;
 import abstraction.Player;
 import abstraction.Position;
 import javafx.application.Application;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -55,8 +54,7 @@ public class CreatePlayers extends Application {
 
 		Label label = Menu.createLabel("Choose the name of each players", 50);
 
-		VBox box = new VBox(title, label);
-		box.setSpacing(10);
+		VBox box = Menu.createVBox(10, title, label);
 
 		// Choose each player's name
 		TextField[] name = new TextField[board.getPlayerNumber()];
@@ -71,11 +69,7 @@ public class CreatePlayers extends Application {
 		Button back = Menu.createButton("Back", 100, 50, 20);
 		back.setOnAction(e -> {
 			ChooseNumberOfPlayers chooseNumberOfPlayersInstance = new ChooseNumberOfPlayers(backgroundPane);
-			try {
-				chooseNumberOfPlayersInstance.start(primaryStage);
-			} catch (Exception e1) {
-				e1.printStackTrace();
-			}
+			Menu.launchVerification(chooseNumberOfPlayersInstance, primaryStage);
 		});
 
 		Button start = Menu.createButton("Start", 100, 50, 20);
@@ -95,20 +89,11 @@ public class CreatePlayers extends Application {
 				}
 			}
 			GameTurn gameTurnInstance = new GameTurn(board, backgroundPane, primaryStage);
-			try {
-				gameTurnInstance.start(primaryStage);
-			} catch (Exception e1) {
-				e1.printStackTrace();
-			}
+			Menu.launchVerification(gameTurnInstance, primaryStage);
 		});
-		box.setAlignment(Pos.CENTER);
 		box.getChildren().addAll(back, start);
 
-		StackPane sceneContent = new StackPane();
-		sceneContent.getChildren().addAll(backgroundPane, box);
-
-		Scene scene = new Scene(sceneContent, 800, 700);
-		scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
+		Scene scene = Menu.createScene(backgroundPane, box);
 
 		primaryStage.setScene(scene);
 		primaryStage.sizeToScene();

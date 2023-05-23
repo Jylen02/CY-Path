@@ -2,11 +2,9 @@ package presentation;
 
 import abstraction.Board;
 import javafx.application.Application;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -42,52 +40,34 @@ public class ChooseNumberOfPlayers extends Application {
 	 */
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		VBox box = new VBox(10);
-
-		Button back = Menu.createButton("Back", 100, 50, 20);
+		Button back = Menu.createButton("Back", 130, 50, 20);
 		back.setOnAction(e -> {
 			Menu menuInstance = new Menu();
-			menuInstance.start(primaryStage);
+			Menu.launchVerification(menuInstance, primaryStage);
 		});
 
 		Label title = Menu.createLabel("Quoridor", 100);
 
 		Label label = Menu.createLabel("Choose the number of players", 50);
 
-		RadioButton twoPlayer = new RadioButton("2 Players");
-		twoPlayer.getStyleClass().add("radio-button");
+		Button twoPlayer = Menu.createButton("2 Players", 130, 50, 20);
 		twoPlayer.setOnAction(e -> {
 			CreatePlayers createPlayersInstance = new CreatePlayers(new Board(2), backgroundPane);
-			try {
-				createPlayersInstance.start(primaryStage);
-			} catch (Exception e1) {
-				e1.printStackTrace();
-			}
+			Menu.launchVerification(createPlayersInstance, primaryStage);
 		});
 
-		RadioButton fourPlayer = new RadioButton("4 Players");
-		fourPlayer.getStyleClass().add("radio-button");
+		Button fourPlayer = Menu.createButton("4 Players", 130, 50, 20);
 		fourPlayer.setOnAction(e -> {
 			CreatePlayers createPlayersInstance = new CreatePlayers(new Board(4), backgroundPane);
-			try {
-				createPlayersInstance.start(primaryStage);
-			} catch (Exception e1) {
-				e1.printStackTrace();
-			}
+			Menu.launchVerification(createPlayersInstance, primaryStage);
 		});
 
-		box.getChildren().addAll(title, label, twoPlayer, fourPlayer, back);
-		box.setAlignment(Pos.CENTER);
+		VBox box = Menu.createVBox(10, title, label, twoPlayer, fourPlayer, back);
 
-		StackPane sceneContent = new StackPane();
-		sceneContent.getChildren().addAll(backgroundPane, box);
-
-		Scene scene = new Scene(sceneContent, 800, 700);
-		scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
-
+		Scene scene = Menu.createScene(backgroundPane, box);
+		
 		primaryStage.setScene(scene);
 		primaryStage.sizeToScene();
 		primaryStage.show();
 	}
-
 }

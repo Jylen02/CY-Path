@@ -42,7 +42,7 @@ public class GameTurn extends Application {
 	protected Board board;
 	protected GridPane grid;
 	protected GridPane invisibleGrid;
-	private Rectangle cell; // For the construction of the grid 
+	private Rectangle cell; // For the construction of the grid
 
 	private Image wolf = new Image(getClass().getResource("/image/wolfR.png").toExternalForm());
 	private Image gibbon = new Image(getClass().getResource("/image/gibbonG.png").toExternalForm());
@@ -60,10 +60,10 @@ public class GameTurn extends Application {
 	protected Rectangle wallPreview;
 
 	// Action information
-	protected boolean canDoAction;
-	protected boolean isPlacingWall;
-	protected boolean hasPlacedWall;
-	protected boolean hasMoved;
+	protected boolean canDoAction = true;
+	protected boolean isPlacingWall = false;
+	protected boolean hasPlacedWall = false;
+	protected boolean hasMoved = false;
 
 	private int mouseColumn;
 	private int mouseRow;
@@ -80,10 +80,6 @@ public class GameTurn extends Application {
 	 */
 	public GameTurn(Board board, StackPane backgroundPane, Stage primaryStage) {
 		this.board = board;
-		this.canDoAction = true;
-		this.isPlacingWall = false;
-		this.hasPlacedWall = false;
-		this.hasMoved = false;
 		this.backgroundPane = backgroundPane;
 		this.primaryStage = primaryStage;
 	}
@@ -105,16 +101,13 @@ public class GameTurn extends Application {
 		Pawn p = board.getPlayers()[board.getCurrentTurn()].getPawn();
 		p.setPossibleMove(p.possibleMove(this.board, p.getPos()));
 		if (p.getPossibleMove().isEmpty()) {
-			board.setCurrentTurn((board.getCurrentTurn() + 1) % board.getPlayerNumber());
-			try {
-				start(primaryStage);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
 			Alert alert = new Alert(Alert.AlertType.INFORMATION);
 			alert.setTitle(board.getPlayers()[board.getCurrentTurn()].getName());
 			alert.setHeaderText("You can't make any move, your turn has been skipped");
 			alert.showAndWait();
+
+			board.setCurrentTurn((board.getCurrentTurn() + 1) % board.getPlayerNumber());
+			Menu.launchVerification(this, primaryStage);
 		} else {
 			grid = updateBoard(false);
 			grid.setAlignment(Pos.CENTER);
@@ -133,39 +126,34 @@ public class GameTurn extends Application {
 			HBox uselessAction = actionList(scene, false);
 
 			Label volumeLabel = Menu.createLabel("Volume", 40);
+			
+			HBox sliderContainer = Menu.createHBox(10, volumeLabel, volumeSlider);
+			
+			HBox uselessSliderContainer = Menu.createHBox(10, Menu.createLabel("Volume", 40), new Slider(0, 0.1, 0.05));
 
-			HBox sliderContainer = new HBox(10);
-			sliderContainer.getChildren().addAll(volumeLabel, volumeSlider);
-			sliderContainer.setAlignment(Pos.CENTER);
 
-			HBox uselessSliderContainer = new HBox(10);
-			uselessSliderContainer.getChildren().addAll(Menu.createLabel("Volume", 40), new Slider(0, 0.1, 0.05));
-			uselessSliderContainer.setAlignment(Pos.CENTER);
-
-			VBox uselessBox = new VBox(50);
-
-			uselessSliderContainer.setVisible(false); 
+			VBox uselessBox = Menu.createVBox(50, uselessPlayerTurn, grid, uselessAction, uselessSliderContainer);
 			// Rendre invisible tous les éléments de la uselessBox sauf la grid
+			uselessSliderContainer.setVisible(false);
 			uselessAction.setVisible(false);
 			uselessPlayerTurn.setVisible(false);
 
-			uselessBox.getChildren().addAll(uselessPlayerTurn, grid, uselessAction, uselessSliderContainer);
-			uselessBox.setAlignment(Pos.CENTER);
+			
+			
+			VBox box = Menu.createVBox(50, playerTurn, invisibleGrid, action, sliderContainer);
 
-			VBox box = new VBox(50);
-			box.getChildren().addAll(playerTurn, invisibleGrid, action, sliderContainer);
-			box.setAlignment(Pos.CENTER);
 
 			if (canDoAction) {
 				HandleMovePawn movePawn = new HandleMovePawn(this);
 				movePawn.handleMove();
 			}
-
+			
+			
 			StackPane sceneContent = new StackPane();
 			sceneContent.getChildren().addAll(backgroundPane, uselessBox, wallPreview, box);
 			scene.setRoot(sceneContent);
 			scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
-			
+
 			scene.setOnMouseMoved(new EventHandler<MouseEvent>() {
 				@Override
 				public void handle(MouseEvent event) {
@@ -196,10 +184,21 @@ public class GameTurn extends Application {
 	 * @return The VBox object representing the action list UI component.
 	 */
 	private HBox actionList(Scene scene, boolean canDoAction) {
-		
+
 		Button loadGame = Menu.createButton("Load", 80, 35, 15);
+		loadGame.setDisable(true);
+		loadGame.setOnAction(e -> {
+			LoadGame loadGameInstance = new LoadGame(backgroundPane);
+			Menu.launchVerification(loadGameInstance, primaryStage);
+		});
 
 		Button saveGame = Menu.createButton("Save", 80, 35, 15);
+		saveGame.setDisable(true);
+		saveGame.setOnAction(e -> {
+			saveGame.setDisable(false);
+			SaveGame saveGameInstance = new SaveGame(board, backgroundPane);
+			Menu.launchVerification(saveGameInstance, primaryStage);
+		});
 
 		Button exit = Menu.createButton("Exit", 80, 35, 15);
 		exit.setOnAction(e -> handleExitButton());
@@ -236,9 +235,12 @@ public class GameTurn extends Application {
 			confirm.setDisable(false);
 		}
 
-		HBox box = new HBox(20);
-		box.getChildren().addAll(exit, restart, cancel, wall, confirm, saveGame, loadGame);
-		box.setAlignment(Pos.TOP_CENTER);
+		if (!hasMoved && !isPlacingWall && !hasPlacedWall) {
+			loadGame.setDisable(false);
+			saveGame.setDisable(false);
+		}
+		
+		HBox box = Menu.createHBox(20, exit, restart, cancel, wall, confirm, saveGame, loadGame);
 
 		return box;
 	}
@@ -327,11 +329,7 @@ public class GameTurn extends Application {
 	 */
 	private void reloadGameTurn(Stage primaryStage) {
 		this.canDoAction = true;
-		try {
-			start(primaryStage);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		Menu.launchVerification(this, primaryStage);
 	}
 
 	/**
@@ -359,26 +357,20 @@ public class GameTurn extends Application {
 	 * reset and the game is restarted.
 	 */
 	private void handleCancel() {
-		// Si on veut annuler le placement du mur en cours
 		if (this.isPlacingWall) {
 			this.isPlacingWall = false;
 		}
 
-		// Si on veut annuler un mur posé
-		// Détecter si j'ai posé un mur
 		if (this.hasPlacedWall) {
 			Wall.removeLastWall(board);
 			this.hasPlacedWall = false;
 		}
 
-		// Si on veut annuler un mouvement de pion
-		// Détecter si j'ai bougé un pion
 		if (hasMoved) {
 			board.getPlayers()[board.getCurrentTurn()].getPawn().resetMove(board);
 			this.hasMoved = false;
 		}
 
-		// Réinitialiser l'affichage du plateau
 		reloadGameTurn(primaryStage);
 	}
 
@@ -398,11 +390,9 @@ public class GameTurn extends Application {
 		if (hasPlacedWall) {
 			resetAction();
 
-			// Update wall information
 			board.getPlayers()[board.getCurrentTurn()]
 					.setRemainingWall(board.getPlayers()[board.getCurrentTurn()].getRemainingWall() - 1);
 
-			// Change turn
 			board.setCurrentTurn((board.getCurrentTurn() + 1) % board.getPlayerNumber());
 
 			reloadGameTurn(primaryStage);
@@ -412,7 +402,6 @@ public class GameTurn extends Application {
 			Pawn p = board.getPlayers()[board.getCurrentTurn()].getPawn();
 			p.setLastPos(p.getPos());
 
-			// Change turn
 			board.setCurrentTurn((board.getCurrentTurn() + 1) % board.getPlayerNumber());
 
 			reloadGameTurn(primaryStage);
@@ -432,7 +421,6 @@ public class GameTurn extends Application {
 	private void handleRestartButton() {
 		resetAction();
 
-		// Reset the game state
 		board.setCurrentTurn(0);
 		this.board.initializeBoard();
 		for (int i = 0; i < this.board.getPlayerNumber(); i++) {
@@ -458,11 +446,9 @@ public class GameTurn extends Application {
 	 * Note: Saving functionality is not implemented in this method.
 	 */
 	private void handleExitButton() {
-		// Save to implement if we want
-
 		resetAction();
 
 		Menu menuInstance = new Menu();
-		menuInstance.start(primaryStage);
+		Menu.launchVerification(menuInstance, primaryStage);
 	}
 }

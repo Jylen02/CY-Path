@@ -68,16 +68,12 @@ public class HandlePlaceWall {
 		if (Wall.createWall(gameTurn.board, orientation, position)) {
 			gameTurn.mediaPlayerWallPlaced.stop();
 			gameTurn.mediaPlayerWallPlaced.play();
-			// Update action information
+
 			gameTurn.isPlacingWall = false;
 			gameTurn.hasPlacedWall = true;
 			gameTurn.wallPreview = null;
 			gameTurn.canDoAction = false;
-			try {
-				gameTurn.start(gameTurn.primaryStage);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			Menu.launchVerification(gameTurn, gameTurn.primaryStage);
 		}
 	}
 

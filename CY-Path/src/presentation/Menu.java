@@ -2,6 +2,7 @@ package presentation;
 
 import javafx.application.Application;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -65,38 +66,35 @@ public class Menu extends Application {
 
 		Label title = createLabel("Quoridor", 140);
 
-		Button play = createButton("Play", 300, 100, 50);
-		play.setOnAction(e -> {
+		Button newGame = createButton("New Game", 300, 100, 50);
+		newGame.setOnAction(e -> {
 			ChooseNumberOfPlayers chooseNumberOfPlayersInstance = new ChooseNumberOfPlayers(backgroundPane);
-			try {
-				chooseNumberOfPlayersInstance.start(primaryStage);
-			} catch (Exception e1) {
-				e1.printStackTrace();
-			}
+			launchVerification(chooseNumberOfPlayersInstance, primaryStage);
+		});
+
+		Button loadGame = createButton("Load Game", 300, 100, 50);
+		loadGame.setOnAction(e -> {
+			LoadGame loadGameInstance = new LoadGame(backgroundPane);
+			launchVerification(loadGameInstance, primaryStage);
 		});
 
 		Button rules = createButton("Rules", 300, 100, 50);
 		rules.setOnAction(e -> {
 			Rules rulesInstance = new Rules(backgroundPane);
-			try {
-				rulesInstance.start(primaryStage);
-			} catch (Exception e1) {
-				e1.printStackTrace();
-			}
+			launchVerification(rulesInstance, primaryStage);
 		});
 
 		Button exit = createButton("Exit", 300, 100, 50);
 		exit.setOnAction(e -> primaryStage.close());
 
-		VBox box = new VBox(20);
-		box.getChildren().addAll(title, play, rules, exit, sliderContainer);
-		box.setAlignment(Pos.CENTER);
+		
+		HBox play = createHBox(50, newGame, loadGame);
+		HBox info = createHBox(50, rules, exit);
 
-		StackPane sceneContent = new StackPane();
-		sceneContent.getChildren().addAll(backgroundPane, box);
+		VBox box = createVBox(50, title, play, info, sliderContainer);
 
-		Scene scene = new Scene(sceneContent, 800, 700);
-		scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
+		Scene scene = createScene(backgroundPane, box);
+
 
 		primaryStage.setScene(scene);
 		primaryStage.sizeToScene();
@@ -130,6 +128,46 @@ public class Menu extends Application {
 		Label label = new Label(text);
 		label.setStyle("-fx-font-size: " + pixel + "px; -fx-text-fill: white;");
 		return label;
+	}
+	
+	protected static VBox createVBox(int spacing, Node... nodes) {
+	    VBox box = new VBox(spacing);
+	    box.getChildren().addAll(nodes);
+	    box.setAlignment(Pos.CENTER);
+	    return box;
+	}
+
+	protected static HBox createHBox(int spacing, Node... nodes) {
+	    HBox box = new HBox(spacing);
+	    box.getChildren().addAll(nodes);
+	    box.setAlignment(Pos.CENTER);
+	    return box;
+	}
+
+	protected static Scene createScene(Node... nodes) {
+		StackPane sceneContent = new StackPane();
+		for (int i = 0; i < nodes.length; i++) {
+			sceneContent.getChildren().add(nodes[i]);
+		}
+
+		Scene scene = new Scene(sceneContent, 800, 700);
+		scene.getStylesheets().add(Menu.class.getResource("style.css").toExternalForm());
+		return scene;
+	}
+	
+	/**
+	 * Launches the specified JavaFX application with the given primary stage and
+	 * handles any exceptions that occur during the launch.
+	 * 
+	 * @param name         The JavaFX application to launch.
+	 * @param primaryStage The primary stage for the application.
+	 */
+	protected static void launchVerification(Application name, Stage primaryStage) {
+		try {
+			name.start(primaryStage);
+		} catch (Exception e) {
+			primaryStage.close();
+		}
 	}
 
 	/**
