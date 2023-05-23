@@ -31,13 +31,13 @@ public class SaveLoadGame {
 		try {
 			FileInputStream fileIn = new FileInputStream(Filename);
 			ObjectInputStream in = new ObjectInputStream(fileIn);
-			
+
 			board.setBoard((Case[][]) in.readObject());
 			board.setPlayerNumber((Integer) in.readObject());
 			board.setPlayers((Player[]) in.readObject());
 			board.setCurrentTurn((Integer) in.readObject());
 			board.setLastWall((Wall) in.readObject());
-			
+
 			in.close();
 			fileIn.close();
 

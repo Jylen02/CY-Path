@@ -212,7 +212,7 @@ public class Pawn implements Serializable {
 	 */
 	private void specialMove(Board board, Set<Position> possibleMove, Position pos, int offsetX, int offsetY) {
 		String combined = offsetX + "_" + offsetY;
-		/* to use the switch depending on the two variables */
+		//to use the switch depending on the two variables 
 		switch (combined) {
 		case "-2_0":
 			if (isPotentialWall(board, pos, -2, 0)) {

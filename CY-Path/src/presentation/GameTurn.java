@@ -41,7 +41,6 @@ public class GameTurn extends Application {
 	// Board information
 	protected Board board;
 	protected GridPane grid;
-	protected GridPane invisibleGrid;
 	private Rectangle cell; // For the construction of the grid
 
 	private Image wolf = new Image(getClass().getResource("/image/wolfR.png").toExternalForm());
@@ -95,8 +94,6 @@ public class GameTurn extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		Label playerTurn = Menu.createLabel(board.getPlayers()[board.getCurrentTurn()].getName() + "'s turn", 50);
-		Label uselessPlayerTurn = Menu.createLabel(board.getPlayers()[board.getCurrentTurn()].getName() + "'s turn",
-				50);
 
 		Pawn p = board.getPlayers()[board.getCurrentTurn()].getPawn();
 		p.setPossibleMove(p.possibleMove(this.board, p.getPos()));
@@ -109,11 +106,8 @@ public class GameTurn extends Application {
 			board.setCurrentTurn((board.getCurrentTurn() + 1) % board.getPlayerNumber());
 			Menu.launchVerification(this, primaryStage);
 		} else {
-			grid = updateBoard(false);
+			grid = updateBoard();
 			grid.setAlignment(Pos.CENTER);
-
-			invisibleGrid = updateBoard(true);
-			invisibleGrid.setAlignment(Pos.CENTER);
 
 			wallPreview = new Rectangle(65, 5, Color.RED);
 			wallPreview.setOpacity(1);
@@ -123,34 +117,20 @@ public class GameTurn extends Application {
 			Scene scene = new Scene(new StackPane(), 800, 700);
 
 			HBox action = actionList(scene, canDoAction);
-			HBox uselessAction = actionList(scene, false);
 
 			Label volumeLabel = Menu.createLabel("Volume", 40);
-			
+
 			HBox sliderContainer = Menu.createHBox(10, volumeLabel, volumeSlider);
-			
-			HBox uselessSliderContainer = Menu.createHBox(10, Menu.createLabel("Volume", 40), new Slider(0, 0.1, 0.05));
 
-
-			VBox uselessBox = Menu.createVBox(50, uselessPlayerTurn, grid, uselessAction, uselessSliderContainer);
-			// Rendre invisible tous les éléments de la uselessBox sauf la grid
-			uselessSliderContainer.setVisible(false);
-			uselessAction.setVisible(false);
-			uselessPlayerTurn.setVisible(false);
-
-			
-			
-			VBox box = Menu.createVBox(50, playerTurn, invisibleGrid, action, sliderContainer);
-
+			VBox box = Menu.createVBox(50, playerTurn, grid, action, sliderContainer);
 
 			if (canDoAction) {
 				HandleMovePawn movePawn = new HandleMovePawn(this);
 				movePawn.handleMove();
 			}
-			
-			
+
 			StackPane sceneContent = new StackPane();
-			sceneContent.getChildren().addAll(backgroundPane, uselessBox, wallPreview, box);
+			sceneContent.getChildren().addAll(backgroundPane, box, wallPreview);
 			scene.setRoot(sceneContent);
 			scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
 
@@ -239,7 +219,7 @@ public class GameTurn extends Application {
 			loadGame.setDisable(false);
 			saveGame.setDisable(false);
 		}
-		
+
 		HBox box = Menu.createHBox(20, exit, restart, cancel, wall, confirm, saveGame, loadGame);
 
 		return box;
@@ -249,7 +229,7 @@ public class GameTurn extends Application {
 	 * Updates the board UI component by updating the positions of the pawns and
 	 * walls.
 	 */
-	protected GridPane updateBoard(boolean invisible) {
+	protected GridPane updateBoard() {
 		GridPane grid = new GridPane();
 		possibleCellMap.clear();
 		cellWallMap.clear();
@@ -310,9 +290,6 @@ public class GameTurn extends Application {
 					} else {
 						this.cell.setFill(Color.WHITE);
 					}
-				}
-				if (invisible) {
-					this.cell.setOpacity(0);
 				}
 				this.cell.setStroke(null);
 				possibleCellMap.put(pos, this.cell);
@@ -432,7 +409,7 @@ public class GameTurn extends Application {
 					board.getPlayers()[i].getPawn().possibleMove(board, board.getPlayers()[i].getPawn().getPos()));
 			board.getPlayers()[i].setRemainingWall(Board.MAXWALLCOUNT / this.board.getPlayerNumber());
 		}
-		grid = updateBoard(false);
+		grid = updateBoard();
 		reloadGameTurn(primaryStage);
 	}
 

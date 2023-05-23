@@ -32,7 +32,7 @@ public class Board implements Serializable {
 	 * The current turn of the game.
 	 */
 	private int currentTurn;
-	
+
 	/**
 	 * The last wall placed on the board.
 	 */

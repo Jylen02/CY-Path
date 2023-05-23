@@ -30,6 +30,7 @@ public class HandlePlaceWall {
 	 * @param button The Button used for wall placement.
 	 */
 	public void handlePlaceWall(Scene scene, Button button) {
+		gameTurn.wallPreview.setMouseTransparent(true);
 		button.setDisable(true);
 		gameTurn.isPlacingWall = true;
 

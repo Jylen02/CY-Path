@@ -84,14 +84,12 @@ public class Menu extends Application {
 		Button exit = createButton("Exit", 300, 100, 50);
 		exit.setOnAction(e -> primaryStage.close());
 
-		
 		HBox play = createHBox(50, newGame, loadGame);
 		HBox info = createHBox(50, rules, exit);
 
 		VBox box = createVBox(50, title, play, info, sliderContainer);
 
 		Scene scene = createScene(backgroundPane, box);
-
 
 		primaryStage.setScene(scene);
 		primaryStage.sizeToScene();
@@ -126,19 +124,19 @@ public class Menu extends Application {
 		label.setStyle("-fx-font-size: " + pixel + "px; -fx-text-fill: white;");
 		return label;
 	}
-	
+
 	protected static VBox createVBox(int spacing, Node... nodes) {
-	    VBox box = new VBox(spacing);
-	    box.getChildren().addAll(nodes);
-	    box.setAlignment(Pos.CENTER);
-	    return box;
+		VBox box = new VBox(spacing);
+		box.getChildren().addAll(nodes);
+		box.setAlignment(Pos.CENTER);
+		return box;
 	}
 
 	protected static HBox createHBox(int spacing, Node... nodes) {
-	    HBox box = new HBox(spacing);
-	    box.getChildren().addAll(nodes);
-	    box.setAlignment(Pos.CENTER);
-	    return box;
+		HBox box = new HBox(spacing);
+		box.getChildren().addAll(nodes);
+		box.setAlignment(Pos.CENTER);
+		return box;
 	}
 
 	protected static Scene createScene(Node... nodes) {
@@ -151,7 +149,7 @@ public class Menu extends Application {
 		scene.getStylesheets().add(Menu.class.getResource("style.css").toExternalForm());
 		return scene;
 	}
-	
+
 	/**
 	 * Launches the specified JavaFX application with the given primary stage and
 	 * handles any exceptions that occur during the launch.

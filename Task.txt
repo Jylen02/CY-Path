@@ -99,9 +99,10 @@ Mettre le tout dans un dossier
 --14.3. Verifier si un joueur à gagner -> message (Durée estimée : 10min - Durée : 15min) : Terminé - Abd-Ennour, 
 
 --15. IHM : Fonctionnalités murs
---15.1. Prévisualiser un mur transparent (Durée : 7h) : Terminé, mais potentiel modification - Christophe, Noaman
+--15.1. Prévisualiser un mur transparent (Durée : 9h) : Terminé - Christophe, Noaman, Jeremy, Abd-Ennour
         Pb StackPane, on ne peut pas avoir le mur transparent 1er plan et cliquer bouton 2nd plan
 	Cherche une autre méthode d'affichage ? -> coloriage -> abandon 
+						-> rendre le mur transparent à la souris : réussi
 --15.2. Ne plus pouvoir cliquer sur le bouton pour récuperer un mur si on le possède déjà (Durée : 10min) : Terminé - Jeremy
 --15.3. Curseur souris -> index (Durée estimée : 2h - Durée : 2h) : Annulé - Christophe
 --15.4. Tourner le mur (clic droit) (Durée estimée : 20min - Durée estimée : 10min) : Terminé - Christophe
@@ -121,7 +122,7 @@ Mettre le tout dans un dossier
 --17.3. Création bouton Save pour faire une backup (Durée : 10min) : Terminé - Christophe
         Création bouton Load pour charger une backup (Durée : 20min) : Terminé - Christophe
       Modifier les classes Abstraction pour être sauvegardable + console : (Durée : 3h30) Terminé - Jeremy
-17.4. Optimiser la création des VBox/HBox/Scene (Durée estimée : 15min ) : A faire - Noaman
+--17.4. Optimiser la création des VBox/HBox/Scene (Durée estimée : 15min - Durée : 45min) : Terminé - Noaman
 
 18. Controle
 18.1. Implémenter la classe Observable dans les classes la nécessitant : A faire
