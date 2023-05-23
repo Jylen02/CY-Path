@@ -41,7 +41,7 @@ public class Quoridor {
 		System.out.println(board);
 		while (confirm != 1 && confirm != 2) {
 			System.out.println("Confirm your action :");
-			System.out.println(" - Yes : 1 \n - No : 2");
+			System.out.println(" - 1) Yes \n - 2) No ");
 			confirm = s.nextInt();
 			switch (confirm) {
 			case 1:
@@ -118,8 +118,8 @@ public class Quoridor {
 			// Otherwise, choose an action
 			else {
 				System.out.println("Choice of action :");
-				System.out.println(" - Move the pawn : 1 \n - Put a wall (Remaining wall(s) : "
-						+ board.getPlayers()[board.getCurrentTurn()].getRemainingWall() + ") : 2");
+				System.out.println(" - 1) Move the pawn \n - 2) Put a wall (Remaining wall(s) : "
+						+ board.getPlayers()[board.getCurrentTurn()].getRemainingWall() + ")");
 				System.out.println("Please select the action you want (1 or 2) :");
 				action = s.nextInt();
 			}
@@ -141,7 +141,7 @@ public class Quoridor {
 				position = enterPosition(s);
 				// Choose wall's orientation
 				System.out.println("Choice of the wall's orientation :");
-				System.out.println(" - Vertical wall : 1 \n - Horizontal wall : 2");
+				System.out.println(" - 1) Vertical wall \n - 2) Horizontal wall ");
 				System.out.println("Please select the action you want (1 or 2) :");
 				int orientation = s.nextInt();
 				switch (orientation) {
@@ -173,6 +173,50 @@ public class Quoridor {
 		}
 	}
 
+	public static int saveChoice(Board board, Scanner s) {
+		int save = 0;
+		System.out.println("Save location : ");
+		System.out.println(" - 1) Save 1 \n - 2) Save 2 \n - 3) Save 3 \n - 4) Exit");
+		System.out.println("Please select the location you want (1, 2, 3 or 4)");
+		save = s.nextInt();
+		if (save != 1 && save != 2 && save != 3 && save != 4) {
+			saveChoice(board, s);
+		} else if (save==4) {
+			return 0;
+		} else {
+			try {
+				SaveLoadGame.save(board, "save" + save + ".svg");
+				System.out.println("Your game progress has been successfully saved.");
+			} catch (IOException e) {
+				System.out.println("An error has occurred, please try again.");
+				saveChoice(board, s);
+			}
+		}
+		return 1;
+	}
+	
+	public static int loadChoice(Board board, Scanner s) {
+		int load = 0;
+		System.out.println("Save location : ");
+		System.out.println(" - 1) Save 1 \n - 2) Save 2 \n - 3) Save 3 \n - 4) Exit ");
+		System.out.println("Please select the location you want (1, 2, 3 or 4)");
+		load = s.nextInt();
+		if (load != 1 && load != 2 && load != 3 && load!=4) {
+			loadChoice(board, s);
+		} else if (load==4){
+			return 0;
+		} else {
+			try {
+				SaveLoadGame.load(board, "save" + load + ".svg");
+				System.out.println("The game has been successfully loaded.");
+			} catch (Exception e) {
+				System.out.println("An error has occurred, please try again.");
+				loadChoice(board, s);
+			}
+		}
+		return 1;
+	}
+
 	/**
 	 * The main method for running the game.
 	 * 
@@ -185,7 +229,7 @@ public class Quoridor {
 		int choice = 0;
 		while (choice != 1 && choice != 2) {
 			System.out.println("Menu :");
-			System.out.println(" - New game : 1 \n - Load a game : 2");
+			System.out.println(" - 1) New game \n - 2) Load a game");
 			System.out.println("Please select the action you want (1 or 2) :");
 			choice = s.nextInt();
 			switch (choice) {
@@ -216,12 +260,7 @@ public class Quoridor {
 				}
 				break;
 			case 2:
-				try {
-					SaveLoadGame.load(board, "save1.svg");
-				} catch (IOException e) {
-					System.out.println("There is no save");
-					choice = 0;
-				}
+				choice = Quoridor.loadChoice(board, s);
 				break;
 			default:
 				System.out.println("Your response is not in the list of available answers.");
@@ -241,18 +280,16 @@ public class Quoridor {
 			choice = 0;
 			while (choice != 1 && choice != 2) {
 				System.out.println("Do you want to save the game : ");
-				System.out.println(" - Yes : 1 \n - No : 2");
+				System.out.println(" - 1) Yes \n - 2) No");
 				System.out.println("Please select your choice (1 or 2) :");
 				choice = s.nextInt();
 				switch (choice) {
 				case 1:
-					try {
-						SaveLoadGame.save(board, "save1.svg");
+					choice = Quoridor.saveChoice(board, s);
+					if (choice == 1) {
 						Quoridor.main(args);
-					} catch (IOException e) {
-						e.printStackTrace();
+						win = true;
 					}
-					win = true;
 					break;
 				case 2:
 					roundOfPlay(board);

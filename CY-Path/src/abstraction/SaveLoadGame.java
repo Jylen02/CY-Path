@@ -27,11 +27,11 @@ public class SaveLoadGame {
 		}
 	}
 
-	public static void load(Board board, String Filename) throws IOException {
+	public static void load(Board board, String Filename) throws Exception {
 		try {
 			FileInputStream fileIn = new FileInputStream(Filename);
 			ObjectInputStream in = new ObjectInputStream(fileIn);
-
+			
 			board.setBoard((Case[][]) in.readObject());
 			board.setPlayerNumber((Integer) in.readObject());
 			board.setPlayers((Player[]) in.readObject());
@@ -41,10 +41,8 @@ public class SaveLoadGame {
 			in.close();
 			fileIn.close();
 
-		} catch (IOException e) {
-			throw new IOException();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
+		} catch (Exception e) {
+			throw new Exception();
 		}
 	}
 }
