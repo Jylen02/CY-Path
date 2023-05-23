@@ -1,7 +1,5 @@
 package presentation;
 
-import java.io.IOException;
-
 import abstraction.Board;
 import abstraction.SaveLoadGame;
 import javafx.application.Application;

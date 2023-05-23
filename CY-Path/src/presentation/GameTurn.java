@@ -101,12 +101,13 @@ public class GameTurn extends Application {
 		Pawn p = board.getPlayers()[board.getCurrentTurn()].getPawn();
 		p.setPossibleMove(p.possibleMove(this.board, p.getPos()));
 		if (p.getPossibleMove().isEmpty()) {
-			board.setCurrentTurn((board.getCurrentTurn() + 1) % board.getPlayerNumber());
-			Menu.launchVerification(this, primaryStage);
 			Alert alert = new Alert(Alert.AlertType.INFORMATION);
 			alert.setTitle(board.getPlayers()[board.getCurrentTurn()].getName());
 			alert.setHeaderText("You can't make any move, your turn has been skipped");
 			alert.showAndWait();
+
+			board.setCurrentTurn((board.getCurrentTurn() + 1) % board.getPlayerNumber());
+			Menu.launchVerification(this, primaryStage);
 		} else {
 			grid = updateBoard(false);
 			grid.setAlignment(Pos.CENTER);
