@@ -86,7 +86,7 @@ public class LoadGame extends Application {
 
 			GameTurn gameTurnInstance = new GameTurn(board, backgroundPane, primaryStage);
 			Menu.launchVerification(gameTurnInstance, primaryStage);
-		} catch (IOException e) {
+		} catch (Exception e) {
 			Alert alert = new Alert(Alert.AlertType.INFORMATION);
 			alert.setTitle("Error : No save found.");
 			alert.setHeaderText("There is no save at this emplacement, please select another save.");

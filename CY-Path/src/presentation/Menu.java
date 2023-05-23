@@ -95,7 +95,7 @@ public class Menu extends Application {
 		info.setAlignment(Pos.CENTER);
 
 		VBox box = new VBox(50);
-		box.getChildren().addAll(title, play, info);
+		box.getChildren().addAll(title, play, info, sliderContainer);
 		box.setAlignment(Pos.CENTER);
 
 		StackPane sceneContent = new StackPane();
