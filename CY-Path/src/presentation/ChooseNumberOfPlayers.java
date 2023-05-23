@@ -2,7 +2,6 @@ package presentation;
 
 import abstraction.Board;
 import javafx.application.Application;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -63,9 +62,7 @@ public class ChooseNumberOfPlayers extends Application {
 			Menu.launchVerification(createPlayersInstance, primaryStage);
 		});
 
-		VBox box = new VBox(10);
-		box.getChildren().addAll(title, label, twoPlayer, fourPlayer, back);
-		box.setAlignment(Pos.CENTER);
+		VBox box = Menu.createVBox(10, title, label, twoPlayer, fourPlayer, back);
 
 		Scene scene = Menu.createScene(backgroundPane, box);
 		

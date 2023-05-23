@@ -1,7 +1,6 @@
 package presentation;
 
 import javafx.application.Application;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -60,10 +59,8 @@ public class Rules extends Application {
 			Menu menuInstance = new Menu();
 			Menu.launchVerification(menuInstance, primaryStage);
 		});
-
-		VBox box = new VBox(title, listOfRules, back);
-		box.setAlignment(Pos.CENTER);
-
+		
+		VBox box = Menu.createVBox(20,title, listOfRules, back);
 
 		Scene scene = Menu.createScene(backgroundPane, box);
 		
