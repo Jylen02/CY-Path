@@ -44,7 +44,7 @@ public class ChooseNumberOfPlayers extends Application {
 		Button back = Menu.createButton("Back", 130, 50, 20);
 		back.setOnAction(e -> {
 			Menu menuInstance = new Menu();
-			menuInstance.start(primaryStage);
+			Menu.launchVerification(menuInstance, primaryStage);
 		});
 
 		Label title = Menu.createLabel("Quoridor", 100);
@@ -54,21 +54,13 @@ public class ChooseNumberOfPlayers extends Application {
 		Button twoPlayer = Menu.createButton("2 Players", 130, 50, 20);
 		twoPlayer.setOnAction(e -> {
 			CreatePlayers createPlayersInstance = new CreatePlayers(new Board(2), backgroundPane);
-			try {
-				createPlayersInstance.start(primaryStage);
-			} catch (Exception e1) {
-				e1.printStackTrace();
-			}
+			Menu.launchVerification(createPlayersInstance, primaryStage);
 		});
 
 		Button fourPlayer = Menu.createButton("4 Players", 130, 50, 20);
 		fourPlayer.setOnAction(e -> {
 			CreatePlayers createPlayersInstance = new CreatePlayers(new Board(4), backgroundPane);
-			try {
-				createPlayersInstance.start(primaryStage);
-			} catch (Exception e1) {
-				e1.printStackTrace();
-			}
+			Menu.launchVerification(createPlayersInstance, primaryStage);
 		});
 
 		VBox box = new VBox(10);

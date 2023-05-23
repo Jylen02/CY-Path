@@ -73,11 +73,7 @@ public class HandlePlaceWall {
 			gameTurn.hasPlacedWall = true;
 			gameTurn.wallPreview = null;
 			gameTurn.canDoAction = false;
-			try {
-				gameTurn.start(gameTurn.primaryStage);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			Menu.launchVerification(gameTurn, gameTurn.primaryStage);
 		}
 	}
 

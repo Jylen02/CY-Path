@@ -68,22 +68,19 @@ public class Menu extends Application {
 		Button newGame = createButton("New Game", 300, 100, 50);
 		newGame.setOnAction(e -> {
 			ChooseNumberOfPlayers chooseNumberOfPlayersInstance = new ChooseNumberOfPlayers(backgroundPane);
-			try {
-				chooseNumberOfPlayersInstance.start(primaryStage);
-			} catch (Exception e1) {
-				primaryStage.close();
-			}
+			launchVerification(chooseNumberOfPlayersInstance, primaryStage);
 		});
 		
 		Button loadGame = createButton("Load Game", 300, 100, 50);
 		loadGame.setOnAction(e -> {
-			
+			LoadGame loadGameInstance = new LoadGame(backgroundPane);
+			launchVerification(loadGameInstance, primaryStage);
 		});
 
 		Button rules = createButton("Rules", 300, 100, 50);
 		rules.setOnAction(e -> {
 			Rules rulesInstance = new Rules(backgroundPane);
-			startException(rulesInstance,primaryStage);
+			launchVerification(rulesInstance,primaryStage);
 		});
 
 		Button exit = createButton("Exit", 300, 100, 50);
@@ -141,13 +138,14 @@ public class Menu extends Application {
 		return label;
 	}
 	
-	protected static void startException(Application name, Stage primaryStage) {
+	protected static void launchVerification(Application name, Stage primaryStage) {
 		try {
 			name.start(primaryStage);
-		} catch (Exception e1) {
+		} catch (Exception e) {
 			primaryStage.close();
 		}
 	}
+	
 	/**
 	 * The main method is the entry point of the Java application. It launches the
 	 * JavaFX application by calling the launch method.

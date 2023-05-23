@@ -58,7 +58,7 @@ public class Rules extends Application {
 		Button back = Menu.createButton("Back", 100, 50, 20);
 		back.setOnAction(e -> {
 			Menu menuInstance = new Menu();
-			menuInstance.start(primaryStage);
+			Menu.launchVerification(menuInstance, primaryStage);
 		});
 
 		VBox box = new VBox(title, listOfRules, back);

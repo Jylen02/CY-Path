@@ -47,11 +47,7 @@ public class HandleMovePawn {
 
 			gameTurn.canDoAction = false;
 			gameTurn.hasMoved = true;
-			try {
-				gameTurn.start(gameTurn.primaryStage);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			Menu.launchVerification(gameTurn, gameTurn.primaryStage);
 			if (gameTurn.board.getPlayers()[gameTurn.board.getCurrentTurn()].getPawn().isWinner()) {
 				Alert alert = new Alert(Alert.AlertType.INFORMATION);
 				alert.setTitle("winner");
@@ -60,7 +56,7 @@ public class HandleMovePawn {
 				alert.showAndWait();
 				// Return to menu
 				Menu menuInstance = new Menu();
-				menuInstance.start(gameTurn.primaryStage);
+				Menu.launchVerification(menuInstance, gameTurn.primaryStage);
 			}
 		}
 	}

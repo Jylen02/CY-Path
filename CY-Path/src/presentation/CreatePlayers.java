@@ -71,11 +71,7 @@ public class CreatePlayers extends Application {
 		Button back = Menu.createButton("Back", 100, 50, 20);
 		back.setOnAction(e -> {
 			ChooseNumberOfPlayers chooseNumberOfPlayersInstance = new ChooseNumberOfPlayers(backgroundPane);
-			try {
-				chooseNumberOfPlayersInstance.start(primaryStage);
-			} catch (Exception e1) {
-				e1.printStackTrace();
-			}
+			Menu.launchVerification(chooseNumberOfPlayersInstance, primaryStage);
 		});
 
 		Button start = Menu.createButton("Start", 100, 50, 20);
@@ -95,11 +91,7 @@ public class CreatePlayers extends Application {
 				}
 			}
 			GameTurn gameTurnInstance = new GameTurn(board, backgroundPane, primaryStage);
-			try {
-				gameTurnInstance.start(primaryStage);
-			} catch (Exception e1) {
-				e1.printStackTrace();
-			}
+			Menu.launchVerification(gameTurnInstance, primaryStage);
 		});
 		box.setAlignment(Pos.CENTER);
 		box.getChildren().addAll(back, start);
