@@ -78,7 +78,7 @@ public class SaveGame extends Application {
 	private void SaveVerification(String save, Stage primaryStage) {
 		try {
 			SaveLoadGame.save(board, save);
-			
+
 			GameTurn gameTurnInstance = new GameTurn(board, backgroundPane, primaryStage);
 			Menu.launchVerification(gameTurnInstance, primaryStage);
 		} catch (IOException e) {

@@ -115,19 +115,20 @@ Mettre le tout dans un dossier
 --16.4. Mettre le background à toutes les pages Stackpane (Duére : 1h) : Terminé - Christophe
 --16.5. Changer l'implémentation des musiques (Durée : 30min) : Terminé - Noaman
 
-17. IHM : Optimiser le code 
+--17. IHM : Optimiser le code 
 --17.1. Séparer en plusieurs classes les différentes pages / différentes actions possible (Durée : 2h) : Terminé - Christophe
 --17.2. Réinitialisation des attributs des boutons à rassembler en une méthode commune si dupliquat de code (Durée : 10min) : Terminé - Christophe
-17.3. Création bouton Save pour faire une backup : A faire
-      Création bouton Load pour charger une backup : A faire
-      Modifier les classes Abstraction pour être sauvegardable : (Durée : 3h) Terminé - Jeremy
+--17.3. Création bouton Save pour faire une backup (Durée : 10min) : Terminé - Christophe
+        Création bouton Load pour charger une backup (Durée : 20min) : Terminé - Christophe
+      Modifier les classes Abstraction pour être sauvegardable + console : (Durée : 3h30) Terminé - Jeremy
+17.4. Optimiser la création des VBox/HBox : A faire
 
 18. Controle
 18.1. Implémenter la classe Observable dans les classes la nécessitant : A faire
 18.2. Mettre les méthodes setChanged/notifyObserver... dans les getters/setters ou méthodes : A faire
 18.3. Relier Présentation (IHM) et Abstraction (classe) : A faire
 
---19. Documentation JavaDoc IHM (Durée : 20min) : Terminé - Christophe
+--19. Documentation JavaDoc IHM (Durée : 30min) : Terminé - Christophe
 19.1. Commentaires pour toutes les méthodes de classe (si utile)
 
 --20. Esthetique

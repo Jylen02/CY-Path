@@ -238,7 +238,7 @@ public class GameTurn extends Application {
 			cancel.setDisable(false);
 			confirm.setDisable(false);
 		}
-		
+
 		if (!hasMoved && !isPlacingWall && !hasPlacedWall) {
 			loadGame.setDisable(false);
 			saveGame.setDisable(false);
@@ -363,26 +363,20 @@ public class GameTurn extends Application {
 	 * reset and the game is restarted.
 	 */
 	private void handleCancel() {
-		// Si on veut annuler le placement du mur en cours
 		if (this.isPlacingWall) {
 			this.isPlacingWall = false;
 		}
 
-		// Si on veut annuler un mur posé
-		// Détecter si j'ai posé un mur
 		if (this.hasPlacedWall) {
 			Wall.removeLastWall(board);
 			this.hasPlacedWall = false;
 		}
 
-		// Si on veut annuler un mouvement de pion
-		// Détecter si j'ai bougé un pion
 		if (hasMoved) {
 			board.getPlayers()[board.getCurrentTurn()].getPawn().resetMove(board);
 			this.hasMoved = false;
 		}
 
-		// Réinitialiser l'affichage du plateau
 		reloadGameTurn(primaryStage);
 	}
 
@@ -402,11 +396,9 @@ public class GameTurn extends Application {
 		if (hasPlacedWall) {
 			resetAction();
 
-			// Update wall information
 			board.getPlayers()[board.getCurrentTurn()]
 					.setRemainingWall(board.getPlayers()[board.getCurrentTurn()].getRemainingWall() - 1);
 
-			// Change turn
 			board.setCurrentTurn((board.getCurrentTurn() + 1) % board.getPlayerNumber());
 
 			reloadGameTurn(primaryStage);
@@ -416,7 +408,6 @@ public class GameTurn extends Application {
 			Pawn p = board.getPlayers()[board.getCurrentTurn()].getPawn();
 			p.setLastPos(p.getPos());
 
-			// Change turn
 			board.setCurrentTurn((board.getCurrentTurn() + 1) % board.getPlayerNumber());
 
 			reloadGameTurn(primaryStage);
@@ -436,7 +427,6 @@ public class GameTurn extends Application {
 	private void handleRestartButton() {
 		resetAction();
 
-		// Reset the game state
 		board.setCurrentTurn(0);
 		this.board.initializeBoard();
 		for (int i = 0; i < this.board.getPlayerNumber(); i++) {
@@ -462,8 +452,6 @@ public class GameTurn extends Application {
 	 * Note: Saving functionality is not implemented in this method.
 	 */
 	private void handleExitButton() {
-		// Save to implement if we want
-
 		resetAction();
 
 		Menu menuInstance = new Menu();
