@@ -215,7 +215,7 @@ public class Pawn implements Serializable {
 		/* to use the switch depending on the two variables */
 		switch (combined) {
 		case "-2_0":
-			if (isPotentialWall(board, pos, -2, 0)) {
+			if (isPotentialWall(board, pos, -2, 0) || isPotentialPlayer(board, pos, -2, 0)) {
 				directionMove(board, possibleMove, pos, false, -2, 0);
 			} else {
 				directionMove(board, possibleMove, pos, false, 0, -2);
@@ -223,7 +223,7 @@ public class Pawn implements Serializable {
 			}
 			break;
 		case "0_2":
-			if (isPotentialWall(board, pos, 0, 2)) {
+			if (isPotentialWall(board, pos, 0, 2) || isPotentialPlayer(board, pos, 0, 2)) {
 				directionMove(board, possibleMove, pos, false, 0, 2);
 			} else {
 				directionMove(board, possibleMove, pos, false, -2, 0);
@@ -231,7 +231,7 @@ public class Pawn implements Serializable {
 			}
 			break;
 		case "2_0":
-			if (isPotentialWall(board, pos, 2, 0)) {
+			if (isPotentialWall(board, pos, 2, 0) || isPotentialPlayer(board, pos, 2, 0)) {
 				directionMove(board, possibleMove, pos, false, 2, 0);
 			} else {
 				directionMove(board, possibleMove, pos, false, 0, -2);
@@ -239,7 +239,7 @@ public class Pawn implements Serializable {
 			}
 			break;
 		case "0_-2":
-			if (isPotentialWall(board, pos, 0, -2)) {
+			if (isPotentialWall(board, pos, 0, -2) || isPotentialPlayer(board, pos, 0, -2)) {
 				directionMove(board, possibleMove, pos, false, 0, -2);
 			} else {
 				directionMove(board, possibleMove, pos, false, -2, 0);
@@ -250,6 +250,29 @@ public class Pawn implements Serializable {
 			break;
 		}
 	}
+	
+	/**
+	 * Checks if there is a potential player at the specified position based on the
+	 * given horizontal and vertical offsets.
+	 *
+	 * @param board   The game board.
+	 * @param pos     The current position.
+	 * @param offsetX The horizontal offset from the current position.
+	 * @param offsetY The vertical offset from the current position.
+	 * @return True if there is a potential player at the calculated position, false otherwise.
+	 */
+	
+	private boolean isPotentialPlayer(Board board, Position pos, int offsetX, int offsetY) {
+	    int newX = pos.getX() + offsetX;
+	    int newY = pos.getY() + offsetY;
+
+	    if (newX < 1 || newX > 17 || newY < 1 || newY > 17) {
+	        return false;
+	    }
+
+	    Case potentialCase = board.getBoard()[newX - (offsetX / 2)][newY - (offsetY / 2)];
+	    return potentialCase == Case.PLAYER1 || potentialCase == Case.PLAYER2 || potentialCase == Case.PLAYER3 || potentialCase == Case.PLAYER4;
+	}
 
 	/**
 	 * Checks if there is a potential wall at the specified position based on the
@@ -259,8 +282,7 @@ public class Pawn implements Serializable {
 	 * @param pos     The current position.
 	 * @param offsetX The horizontal offset from the current position.
 	 * @param offsetY The vertical offset from the current position.
-	 * @return True if there is a potential wall at the calculated position, false
-	 *         otherwise.
+	 * @return True if there is a potential wall at the calculated position, false otherwise.
 	 */
 	private boolean isPotentialWall(Board board, Position pos, int offsetX, int offsetY) {
 		int newX = pos.getX() + offsetX;
