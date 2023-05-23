@@ -70,7 +70,7 @@ public class Menu extends Application {
 			ChooseNumberOfPlayers chooseNumberOfPlayersInstance = new ChooseNumberOfPlayers(backgroundPane);
 			launchVerification(chooseNumberOfPlayersInstance, primaryStage);
 		});
-		
+
 		Button loadGame = createButton("Load Game", 300, 100, 50);
 		loadGame.setOnAction(e -> {
 			LoadGame loadGameInstance = new LoadGame(backgroundPane);
@@ -80,7 +80,7 @@ public class Menu extends Application {
 		Button rules = createButton("Rules", 300, 100, 50);
 		rules.setOnAction(e -> {
 			Rules rulesInstance = new Rules(backgroundPane);
-			launchVerification(rulesInstance,primaryStage);
+			launchVerification(rulesInstance, primaryStage);
 		});
 
 		Button exit = createButton("Exit", 300, 100, 50);
@@ -89,11 +89,11 @@ public class Menu extends Application {
 		HBox play = new HBox(50);
 		play.getChildren().addAll(newGame, loadGame);
 		play.setAlignment(Pos.CENTER);
-		
+
 		HBox info = new HBox(50);
 		info.getChildren().addAll(rules, exit);
 		info.setAlignment(Pos.CENTER);
-		
+
 		VBox box = new VBox(50);
 		box.getChildren().addAll(title, play, info);
 		box.setAlignment(Pos.CENTER);
@@ -137,7 +137,14 @@ public class Menu extends Application {
 		label.setStyle("-fx-font-size: " + pixel + "px; -fx-text-fill: white;");
 		return label;
 	}
-	
+
+	/**
+	 * Launches the specified JavaFX application with the given primary stage and
+	 * handles any exceptions that occur during the launch.
+	 * 
+	 * @param name         The JavaFX application to launch.
+	 * @param primaryStage The primary stage for the application.
+	 */
 	protected static void launchVerification(Application name, Stage primaryStage) {
 		try {
 			name.start(primaryStage);
@@ -145,7 +152,7 @@ public class Menu extends Application {
 			primaryStage.close();
 		}
 	}
-	
+
 	/**
 	 * The main method is the entry point of the Java application. It launches the
 	 * JavaFX application by calling the launch method.
