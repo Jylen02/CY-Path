@@ -93,13 +93,16 @@ Human-machine interface only features :
 	- The sound's volume can be controled 
 
 Not implemented features:
-	- Backup of the game (Save and Load)
 	- Observator
 
 How to play ? :
-	- Press the "Play" button
-	- Select the number of players (2 or 4)
-	- Enter the names of each players then press the "Start" button
+	- To launch a new game :
+		- Press the "New Game" button  
+		- Select the number of players (2 or 4)
+		- Enter the names of each players then press the "Start" button
+	- To load a game already in progress :
+		- Press the "Load Game" button
+		- Choose the game you want to load with the corresponding button
 	- Player's turn :
 		-> Possible moves are displayed on the board for the active player
 		-> The number of remaining walls is displayed on the Wall's button
@@ -117,4 +120,5 @@ How to play ? :
 	- A confirmation is needed to make the action (Press "Confirm" button)
 	- It's now the next player's turn
 	- The game ends when one of the players has reached the opposite side of their starting point
+	- You can save the game and load another game by pressing the corresponding button
 	- You can exit or restart the game at any moment but the current game will not be saved.
