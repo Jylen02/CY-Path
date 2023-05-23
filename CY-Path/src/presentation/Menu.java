@@ -87,20 +87,14 @@ public class Menu extends Application {
 		Button exit = createButton("Exit", 300, 100, 50);
 		exit.setOnAction(e -> primaryStage.close());
 
-		HBox play = new HBox(50);
-		play.getChildren().addAll(newGame, loadGame);
-		play.setAlignment(Pos.CENTER);
+		
+		HBox play = createHBox(50, newGame, loadGame);
+		HBox info = createHBox(50, rules, exit);
 
-		HBox info = new HBox(50);
-		info.getChildren().addAll(rules, exit);
-		info.setAlignment(Pos.CENTER);
+		VBox box = createVBox(50, title, play, info, sliderContainer);
 
-		VBox box = new VBox(50);
-		box.getChildren().addAll(title, play, info, sliderContainer);
-		box.setAlignment(Pos.CENTER);
+		Scene scene = createScene(backgroundPane, box);
 
-		Node[] nodes = { backgroundPane, box };
-		Scene scene = createScene(nodes);
 
 		primaryStage.setScene(scene);
 		primaryStage.sizeToScene();
@@ -135,23 +129,22 @@ public class Menu extends Application {
 		label.setStyle("-fx-font-size: " + pixel + "px; -fx-text-fill: white;");
 		return label;
 	}
-
-	protected static VBox createVBox(int spacing) {
-		VBox box = new VBox(spacing);
-		box.setAlignment(Pos.CENTER);
-		return box;
+	
+	protected static VBox createVBox(int spacing, Node... nodes) {
+	    VBox box = new VBox(spacing);
+	    box.getChildren().addAll(nodes);
+	    box.setAlignment(Pos.CENTER);
+	    return box;
 	}
 
-	protected static HBox createHBox(Node[] nodes, int spacing) {
-		HBox box = new HBox(spacing);
-		for (int i = 0; i < nodes.length; i++) {
-			box.getChildren().add(nodes[i]);
-		}
-		box.setAlignment(Pos.CENTER);
-		return box;
+	protected static HBox createHBox(int spacing, Node... nodes) {
+	    HBox box = new HBox(spacing);
+	    box.getChildren().addAll(nodes);
+	    box.setAlignment(Pos.CENTER);
+	    return box;
 	}
 
-	protected static Scene createScene(Node[] nodes) {
+	protected static Scene createScene(Node... nodes) {
 		StackPane sceneContent = new StackPane();
 		for (int i = 0; i < nodes.length; i++) {
 			sceneContent.getChildren().add(nodes[i]);
