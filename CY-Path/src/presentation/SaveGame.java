@@ -69,10 +69,11 @@ public class SaveGame extends Application {
 	}
 
 	/**
-	 * Handles the saving of the game to the specified location, while also performing error handling.
-	 * In case of failure, it informs the user and provides options to retry or change the save location.
+	 * Handles the saving of the game to the specified location, while also
+	 * performing error handling. In case of failure, it informs the user and
+	 * provides options to retry or change the save location.
 	 *
-	 * @param save the file name for the save file.
+	 * @param save         the file name for the save file.
 	 * @param primaryStage the primary stage for this JavaFX application.
 	 */
 	private void saveVerification(String save, Stage primaryStage) {

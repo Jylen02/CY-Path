@@ -109,8 +109,7 @@ public class GameTurn extends Application {
 			grid = updateBoard();
 			grid.setAlignment(Pos.CENTER);
 
-			wallPreview = new Rectangle(65, 5, Color.RED);
-			wallPreview.setOpacity(1);
+			wallPreview = new Rectangle(30 * Wall.HEIGHT + 5 * (Wall.HEIGHT - 1), 5, Color.RED);
 			wallPreview.setStroke(null);
 			wallPreview.setVisible(false);
 
@@ -144,8 +143,8 @@ public class GameTurn extends Application {
 							wallPreview.setTranslateX(mouseColumn - 367);
 							wallPreview.setTranslateY(mouseRow - 346);
 						} else {
-							wallPreview.setTranslateX(mouseColumn - 365 - 32);
-							wallPreview.setTranslateY(mouseRow - 347 + 30);
+							wallPreview.setTranslateX(mouseColumn - 367 - 30);
+							wallPreview.setTranslateY(mouseRow - 346 + 30);
 						}
 					}
 				}
@@ -318,6 +317,7 @@ public class GameTurn extends Application {
 	 * been performed.
 	 */
 	private void resetAction() {
+		this.canDoAction = true;
 		this.isPlacingWall = false;
 		this.hasPlacedWall = false;
 		this.hasMoved = false;
@@ -336,14 +336,10 @@ public class GameTurn extends Application {
 	private void handleCancel() {
 		if (this.isPlacingWall) {
 			this.isPlacingWall = false;
-		}
-
-		if (this.hasPlacedWall) {
+		} else if (this.hasPlacedWall) {
 			Wall.removeLastWall(board);
 			this.hasPlacedWall = false;
-		}
-
-		if (hasMoved) {
+		} else if (hasMoved) {
 			board.getPlayers()[board.getCurrentTurn()].getPawn().resetMove(board);
 			this.hasMoved = false;
 		}
@@ -364,25 +360,17 @@ public class GameTurn extends Application {
 	 * The board display is reset and the game is restarted.
 	 */
 	private void handleConfirm() {
+		resetAction();
 		if (hasPlacedWall) {
-			resetAction();
-
 			board.getPlayers()[board.getCurrentTurn()]
 					.setRemainingWall(board.getPlayers()[board.getCurrentTurn()].getRemainingWall() - 1);
-
-			board.setCurrentTurn((board.getCurrentTurn() + 1) % board.getPlayerNumber());
-
-			reloadGameTurn(primaryStage);
 		} else if (hasMoved) {
-			resetAction();
-
 			Pawn p = board.getPlayers()[board.getCurrentTurn()].getPawn();
 			p.setLastPos(p.getPos());
-
-			board.setCurrentTurn((board.getCurrentTurn() + 1) % board.getPlayerNumber());
-
-			reloadGameTurn(primaryStage);
 		}
+		board.setCurrentTurn((board.getCurrentTurn() + 1) % board.getPlayerNumber());
+
+		reloadGameTurn(primaryStage);
 	}
 
 	/**
@@ -398,7 +386,7 @@ public class GameTurn extends Application {
 	private void handleRestart() {
 		resetAction();
 
-		board.setCurrentTurn(0);
+		this.board.setCurrentTurn(0);
 		this.board.initializeBoard();
 		for (int i = 0; i < this.board.getPlayerNumber(); i++) {
 			board.getPlayers()[i].getPawn().setPos(

@@ -65,7 +65,7 @@ public class ChooseNumberOfPlayers extends Application {
 		VBox box = Menu.createVBox(10, title, label, twoPlayer, fourPlayer, back);
 
 		Scene scene = Menu.createScene(backgroundPane, box);
-		
+
 		primaryStage.setScene(scene);
 		primaryStage.sizeToScene();
 		primaryStage.show();

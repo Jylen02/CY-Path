@@ -37,7 +37,6 @@ public class Menu extends Application {
 	public void start(Stage primaryStage) {
 		primaryStage.setTitle("Quoridor");
 		primaryStage.setResizable(false);
-
 		primaryStage.getIcons().add(new Image(getClass().getResource("/image/dikdik.png").toExternalForm()));
 
 		Image backgroundImage = new Image(getClass().getResource("/image/background.png").toExternalForm());
@@ -53,8 +52,6 @@ public class Menu extends Application {
 
 		MediaPlayer mediaPlayerMusic = BackgroundMusic.getInstance().getMusicPlayer();
 		Slider volumeSlider = BackgroundMusic.getInstance().getVolumeSlider();
-		mediaPlayerMusic.volumeProperty().bindBidirectional(volumeSlider.valueProperty());
-		mediaPlayerMusic.setCycleCount(MediaPlayer.INDEFINITE); // Infinite restart
 		mediaPlayerMusic.play(); // background music start with the launch of the app
 
 		HBox sliderContainer = new HBox(10);
@@ -124,7 +121,7 @@ public class Menu extends Application {
 		label.setStyle("-fx-font-size: " + pixel + "px; -fx-text-fill: white;");
 		return label;
 	}
-	
+
 	/**
 	 * Creates a VBox with the specified spacing and nodes.
 	 *
@@ -138,7 +135,7 @@ public class Menu extends Application {
 		box.setAlignment(Pos.CENTER);
 		return box;
 	}
-	
+
 	/**
 	 * Creates an HBox with the specified spacing and nodes.
 	 *
@@ -152,7 +149,7 @@ public class Menu extends Application {
 		box.setAlignment(Pos.CENTER);
 		return box;
 	}
-	
+
 	/**
 	 * Creates a Scene with the specified nodes.
 	 *

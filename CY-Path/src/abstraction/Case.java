@@ -17,22 +17,22 @@ public enum Case {
 	EMPTY(0),
 
 	/**
-	 * Player 1's pawn.
+	 * 1st pawn.
 	 */
 	PAWN1(1),
 
 	/**
-	 * Player 2's pawn.
+	 * 2nd pawn.
 	 */
 	PAWN2(2),
 
 	/**
-	 * Player 3's pawn.
+	 * 3rd pawn.
 	 */
 	PAWN3(3),
 
 	/**
-	 * Player 4's pawn.
+	 * 4th pawn.
 	 */
 	PAWN4(4),
 

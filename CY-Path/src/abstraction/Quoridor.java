@@ -172,14 +172,14 @@ public class Quoridor {
 			}
 		}
 	}
-	
+
 	/**
-	 * This method saves the game to a specific save file. 
-	 * The user can select the location they want to save the game.
+	 * This method saves the game to a specific save file. The user can select the
+	 * location they want to save the game.
 	 *
 	 * @param board the current state of the board
 	 * @param s     the Scanner object for user input
-	 * @return      0 if the user chooses to exit, 1 if the game is successfully saved
+	 * @return 0 if the user chooses to exit, 1 if the game is successfully saved
 	 */
 	public static int saveChoice(Board board, Scanner s) {
 		int save = 0;
@@ -189,7 +189,7 @@ public class Quoridor {
 		save = s.nextInt();
 		if (save != 1 && save != 2 && save != 3 && save != 4) {
 			saveChoice(board, s);
-		} else if (save==4) {
+		} else if (save == 4) {
 			return 0;
 		} else {
 			try {
@@ -202,14 +202,14 @@ public class Quoridor {
 		}
 		return 1;
 	}
-	
+
 	/**
-	 * This method loads a game from a specific save file. 
-	 * The user can select the location they want to load the game from.
+	 * This method loads a game from a specific save file. The user can select the
+	 * location they want to load the game from.
 	 *
 	 * @param board the current state of the board
 	 * @param s     the Scanner object for user input
-	 * @return      0 if the user chooses to exit, 1 if the game is successfully loaded
+	 * @return 0 if the user chooses to exit, 1 if the game is successfully loaded
 	 */
 	public static int loadChoice(Board board, Scanner s) {
 		int load = 0;
@@ -217,9 +217,9 @@ public class Quoridor {
 		System.out.println(" - 1) Save 1 \n - 2) Save 2 \n - 3) Save 3 \n - 4) Exit ");
 		System.out.println("Please select the location you want (1, 2, 3 or 4)");
 		load = s.nextInt();
-		if (load != 1 && load != 2 && load != 3 && load!=4) {
+		if (load != 1 && load != 2 && load != 3 && load != 4) {
 			loadChoice(board, s);
-		} else if (load==4){
+		} else if (load == 4) {
 			return 0;
 		} else {
 			try {
