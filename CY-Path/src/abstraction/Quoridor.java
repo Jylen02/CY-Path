@@ -172,7 +172,15 @@ public class Quoridor {
 			}
 		}
 	}
-
+	
+	/**
+	 * This method saves the game to a specific save file. 
+	 * The user can select the location they want to save the game.
+	 *
+	 * @param board the current state of the board
+	 * @param s     the Scanner object for user input
+	 * @return      0 if the user chooses to exit, 1 if the game is successfully saved
+	 */
 	public static int saveChoice(Board board, Scanner s) {
 		int save = 0;
 		System.out.println("Save location : ");
@@ -195,6 +203,14 @@ public class Quoridor {
 		return 1;
 	}
 	
+	/**
+	 * This method loads a game from a specific save file. 
+	 * The user can select the location they want to load the game from.
+	 *
+	 * @param board the current state of the board
+	 * @param s     the Scanner object for user input
+	 * @return      0 if the user chooses to exit, 1 if the game is successfully loaded
+	 */
 	public static int loadChoice(Board board, Scanner s) {
 		int load = 0;
 		System.out.println("Save location : ");

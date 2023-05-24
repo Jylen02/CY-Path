@@ -108,13 +108,25 @@ public class Position implements Serializable{
 		return getX() * 100 + getY();
 		
 	}
-	// Méthode pour sérialiser la classe Board
-	private void writeObject(ObjectOutputStream out) throws IOException {
+	
+	/**
+	 * Method for serializing the Board class.
+	 *
+	 * @param out the ObjectOutputStream to write the Board object
+	 * @throws IOException if an I/O error occurs while writing to the underlying OutputStream
+	 */
+	private void writeObject(ObjectOutputStream out) throws IOException {	// Méthode pour sérialiser la classe Board
 		out.defaultWriteObject();
 	}
 
-	// Méthode pour désérialiser la classe Board
-	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+	/**
+	 * Method for deserializing the Board class.
+	 *
+	 * @param in the ObjectInputStream to read the Board object from
+	 * @throws IOException if an I/O error occurs while reading from the underlying InputStream
+	 * @throws ClassNotFoundException if the class of a serialized object cannot be found
+	 */
+	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {	// Méthode pour désérialiser la classe Board
 		in.defaultReadObject();
 	}
 }

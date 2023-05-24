@@ -102,19 +102,39 @@ public class Board implements Serializable {
 	public void setPlayerNumber(int playerNumber) {
 		this.playerNumber = playerNumber;
 	}
-
+	
+	/**
+	 * Returns the array of Player objects representing the players in the game.
+	 *
+	 * @return the array of players
+	 */
 	public Player[] getPlayers() {
 		return players;
 	}
-
+	
+	/**
+	 * Sets the array of Player objects representing the players in the game.
+	 *
+	 * @param players the array of players to be set
+	 */
 	public void setPlayers(Player[] players) {
 		this.players = players;
 	}
-
+	
+	/**
+	 * Returns the current turn in the game.
+	 *
+	 * @return the current turn
+	 */
 	public int getCurrentTurn() {
 		return currentTurn;
 	}
-
+	
+	/**
+	 * Sets the current turn in the game.
+	 *
+	 * @param currentTurn the current turn to be set
+	 */
 	public void setCurrentTurn(int currentTurn) {
 		this.currentTurn = currentTurn;
 	}
@@ -314,13 +334,26 @@ public class Board implements Serializable {
 		return marking;
 	}
 
-	// Méthode pour sérialiser la classe Board
-	private void writeObject(ObjectOutputStream out) throws IOException {
+	/**
+	 * Serializes the current state of the Board class.
+	 * This method is automatically called during serialization.
+	 *
+	 * @param out the ObjectOutputStream to which the board state is written
+	 * @throws IOException if an I/O error occurs while writing to the ObjectOutputStream
+	 */
+	private void writeObject(ObjectOutputStream out) throws IOException {	// Méthode pour sérialiser la classe Board
 		out.defaultWriteObject();
 	}
 
-	// Méthode pour désérialiser la classe Board
-	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+	/**
+	 * Deserializes the state of the Board class.
+	 * This method is automatically called during deserialization.
+	 *
+	 * @param in the ObjectInputStream from which the board state is read
+	 * @throws IOException if an I/O error occurs while reading from the ObjectInputStream
+	 * @throws ClassNotFoundException if the class of a serialized object cannot be found
+	 */
+	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException { 	// Méthode pour désérialiser la classe Board
 		in.defaultReadObject();
 	}
 }

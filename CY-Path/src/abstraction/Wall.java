@@ -210,13 +210,28 @@ public class Wall implements Serializable {
 		}
 	}
 	
-	// Méthode pour sérialiser la classe Board
-	private void writeObject(ObjectOutputStream out) throws IOException {
+	/**
+	 * Serializes the current state of the Board object.
+	 * This method is used in the process of serialization and is automatically invoked 
+         * when ObjectOutputStream's writeObject() method is called.
+	 *
+	 * @param out the ObjectOutputStream to which the board state is written
+	 * @throws IOException if an I/O error occurs while writing to the ObjectOutputStream
+	 */
+	private void writeObject(ObjectOutputStream out) throws IOException {	// Méthode pour sérialiser la classe Board
 		out.defaultWriteObject();
 	}
 
-	// Méthode pour désérialiser la classe Board
-	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+	/**
+	 * Deserializes the state of the Board object.
+	 * This method is used in the process of deserialization and is automatically invoked 
+         * when ObjectInputStream's readObject() method is called.
+	 *
+	 * @param in the ObjectInputStream from which the board state is read
+	 * @throws IOException if an I/O error occurs while reading from the ObjectInputStream
+	 * @throws ClassNotFoundException if the class of a serialized object could not be found
+	 */
+	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {	// Méthode pour désérialiser la classe Board
 		in.defaultReadObject();
 	}
 }
