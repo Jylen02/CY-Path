@@ -82,12 +82,8 @@ public class HandlePlaceWall {
 	 * Updates the wall orientation by adjusting the dimensions of the wall preview.
 	 */
 	public void updateWallOrientation() {
-		if (gameTurn.wallPreview.getWidth() > gameTurn.wallPreview.getHeight()) {
-			gameTurn.wallPreview.setWidth(5);
-			gameTurn.wallPreview.setHeight(65);
-		} else {
-			gameTurn.wallPreview.setWidth(65);
-			gameTurn.wallPreview.setHeight(5);
-		}
+		double tmpWidth = gameTurn.wallPreview.getWidth();
+		gameTurn.wallPreview.setWidth(gameTurn.wallPreview.getHeight());
+		gameTurn.wallPreview.setHeight(tmpWidth);
 	}
 }

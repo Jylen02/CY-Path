@@ -59,11 +59,11 @@ public class Rules extends Application {
 			Menu menuInstance = new Menu();
 			Menu.launchVerification(menuInstance, primaryStage);
 		});
-		
-		VBox box = Menu.createVBox(20,title, listOfRules, back);
+
+		VBox box = Menu.createVBox(20, title, listOfRules, back);
 
 		Scene scene = Menu.createScene(backgroundPane, box);
-		
+
 		primaryStage.setScene(scene);
 		primaryStage.sizeToScene();
 		primaryStage.show();

@@ -10,7 +10,7 @@ import java.io.Serializable;
  */
 public class Wall implements Serializable {
 
-	// private final int HEIGHT = 2;
+	public static final int HEIGHT = 2;
 	/**
 	 * The orientation of the wall.
 	 */
@@ -75,8 +75,8 @@ public class Wall implements Serializable {
 	 * @return true if the wall is out of bounds, false otherwise.
 	 */
 	public boolean outOfBorderWidth() {
-		if (this.getPosition().getX() <= 0 || this.getPosition().getY() >= 18 || this.getPosition().getX() >= 18
-				|| this.getPosition().getY() <= 0) {
+		if (this.getPosition().getX() <= 0 || this.getPosition().getY() > Board.SIZE
+				|| this.getPosition().getX() > Board.SIZE || this.getPosition().getY() <= 0) {
 			return true;
 		}
 		return false;
@@ -163,12 +163,14 @@ public class Wall implements Serializable {
 	 * @return true if the wall blocked a player, false otherwise.
 	 */
 	public boolean wallError(Board board) {
+		// Refresh the possible moves for each player after the wall is placed
 		for (int i = 0; i < board.getPlayers().length; i++) {
 			board.getPlayers()[i].getPawn().setPossibleMove(
 					board.getPlayers()[i].getPawn().possibleMove(board, board.getPlayers()[i].getPawn().getPos()));
 		}
 		if (!board.isWinnableForAll()) {
 			this.updateWall(board, Case.POTENTIALWALL);
+			// Refresh the possible moves for each player if the wall is removed
 			for (int i = 0; i < board.getPlayers().length; i++) {
 				board.getPlayers()[i].getPawn().setPossibleMove(
 						board.getPlayers()[i].getPawn().possibleMove(board, board.getPlayers()[i].getPawn().getPos()));
@@ -209,14 +211,34 @@ public class Wall implements Serializable {
 			return false;
 		}
 	}
-	
-	// Méthode pour sérialiser la classe Board
-	private void writeObject(ObjectOutputStream out) throws IOException {
+
+	/**
+	 * Serializes the current state of the Board object. This method is used in the
+	 * process of serialization and is automatically invoked when
+	 * ObjectOutputStream's writeObject() method is called.
+	 *
+	 * @param out the ObjectOutputStream to which the board state is written
+	 * @throws IOException if an I/O error occurs while writing to the
+	 *                     ObjectOutputStream
+	 */
+	private void writeObject(ObjectOutputStream out) throws IOException { // Méthode pour sérialiser la classe Board
 		out.defaultWriteObject();
 	}
 
-	// Méthode pour désérialiser la classe Board
-	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+	/**
+	 * Deserializes the state of the Board object. This method is used in the
+	 * process of deserialization and is automatically invoked when
+	 * ObjectInputStream's readObject() method is called.
+	 *
+	 * @param in the ObjectInputStream from which the board state is read
+	 * @throws IOException            if an I/O error occurs while reading from the
+	 *                                ObjectInputStream
+	 * @throws ClassNotFoundException if the class of a serialized object could not
+	 *                                be found
+	 */
+	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException { // Méthode pour
+																								// désérialiser la
+																								// classe Board
 		in.defaultReadObject();
 	}
 }

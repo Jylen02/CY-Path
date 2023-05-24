@@ -29,8 +29,6 @@ public class BackgroundMusic {
 		mediaPlayerMusic.volumeProperty().bindBidirectional(volumeSlider.valueProperty());
 		mediaPlayerPawnMove.volumeProperty().bindBidirectional(volumeSlider.valueProperty());
 		mediaPlayerWallPlaced.volumeProperty().bindBidirectional(volumeSlider.valueProperty());
-
-		mediaPlayerMusic.play();
 	}
 
 	public static BackgroundMusic getInstance() {
