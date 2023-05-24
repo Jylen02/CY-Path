@@ -18,7 +18,7 @@ public class Pawn implements Serializable {
 	private Position pos;
 
 	/**
-	 * The last position of the pawn.
+	 * The pawn turn start position.
 	 */
 	private Position lastPos;
 

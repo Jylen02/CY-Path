@@ -101,7 +101,6 @@ public class Quoridor {
 		Scanner s = new Scanner(System.in);
 		int action;
 		Position position;
-		// Verify if there max amount of wall is reach
 		Pawn p = board.getPlayers()[board.getCurrentTurn()].getPawn();
 		if (p.getPossibleMove().isEmpty()) {
 			System.out.println("You can't make any move, your turn has been skipped");
