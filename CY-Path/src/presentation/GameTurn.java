@@ -116,7 +116,7 @@ public class GameTurn extends Application {
 
 			Scene scene = new Scene(new StackPane(), 800, 700);
 
-			HBox action = actionList(scene, canDoAction);
+			HBox action = actionList(scene);
 
 			Label volumeLabel = Menu.createLabel("Volume", 40);
 
@@ -163,7 +163,7 @@ public class GameTurn extends Application {
 	 * @param scene The Scene object representing the current scene.
 	 * @return The VBox object representing the action list UI component.
 	 */
-	private HBox actionList(Scene scene, boolean canDoAction) {
+	private HBox actionList(Scene scene) {
 
 		Button loadGame = Menu.createButton("Load", 80, 35, 15);
 		loadGame.setDisable(true);
@@ -181,10 +181,10 @@ public class GameTurn extends Application {
 		});
 
 		Button exit = Menu.createButton("Exit", 80, 35, 15);
-		exit.setOnAction(e -> handleExitButton());
+		exit.setOnAction(e -> handleExit());
 
 		Button restart = Menu.createButton("Restart", 80, 35, 15);
-		restart.setOnAction(e -> handleRestartButton());
+		restart.setOnAction(e -> handleRestart());
 
 		Button cancel = Menu.createButton("Cancel", 90, 35, 15);
 		cancel.setOnAction(e -> handleCancel());
@@ -395,7 +395,7 @@ public class GameTurn extends Application {
 	 * remaining walls are reset. The board display is updated and the game is
 	 * restarted.
 	 */
-	private void handleRestartButton() {
+	private void handleRestart() {
 		resetAction();
 
 		board.setCurrentTurn(0);
@@ -422,7 +422,7 @@ public class GameTurn extends Application {
 	 * 
 	 * Note: Saving functionality is not implemented in this method.
 	 */
-	private void handleExitButton() {
+	private void handleExit() {
 		resetAction();
 
 		Menu menuInstance = new Menu();

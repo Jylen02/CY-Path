@@ -51,13 +51,13 @@ public class SaveGame extends Application {
 		Label title = Menu.createLabel("Save a Game", 100);
 
 		Button save1 = Menu.createButton("Save 1", 130, 50, 20);
-		save1.setOnAction(e -> SaveVerification("save1.svg", primaryStage));
+		save1.setOnAction(e -> saveVerification("save1.svg", primaryStage));
 
 		Button save2 = Menu.createButton("Save 2", 130, 50, 20);
-		save2.setOnAction(e -> SaveVerification("save2.svg", primaryStage));
+		save2.setOnAction(e -> saveVerification("save2.svg", primaryStage));
 
 		Button save3 = Menu.createButton("Save 3", 130, 50, 20);
-		save3.setOnAction(e -> SaveVerification("save3.svg", primaryStage));
+		save3.setOnAction(e -> saveVerification("save3.svg", primaryStage));
 
 		VBox box = Menu.createVBox(10, title, save1, save2, save3, back);
 
@@ -68,7 +68,7 @@ public class SaveGame extends Application {
 		primaryStage.show();
 	}
 
-	private void SaveVerification(String save, Stage primaryStage) {
+	private void saveVerification(String save, Stage primaryStage) {
 		try {
 			SaveLoadGame.save(board, save);
 
