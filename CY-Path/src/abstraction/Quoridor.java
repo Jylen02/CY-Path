@@ -246,7 +246,12 @@ public class Quoridor {
 			System.out.println("Menu :");
 			System.out.println(" - 1) New game \n - 2) Load a game");
 			System.out.println("Please select the action you want (1 or 2) :");
-			choice = s.nextInt();
+			try {
+		        choice = Integer.parseInt(s.next());
+		    } catch (NumberFormatException e) {
+		        System.out.println("Invalid input! Please enter 1 or 2.");
+		        continue;
+		    }
 			switch (choice) {
 			case 1:
 				// Enter the number of players
