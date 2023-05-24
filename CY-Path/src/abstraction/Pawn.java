@@ -30,7 +30,7 @@ public class Pawn implements Serializable {
 	/**
 	 * The player number associated with the pawn.
 	 */
-	private Case playerNb;
+	private Case pawnNumber;
 
 	/**
 	 * The finish line position(s) for this pawn.
@@ -47,7 +47,7 @@ public class Pawn implements Serializable {
 	public Pawn(Board board, Position pos, Case player) {
 		this.pos = pos;
 		this.lastPos = pos;
-		this.playerNb = player;
+		this.pawnNumber = player;
 		this.possibleMove = possibleMove(board, pos);
 		this.finishLine();
 	}
@@ -85,7 +85,7 @@ public class Pawn implements Serializable {
 	 * @return The player number.
 	 */
 	public Case getPlayerNb() {
-		return playerNb;
+		return pawnNumber;
 	}
 
 	/**
@@ -139,23 +139,23 @@ public class Pawn implements Serializable {
 	 */
 	public void finishLine() {
 		this.setFinishLine(new HashSet<Position>());
-		switch (this.playerNb) {
-		case PLAYER1:
+		switch (this.pawnNumber) {
+		case PAWN1:
 			for (int j = 1; j < Board.SIZE; j += 2) {
 				this.getFinishLine().add(new Position(1, j));
 			}
 			break;
-		case PLAYER2:
+		case PAWN2:
 			for (int j = 1; j < Board.SIZE; j += 2) {
 				this.getFinishLine().add(new Position(Board.SIZE - 2, j));
 			}
 			break;
-		case PLAYER3:
+		case PAWN3:
 			for (int i = 1; i < Board.SIZE; i += 2) {
 				this.getFinishLine().add(new Position(i, Board.SIZE - 2));
 			}
 			break;
-		case PLAYER4:
+		case PAWN4:
 			for (int i = 1; i < Board.SIZE; i += 2) {
 				this.getFinishLine().add(new Position(i, 1));
 			}

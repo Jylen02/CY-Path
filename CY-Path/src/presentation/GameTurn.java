@@ -256,16 +256,16 @@ public class GameTurn extends Application {
 						this.cell = new Rectangle(30, 5);
 					}
 					this.cell.setFill(Color.BLACK);
-				} else if (board.getBoard()[row][col] == Case.PLAYER1) {
+				} else if (board.getBoard()[row][col] == Case.PAWN1) {
 					cell = new Rectangle(30, 30);
 					this.cell.setFill(new ImagePattern(penguin));
-				} else if (board.getBoard()[row][col] == Case.PLAYER2) {
+				} else if (board.getBoard()[row][col] == Case.PAWN2) {
 					cell = new Rectangle(30, 30);
 					this.cell.setFill(new ImagePattern(wolf));
-				} else if (board.getBoard()[row][col] == Case.PLAYER3) {
+				} else if (board.getBoard()[row][col] == Case.PAWN3) {
 					cell = new Rectangle(30, 30);
 					this.cell.setFill(new ImagePattern(gibbon));
-				} else if (board.getBoard()[row][col] == Case.PLAYER4) {
+				} else if (board.getBoard()[row][col] == Case.PAWN4) {
 					cell = new Rectangle(30, 30);
 					this.cell.setFill(new ImagePattern(seagull));
 				} else {

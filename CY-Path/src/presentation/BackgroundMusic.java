@@ -6,18 +6,15 @@ import javafx.scene.media.MediaPlayer;
 
 public class BackgroundMusic {
 	private static BackgroundMusic instance;
-	private Media mediaMusic;
-	private Media mediaPawnMove;
-	private Media mediaWallPlaced;
 	private MediaPlayer mediaPlayerMusic;
 	private MediaPlayer mediaPlayerPawnMove;
 	private MediaPlayer mediaPlayerWallPlaced;
 	private Slider volumeSlider;
 
 	private BackgroundMusic() {
-		mediaMusic = new Media(getClass().getResource("/sound/tw3.mp3").toString());
-		mediaPawnMove = new Media(getClass().getResource("/sound/move.mp3").toString());
-		mediaWallPlaced = new Media(getClass().getResource("/sound/wall.mp3").toString());
+		Media mediaMusic = new Media(getClass().getResource("/sound/tw3.mp3").toString());
+		Media mediaPawnMove = new Media(getClass().getResource("/sound/move.mp3").toString());
+		Media mediaWallPlaced = new Media(getClass().getResource("/sound/wall.mp3").toString());
 
 		mediaPlayerMusic = new MediaPlayer(mediaMusic);
 		mediaPlayerMusic.setCycleCount(MediaPlayer.INDEFINITE);

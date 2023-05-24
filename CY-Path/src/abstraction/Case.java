@@ -19,22 +19,22 @@ public enum Case {
 	/**
 	 * Player 1's pawn.
 	 */
-	PLAYER1(1),
+	PAWN1(1),
 
 	/**
 	 * Player 2's pawn.
 	 */
-	PLAYER2(2),
+	PAWN2(2),
 
 	/**
 	 * Player 3's pawn.
 	 */
-	PLAYER3(3),
+	PAWN3(3),
 
 	/**
 	 * Player 4's pawn.
 	 */
-	PLAYER4(4),
+	PAWN4(4),
 
 	/**
 	 * Emplacement for a potential wall.
