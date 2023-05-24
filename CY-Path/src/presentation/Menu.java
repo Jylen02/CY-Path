@@ -124,21 +124,41 @@ public class Menu extends Application {
 		label.setStyle("-fx-font-size: " + pixel + "px; -fx-text-fill: white;");
 		return label;
 	}
-
+	
+	/**
+	 * Creates a VBox with the specified spacing and nodes.
+	 *
+	 * @param spacing the amount of vertical space between each node
+	 * @param nodes   the nodes to be added to the VBox
+	 * @return the created VBox
+	 */
 	protected static VBox createVBox(int spacing, Node... nodes) {
 		VBox box = new VBox(spacing);
 		box.getChildren().addAll(nodes);
 		box.setAlignment(Pos.CENTER);
 		return box;
 	}
-
+	
+	/**
+	 * Creates an HBox with the specified spacing and nodes.
+	 *
+	 * @param spacing the amount of horizontal space between each node
+	 * @param nodes   the nodes to be added to the HBox
+	 * @return the created HBox
+	 */
 	protected static HBox createHBox(int spacing, Node... nodes) {
 		HBox box = new HBox(spacing);
 		box.getChildren().addAll(nodes);
 		box.setAlignment(Pos.CENTER);
 		return box;
 	}
-
+	
+	/**
+	 * Creates a Scene with the specified nodes.
+	 *
+	 * @param nodes the nodes to be added to the Scene
+	 * @return the created Scene
+	 */
 	protected static Scene createScene(Node... nodes) {
 		StackPane sceneContent = new StackPane();
 		for (int i = 0; i < nodes.length; i++) {

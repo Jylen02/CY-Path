@@ -7,7 +7,16 @@ import java.io.ObjectOutputStream;
 import java.io.ObjectInputStream;
 
 public class SaveLoadGame {
-
+	
+	/**
+	 * Saves the current state of the board to a specified file.
+	 * The state of the board includes the current board layout, the number of players,
+	 * the array of players, the current turn, and the last wall placed.
+	 *
+	 * @param board    The current state of the board
+	 * @param Filename The name of the file to which the board state will be saved
+	 * @throws IOException if an error occurs while writing to the file
+	 */
 	public static void save(Board board, String Filename) throws IOException {
 		try {
 			FileOutputStream fileOut = new FileOutputStream(Filename);
@@ -26,7 +35,17 @@ public class SaveLoadGame {
 			throw new IOException(e.getMessage());
 		}
 	}
-
+	
+	/**
+	 * Loads a saved state of the board from a specified file.
+	 * The state of the board includes the current board layout, the number of players,
+	 * the array of players, the current turn, and the last wall placed.
+	 *
+	 * @param board    The board object to which the loaded state will be applied
+	 * @param Filename The name of the file from which the board state will be loaded
+	 * @throws Exception if an error occurs while reading from the file or
+	 *                   if the class of a serialized object cannot be found
+	 */
 	public static void load(Board board, String Filename) throws Exception {
 		try {
 			FileInputStream fileIn = new FileInputStream(Filename);
