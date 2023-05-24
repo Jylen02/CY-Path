@@ -225,7 +225,7 @@ public class Wall implements Serializable {
 	 * @throws IOException if an I/O error occurs while writing to the
 	 *                     ObjectOutputStream
 	 */
-	private void writeObject(ObjectOutputStream out) throws IOException { // Méthode pour sérialiser la classe Board
+	private void writeObject(ObjectOutputStream out) throws IOException {
 		out.defaultWriteObject();
 	}
 
@@ -240,9 +240,7 @@ public class Wall implements Serializable {
 	 * @throws ClassNotFoundException if the class of a serialized object could not
 	 *                                be found
 	 */
-	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException { // Méthode pour
-																								// désérialiser la
-																								// classe Board
+	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
 		in.defaultReadObject();
 	}
 }
