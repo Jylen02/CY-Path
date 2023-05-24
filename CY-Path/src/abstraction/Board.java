@@ -334,6 +334,13 @@ public class Board implements Serializable {
 		}
 		return marking;
 	}
+	
+	public void updatePossibleMove() {
+		for (int i = 0; i < this.getPlayers().length; i++) {
+			this.getPlayers()[i].getPawn().setPossibleMove(
+					this.getPlayers()[i].getPawn().possibleMove(this, this.getPlayers()[i].getPawn().getPos()));
+		}
+	}
 
 	/**
 	 * Serializes the current state of the Board class. This method is automatically

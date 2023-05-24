@@ -164,17 +164,11 @@ public class Wall implements Serializable {
 	 */
 	public boolean wallError(Board board) {
 		// Refresh the possible moves for each player after the wall is placed
-		for (int i = 0; i < board.getPlayers().length; i++) {
-			board.getPlayers()[i].getPawn().setPossibleMove(
-					board.getPlayers()[i].getPawn().possibleMove(board, board.getPlayers()[i].getPawn().getPos()));
-		}
+		board.updatePossibleMove();
 		if (!board.isWinnableForAll()) {
 			this.updateWall(board, Case.POTENTIALWALL);
 			// Refresh the possible moves for each player if the wall is removed
-			for (int i = 0; i < board.getPlayers().length; i++) {
-				board.getPlayers()[i].getPawn().setPossibleMove(
-						board.getPlayers()[i].getPawn().possibleMove(board, board.getPlayers()[i].getPawn().getPos()));
-			}
+			board.updatePossibleMove();
 			return true;
 		}
 		return false;

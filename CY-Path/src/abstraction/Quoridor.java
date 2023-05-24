@@ -286,10 +286,7 @@ public class Quoridor {
 		System.out.println(board);
 		boolean win = false;
 		// Initialize first possible move for each pawn
-		for (int i = 0; i < board.getPlayerNumber(); i++) {
-			board.getPlayers()[i].getPawn().setPossibleMove(
-					board.getPlayers()[i].getPawn().possibleMove(board, board.getPlayers()[i].getPawn().getPos()));
-		}
+		board.updatePossibleMove();
 		// While no one has won, play turn
 		while (!win) {
 			System.out.println(board.getPlayers()[board.getCurrentTurn()].getName() + "'s turn :");
@@ -316,10 +313,7 @@ public class Quoridor {
 						System.out.println(
 								board.getPlayers()[board.getCurrentTurn()].getName() + " has won. Congratulations !");
 					} else {
-						for (int i = 0; i < numberOfPlayers; i++) {
-							board.getPlayers()[i].getPawn().setPossibleMove(board.getPlayers()[i].getPawn()
-									.possibleMove(board, board.getPlayers()[i].getPawn().getPos()));
-						}
+						board.updatePossibleMove();
 						board.setCurrentTurn((board.getCurrentTurn() + 1) % board.getPlayerNumber());
 					}
 					break;
