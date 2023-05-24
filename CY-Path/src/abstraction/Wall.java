@@ -10,7 +10,6 @@ import java.io.Serializable;
  */
 public class Wall implements Serializable {
 
-	public static final int HEIGHT = 2;
 	/**
 	 * The orientation of the wall.
 	 */
@@ -20,7 +19,12 @@ public class Wall implements Serializable {
 	 * The current position of the middle of the wall.
 	 */
 	private Position position;
-
+	
+	/**
+	 * The height of walls
+	 */
+	public static final int HEIGHT = 2;
+	
 	/**
 	 * Constructs a new Wall object with the specified orientation and position.
 	 *

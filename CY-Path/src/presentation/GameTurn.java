@@ -137,15 +137,10 @@ public class GameTurn extends Application {
 				@Override
 				public void handle(MouseEvent event) {
 					if (isPlacingWall) {
-						mouseColumn = (int) (event.getX() - wallPreview.getWidth() / 2);
-						mouseRow = (int) (event.getY() - wallPreview.getHeight() / 2);
-						if (wallPreview.getWidth() > wallPreview.getHeight()) {
-							wallPreview.setTranslateX(mouseColumn - 367);
-							wallPreview.setTranslateY(mouseRow - 346);
-						} else {
-							wallPreview.setTranslateX(mouseColumn - 367 - 30);
-							wallPreview.setTranslateY(mouseRow - 346 + 30);
-						}
+						mouseColumn = (int) (event.getX() - 800 / 2);
+						mouseRow = (int) (event.getY() - 700 / 2);
+						wallPreview.setTranslateX(mouseColumn);
+						wallPreview.setTranslateY(mouseRow);
 					}
 				}
 			});
