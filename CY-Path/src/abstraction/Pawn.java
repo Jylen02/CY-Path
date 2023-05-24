@@ -18,7 +18,7 @@ public class Pawn implements Serializable {
 	private Position pos;
 
 	/**
-	 * The last position of the pawn.
+	 * The pawn turn start position.
 	 */
 	private Position lastPos;
 
@@ -184,7 +184,7 @@ public class Pawn implements Serializable {
 		int newY = pos.getY() + offsetY;
 
 		/* Verifies if the new position is on the grid */
-		if (newX >= 1 && newX <= 17 && newY >= 1 && newY <= 17) {
+		if (newX >= 1 && newX <= Board.SIZE-2 && newY >= 1 && newY <= Board.SIZE-2) {
 			Position newPosition = new Position(newX, newY);
 			if (board.getBoard()[newPosition.getX() - (offsetX / 2)][newPosition.getY()
 					- (offsetY / 2)] == Case.POTENTIALWALL) {

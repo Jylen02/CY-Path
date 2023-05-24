@@ -10,7 +10,6 @@ import java.io.Serializable;
  */
 public class Wall implements Serializable {
 
-	public static final int HEIGHT = 2;
 	/**
 	 * The orientation of the wall.
 	 */
@@ -20,7 +19,12 @@ public class Wall implements Serializable {
 	 * The current position of the middle of the wall.
 	 */
 	private Position position;
-
+	
+	/**
+	 * The height of walls
+	 */
+	public static final int HEIGHT = 2;
+	
 	/**
 	 * Constructs a new Wall object with the specified orientation and position.
 	 *
@@ -215,7 +219,7 @@ public class Wall implements Serializable {
 	 * @throws IOException if an I/O error occurs while writing to the
 	 *                     ObjectOutputStream
 	 */
-	private void writeObject(ObjectOutputStream out) throws IOException { // Méthode pour sérialiser la classe Board
+	private void writeObject(ObjectOutputStream out) throws IOException {
 		out.defaultWriteObject();
 	}
 
@@ -230,9 +234,7 @@ public class Wall implements Serializable {
 	 * @throws ClassNotFoundException if the class of a serialized object could not
 	 *                                be found
 	 */
-	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException { // Méthode pour
-																								// désérialiser la
-																								// classe Board
+	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
 		in.defaultReadObject();
 	}
 }
