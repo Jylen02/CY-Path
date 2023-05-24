@@ -3,6 +3,7 @@
 --1.2. Construire le plateau (Durée estimée : 4h - Durée : 2h) : Terminé - Tout le monde
      Initialiser le plateau selon le nombre de joueur (en plaçant les pions)
      Réinitialiser compteur Wall
+--1.3. Construction des diagrammes de classe, de cas d'utilisation et de séquence (Durée : 5h) : Terminé - Tout le monde
 
 --2. Faire une méthode tourDeJeu boucle while(noWinner) (Durée estimée : 1h) : Terminé - Noaman, Jeremy, Christophe
    Créer une classe Player (numéro joueur,attribut myTurn, méthode jouer)
@@ -24,6 +25,8 @@
      Afficher gagnant
      Bouton rejouer (appeler initializeBoard())
 --3.5. Optimisation/factorisation code déplacement du pion (Durée : 2h) : Terminé - Warren
+--3.6. Si un joueur est complètement bloqué -> sauter son tour (Durée : 5min) : Terminé - Christophe
+--3.7. Rajouter Player[] dans Board pour pouvoir faire une méthode qui actualise les déplacements possibles de chaque pion + simplifier certaines modifications dans la console/IHM (Durée : 30min) : Terminé - Jeremy
 
 --4. Poser un mur
 --4.2. Vérifier Mur posable (Durée estimée : 2-3h - Durée : 2h) : Terminé - Warren
@@ -124,10 +127,10 @@ Mettre le tout dans un dossier
       Modifier les classes Abstraction pour être sauvegardable + console : (Durée : 3h30) Terminé - Jeremy
 --17.4. Optimiser la création des VBox/HBox/Scene (Durée estimée : 30min - Durée : 45min) : Terminé - Noaman
 
-18. Controle
-18.1. Implémenter la classe Observable dans les classes la nécessitant : A faire
-18.2. Mettre les méthodes setChanged/notifyObserver... dans les getters/setters ou méthodes : A faire
-18.3. Relier Présentation (IHM) et Abstraction (classe) : A faire
+--18. Controle
+--18.1. Implémenter la classe Observable dans les classes la nécessitant : Pas besoin
+--18.2. Mettre les méthodes setChanged/notifyObserver... dans les getters/setters ou méthodes : Pas besoin
+--18.3. Relier Présentation (IHM) et Abstraction (classe) : Pas besoin
 
 --19. Documentation JavaDoc IHM (Durée : 30min) : Terminé - Christophe
 --19.1. Commentaires pour toutes les méthodes de classe (si utile)
@@ -135,6 +138,9 @@ Mettre le tout dans un dossier
 --20. Esthetique
 --20.1. Creer et ajouter des styles css sur toutes les pages/boutons/labels (Durée : 1h30) : Terminé - Warren
 
-Potentielles modifications :
---Si un joueur est complètement bloqué -> sauter son tour (Durée : 5min) : Terminé - Christophe
---Rajouter Player[] dans Board pour pouvoir faire une méthode qui actualise les déplacements possibles de chaque pion + simplifier certaines modifications dans la console/IHM (Durée : 30min) : Terminé - Jeremy
+--21. Ajustement des diagrammes de classe, de cas d'utilisation et de séquence (Durée : 4h) : Terminé - Christophe, Warren, Noaman, Abd-Ennour
+
+--22. Factoriser le code (général)
+--22.1. Ajouter une taille au mur (gérer la taille des rectangles en fonction de celle-ci) (Durée : 20min) : Terminé - Jeremy, Christophe, Noaman
+--22.2. Méthode pour actualiser la position de tous les pions (Durée : 5min) : Terminé - Christophe
+22.3. Exception Scanner.nextInt à traiter (dans une méthode) (Durée : 10min) : Terminé - Noaman, Christophe

@@ -334,7 +334,12 @@ public class Board implements Serializable {
 		}
 		return marking;
 	}
-	
+
+	/**
+	 * Updates the possible moves for each player's pawn on the game board. This
+	 * method calculates and sets the new possible moves for each player's pawn
+	 * based on the current state of the game board.
+	 */
 	public void updatePossibleMove() {
 		for (int i = 0; i < this.getPlayers().length; i++) {
 			this.getPlayers()[i].getPawn().setPossibleMove(
@@ -364,7 +369,7 @@ public class Board implements Serializable {
 	 * @throws ClassNotFoundException if the class of a serialized object cannot be
 	 *                                found
 	 */
-	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException { 									
+	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
 		in.defaultReadObject();
 	}
 }
