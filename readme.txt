@@ -2,11 +2,11 @@ CY-Path
 
 To compile the Javadoc :
 	- Make sure you have downloaded the JavaFX library 
-	- Download the project
+	- Download the project and extract it to a folder of your choice
 	- Open the terminal on Windows
-	- Enter the command "cd AbsolutePath" replacing AbsolutePath with the absolute path of the project
+	- Enter the command "cd AbsolutePath" replacing AbsolutePath with the absolute path of the folder where the project is located
 	- Enter the following command : 
-			javadoc -d CY-Path/doc -classpath "AbsolutePath/lib/*" CY-Path/src/abstraction/*.java CY-Path/src/presentation/*.java
+		-> javadoc -d CY-Path/doc -classpath "AbsolutePath/lib/*" CY-Path/src/abstraction/*.java CY-Path/src/presentation/*.java
 	  replacing AbsolutePath with the absolute path of the "javafx-sdk-20.0.1" folder
 
 To see the Javadoc :
@@ -14,12 +14,24 @@ To see the Javadoc :
 
 Terminal version :
 
-To run the deliverable:
-	- Make sure your Java version is up to date, otherwise download the latest version of JDK from Oracle's official website and restart the console.
-	- Download the "quoridor.jar" file and place it in the folder of your choice
+To compile the executable :
+	- Make sure your Java version is up to date, otherwise download the latest version of JDK from Oracle's official website and restart the console
+	- Download the project and extract it to a folder of your choice
 	- Open the terminal on Windows
-	- Enter the command "cd AbsolutePath" replacing AbsolutePath with the absolute path of the folder where the quoridor.jar file is located
-	- Then enter the command "java -jar quoridor.jar"
+	- Enter the command 
+		-> "cd AbsolutePath" replacing AbsolutePath with the absolute path of the folder where the project is located
+	- Enter the following command : 
+		-> jar cfe quoridor.jar abstraction.Quoridor -C CY-Path/bin .
+			-> /!\ the "." is important, do not forget it
+
+To run the deliverable:
+	- Make sure your Java version is up to date, otherwise download the latest version of JDK from Oracle's official website and restart the console
+	- Download the "quoridor.jar" file if you don't have it and place it in the folder of your choice
+	- Open the terminal on Windows
+	- Enter the command 
+		-> "cd AbsolutePath" replacing AbsolutePath with the absolute path of the folder where the quoridor.jar file is located
+	- Enter the command :
+		-> "java -jar quoridor.jar"
 
 Implemented features:
 	- Choice between a new game or an existing game
@@ -74,12 +86,24 @@ How to play ? :
 
 Human-machine interface version :
 
-To run the IHM version of the deliverable :
-	- Same as previously, but make sure to have download JavaFX 
+To compile the executable :
+	- Make sure your Java version is up to date, otherwise download the latest version of JDK from Oracle's official website and restart the console
+	- Download the project and extract it to a folder of your choice.
 	- Open the terminal on Windows
-	- Enter the command "cd AbsolutePath" replacing AbsolutePath with the absolute path of the folder where the quoridorHMI.jar file is located
-	- Then enter the command "java --module-path "...\javafx-sdk-20\lib" --add-modules=javafx.controls,javafx.fxml,javafx.swing,javafx.base,javafx.graphics,javafx.media,javafx.web -jar quoridorHMI.jar"
-	-> /!\ Be careful to replace "..." by the absolute path of JavaFX's folder path.
+	- Enter the command :
+		-> "cd AbsolutePath" replacing AbsolutePath with the absolute path of the folder where the project is located
+	- Enter the following command : 
+		-> "jar cfe quoridorHMI.jar presentation.Menu -C CY-Path/bin ."
+			-> /!\ the "." is important, do not forget it
+
+To run the HMI version of the deliverable :
+	- Same as the Terminal version, but make sure to have download JavaFX 
+	- Open the terminal on Windows
+	- Enter the command :
+		-> "cd AbsolutePath" replacing AbsolutePath with the absolute path of the folder where the quoridorHMI.jar file is located
+	- Enter the command :
+		-> "java --module-path "...\javafx-sdk-20\lib" --add-modules=javafx.controls,javafx.fxml,javafx.swing,javafx.base,javafx.graphics,javafx.media,javafx.web -jar quoridorHMI.jar"
+			-> /!\ Be careful to replace "..." by the absolute path of JavaFX's folder path.
 
 Human-machine interface only features :
 	- Same features as terminal's ones
