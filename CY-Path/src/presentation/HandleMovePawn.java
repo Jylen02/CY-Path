@@ -42,21 +42,21 @@ public class HandleMovePawn {
 			gameTurn.mediaPlayerPawnMove.stop();
 			gameTurn.mediaPlayerPawnMove.play();
 
-			gameTurn.invisibleGrid = gameTurn.updateBoard(true);
-			gameTurn.grid = gameTurn.updateBoard(false);
+			gameTurn.grid = gameTurn.updateBoard();
 
 			gameTurn.canDoAction = false;
 			gameTurn.hasMoved = true;
-			Menu.launchVerification(gameTurn, gameTurn.primaryStage);
 
 			if (gameTurn.board.getPlayers()[gameTurn.board.getCurrentTurn()].getPawn().isWinner()) {
 				Alert alert = new Alert(Alert.AlertType.INFORMATION);
-				alert.setTitle("winner");
+				alert.setTitle("Winner");
 				alert.setHeaderText(
-						"The winner is  " + gameTurn.board.getPlayers()[gameTurn.board.getCurrentTurn()].getName());
+						"The winner is " + gameTurn.board.getPlayers()[gameTurn.board.getCurrentTurn()].getName());
 				alert.showAndWait();
 				Menu menuInstance = new Menu();
 				Menu.launchVerification(menuInstance, gameTurn.primaryStage);
+			} else {
+				Menu.launchVerification(gameTurn, gameTurn.primaryStage);
 			}
 		}
 	}

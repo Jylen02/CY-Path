@@ -32,7 +32,7 @@ public class Board implements Serializable {
 	 * The current turn of the game.
 	 */
 	private int currentTurn;
-	
+
 	/**
 	 * The last wall placed on the board.
 	 */
@@ -103,18 +103,38 @@ public class Board implements Serializable {
 		this.playerNumber = playerNumber;
 	}
 
+	/**
+	 * Returns the array of Player objects representing the players in the game.
+	 *
+	 * @return the array of players
+	 */
 	public Player[] getPlayers() {
 		return players;
 	}
 
+	/**
+	 * Sets the array of Player objects representing the players in the game.
+	 *
+	 * @param players the array of players to be set
+	 */
 	public void setPlayers(Player[] players) {
 		this.players = players;
 	}
 
+	/**
+	 * Returns the current turn in the game.
+	 *
+	 * @return the current turn
+	 */
 	public int getCurrentTurn() {
 		return currentTurn;
 	}
 
+	/**
+	 * Sets the current turn in the game.
+	 *
+	 * @param currentTurn the current turn to be set
+	 */
 	public void setCurrentTurn(int currentTurn) {
 		this.currentTurn = currentTurn;
 	}
@@ -190,6 +210,7 @@ public class Board implements Serializable {
 				}
 			}
 		}
+		// Initialize player's starting position
 		for (int i = 0; i < this.getPlayerNumber(); i++) {
 			for (Case value : Case.values()) {
 				if (value.getValue() == i + 1) {
@@ -265,26 +286,26 @@ public class Board implements Serializable {
 	 * @return true if all players can reach their goals, false otherwise.
 	 */
 	public boolean isWinnableForAll() {
-		int i = 0;
-		while (i < this.getPlayers().length && this.isWinnable(this.getPlayers()[i].getPawn())) {
-			i++;
+		int iterator = 0;
+		while (iterator < this.getPlayers().length && this.isWinnable(this.getPlayers()[iterator].getPawn())) {
+			iterator++;
 		}
-		return i == this.getPlayers().length;
+		return iterator == this.getPlayers().length;
 	}
 
 	/**
 	 * Check if a game board is winnable for a given player.
 	 * 
-	 * @param player The Pawn of the player to check.
+	 * @param pawn The Pawn of the player to check.
 	 * @return true if the game is winnable for the player, false otherwise.
 	 */
-	public boolean isWinnable(Pawn player) {
+	public boolean isWinnable(Pawn pawn) {
 		Set<Position> marking = new HashSet<Position>();
-		marking.add(player.getPos());
-		for (Position pos : player.getPossibleMove()) {
-			marking = this.dfs(pos, player, marking, player.getPossibleMove());
+		marking.add(pawn.getPos());
+		for (Position pos : pawn.getPossibleMove()) {
+			marking = this.dfs(pos, pawn, marking, pawn.getPossibleMove());
 		}
-		for (Position pos : player.getFinishLine()) {
+		for (Position pos : pawn.getFinishLine()) {
 			if (marking.contains(pos)) {
 				return true;
 			}
@@ -296,30 +317,58 @@ public class Board implements Serializable {
 	 * Performs a depth-first search (DFS) on the game board from a given position.
 	 * 
 	 * @param pos          The position from which to start the DFS.
-	 * @param player       The player for whom to perform the DFS.
+	 * @param pawn         The player for whom to perform the DFS.
 	 * @param marking      A set of positions marking the nodes visited during the
 	 *                     DFS.
 	 * @param possibleMove The set of Positions representing the possible moves for
 	 *                     the Pawn.
 	 * @return The updated marking set after performing the DFS.
 	 */
-	public Set<Position> dfs(Position pos, Pawn player, Set<Position> marking, Set<Position> possibleMove) {
+	public Set<Position> dfs(Position pos, Pawn pawn, Set<Position> marking, Set<Position> possibleMove) {
 		if (!marking.contains(pos)) {
 			marking.add(pos);
-			possibleMove = player.possibleMove(this, pos);
+			possibleMove = pawn.possibleMove(this, pos);
 			for (Position pos1 : possibleMove) {
-				marking = this.dfs(pos1, player, marking, possibleMove);
+				marking = this.dfs(pos1, pawn, marking, possibleMove);
 			}
 		}
 		return marking;
 	}
 
-	// Méthode pour sérialiser la classe Board
+	/**
+	 * Updates the possible moves for each player's pawn on the game board. This
+	 * method calculates and sets the new possible moves for each player's pawn
+	 * based on the current state of the game board.
+	 */
+	public void updatePossibleMove() {
+		for (int i = 0; i < this.getPlayers().length; i++) {
+			this.getPlayers()[i].getPawn().setPossibleMove(
+					this.getPlayers()[i].getPawn().possibleMove(this, this.getPlayers()[i].getPawn().getPos()));
+		}
+	}
+
+	/**
+	 * Serializes the current state of the Board class. This method is automatically
+	 * called during serialization.
+	 *
+	 * @param out the ObjectOutputStream to which the board state is written
+	 * @throws IOException if an I/O error occurs while writing to the
+	 *                     ObjectOutputStream
+	 */
 	private void writeObject(ObjectOutputStream out) throws IOException {
 		out.defaultWriteObject();
 	}
 
-	// Méthode pour désérialiser la classe Board
+	/**
+	 * Deserializes the state of the Board class. This method is automatically
+	 * called during deserialization.
+	 *
+	 * @param in the ObjectInputStream from which the board state is read
+	 * @throws IOException            if an I/O error occurs while reading from the
+	 *                                ObjectInputStream
+	 * @throws ClassNotFoundException if the class of a serialized object cannot be
+	 *                                found
+	 */
 	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
 		in.defaultReadObject();
 	}

@@ -45,16 +45,15 @@ public class LoadGame extends Application {
 		Label title = Menu.createLabel("Load a Game", 100);
 
 		Button save1 = Menu.createButton("Save 1", 130, 50, 20);
-		save1.setOnAction(e -> LoadVerification("save1.svg", primaryStage));
+		save1.setOnAction(e -> loadVerification("save1.svg", primaryStage));
 
 		Button save2 = Menu.createButton("Save 2", 130, 50, 20);
-		save2.setOnAction(e -> LoadVerification("save2.svg", primaryStage));
+		save2.setOnAction(e -> loadVerification("save2.svg", primaryStage));
 
 		Button save3 = Menu.createButton("Save 3", 130, 50, 20);
-		save3.setOnAction(e -> LoadVerification("save3.svg", primaryStage));
+		save3.setOnAction(e -> loadVerification("save3.svg", primaryStage));
 
 		VBox box = Menu.createVBox(10, title, save1, save2, save3, back);
-		
 
 		Scene scene = Menu.createScene(backgroundPane, box);
 
@@ -71,7 +70,7 @@ public class LoadGame extends Application {
 	 * @param save         The filename of the save file to load.
 	 * @param primaryStage The primary stage for the application.
 	 */
-	private void LoadVerification(String save, Stage primaryStage) {
+	private void loadVerification(String save, Stage primaryStage) {
 		Board board = new Board(0);
 		try {
 			SaveLoadGame.load(board, save);

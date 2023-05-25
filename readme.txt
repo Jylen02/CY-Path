@@ -92,9 +92,6 @@ Human-machine interface only features :
 	- Can't move the pawn when placing wall
 	- The sound's volume can be controled 
 
-Not implemented features:
-	- Observator
-
 How to play ? :
 	- To launch a new game :
 		- Press the "New Game" button  

@@ -17,24 +17,24 @@ public enum Case {
 	EMPTY(0),
 
 	/**
-	 * Player 1's pawn.
+	 * 1st pawn.
 	 */
-	PLAYER1(1),
+	PAWN1(1),
 
 	/**
-	 * Player 2's pawn.
+	 * 2nd pawn.
 	 */
-	PLAYER2(2),
+	PAWN2(2),
 
 	/**
-	 * Player 3's pawn.
+	 * 3rd pawn.
 	 */
-	PLAYER3(3),
+	PAWN3(3),
 
 	/**
-	 * Player 4's pawn.
+	 * 4th pawn.
 	 */
-	PLAYER4(4),
+	PAWN4(4),
 
 	/**
 	 * Emplacement for a potential wall.

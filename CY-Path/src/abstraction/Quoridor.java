@@ -9,6 +9,22 @@ import java.util.Scanner;
 public class Quoridor {
 
 	/**
+	 * Verifies if the user input is a valid integer value.
+	 *
+	 * @param s The Scanner object used to read user input.
+	 * @return The valid integer input.
+	 */
+	public static int intVerification(Scanner s) {
+		try {
+			int input = Integer.parseInt(s.next());
+			return input;
+		} catch (NumberFormatException e) {
+			System.out.println("Invalid input!");
+			return intVerification(s);
+		}
+	}
+
+	/**
 	 * Prompts the user to enter the coordinates of a position and returns that
 	 * position.
 	 *
@@ -18,9 +34,9 @@ public class Quoridor {
 	public static Position enterPosition(Scanner s) {
 		System.out.println("Please enter the coordinates : ");
 		System.out.print("row = ");
-		int row = s.nextInt();
+		int row = intVerification(s);
 		System.out.print("column = ");
-		int column = s.nextInt();
+		int column = intVerification(s);
 		return new Position(row, column);
 	}
 
@@ -42,7 +58,7 @@ public class Quoridor {
 		while (confirm != 1 && confirm != 2) {
 			System.out.println("Confirm your action :");
 			System.out.println(" - 1) Yes \n - 2) No ");
-			confirm = s.nextInt();
+			confirm = intVerification(s);
 			switch (confirm) {
 			case 1:
 				if (action == 1) {
@@ -101,7 +117,6 @@ public class Quoridor {
 		Scanner s = new Scanner(System.in);
 		int action;
 		Position position;
-		// Verify if there max amount of wall is reach
 		Pawn p = board.getPlayers()[board.getCurrentTurn()].getPawn();
 		if (p.getPossibleMove().isEmpty()) {
 			System.out.println("You can't make any move, your turn has been skipped");
@@ -121,7 +136,7 @@ public class Quoridor {
 				System.out.println(" - 1) Move the pawn \n - 2) Put a wall (Remaining wall(s) : "
 						+ board.getPlayers()[board.getCurrentTurn()].getRemainingWall() + ")");
 				System.out.println("Please select the action you want (1 or 2) :");
-				action = s.nextInt();
+				action = intVerification(s);
 			}
 			switch (action) {
 			case 1:
@@ -143,7 +158,7 @@ public class Quoridor {
 				System.out.println("Choice of the wall's orientation :");
 				System.out.println(" - 1) Vertical wall \n - 2) Horizontal wall ");
 				System.out.println("Please select the action you want (1 or 2) :");
-				int orientation = s.nextInt();
+				int orientation = intVerification(s);
 				switch (orientation) {
 				case 1:
 					if (placeWall(board, position, Orientation.VERTICAL)) {
@@ -173,15 +188,23 @@ public class Quoridor {
 		}
 	}
 
+	/**
+	 * This method saves the game to a specific save file. The user can select the
+	 * location they want to save the game.
+	 *
+	 * @param board the current state of the board
+	 * @param s     the Scanner object for user input
+	 * @return 0 if the user chooses to exit, 1 if the game is successfully saved
+	 */
 	public static int saveChoice(Board board, Scanner s) {
 		int save = 0;
 		System.out.println("Save location : ");
 		System.out.println(" - 1) Save 1 \n - 2) Save 2 \n - 3) Save 3 \n - 4) Exit");
 		System.out.println("Please select the location you want (1, 2, 3 or 4)");
-		save = s.nextInt();
+		save = intVerification(s);
 		if (save != 1 && save != 2 && save != 3 && save != 4) {
 			saveChoice(board, s);
-		} else if (save==4) {
+		} else if (save == 4) {
 			return 0;
 		} else {
 			try {
@@ -194,16 +217,24 @@ public class Quoridor {
 		}
 		return 1;
 	}
-	
+
+	/**
+	 * This method loads a game from a specific save file. The user can select the
+	 * location they want to load the game from.
+	 *
+	 * @param board the current state of the board
+	 * @param s     the Scanner object for user input
+	 * @return 0 if the user chooses to exit, 1 if the game is successfully loaded
+	 */
 	public static int loadChoice(Board board, Scanner s) {
 		int load = 0;
 		System.out.println("Save location : ");
 		System.out.println(" - 1) Save 1 \n - 2) Save 2 \n - 3) Save 3 \n - 4) Exit ");
 		System.out.println("Please select the location you want (1, 2, 3 or 4)");
-		load = s.nextInt();
-		if (load != 1 && load != 2 && load != 3 && load!=4) {
+		load = intVerification(s);
+		if (load != 1 && load != 2 && load != 3 && load != 4) {
 			loadChoice(board, s);
-		} else if (load==4){
+		} else if (load == 4) {
 			return 0;
 		} else {
 			try {
@@ -231,13 +262,13 @@ public class Quoridor {
 			System.out.println("Menu :");
 			System.out.println(" - 1) New game \n - 2) Load a game");
 			System.out.println("Please select the action you want (1 or 2) :");
-			choice = s.nextInt();
+			choice = intVerification(s);
 			switch (choice) {
 			case 1:
 				// Enter the number of players
 				while (numberOfPlayers != 2 && numberOfPlayers != 4) {
 					System.out.println("Please enter the number of players (2 or 4)");
-					numberOfPlayers = s.nextInt();
+					numberOfPlayers = intVerification(s);
 					if (numberOfPlayers != 2 && numberOfPlayers != 4) {
 						System.out.println("Your response is not in the list of available answers.");
 					}
@@ -270,10 +301,7 @@ public class Quoridor {
 		System.out.println(board);
 		boolean win = false;
 		// Initialize first possible move for each pawn
-		for (int i = 0; i < board.getPlayerNumber(); i++) {
-			board.getPlayers()[i].getPawn().setPossibleMove(
-					board.getPlayers()[i].getPawn().possibleMove(board, board.getPlayers()[i].getPawn().getPos()));
-		}
+		board.updatePossibleMove();
 		// While no one has won, play turn
 		while (!win) {
 			System.out.println(board.getPlayers()[board.getCurrentTurn()].getName() + "'s turn :");
@@ -282,7 +310,7 @@ public class Quoridor {
 				System.out.println("Do you want to save the game : ");
 				System.out.println(" - 1) Yes \n - 2) No");
 				System.out.println("Please select your choice (1 or 2) :");
-				choice = s.nextInt();
+				choice = intVerification(s);
 				switch (choice) {
 				case 1:
 					choice = Quoridor.saveChoice(board, s);
@@ -300,10 +328,7 @@ public class Quoridor {
 						System.out.println(
 								board.getPlayers()[board.getCurrentTurn()].getName() + " has won. Congratulations !");
 					} else {
-						for (int i = 0; i < numberOfPlayers; i++) {
-							board.getPlayers()[i].getPawn().setPossibleMove(board.getPlayers()[i].getPawn()
-									.possibleMove(board, board.getPlayers()[i].getPawn().getPos()));
-						}
+						board.updatePossibleMove();
 						board.setCurrentTurn((board.getCurrentTurn() + 1) % board.getPlayerNumber());
 					}
 					break;

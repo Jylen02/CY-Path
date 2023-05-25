@@ -18,7 +18,7 @@ public class Pawn implements Serializable {
 	private Position pos;
 
 	/**
-	 * The last position of the pawn.
+	 * The pawn turn start position.
 	 */
 	private Position lastPos;
 
@@ -30,7 +30,7 @@ public class Pawn implements Serializable {
 	/**
 	 * The player number associated with the pawn.
 	 */
-	private Case playerNb;
+	private Case pawnNumber;
 
 	/**
 	 * The finish line position(s) for this pawn.
@@ -40,14 +40,14 @@ public class Pawn implements Serializable {
 	/**
 	 * Creates a new pawn with the specified position and associated player.
 	 *
-	 * @param board  The board where the pawn is placed.
-	 * @param pos    The current position of the pawn.
-	 * @param player The player associated with the pawn.
+	 * @param board The board where the pawn is placed.
+	 * @param pos   The current position of the pawn.
+	 * @param pawn  The number of the pawn.
 	 */
-	public Pawn(Board board, Position pos, Case player) {
+	public Pawn(Board board, Position pos, Case pawn) {
 		this.pos = pos;
 		this.lastPos = pos;
-		this.playerNb = player;
+		this.pawnNumber = pawn;
 		this.possibleMove = possibleMove(board, pos);
 		this.finishLine();
 	}
@@ -80,12 +80,12 @@ public class Pawn implements Serializable {
 	}
 
 	/**
-	 * Returns the player number associated with the pawn.
+	 * Returns the pawn's number associated with the pawn.
 	 *
-	 * @return The player number.
+	 * @return The pawn's number.
 	 */
-	public Case getPlayerNb() {
-		return playerNb;
+	public Case getPawnNumber() {
+		return pawnNumber;
 	}
 
 	/**
@@ -135,29 +135,29 @@ public class Pawn implements Serializable {
 	}
 
 	/**
-	 * Determines the finish line for this pawn based on the associated player.
+	 * Determines the finish line for this pawn based on the associated pawn.
 	 */
 	public void finishLine() {
 		this.setFinishLine(new HashSet<Position>());
-		switch (this.playerNb) {
-		case PLAYER1:
-			for (int j = 1; j < Board.SIZE; j += 2) {
-				this.getFinishLine().add(new Position(1, j));
+		switch (this.pawnNumber) {
+		case PAWN1:
+			for (int col = 1; col < Board.SIZE; col += 2) {
+				this.getFinishLine().add(new Position(1, col));
 			}
 			break;
-		case PLAYER2:
-			for (int j = 1; j < Board.SIZE; j += 2) {
-				this.getFinishLine().add(new Position(Board.SIZE - 2, j));
+		case PAWN2:
+			for (int col = 1; col < Board.SIZE; col += 2) {
+				this.getFinishLine().add(new Position(Board.SIZE - 2, col));
 			}
 			break;
-		case PLAYER3:
-			for (int i = 1; i < Board.SIZE; i += 2) {
-				this.getFinishLine().add(new Position(i, Board.SIZE - 2));
+		case PAWN3:
+			for (int row = 1; row < Board.SIZE; row += 2) {
+				this.getFinishLine().add(new Position(row, Board.SIZE - 2));
 			}
 			break;
-		case PLAYER4:
-			for (int i = 1; i < Board.SIZE; i += 2) {
-				this.getFinishLine().add(new Position(i, 1));
+		case PAWN4:
+			for (int row = 1; row < Board.SIZE; row += 2) {
+				this.getFinishLine().add(new Position(row, 1));
 			}
 			break;
 		default:
@@ -184,7 +184,7 @@ public class Pawn implements Serializable {
 		int newY = pos.getY() + offsetY;
 
 		/* Verifies if the new position is on the grid */
-		if (newX >= 1 && newX <= 17 && newY >= 1 && newY <= 17) {
+		if (newX >= 1 && newX <= Board.SIZE-2 && newY >= 1 && newY <= Board.SIZE-2) {
 			Position newPosition = new Position(newX, newY);
 			if (board.getBoard()[newPosition.getX() - (offsetX / 2)][newPosition.getY()
 					- (offsetY / 2)] == Case.POTENTIALWALL) {
@@ -212,9 +212,9 @@ public class Pawn implements Serializable {
 	 */
 	private void specialMove(Board board, Set<Position> possibleMove, Position pos, int offsetX, int offsetY) {
 		String combined = offsetX + "_" + offsetY;
-		/* to use the switch depending on the two variables */
+		// to use the switch depending on the two variables
 		switch (combined) {
-		case "-2_0":
+		case "-2_0": //topMove
 			if (isPotentialWall(board, pos, -2, 0)) {
 				directionMove(board, possibleMove, pos, false, -2, 0);
 			} else {
@@ -222,7 +222,7 @@ public class Pawn implements Serializable {
 				directionMove(board, possibleMove, pos, false, 0, 2);
 			}
 			break;
-		case "0_2":
+		case "0_2": //rightMove
 			if (isPotentialWall(board, pos, 0, 2)) {
 				directionMove(board, possibleMove, pos, false, 0, 2);
 			} else {
@@ -230,7 +230,7 @@ public class Pawn implements Serializable {
 				directionMove(board, possibleMove, pos, false, 2, 0);
 			}
 			break;
-		case "2_0":
+		case "2_0": //botMove
 			if (isPotentialWall(board, pos, 2, 0)) {
 				directionMove(board, possibleMove, pos, false, 2, 0);
 			} else {
@@ -238,7 +238,7 @@ public class Pawn implements Serializable {
 				directionMove(board, possibleMove, pos, false, 0, 2);
 			}
 			break;
-		case "0_-2":
+		case "0_-2": //leftMove
 			if (isPotentialWall(board, pos, 0, -2)) {
 				directionMove(board, possibleMove, pos, false, 0, -2);
 			} else {
@@ -290,7 +290,7 @@ public class Pawn implements Serializable {
 	}
 
 	/**
-	 * Update the player's position.
+	 * Update the pawn's position.
 	 *
 	 * @param board The current state of the game board.
 	 * @param pos   The new player's position.
@@ -298,12 +298,12 @@ public class Pawn implements Serializable {
 	public void updatePos(Board board, Position pos) {
 		board.getBoard()[this.getPos().getX()][this.getPos().getY()] = Case.EMPTY;
 		this.setPos(pos);
-		board.getBoard()[this.getPos().getX()][this.getPos().getY()] = this.getPlayerNb();
+		board.getBoard()[this.getPos().getX()][this.getPos().getY()] = this.getPawnNumber();
 		this.setPossibleMove(this.possibleMove(board, this.getPos()));
 	}
 
 	/**
-	 * If possible, moves a player to a new position on the board.
+	 * If possible, moves a pawn to a new position on the board.
 	 *
 	 * @param board The game board.
 	 * @param pos   The new position for the player.
@@ -341,12 +341,30 @@ public class Pawn implements Serializable {
 		return false;
 	}
 
-	// Méthode pour sérialiser la classe Board
+	/**
+	 * Serializes the current state of the Board object. This method is used in the
+	 * process of serialization and is automatically invoked when
+	 * ObjectOutputStream's writeObject() method is called.
+	 *
+	 * @param out the ObjectOutputStream to which the board state is written
+	 * @throws IOException if an I/O error occurs while writing to the
+	 *                     ObjectOutputStream
+	 */
 	private void writeObject(ObjectOutputStream out) throws IOException {
 		out.defaultWriteObject();
 	}
 
-	// Méthode pour désérialiser la classe Board
+	/**
+	 * Deserializes the state of the Board object. This method is used in the
+	 * process of deserialization and is automatically invoked when
+	 * ObjectInputStream's readObject() method is called.
+	 *
+	 * @param in the ObjectInputStream from which the board state is read
+	 * @throws IOException            if an I/O error occurs while reading from the
+	 *                                ObjectInputStream
+	 * @throws ClassNotFoundException if the class of a serialized object could not
+	 *                                be found
+	 */
 	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
 		in.defaultReadObject();
 	}
