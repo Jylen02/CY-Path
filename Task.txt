@@ -143,4 +143,4 @@ Mettre le tout dans un dossier
 --22. Factoriser le code (général)
 --22.1. Ajouter une taille au mur (gérer la taille des rectangles en fonction de celle-ci) (Durée : 20min) : Terminé - Jeremy, Christophe, Noaman
 --22.2. Méthode pour actualiser la position de tous les pions (Durée : 5min) : Terminé - Christophe
-22.3. Exception Scanner.nextInt à traiter (dans une méthode) (Durée : 10min) : Terminé - Noaman, Christophe
+--22.3. Exception Scanner.nextInt à traiter (dans une méthode) (Durée : 10min) : Terminé - Noaman, Christophe
