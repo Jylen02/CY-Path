@@ -282,7 +282,6 @@ public class Board implements Serializable {
 	 * Checks if the current board configuration allows all players to reach their
 	 * respective goals.
 	 * 
-	 * @param players Array of players in the game.
 	 * @return true if all players can reach their goals, false otherwise.
 	 */
 	public boolean isWinnableForAll() {

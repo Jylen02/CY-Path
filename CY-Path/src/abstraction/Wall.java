@@ -163,7 +163,6 @@ public class Wall implements Serializable {
 	 * Verifies if the placed wall blocks a player and removes it if necessary.
 	 * 
 	 * @param board   The game board.
-	 * @param players Array of players in the game.
 	 * @return true if the wall blocked a player, false otherwise.
 	 */
 	public boolean wallError(Board board) {

@@ -36,6 +36,8 @@ public class HandleMovePawn {
 
 	/**
 	 * Moves the specified player's pawn to the given position.
+	 * 
+	 * @param pos The position to which the pawn will be moved
 	 */
 	public void movePawn(Position pos) {
 		if (gameTurn.board.getPlayers()[gameTurn.board.getCurrentTurn()].getPawn().move(gameTurn.board, pos)) {

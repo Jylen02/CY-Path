@@ -4,6 +4,10 @@ import javafx.scene.control.Slider;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
+/**
+ * The BackgroundMusic class manages the background music and sound effects for the game.
+ * It provides methods to control the playback and volume of the media players.
+ */
 public class BackgroundMusic {
 	
 	/**

@@ -6,6 +6,9 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.ObjectInputStream;
 
+/**
+ * The SaveLoadGame class provides methods to save and load the current state of the game board to/from a file.
+ */
 public class SaveLoadGame {
 
 	/**

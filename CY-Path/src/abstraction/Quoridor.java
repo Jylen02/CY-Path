@@ -47,9 +47,6 @@ public class Quoridor {
 	 * @param s       The Scanner used for reading user input.
 	 * @param action  The action to be confirmed.
 	 * @param board   The game board.
-	 * @param players An array of Player objects representing the players in the
-	 *                game.
-	 * @param turn    The current player's turn.
 	 */
 	public static void confirmation(Scanner s, int action, Board board) {
 		int confirm = 0;
@@ -88,9 +85,6 @@ public class Quoridor {
 	 * Places a wall on the game board at the specified position and orientation.
 	 *
 	 * @param board       The game board.
-	 * @param players     An array of Player objects representing the players in the
-	 *                    game.
-	 * @param turn        The current player's turn.
 	 * @param position    The position where the wall is to be placed.
 	 * @param orientation The orientation of the wall.
 	 * @return true if the wall is successfully placed, false otherwise.
@@ -110,8 +104,6 @@ public class Quoridor {
 	 * Handles the turn for a player.
 	 * 
 	 * @param board   The game board.
-	 * @param players Array of players in the game.
-	 * @param turn    The current turn number.
 	 */
 	public static void roundOfPlay(Board board) {
 		Scanner s = new Scanner(System.in);
