@@ -355,7 +355,6 @@ public class GameTurn extends Application {
 	 * The board display is reset and the game is restarted.
 	 */
 	private void handleConfirm() {
-		resetAction();
 		if (hasPlacedWall) {
 			board.getPlayers()[board.getCurrentTurn()]
 					.setRemainingWall(board.getPlayers()[board.getCurrentTurn()].getRemainingWall() - 1);
@@ -363,6 +362,7 @@ public class GameTurn extends Application {
 			Pawn p = board.getPlayers()[board.getCurrentTurn()].getPawn();
 			p.setLastPos(p.getPos());
 		}
+		resetAction();
 		board.setCurrentTurn((board.getCurrentTurn() + 1) % board.getPlayerNumber());
 
 		reloadGameTurn(primaryStage);
