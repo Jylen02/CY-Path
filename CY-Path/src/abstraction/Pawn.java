@@ -296,6 +296,7 @@ public class Pawn implements Serializable {
 	 * @param pos   The new player's position.
 	 */
 	public void updatePos(Board board, Position pos) {
+		this.setLastPos(this.getPos());
 		board.getBoard()[this.getPos().getX()][this.getPos().getY()] = Case.EMPTY;
 		this.setPos(pos);
 		board.getBoard()[this.getPos().getX()][this.getPos().getY()] = this.getPawnNumber();
