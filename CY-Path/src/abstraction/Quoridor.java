@@ -203,7 +203,7 @@ public class Quoridor {
 		System.out.println("Please select the location you want (1, 2, 3 or 4)");
 		save = intVerification(s);
 		if (save != 1 && save != 2 && save != 3 && save != 4) {
-			saveChoice(board, s);
+			return saveChoice(board, s);
 		} else if (save == 4) {
 			return 0;
 		} else {
@@ -212,7 +212,7 @@ public class Quoridor {
 				System.out.println("Your game progress has been successfully saved.");
 			} catch (IOException e) {
 				System.out.println("An error has occurred, please try again.");
-				saveChoice(board, s);
+				return saveChoice(board, s);
 			}
 		}
 		return 1;
@@ -233,7 +233,7 @@ public class Quoridor {
 		System.out.println("Please select the location you want (1, 2, 3 or 4)");
 		load = intVerification(s);
 		if (load != 1 && load != 2 && load != 3 && load != 4) {
-			loadChoice(board, s);
+			return loadChoice(board, s);
 		} else if (load == 4) {
 			return 0;
 		} else {
@@ -242,7 +242,7 @@ public class Quoridor {
 				System.out.println("The game has been successfully loaded.");
 			} catch (Exception e) {
 				System.out.println("An error has occurred, please try again.");
-				loadChoice(board, s);
+				return loadChoice(board, s);
 			}
 		}
 		return 1;
