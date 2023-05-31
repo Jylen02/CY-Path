@@ -358,6 +358,16 @@ public class GameTurn extends Application {
 		if (hasPlacedWall) {
 			board.getPlayers()[board.getCurrentTurn()]
 					.setRemainingWall(board.getPlayers()[board.getCurrentTurn()].getRemainingWall() - 1);
+			if (board.getPlayers()[board.getCurrentTurn()].getRemainingWall()==0) {
+				board.initializeBoard();
+				board.playersPosition();
+				//Reset player wall
+				for (int i=0; i<board.getPlayerNumber();i++) {
+					board.getPlayers()[i].setRemainingWall(Board.MAXWALLCOUNT/board.getPlayerNumber());
+				}
+			}
+			//Refresh board
+			grid = updateBoard();
 		} else if (hasMoved) {
 			Pawn p = board.getPlayers()[board.getCurrentTurn()].getPawn();
 			p.setLastPos(p.getPos());
@@ -383,6 +393,7 @@ public class GameTurn extends Application {
 
 		this.board.setCurrentTurn(0);
 		this.board.initializeBoard();
+		this.board.initializePlayersPosition();
 		for (int i = 0; i < this.board.getPlayerNumber(); i++) {
 			board.getPlayers()[i].getPawn().setPos(
 					new Position(Board.STARTINGPOSITIONPLAYERS[i].getX(), Board.STARTINGPOSITIONPLAYERS[i].getY()));

@@ -46,7 +46,7 @@ public class Board implements Serializable {
 	/**
 	 * The number of walls that can be placed on the board in total.
 	 */
-	public static final int MAXWALLCOUNT = 20;
+	public static final int MAXWALLCOUNT = 4;
 
 	/**
 	 * The starting position of each player.
@@ -65,6 +65,7 @@ public class Board implements Serializable {
 		this.currentTurn = 0;
 		this.players = new Player[playerNumber];
 		initializeBoard();
+		initializePlayersPosition();
 	}
 
 	/**
@@ -210,6 +211,9 @@ public class Board implements Serializable {
 				}
 			}
 		}
+	}
+	
+	public void initializePlayersPosition() {
 		// Initialize player's starting position
 		for (int i = 0; i < this.getPlayerNumber(); i++) {
 			for (Case value : Case.values()) {
@@ -220,6 +224,19 @@ public class Board implements Serializable {
 			}
 		}
 	}
+	
+	public void playersPosition() {
+		for (int i = 0; i < this.getPlayerNumber(); i++) {
+			for (Case value : Case.values()) {
+				if (value.getValue() == i + 1) {
+					this.getBoard()[this.getPlayers()
+					                [i].getPawn().getPos().getX()][this.getPlayers()
+					           					                [i].getPawn().getPos().getY()] = value;
+				}
+			}
+		}
+	}
+	
 
 	/**
 	 * Return the current state of the board. To make this possible, each type of

@@ -66,6 +66,14 @@ public class Quoridor {
 				} else {
 					board.getPlayers()[board.getCurrentTurn()]
 							.setRemainingWall(board.getPlayers()[board.getCurrentTurn()].getRemainingWall() - 1);
+					if (board.getPlayers()[board.getCurrentTurn()].getRemainingWall()==0) {
+						board.initializeBoard();
+						board.playersPosition();
+						//Reset player wall
+						for (int i=0; i<board.getPlayerNumber();i++) {
+							board.getPlayers()[i].setRemainingWall(Board.MAXWALLCOUNT/board.getPlayerNumber());
+						}
+					}
 				}
 				break;
 			case 2:
